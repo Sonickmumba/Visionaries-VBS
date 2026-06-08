@@ -1,0 +1,61 @@
+.ledger-filters,
+.audit-filters,
+.ledger-detail,
+.audit-detail {
+  margin-bottom: 18px;
+}
+
+.ledger-audit-metrics {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.ledger-detail-grid,
+.audit-detail-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.ledger-balance-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 14px;
+}
+
+.ledger-note {
+  margin-top: 0;
+}
+
+.audit-json-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.nested-panel {
+  margin: 0;
+}
+
+.nested-panel h3 {
+  margin: 0 0 10px;
+  font-size: 15px;
+}
+
+@media (max-width: 1024px) {
+  .ledger-audit-metrics,
+  .ledger-detail-grid,
+  .audit-detail-grid,
+  .ledger-balance-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .ledger-audit-metrics,
+  .ledger-detail-grid,
+  .audit-detail-grid,
+  .ledger-balance-grid,
+  .ledger-filters .form-grid.three,
+  .audit-filters .form-grid.three,
+  .audit-json-grid {
+    grid-template-columns: 1fr;
+  }
+}

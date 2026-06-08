@@ -1,0 +1,412 @@
+import React, { useEffect, useMemo, useState } from "react";
+import {
+  AlertTriangle,
+  Banknote,
+  CheckCircle2,
+  ClipboardList,
+  FileCheck2,
+  Lock,
+  PiggyBank,
+  RefreshCw,
+  Scale,
+} from "lucide-react";
+import { api } from "../../api/client.js";
+import {
+  Alert,
+  Badge,
+  Button,
+  Card,
+  DataTable,
+  EmptyState,
+  Select,
+  Skeleton,
+  Stepper,
+  Tabs,
+} from "../../components/ui/index.jsx";
+import { Page } from "../../layouts/AppLayouts.jsx";
+import "../../styles/monthly-closing.css";
+
+const money = (value) => `K${Number(value || 0).toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
+const dateOnly = (value) => value ? String(value).slice(0, 10) : "-";
+
+export const CLOSING_ALLOCATION_METHODS = [
+  { value: "ONLY_NON_BORROWERS_EQUAL", label: "Only non-borrowers equal" },
+  { value: "NON_BORROWERS_AND_BELOW_MINIMUM_PROPORTIONAL", label: "Shortfall proportional" },
+  { value: "ALL_MEMBERS_EQUAL", label: "All members equal" },
+];
+
+export const CLOSING_STEPS = [
+  "Validate Inputs",
+  "Assess Declarations",
+  "Post Penalties",
+  "Calculate Interest",
+  "Allocate Common Interest",
+  "Create Snapshots",
+  "Approve and Lock",
+];
+
+function memberName(item) {
+  return `${item?.first_name || ""} ${item?.last_name || ""}`.trim() || "Member";
+}
+
+function statusLabel(value) {
+  return String(value || "-").replaceAll("_", " ");
+}
+
+function statusTone(status) {
+  if (["APPROVED", "LOCKED", "AT_OR_ABOVE_MINIMUM"].includes(status)) return "green";
+  if (["MISSED", "NEVER_BORROWED"].includes(status)) return "red";
+  if (["OPEN", "DECLARATION_PERIOD", "PAYOUT_PERIOD", "BORROWED_BELOW_MINIMUM"].includes(status)) return "amber";
+  return "gray";
+}
+
+export function closingPreviewQuery({ cycleId, cycleMonthId }) {
+  const params = new URLSearchParams();
+  if (cycleId) params.set("cycleId", cycleId);
+  if (cycleMonthId) params.set("cycleMonthId", cycleMonthId);
+  const query = params.toString();
+  return `/monthly-closing/preview${query ? `?${query}` : ""}`;
+}
+
+export function validateClosingRun({ preview, allocationMethod }) {
+  const errors = {};
+  if (!preview?.cycle?.id) errors.cycleId = "Choose a cycle.";
+  if (!preview?.cycleMonth?.id) errors.cycleMonthId = "Choose a month.";
+  if (!allocationMethod) errors.allocationMethod = "Choose a common-interest allocation method.";
+  if (preview?.cycleMonth?.status === "LOCKED") errors.locked = "This month is already locked.";
+  return errors;
+}
+
+export function closingRunPayload({ preview, allocationMethod, lockMonth }) {
+  return {
+    cycleId: preview.cycle.id,
+    cycleMonthId: preview.cycleMonth.id,
+    lock: Boolean(lockMonth),
+    allocationMethod,
+  };
+}
+
+export async function runMonthlyClosing({ preview, allocationMethod, lockMonth, closingApi = api }) {
+  const errors = validateClosingRun({ preview, allocationMethod });
+  if (Object.keys(errors).length) {
+    const error = new Error("Validation failed");
+    error.validationErrors = errors;
+    throw error;
+  }
+
+  return closingApi("/monthly-closing/run", {
+    method: "POST",
+    body: closingRunPayload({ preview, allocationMethod, lockMonth }),
+  });
+}
+
+export function closingExceptions(members = []) {
+  return members.filter((member) => (
+    member.declarationStatus === "MISSED"
+    || member.borrowingStatus === "NEVER_BORROWED"
+    || member.borrowingStatus === "BORROWED_BELOW_MINIMUM"
+    || Number(member.penaltyAmount || 0) > 0
+  ));
+}
+
+export function closingStepIndex(preview, result) {
+  if (result?.run?.status === "APPROVED") return CLOSING_STEPS.length;
+  if (!preview?.cycleMonth) return 0;
+  return 1;
+}
+
+function DetailValue({ label, value }) {
+  return <div><strong>{label}</strong><span>{value}</span></div>;
+}
+
+function RunResult({ result }) {
+  if (!result) return null;
+  const summary = result.summary || {};
+  const run = result.run || {};
+  const commonInterestRun = result.commonInterest?.run || {};
+
+  return (
+    <section className="panel closing-result">
+      <div className="panel-head">
+        <h2>Approved Closing Run</h2>
+        <Badge text={run.status || "APPROVED"} tone="green" />
+      </div>
+      <div className="detail-grid closing-detail-grid">
+        <DetailValue label="Run Number" value={run.run_number || "-"} />
+        <DetailValue label="Approved" value={dateOnly(run.approved_at || run.completed_at)} />
+        <DetailValue label="Snapshots" value={(result.snapshots || []).length} />
+        <DetailValue label="Common Interest Pool" value={money(commonInterestRun.common_interest_pool || summary.common_interest_pool)} />
+      </div>
+      <DataTable
+        columns={["Savings Interest", "Loan Interest", "Common Interest", "Penalties", "Outstanding Loans"]}
+        rows={[[
+          money(summary.total_savings_interest),
+          money(summary.total_loan_interest_assessed),
+          money(summary.total_common_interest_charged),
+          money(summary.total_penalties_assessed),
+          money(summary.total_outstanding_loans),
+        ]]}
+      />
+    </section>
+  );
+}
+
+export function MonthlyClosingPage({
+  closingApi = api,
+  initialCycles = undefined,
+  initialCycleDetail = null,
+  initialPreview = null,
+  initialResult = null,
+}) {
+  const [cycles, setCycles] = useState(initialCycles || []);
+  const [cycleDetail, setCycleDetail] = useState(initialCycleDetail || { months: [] });
+  const [cycleId, setCycleId] = useState(initialCycles?.[0]?.id || initialPreview?.cycle?.id || "");
+  const [cycleMonthId, setCycleMonthId] = useState(initialCycleDetail?.months?.[0]?.id || initialPreview?.cycleMonth?.id || "");
+  const [allocationMethod, setAllocationMethod] = useState("NON_BORROWERS_AND_BELOW_MINIMUM_PROPORTIONAL");
+  const [lockMonth, setLockMonth] = useState(false);
+  const [preview, setPreview] = useState(initialPreview);
+  const [result, setResult] = useState(initialResult);
+  const [activeTab, setActiveTab] = useState("overview");
+  const [errors, setErrors] = useState({});
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(initialPreview === null);
+  const [busy, setBusy] = useState("");
+
+  async function loadCycles() {
+    try {
+      const response = await closingApi("/cycles");
+      const rows = response.data || [];
+      setCycles(rows);
+      const selected = rows.find((cycle) => cycle.status === "ACTIVE") || rows[0];
+      if (selected && !cycleId) setCycleId(selected.id);
+    } catch (err) {
+      setError(err.message || "Cycles could not load.");
+    }
+  }
+
+  async function loadCycleDetail(id = cycleId) {
+    if (!id) return;
+    try {
+      const response = await closingApi(`/cycles/${id}`);
+      const months = response.months || [];
+      setCycleDetail({ months });
+      const selected = months.find((month) => ["DECLARATION_PERIOD", "OPEN", "PAYOUT_PERIOD"].includes(month.status)) || months[0];
+      if (selected && !cycleMonthId) setCycleMonthId(selected.id);
+    } catch (err) {
+      setError(err.message || "Cycle months could not load.");
+    }
+  }
+
+  async function loadPreview({ clearResult = true } = {}) {
+    setLoading(true);
+    setErrors({});
+    setError("");
+    try {
+      const response = await closingApi(closingPreviewQuery({ cycleId, cycleMonthId }));
+      setPreview(response.data);
+      if (clearResult) setResult(null);
+    } catch (err) {
+      setError(err.message || "Monthly closing preview could not load.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function runClosing() {
+    setBusy("run");
+    setMessage("");
+    setError("");
+    setErrors({});
+    try {
+      const response = await runMonthlyClosing({ preview, allocationMethod, lockMonth, closingApi });
+      setResult(response.data);
+      setMessage(`Monthly closing approved. ${lockMonth ? "The month was locked." : "The month remains open for authorized review."}`);
+      setActiveTab("result");
+      await loadPreview({ clearResult: false });
+    } catch (err) {
+      if (err.validationErrors) setErrors(err.validationErrors);
+      else setError(err.message || "Monthly closing could not be completed.");
+    } finally {
+      setBusy("");
+    }
+  }
+
+  useEffect(() => {
+    if (initialCycles === undefined) loadCycles();
+  }, []);
+
+  useEffect(() => {
+    if (cycleId && initialCycleDetail === null) loadCycleDetail(cycleId);
+  }, [cycleId]);
+
+  useEffect(() => {
+    if (initialPreview === null) loadPreview();
+  }, [cycleMonthId]);
+
+  const totals = preview?.totals || {};
+  const members = preview?.members || [];
+  const exceptions = useMemo(() => closingExceptions(members), [members]);
+  const stepIndex = closingStepIndex(preview, result);
+
+  return (
+    <Page
+      title="Monthly Closing"
+      actions={(
+        <>
+          <Button type="button" icon={RefreshCw} onClick={loadPreview} loading={loading}>Refresh Preview</Button>
+          <Button type="button" variant="danger" icon={FileCheck2} onClick={runClosing} loading={busy === "run"} disabled={preview?.cycleMonth?.status === "LOCKED"}>
+            Run Closing
+          </Button>
+        </>
+      )}
+    >
+      {message ? <Alert tone="success" title="Monthly closing complete">{message}</Alert> : null}
+      {error ? <Alert tone="danger" title="Monthly closing failed">{error}</Alert> : null}
+      {errors.locked ? <Alert tone="warning" title="Month locked">{errors.locked}</Alert> : null}
+
+      <section className="panel closing-context">
+        <div className="form-grid three">
+          <Select
+            label="Cycle"
+            value={cycleId}
+            onChange={(value) => { setCycleId(value); setCycleMonthId(""); }}
+            placeholder="Choose cycle"
+            error={errors.cycleId}
+            options={cycles.map((cycle) => ({ value: cycle.id, label: `${cycle.name} - ${cycle.status}` }))}
+          />
+          <Select
+            label="Month"
+            value={cycleMonthId}
+            onChange={setCycleMonthId}
+            placeholder="Choose month"
+            error={errors.cycleMonthId}
+            options={(cycleDetail.months || []).map((month) => ({ value: month.id, label: `Month ${month.month_number} - ${statusLabel(month.status)}` }))}
+          />
+          <Select
+            label="Common-interest method"
+            value={allocationMethod}
+            onChange={setAllocationMethod}
+            error={errors.allocationMethod}
+            options={CLOSING_ALLOCATION_METHODS}
+          />
+        </div>
+        <label className="closing-lock-toggle">
+          <input type="checkbox" checked={lockMonth} onChange={(event) => setLockMonth(event.target.checked)} />
+          <span><Lock size={15} aria-hidden="true" /> Lock month after approval</span>
+        </label>
+      </section>
+
+      <section className="panel closing-steps-panel">
+        <div className="panel-head">
+          <h2>Closing Workflow</h2>
+          <Badge text={preview?.cycleMonth ? statusLabel(preview.cycleMonth.status) : "No month"} tone={statusTone(preview?.cycleMonth?.status)} />
+        </div>
+        <Stepper steps={CLOSING_STEPS} active={stepIndex} />
+      </section>
+
+      {loading ? <section className="panel"><Skeleton lines={9} /></section> : !preview ? (
+        <EmptyState title="No monthly closing preview" message="Choose a cycle month and refresh the preview before running closing." />
+      ) : (
+        <>
+          <div className="metrics closing-metrics">
+            <Card title="Declared" value={totals.declared || 0} note="Members declared" icon={ClipboardList} />
+            <Card title="Missed" value={totals.missed || 0} note="Penalty candidates" tone={Number(totals.missed || 0) ? "red" : "green"} icon={AlertTriangle} />
+            <Card title="Savings Interest" value={money(totals.savingsInterest)} note="To post this month" tone="teal" icon={PiggyBank} />
+            <Card title="Loan Interest" value={money(totals.loanInterest)} note="Loan interest assessment" tone="blue" icon={Banknote} />
+            <Card title="Penalties" value={money(totals.penalties)} note="Failure-to-declare preview" tone="amber" icon={Scale} />
+          </div>
+
+          <Tabs
+            active={activeTab}
+            onChange={setActiveTab}
+            label="Monthly closing tabs"
+            tabs={[
+              { id: "overview", label: "Overview" },
+              { id: "members", label: "Member Snapshots" },
+              { id: "exceptions", label: "Exceptions" },
+              { id: "result", label: "Run Result" },
+            ]}
+          />
+
+          {activeTab === "overview" ? (
+            <section className="panel">
+              <div className="panel-head">
+                <h2>Closing Context</h2>
+                <Badge text={preview.cycle?.name || "Cycle"} tone="blue" />
+              </div>
+              <div className="detail-grid closing-detail-grid">
+                <DetailValue label="Cycle" value={preview.cycle?.name || "-"} />
+                <DetailValue label="Month" value={preview.cycleMonth ? `Month ${preview.cycleMonth.month_number}` : "-"} />
+                <DetailValue label="Month Status" value={statusLabel(preview.cycleMonth?.status)} />
+                <DetailValue label="Allocation Method" value={CLOSING_ALLOCATION_METHODS.find((item) => item.value === allocationMethod)?.label || "-"} />
+              </div>
+              <DataTable
+                columns={["Declared", "Missed", "Savings Deposits", "Savings Interest", "Loan Interest", "Penalties"]}
+                rows={[[
+                  totals.declared || 0,
+                  totals.missed || 0,
+                  money(totals.savingsDeposit),
+                  money(totals.savingsInterest),
+                  money(totals.loanInterest),
+                  money(totals.penalties),
+                ]]}
+              />
+            </section>
+          ) : null}
+
+          {activeTab === "members" ? (
+            <section className="panel">
+              <div className="panel-head">
+                <h2>Member Snapshots</h2>
+                <Badge text={`${members.length} members`} tone="blue" />
+              </div>
+              <DataTable
+                columns={["Member", "Declaration", "Savings Deposit", "Savings Interest", "Loan Interest", "Borrowing Status", "Penalty"]}
+                rows={members.map((member) => [
+                  memberName(member),
+                  <Badge text={statusLabel(member.declarationStatus)} tone={statusTone(member.declarationStatus)} />,
+                  money(member.savingsDeposit),
+                  money(member.savingsInterest),
+                  money(member.loanInterest),
+                  <Badge text={statusLabel(member.borrowingStatus)} tone={statusTone(member.borrowingStatus)} />,
+                  money(member.penaltyAmount),
+                ])}
+                empty="No active members found for this cycle month."
+              />
+            </section>
+          ) : null}
+
+          {activeTab === "exceptions" ? (
+            <section className="panel">
+              <div className="panel-head">
+                <h2>Exceptions</h2>
+                <Badge text={`${exceptions.length} items`} tone={exceptions.length ? "amber" : "green"} />
+              </div>
+              <DataTable
+                columns={["Member", "Issue", "Expected Closing Action", "Amount"]}
+                rows={exceptions.map((member) => {
+                  const missed = member.declarationStatus === "MISSED";
+                  const belowMinimum = member.borrowingStatus !== "AT_OR_ABOVE_MINIMUM";
+                  return [
+                    memberName(member),
+                    missed ? "Missed declaration" : statusLabel(member.borrowingStatus),
+                    missed ? "Assess failure-to-declare penalty" : "Carry borrowing compliance status forward",
+                    missed ? money(member.penaltyAmount) : money(member.borrowingShortfall),
+                  ];
+                })}
+                empty="No declaration or borrowing exceptions found."
+              />
+            </section>
+          ) : null}
+
+          {activeTab === "result" ? (
+            result ? <RunResult result={result} /> : (
+              <EmptyState title="No approved run yet" message="Run monthly closing after reviewing the preview, exceptions, and member snapshots." />
+            )
+          ) : null}
+        </>
+      )}
+    </Page>
+  );
+}

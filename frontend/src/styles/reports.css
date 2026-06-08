@@ -1,0 +1,27 @@
+.reports-filters,
+.reports-detail {
+  margin-bottom: 18px;
+}
+
+.reports-metrics {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.reports-detail-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+@media (max-width: 1024px) {
+  .reports-metrics,
+  .reports-detail-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .reports-metrics,
+  .reports-detail-grid,
+  .reports-filters .form-grid.three {
+    grid-template-columns: 1fr;
+  }
+}

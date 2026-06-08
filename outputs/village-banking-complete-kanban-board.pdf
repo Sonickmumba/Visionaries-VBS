@@ -1,0 +1,5391 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [7 0 R 9 0 R 11 0 R 13 0 R 15 0 R 17 0 R 19 0 R 21 0 R 23 0 R 25 0 R 27 0 R 29 0 R 31 0 R 33 0 R 35 0 R 37 0 R 39 0 R 41 0 R 43 0 R 45 0 R 47 0 R 49 0 R 51 0 R 53 0 R 55 0 R 57 0 R 59 0 R 61 0 R 63 0 R 65 0 R 67 0 R 69 0 R 71 0 R 73 0 R 75 0 R] /Count 35 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Courier >>
+endobj
+6 0 obj
+<< /Length 3243 >>
+stream
+BT
+/F1 18 Tf
+48 736.00 Td (Village Banking Web Application) Tj
+-48 -736 Td
+/F1 18 Tf
+48 700.00 Td (Complete Implementation Kanban Board) Tj
+-48 -700 Td
+/F1 14 Tf
+48 656.00 Td (1. Board Purpose) Tj
+-48 -656 Td
+/F2 9 Tf
+48 628.00 Td (This Kanban board defines the full implementation plan for the Village Banking Web Application.) Tj
+-48 -628 Td
+/F2 9 Tf
+48 610.00 Td (The build order is:) Tj
+-48 -610 Td
+/F2 9 Tf
+48 592.00 Td (1. Backend foundation using Node.js, Express.js, and PostgreSQL.) Tj
+-48 -592 Td
+/F2 9 Tf
+48 580.00 Td (2. Backend domain modules and financial rules engine.) Tj
+-48 -580 Td
+/F2 9 Tf
+48 568.00 Td (3. Backend testing, security, audit, and reporting.) Tj
+-48 -568 Td
+/F2 9 Tf
+48 556.00 Td (4. Frontend foundation using React and JavaScript.) Tj
+-48 -556 Td
+/F2 9 Tf
+48 544.00 Td (5. Admin screens and workflows.) Tj
+-48 -544 Td
+/F2 9 Tf
+48 532.00 Td (6. Member portal screens and responsive layouts.) Tj
+-48 -532 Td
+/F2 9 Tf
+48 520.00 Td (7. Full integration, QA, deployment, and production readiness.) Tj
+-48 -520 Td
+/F2 9 Tf
+48 502.00 Td (The board is designed for a scalable application with strong auditability, ledger-based financial) Tj
+-48 -502 Td
+/F2 9 Tf
+48 490.00 Td (tracking, monthly processing, and responsive support for mobile and desktop screens.) Tj
+-48 -490 Td
+/F1 14 Tf
+48 462.00 Td (2. Recommended Kanban Columns) Tj
+-48 -462 Td
+/F2 9 Tf
+48 434.00 Td (Use these columns:) Tj
+-48 -434 Td
+/F3 6.2 Tf
+48 416.00 Td (Backlog) Tj
+-48 -416 Td
+/F3 6.2 Tf
+48 408.00 Td (Ready) Tj
+-48 -408 Td
+/F3 6.2 Tf
+48 400.00 Td (In Progress) Tj
+-48 -400 Td
+/F3 6.2 Tf
+48 392.00 Td (Code Review) Tj
+-48 -392 Td
+/F3 6.2 Tf
+48 384.00 Td (Testing) Tj
+-48 -384 Td
+/F3 6.2 Tf
+48 376.00 Td (Blocked) Tj
+-48 -376 Td
+/F3 6.2 Tf
+48 368.00 Td (Done) Tj
+-48 -368 Td
+/F3 6.2 Tf
+48 360.00 Td (Released) Tj
+-48 -360 Td
+/F2 9 Tf
+48 340.00 Td (Optional swimlanes:) Tj
+-48 -340 Td
+/F3 6.2 Tf
+48 322.00 Td (Backend) Tj
+-48 -322 Td
+/F3 6.2 Tf
+48 314.00 Td (Frontend) Tj
+-48 -314 Td
+/F3 6.2 Tf
+48 306.00 Td (Testing / QA) Tj
+-48 -306 Td
+/F3 6.2 Tf
+48 298.00 Td (DevOps) Tj
+-48 -298 Td
+/F3 6.2 Tf
+48 290.00 Td (Security) Tj
+-48 -290 Td
+/F3 6.2 Tf
+48 282.00 Td (Documentation) Tj
+-48 -282 Td
+/F1 14 Tf
+48 252.00 Td (3. Priority Levels) Tj
+-48 -252 Td
+/F3 6.2 Tf
+48 224.00 Td (P0 - Required for MVP financial correctness) Tj
+-48 -224 Td
+/F3 6.2 Tf
+48 216.00 Td (P1 - Required for complete application workflow) Tj
+-48 -216 Td
+/F3 6.2 Tf
+48 208.00 Td (P2 - Important for scalability, usability, and admin efficiency) Tj
+-48 -208 Td
+/F3 6.2 Tf
+48 200.00 Td (P3 - Enhancement after core release) Tj
+-48 -200 Td
+/F1 14 Tf
+48 170.00 Td (4. Definition of Done) Tj
+-48 -170 Td
+/F2 9 Tf
+48 142.00 Td (A task is done only when:) Tj
+-48 -142 Td
+/F2 9 Tf
+48 124.00 Td (  implementation is complete,) Tj
+-48 -124 Td
+/F2 9 Tf
+48 112.00 Td (  validation rules are enforced server-side,) Tj
+-48 -112 Td
+/F2 9 Tf
+48 100.00 Td (  database migrations are created,) Tj
+-48 -100 Td
+/F2 9 Tf
+48 88.00 Td (  unit tests are added where applicable,) Tj
+-48 -88 Td
+/F2 9 Tf
+48 76.00 Td (  integration tests are added for API workflows,) Tj
+-48 -76 Td
+/F2 9 Tf
+48 64.00 Td (  frontend states are covered where applicable,) Tj
+-48 -64 Td
+/F2 8 Tf
+509 28 Td (Page 1) Tj
+ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 6 0 R >>
+endobj
+8 0 obj
+<< /Length 3312 >>
+stream
+BT
+/F2 9 Tf
+48 744.00 Td (  mobile and desktop layouts are checked,) Tj
+-48 -744 Td
+/F2 9 Tf
+48 732.00 Td (  error states are handled,) Tj
+-48 -732 Td
+/F2 9 Tf
+48 720.00 Td (  audit trail behavior is verified for sensitive actions,) Tj
+-48 -720 Td
+/F2 9 Tf
+48 708.00 Td (  documentation or notes are updated.) Tj
+-48 -708 Td
+/F1 14 Tf
+48 680.00 Td (5. Backend Phase 1: Project Foundation) Tj
+-48 -680 Td
+/F1 11 Tf
+48 644.00 Td (BE-001: Initialize Backend Project) Tj
+-48 -644 Td
+/F2 9 Tf
+48 621.00 Td (Priority: P0) Tj
+-48 -621 Td
+/F2 9 Tf
+48 609.00 Td (Epic: Backend Foundation) Tj
+-48 -609 Td
+/F2 9 Tf
+48 591.00 Td (Description:) Tj
+-48 -591 Td
+/F2 9 Tf
+48 579.00 Td (Create the Express.js backend project using Node.js and JavaScript. The project should be) Tj
+-48 -579 Td
+/F2 9 Tf
+48 567.00 Td (structured for modular growth.) Tj
+-48 -567 Td
+/F2 9 Tf
+48 549.00 Td (Subtasks:) Tj
+-48 -549 Td
+/F2 9 Tf
+48 531.00 Td (  Create backend folder structure.) Tj
+-48 -531 Td
+/F2 9 Tf
+48 519.00 Td (  Initialize package.json.) Tj
+-48 -519 Td
+/F2 9 Tf
+48 507.00 Td (  Install Express, PostgreSQL client, validation, auth, logging, and testing dependencies.) Tj
+-48 -507 Td
+/F2 9 Tf
+48 495.00 Td (  Configure environment variables.) Tj
+-48 -495 Td
+/F2 9 Tf
+48 483.00 Td (  Add .env.example.) Tj
+-48 -483 Td
+/F2 9 Tf
+48 471.00 Td (  Add basic health-check endpoint.) Tj
+-48 -471 Td
+/F2 9 Tf
+48 459.00 Td (  Add centralized error handler.) Tj
+-48 -459 Td
+/F2 9 Tf
+48 447.00 Td (  Add request logging.) Tj
+-48 -447 Td
+/F2 9 Tf
+48 435.00 Td (  Add linting and formatting.) Tj
+-48 -435 Td
+/F2 9 Tf
+48 417.00 Td (Suggested structure:) Tj
+-48 -417 Td
+/F3 6.2 Tf
+48 399.00 Td (backend/) Tj
+-48 -399 Td
+/F3 6.2 Tf
+48 391.00 Td (  src/) Tj
+-48 -391 Td
+/F3 6.2 Tf
+48 383.00 Td (    app.js) Tj
+-48 -383 Td
+/F3 6.2 Tf
+48 375.00 Td (    server.js) Tj
+-48 -375 Td
+/F3 6.2 Tf
+48 367.00 Td (    config/) Tj
+-48 -367 Td
+/F3 6.2 Tf
+48 359.00 Td (    db/) Tj
+-48 -359 Td
+/F3 6.2 Tf
+48 351.00 Td (    middleware/) Tj
+-48 -351 Td
+/F3 6.2 Tf
+48 343.00 Td (    modules/) Tj
+-48 -343 Td
+/F3 6.2 Tf
+48 335.00 Td (    services/) Tj
+-48 -335 Td
+/F3 6.2 Tf
+48 327.00 Td (    utils/) Tj
+-48 -327 Td
+/F3 6.2 Tf
+48 319.00 Td (    tests/) Tj
+-48 -319 Td
+/F2 9 Tf
+48 299.00 Td (Acceptance Criteria:) Tj
+-48 -299 Td
+/F2 9 Tf
+48 281.00 Td (  Server starts successfully.) Tj
+-48 -281 Td
+/F2 9 Tf
+48 269.00 Td (  GET /health returns status and timestamp.) Tj
+-48 -269 Td
+/F2 9 Tf
+48 257.00 Td (  Environment configuration works for development and test.) Tj
+-48 -257 Td
+/F2 9 Tf
+48 245.00 Td (  Errors return consistent JSON format.) Tj
+-48 -245 Td
+/F2 9 Tf
+48 227.00 Td (Testing:) Tj
+-48 -227 Td
+/F2 9 Tf
+48 209.00 Td (  Unit test health endpoint.) Tj
+-48 -209 Td
+/F2 9 Tf
+48 197.00 Td (  Test missing route returns 404.) Tj
+-48 -197 Td
+/F2 9 Tf
+48 185.00 Td (  Test error handler returns expected shape.) Tj
+-48 -185 Td
+/F1 11 Tf
+48 159.00 Td (BE-002: PostgreSQL Connection and Migration Setup) Tj
+-48 -159 Td
+/F2 9 Tf
+48 136.00 Td (Priority: P0) Tj
+-48 -136 Td
+/F2 9 Tf
+48 124.00 Td (Epic: Backend Foundation) Tj
+-48 -124 Td
+/F2 9 Tf
+48 106.00 Td (Description:) Tj
+-48 -106 Td
+/F2 9 Tf
+48 94.00 Td (Set up PostgreSQL connection and database migration workflow.) Tj
+-48 -94 Td
+/F2 9 Tf
+48 76.00 Td (Subtasks:) Tj
+-48 -76 Td
+/F2 8 Tf
+509 28 Td (Page 2) Tj
+ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 8 0 R >>
+endobj
+10 0 obj
+<< /Length 3095 >>
+stream
+BT
+/F2 9 Tf
+48 744.00 Td (  Configure PostgreSQL connection pool.) Tj
+-48 -744 Td
+/F2 9 Tf
+48 732.00 Td (  Add migration tool such as Knex, node-pg-migrate, Sequelize migrations, or Prisma migrations.) Tj
+-48 -732 Td
+/F2 9 Tf
+48 720.00 Td (  Create development and test database configs.) Tj
+-48 -720 Td
+/F2 9 Tf
+48 708.00 Td (  Add migration scripts.) Tj
+-48 -708 Td
+/F2 9 Tf
+48 696.00 Td (  Add seed script structure.) Tj
+-48 -696 Td
+/F2 9 Tf
+48 684.00 Td (  Add database reset script for test environment.) Tj
+-48 -684 Td
+/F2 9 Tf
+48 666.00 Td (Acceptance Criteria:) Tj
+-48 -666 Td
+/F2 9 Tf
+48 648.00 Td (  Backend can connect to PostgreSQL.) Tj
+-48 -648 Td
+/F2 9 Tf
+48 636.00 Td (  Migrations can run up and down.) Tj
+-48 -636 Td
+/F2 9 Tf
+48 624.00 Td (  Test database can be reset automatically.) Tj
+-48 -624 Td
+/F2 9 Tf
+48 606.00 Td (Testing:) Tj
+-48 -606 Td
+/F2 9 Tf
+48 588.00 Td (  Test database connection.) Tj
+-48 -588 Td
+/F2 9 Tf
+48 576.00 Td (  Test migration execution in CI/local test command.) Tj
+-48 -576 Td
+/F1 11 Tf
+48 550.00 Td (BE-003: Implement Base Middleware) Tj
+-48 -550 Td
+/F2 9 Tf
+48 527.00 Td (Priority: P0) Tj
+-48 -527 Td
+/F2 9 Tf
+48 515.00 Td (Epic: Backend Foundation) Tj
+-48 -515 Td
+/F2 9 Tf
+48 497.00 Td (Description:) Tj
+-48 -497 Td
+/F2 9 Tf
+48 485.00 Td (Add middleware required across the backend.) Tj
+-48 -485 Td
+/F2 9 Tf
+48 467.00 Td (Subtasks:) Tj
+-48 -467 Td
+/F2 9 Tf
+48 449.00 Td (  JSON body parser.) Tj
+-48 -449 Td
+/F2 9 Tf
+48 437.00 Td (  CORS configuration.) Tj
+-48 -437 Td
+/F2 9 Tf
+48 425.00 Td (  Security headers.) Tj
+-48 -425 Td
+/F2 9 Tf
+48 413.00 Td (  Request ID middleware.) Tj
+-48 -413 Td
+/F2 9 Tf
+48 401.00 Td (  Request logger.) Tj
+-48 -401 Td
+/F2 9 Tf
+48 389.00 Td (  Auth middleware placeholder.) Tj
+-48 -389 Td
+/F2 9 Tf
+48 377.00 Td (  Role authorization helper.) Tj
+-48 -377 Td
+/F2 9 Tf
+48 365.00 Td (  Validation middleware.) Tj
+-48 -365 Td
+/F2 9 Tf
+48 353.00 Td (  Locked-month guard placeholder.) Tj
+-48 -353 Td
+/F2 9 Tf
+48 335.00 Td (Acceptance Criteria:) Tj
+-48 -335 Td
+/F2 9 Tf
+48 317.00 Td (  Every request receives a request ID.) Tj
+-48 -317 Td
+/F2 9 Tf
+48 305.00 Td (  Validation errors are consistent.) Tj
+-48 -305 Td
+/F2 9 Tf
+48 293.00 Td (  Protected route scaffolding is available.) Tj
+-48 -293 Td
+/F2 9 Tf
+48 275.00 Td (Testing:) Tj
+-48 -275 Td
+/F2 9 Tf
+48 257.00 Td (  Middleware unit tests.) Tj
+-48 -257 Td
+/F2 9 Tf
+48 245.00 Td (  Validation error response tests.) Tj
+-48 -245 Td
+/F2 9 Tf
+48 233.00 Td (  CORS and security header smoke tests.) Tj
+-48 -233 Td
+/F1 14 Tf
+48 205.00 Td (6. Backend Phase 2: Database Schema) Tj
+-48 -205 Td
+/F1 11 Tf
+48 169.00 Td (BE-004: Create Core Enum and Identity Migrations) Tj
+-48 -169 Td
+/F2 9 Tf
+48 146.00 Td (Priority: P0) Tj
+-48 -146 Td
+/F2 9 Tf
+48 134.00 Td (Epic: Database) Tj
+-48 -134 Td
+/F2 9 Tf
+48 116.00 Td (Description:) Tj
+-48 -116 Td
+/F2 9 Tf
+48 104.00 Td (Create database enum types and identity tables.) Tj
+-48 -104 Td
+/F2 9 Tf
+48 86.00 Td (Subtasks:) Tj
+-48 -86 Td
+/F2 9 Tf
+48 68.00 Td (  Add PostgreSQL enum migrations.) Tj
+-48 -68 Td
+/F2 8 Tf
+509 28 Td (Page 3) Tj
+ET
+endstream
+endobj
+11 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 10 0 R >>
+endobj
+12 0 obj
+<< /Length 3174 >>
+stream
+BT
+/F2 9 Tf
+48 744.00 Td (  Create users.) Tj
+-48 -744 Td
+/F2 9 Tf
+48 732.00 Td (  Create members.) Tj
+-48 -732 Td
+/F2 9 Tf
+48 720.00 Td (  Add indexes and uniqueness constraints.) Tj
+-48 -720 Td
+/F2 9 Tf
+48 708.00 Td (  Add timestamp update trigger or app-level update handling.) Tj
+-48 -708 Td
+/F2 9 Tf
+48 690.00 Td (Acceptance Criteria:) Tj
+-48 -690 Td
+/F2 9 Tf
+48 672.00 Td (  Users and members can be created.) Tj
+-48 -672 Td
+/F2 9 Tf
+48 660.00 Td (  Member may optionally link to a user account.) Tj
+-48 -660 Td
+/F2 9 Tf
+48 648.00 Td (  Duplicate email is rejected.) Tj
+-48 -648 Td
+/F2 9 Tf
+48 630.00 Td (Testing:) Tj
+-48 -630 Td
+/F2 9 Tf
+48 612.00 Td (  Migration tests.) Tj
+-48 -612 Td
+/F2 9 Tf
+48 600.00 Td (  Model/repository tests for users and members.) Tj
+-48 -600 Td
+/F2 9 Tf
+48 588.00 Td (  Unique constraint tests.) Tj
+-48 -588 Td
+/F1 11 Tf
+48 562.00 Td (BE-005: Create Cycle Configuration Schema) Tj
+-48 -562 Td
+/F2 9 Tf
+48 539.00 Td (Priority: P0) Tj
+-48 -539 Td
+/F2 9 Tf
+48 527.00 Td (Epic: Database) Tj
+-48 -527 Td
+/F2 9 Tf
+48 509.00 Td (Description:) Tj
+-48 -509 Td
+/F2 9 Tf
+48 497.00 Td (Implement cycle-related tables.) Tj
+-48 -497 Td
+/F2 9 Tf
+48 479.00 Td (Subtasks:) Tj
+-48 -479 Td
+/F2 9 Tf
+48 461.00 Td (  Create cycles.) Tj
+-48 -461 Td
+/F2 9 Tf
+48 449.00 Td (  Create cycle_months.) Tj
+-48 -449 Td
+/F2 9 Tf
+48 437.00 Td (  Create cycle_members.) Tj
+-48 -437 Td
+/F2 9 Tf
+48 425.00 Td (  Create penalty_types.) Tj
+-48 -425 Td
+/F2 9 Tf
+48 413.00 Td (  Add constraints for dates, rates, and non-negative amounts.) Tj
+-48 -413 Td
+/F2 9 Tf
+48 401.00 Td (  Add indexes for cycle queries.) Tj
+-48 -401 Td
+/F2 9 Tf
+48 383.00 Td (Acceptance Criteria:) Tj
+-48 -383 Td
+/F2 9 Tf
+48 365.00 Td (  Cycle rules are persisted per cycle.) Tj
+-48 -365 Td
+/F2 9 Tf
+48 353.00 Td (  Members can be enrolled into cycles.) Tj
+-48 -353 Td
+/F2 9 Tf
+48 341.00 Td (  Duplicate enrollment is prevented.) Tj
+-48 -341 Td
+/F2 9 Tf
+48 329.00 Td (  Cycle months can be generated.) Tj
+-48 -329 Td
+/F2 9 Tf
+48 311.00 Td (Testing:) Tj
+-48 -311 Td
+/F2 9 Tf
+48 293.00 Td (  Migration tests.) Tj
+-48 -293 Td
+/F2 9 Tf
+48 281.00 Td (  Constraint tests.) Tj
+-48 -281 Td
+/F2 9 Tf
+48 269.00 Td (  Repository tests for cycle creation and member enrollment.) Tj
+-48 -269 Td
+/F1 11 Tf
+48 243.00 Td (BE-006: Create Financial Operations Schema) Tj
+-48 -243 Td
+/F2 9 Tf
+48 220.00 Td (Priority: P0) Tj
+-48 -220 Td
+/F2 9 Tf
+48 208.00 Td (Epic: Database) Tj
+-48 -208 Td
+/F2 9 Tf
+48 190.00 Td (Description:) Tj
+-48 -190 Td
+/F2 9 Tf
+48 178.00 Td (Implement operational tables for declarations, contributions, loans, penalties, common interest,) Tj
+-48 -178 Td
+/F2 9 Tf
+48 166.00 Td (ledger, snapshots, audit, and overrides.) Tj
+-48 -166 Td
+/F2 9 Tf
+48 148.00 Td (Subtasks:) Tj
+-48 -148 Td
+/F2 9 Tf
+48 130.00 Td (  Create declarations.) Tj
+-48 -130 Td
+/F2 9 Tf
+48 118.00 Td (  Create contribution_payments.) Tj
+-48 -118 Td
+/F2 9 Tf
+48 106.00 Td (  Create loan_requests.) Tj
+-48 -106 Td
+/F2 9 Tf
+48 94.00 Td (  Create loan_disbursements.) Tj
+-48 -94 Td
+/F2 9 Tf
+48 82.00 Td (  Create loan_repayments.) Tj
+-48 -82 Td
+/F2 9 Tf
+48 70.00 Td (  Create penalties.) Tj
+-48 -70 Td
+/F2 8 Tf
+509 28 Td (Page 4) Tj
+ET
+endstream
+endobj
+13 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 12 0 R >>
+endobj
+14 0 obj
+<< /Length 3333 >>
+stream
+BT
+/F2 9 Tf
+48 744.00 Td (  Create common_interest_runs.) Tj
+-48 -744 Td
+/F2 9 Tf
+48 732.00 Td (  Create common_interest_allocations.) Tj
+-48 -732 Td
+/F2 9 Tf
+48 720.00 Td (  Create ledger_transactions.) Tj
+-48 -720 Td
+/F2 9 Tf
+48 708.00 Td (  Create ledger_entries.) Tj
+-48 -708 Td
+/F2 9 Tf
+48 696.00 Td (  Create monthly_closing_runs.) Tj
+-48 -696 Td
+/F2 9 Tf
+48 684.00 Td (  Create member_monthly_snapshots.) Tj
+-48 -684 Td
+/F2 9 Tf
+48 672.00 Td (  Create cycle_month_summaries.) Tj
+-48 -672 Td
+/F2 9 Tf
+48 660.00 Td (  Create overrides.) Tj
+-48 -660 Td
+/F2 9 Tf
+48 648.00 Td (  Create audit_logs.) Tj
+-48 -648 Td
+/F2 9 Tf
+48 636.00 Td (  Add indexes for reporting and member statements.) Tj
+-48 -636 Td
+/F2 9 Tf
+48 618.00 Td (Acceptance Criteria:) Tj
+-48 -618 Td
+/F2 9 Tf
+48 600.00 Td (  All financial workflow data can be stored.) Tj
+-48 -600 Td
+/F2 9 Tf
+48 588.00 Td (  One declaration per member per month is enforced.) Tj
+-48 -588 Td
+/F2 9 Tf
+48 576.00 Td (  One social fund and one membership fee per member per cycle is enforced.) Tj
+-48 -576 Td
+/F2 9 Tf
+48 564.00 Td (  Ledger entries can be linked to source workflows.) Tj
+-48 -564 Td
+/F2 9 Tf
+48 546.00 Td (Testing:) Tj
+-48 -546 Td
+/F2 9 Tf
+48 528.00 Td (  Migration tests for all tables.) Tj
+-48 -528 Td
+/F2 9 Tf
+48 516.00 Td (  Foreign key tests.) Tj
+-48 -516 Td
+/F2 9 Tf
+48 504.00 Td (  Unique constraint tests.) Tj
+-48 -504 Td
+/F2 9 Tf
+48 492.00 Td (  Index existence checks where useful.) Tj
+-48 -492 Td
+/F1 14 Tf
+48 464.00 Td (7. Backend Phase 3: Authentication and Authorization) Tj
+-48 -464 Td
+/F1 11 Tf
+48 428.00 Td (BE-007: Authentication Service) Tj
+-48 -428 Td
+/F2 9 Tf
+48 405.00 Td (Priority: P0) Tj
+-48 -405 Td
+/F2 9 Tf
+48 393.00 Td (Epic: Auth) Tj
+-48 -393 Td
+/F2 9 Tf
+48 375.00 Td (Description:) Tj
+-48 -375 Td
+/F2 9 Tf
+48 363.00 Td (Implement login, signup or invitation acceptance, password reset, and session/JWT handling.) Tj
+-48 -363 Td
+/F2 9 Tf
+48 345.00 Td (Subtasks:) Tj
+-48 -345 Td
+/F2 9 Tf
+48 327.00 Td (  Password hashing.) Tj
+-48 -327 Td
+/F2 9 Tf
+48 315.00 Td (  Login endpoint.) Tj
+-48 -315 Td
+/F2 9 Tf
+48 303.00 Td (  Logout endpoint if using sessions.) Tj
+-48 -303 Td
+/F2 9 Tf
+48 291.00 Td (  Signup endpoint if member self-registration is allowed.) Tj
+-48 -291 Td
+/F2 9 Tf
+48 279.00 Td (  Admin-created user invitation endpoint.) Tj
+-48 -279 Td
+/F2 9 Tf
+48 267.00 Td (  Forgot password endpoint.) Tj
+-48 -267 Td
+/F2 9 Tf
+48 255.00 Td (  Reset password endpoint.) Tj
+-48 -255 Td
+/F2 9 Tf
+48 243.00 Td (  Current user endpoint.) Tj
+-48 -243 Td
+/F2 9 Tf
+48 231.00 Td (  Refresh token/session renewal if used.) Tj
+-48 -231 Td
+/F2 9 Tf
+48 213.00 Td (Acceptance Criteria:) Tj
+-48 -213 Td
+/F2 9 Tf
+48 195.00 Td (  Users can log in securely.) Tj
+-48 -195 Td
+/F2 9 Tf
+48 183.00 Td (  Passwords are never stored in plain text.) Tj
+-48 -183 Td
+/F2 9 Tf
+48 171.00 Td (  Invalid credentials do not reveal account existence.) Tj
+-48 -171 Td
+/F2 9 Tf
+48 159.00 Td (  Password reset tokens expire.) Tj
+-48 -159 Td
+/F2 9 Tf
+48 141.00 Td (Testing:) Tj
+-48 -141 Td
+/F2 9 Tf
+48 123.00 Td (  Auth unit tests.) Tj
+-48 -123 Td
+/F2 9 Tf
+48 111.00 Td (  Login success/failure tests.) Tj
+-48 -111 Td
+/F2 9 Tf
+48 99.00 Td (  Password reset token tests.) Tj
+-48 -99 Td
+/F2 9 Tf
+48 87.00 Td (  Signup validation tests.) Tj
+-48 -87 Td
+/F2 8 Tf
+509 28 Td (Page 5) Tj
+ET
+endstream
+endobj
+15 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 14 0 R >>
+endobj
+16 0 obj
+<< /Length 3117 >>
+stream
+BT
+/F1 11 Tf
+48 736.00 Td (BE-008: Role-Based Access Control) Tj
+-48 -736 Td
+/F2 9 Tf
+48 713.00 Td (Priority: P0) Tj
+-48 -713 Td
+/F2 9 Tf
+48 701.00 Td (Epic: Security) Tj
+-48 -701 Td
+/F2 9 Tf
+48 683.00 Td (Description:) Tj
+-48 -683 Td
+/F2 9 Tf
+48 671.00 Td (Restrict routes by role and ownership.) Tj
+-48 -671 Td
+/F2 9 Tf
+48 653.00 Td (Subtasks:) Tj
+-48 -653 Td
+/F2 9 Tf
+48 635.00 Td (  Implement requireAuth.) Tj
+-48 -635 Td
+/F2 9 Tf
+48 623.00 Td (  Implement requireRole.) Tj
+-48 -623 Td
+/F2 9 Tf
+48 611.00 Td (  Implement member ownership checks.) Tj
+-48 -611 Td
+/F2 9 Tf
+48 599.00 Td (  Implement admin-only financial posting guard.) Tj
+-48 -599 Td
+/F2 9 Tf
+48 587.00 Td (  Implement auditor read-only access.) Tj
+-48 -587 Td
+/F2 9 Tf
+48 569.00 Td (Acceptance Criteria:) Tj
+-48 -569 Td
+/F2 9 Tf
+48 551.00 Td (  Members can only view their own data.) Tj
+-48 -551 Td
+/F2 9 Tf
+48 539.00 Td (  Admins can manage operational records.) Tj
+-48 -539 Td
+/F2 9 Tf
+48 527.00 Td (  Auditors can view reports and audit trail but cannot post financial records.) Tj
+-48 -527 Td
+/F2 9 Tf
+48 509.00 Td (Testing:) Tj
+-48 -509 Td
+/F2 9 Tf
+48 491.00 Td (  Unauthorized access tests.) Tj
+-48 -491 Td
+/F2 9 Tf
+48 479.00 Td (  Member ownership tests.) Tj
+-48 -479 Td
+/F2 9 Tf
+48 467.00 Td (  Admin-only route tests.) Tj
+-48 -467 Td
+/F2 9 Tf
+48 455.00 Td (  Auditor read-only tests.) Tj
+-48 -455 Td
+/F1 14 Tf
+48 427.00 Td (8. Backend Phase 4: Core Domain Modules) Tj
+-48 -427 Td
+/F1 11 Tf
+48 391.00 Td (BE-009: Member Management API) Tj
+-48 -391 Td
+/F2 9 Tf
+48 368.00 Td (Priority: P0) Tj
+-48 -368 Td
+/F2 9 Tf
+48 356.00 Td (Epic: Members) Tj
+-48 -356 Td
+/F2 9 Tf
+48 338.00 Td (Description:) Tj
+-48 -338 Td
+/F2 9 Tf
+48 326.00 Td (Implement member CRUD and cycle enrollment APIs.) Tj
+-48 -326 Td
+/F2 9 Tf
+48 308.00 Td (Subtasks:) Tj
+-48 -308 Td
+/F2 9 Tf
+48 290.00 Td (  Create member.) Tj
+-48 -290 Td
+/F2 9 Tf
+48 278.00 Td (  Update member.) Tj
+-48 -278 Td
+/F2 9 Tf
+48 266.00 Td (  Activate/deactivate member.) Tj
+-48 -266 Td
+/F2 9 Tf
+48 254.00 Td (  List members with filters.) Tj
+-48 -254 Td
+/F2 9 Tf
+48 242.00 Td (  Get member detail.) Tj
+-48 -242 Td
+/F2 9 Tf
+48 230.00 Td (  Enroll member into cycle.) Tj
+-48 -230 Td
+/F2 9 Tf
+48 218.00 Td (  Deactivate participation in cycle.) Tj
+-48 -218 Td
+/F2 9 Tf
+48 200.00 Td (Endpoints:) Tj
+-48 -200 Td
+/F3 6.2 Tf
+48 182.00 Td (GET /api/members) Tj
+-48 -182 Td
+/F3 6.2 Tf
+48 174.00 Td (POST /api/members) Tj
+-48 -174 Td
+/F3 6.2 Tf
+48 166.00 Td (GET /api/members/:id) Tj
+-48 -166 Td
+/F3 6.2 Tf
+48 158.00 Td (PATCH /api/members/:id) Tj
+-48 -158 Td
+/F3 6.2 Tf
+48 150.00 Td (POST /api/cycles/:cycleId/members) Tj
+-48 -150 Td
+/F3 6.2 Tf
+48 142.00 Td (PATCH /api/cycles/:cycleId/members/:cycleMemberId) Tj
+-48 -142 Td
+/F2 9 Tf
+48 122.00 Td (Acceptance Criteria:) Tj
+-48 -122 Td
+/F2 9 Tf
+48 104.00 Td (  Admin can manage members.) Tj
+-48 -104 Td
+/F2 9 Tf
+48 92.00 Td (  Member list supports search and status filters.) Tj
+-48 -92 Td
+/F2 9 Tf
+48 80.00 Td (  Member detail returns cycle participation summary.) Tj
+-48 -80 Td
+/F2 9 Tf
+48 62.00 Td (Testing:) Tj
+-48 -62 Td
+/F2 8 Tf
+509 28 Td (Page 6) Tj
+ET
+endstream
+endobj
+17 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 16 0 R >>
+endobj
+18 0 obj
+<< /Length 3306 >>
+stream
+BT
+/F2 9 Tf
+48 738.00 Td (  CRUD tests.) Tj
+-48 -738 Td
+/F2 9 Tf
+48 726.00 Td (  Enrollment tests.) Tj
+-48 -726 Td
+/F2 9 Tf
+48 714.00 Td (  Duplicate enrollment tests.) Tj
+-48 -714 Td
+/F2 9 Tf
+48 702.00 Td (  Permission tests.) Tj
+-48 -702 Td
+/F1 11 Tf
+48 676.00 Td (BE-010: Cycle Management API) Tj
+-48 -676 Td
+/F2 9 Tf
+48 653.00 Td (Priority: P0) Tj
+-48 -653 Td
+/F2 9 Tf
+48 641.00 Td (Epic: Cycles) Tj
+-48 -641 Td
+/F2 9 Tf
+48 623.00 Td (Description:) Tj
+-48 -623 Td
+/F2 9 Tf
+48 611.00 Td (Implement cycle configuration and cycle month management.) Tj
+-48 -611 Td
+/F2 9 Tf
+48 593.00 Td (Subtasks:) Tj
+-48 -593 Td
+/F2 9 Tf
+48 575.00 Td (  Create cycle.) Tj
+-48 -575 Td
+/F2 9 Tf
+48 563.00 Td (  Edit draft cycle.) Tj
+-48 -563 Td
+/F2 9 Tf
+48 551.00 Td (  Activate cycle.) Tj
+-48 -551 Td
+/F2 9 Tf
+48 539.00 Td (  Generate monthly periods.) Tj
+-48 -539 Td
+/F2 9 Tf
+48 527.00 Td (  Update cycle status.) Tj
+-48 -527 Td
+/F2 9 Tf
+48 515.00 Td (  Configure penalty types.) Tj
+-48 -515 Td
+/F2 9 Tf
+48 503.00 Td (  Fetch cycle detail with rules.) Tj
+-48 -503 Td
+/F2 9 Tf
+48 491.00 Td (  Fetch cycle months.) Tj
+-48 -491 Td
+/F2 9 Tf
+48 473.00 Td (Endpoints:) Tj
+-48 -473 Td
+/F3 6.2 Tf
+48 455.00 Td (GET /api/cycles) Tj
+-48 -455 Td
+/F3 6.2 Tf
+48 447.00 Td (POST /api/cycles) Tj
+-48 -447 Td
+/F3 6.2 Tf
+48 439.00 Td (GET /api/cycles/:cycleId) Tj
+-48 -439 Td
+/F3 6.2 Tf
+48 431.00 Td (PATCH /api/cycles/:cycleId) Tj
+-48 -431 Td
+/F3 6.2 Tf
+48 423.00 Td (POST /api/cycles/:cycleId/months/generate) Tj
+-48 -423 Td
+/F3 6.2 Tf
+48 415.00 Td (GET /api/cycles/:cycleId/months) Tj
+-48 -415 Td
+/F3 6.2 Tf
+48 407.00 Td (POST /api/cycles/:cycleId/penalty-types) Tj
+-48 -407 Td
+/F2 9 Tf
+48 387.00 Td (Acceptance Criteria:) Tj
+-48 -387 Td
+/F2 9 Tf
+48 369.00 Td (  Cycle-specific rules are stored permanently.) Tj
+-48 -369 Td
+/F2 9 Tf
+48 357.00 Td (  Months include declaration and payout windows.) Tj
+-48 -357 Td
+/F2 9 Tf
+48 345.00 Td (  Active cycles cannot have critical rules silently changed without audit.) Tj
+-48 -345 Td
+/F2 9 Tf
+48 327.00 Td (Testing:) Tj
+-48 -327 Td
+/F2 9 Tf
+48 309.00 Td (  Cycle creation tests.) Tj
+-48 -309 Td
+/F2 9 Tf
+48 297.00 Td (  Month generation tests.) Tj
+-48 -297 Td
+/F2 9 Tf
+48 285.00 Td (  Rate and date validation tests.) Tj
+-48 -285 Td
+/F2 9 Tf
+48 273.00 Td (  Audit tests for rule changes.) Tj
+-48 -273 Td
+/F1 11 Tf
+48 247.00 Td (BE-011: Declaration API) Tj
+-48 -247 Td
+/F2 9 Tf
+48 224.00 Td (Priority: P0) Tj
+-48 -224 Td
+/F2 9 Tf
+48 212.00 Td (Epic: Declarations) Tj
+-48 -212 Td
+/F2 9 Tf
+48 194.00 Td (Description:) Tj
+-48 -194 Td
+/F2 9 Tf
+48 182.00 Td (Implement monthly declaration submission and admin review.) Tj
+-48 -182 Td
+/F2 9 Tf
+48 164.00 Td (Subtasks:) Tj
+-48 -164 Td
+/F2 9 Tf
+48 146.00 Td (  Submit declaration.) Tj
+-48 -146 Td
+/F2 9 Tf
+48 134.00 Td (  Save declaration draft if allowed.) Tj
+-48 -134 Td
+/F2 9 Tf
+48 122.00 Td (  Validate declaration window.) Tj
+-48 -122 Td
+/F2 9 Tf
+48 110.00 Td (  List declarations by cycle month.) Tj
+-48 -110 Td
+/F2 9 Tf
+48 98.00 Td (  Get declaration detail.) Tj
+-48 -98 Td
+/F2 9 Tf
+48 86.00 Td (  Edit declaration before locked month.) Tj
+-48 -86 Td
+/F2 9 Tf
+48 74.00 Td (  Mark missed declarations during monthly processing.) Tj
+-48 -74 Td
+/F2 9 Tf
+48 62.00 Td (  Cancel declaration with audit.) Tj
+-48 -62 Td
+/F2 8 Tf
+509 28 Td (Page 7) Tj
+ET
+endstream
+endobj
+19 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 18 0 R >>
+endobj
+20 0 obj
+<< /Length 3276 >>
+stream
+BT
+/F2 9 Tf
+48 738.00 Td (Endpoints:) Tj
+-48 -738 Td
+/F3 6.2 Tf
+48 720.00 Td (GET /api/declarations) Tj
+-48 -720 Td
+/F3 6.2 Tf
+48 712.00 Td (POST /api/declarations) Tj
+-48 -712 Td
+/F3 6.2 Tf
+48 704.00 Td (GET /api/declarations/:id) Tj
+-48 -704 Td
+/F3 6.2 Tf
+48 696.00 Td (PATCH /api/declarations/:id) Tj
+-48 -696 Td
+/F3 6.2 Tf
+48 688.00 Td (POST /api/declarations/:id/cancel) Tj
+-48 -688 Td
+/F2 9 Tf
+48 668.00 Td (Acceptance Criteria:) Tj
+-48 -668 Td
+/F2 9 Tf
+48 650.00 Td (  One declaration per member per month.) Tj
+-48 -650 Td
+/F2 9 Tf
+48 638.00 Td (  Submission stores timestamp and within-window flag.) Tj
+-48 -638 Td
+/F2 9 Tf
+48 626.00 Td (  Missed members can be identified.) Tj
+-48 -626 Td
+/F2 9 Tf
+48 614.00 Td (  Locked months cannot be edited.) Tj
+-48 -614 Td
+/F2 9 Tf
+48 596.00 Td (Testing:) Tj
+-48 -596 Td
+/F2 9 Tf
+48 578.00 Td (  Declaration submission tests.) Tj
+-48 -578 Td
+/F2 9 Tf
+48 566.00 Td (  Window validation tests.) Tj
+-48 -566 Td
+/F2 9 Tf
+48 554.00 Td (  Duplicate declaration tests.) Tj
+-48 -554 Td
+/F2 9 Tf
+48 542.00 Td (  Locked month edit tests.) Tj
+-48 -542 Td
+/F2 9 Tf
+48 530.00 Td (  Member ownership tests.) Tj
+-48 -530 Td
+/F1 11 Tf
+48 504.00 Td (BE-012: Savings and Contributions API) Tj
+-48 -504 Td
+/F2 9 Tf
+48 481.00 Td (Priority: P0) Tj
+-48 -481 Td
+/F2 9 Tf
+48 469.00 Td (Epic: Savings) Tj
+-48 -469 Td
+/F2 9 Tf
+48 451.00 Td (Description:) Tj
+-48 -451 Td
+/F2 9 Tf
+48 439.00 Td (Implement savings deposits and one-time contribution posting.) Tj
+-48 -439 Td
+/F2 9 Tf
+48 421.00 Td (Subtasks:) Tj
+-48 -421 Td
+/F2 9 Tf
+48 403.00 Td (  Post savings deposit.) Tj
+-48 -403 Td
+/F2 9 Tf
+48 391.00 Td (  Validate savings principal cap.) Tj
+-48 -391 Td
+/F2 9 Tf
+48 379.00 Td (  Post social fund payment.) Tj
+-48 -379 Td
+/F2 9 Tf
+48 367.00 Td (  Post membership fee payment.) Tj
+-48 -367 Td
+/F2 9 Tf
+48 355.00 Td (  Prevent duplicate one-time contribution.) Tj
+-48 -355 Td
+/F2 9 Tf
+48 343.00 Td (  Link postings to ledger.) Tj
+-48 -343 Td
+/F2 9 Tf
+48 331.00 Td (  List savings activity.) Tj
+-48 -331 Td
+/F2 9 Tf
+48 319.00 Td (  Return savings cap progress.) Tj
+-48 -319 Td
+/F2 9 Tf
+48 301.00 Td (Endpoints:) Tj
+-48 -301 Td
+/F3 6.2 Tf
+48 283.00 Td (POST /api/savings/deposits) Tj
+-48 -283 Td
+/F3 6.2 Tf
+48 275.00 Td (GET /api/savings/member/:cycleMemberId) Tj
+-48 -275 Td
+/F3 6.2 Tf
+48 267.00 Td (POST /api/contributions) Tj
+-48 -267 Td
+/F3 6.2 Tf
+48 259.00 Td (GET /api/contributions/member/:cycleMemberId) Tj
+-48 -259 Td
+/F2 9 Tf
+48 239.00 Td (Acceptance Criteria:) Tj
+-48 -239 Td
+/F2 9 Tf
+48 221.00 Td (  Savings cap applies only to principal.) Tj
+-48 -221 Td
+/F2 9 Tf
+48 209.00 Td (  Contributions are separate from savings.) Tj
+-48 -209 Td
+/F2 9 Tf
+48 197.00 Td (  All postings create ledger transactions.) Tj
+-48 -197 Td
+/F2 9 Tf
+48 179.00 Td (Testing:) Tj
+-48 -179 Td
+/F2 9 Tf
+48 161.00 Td (  Savings deposit tests.) Tj
+-48 -161 Td
+/F2 9 Tf
+48 149.00 Td (  Cap enforcement tests.) Tj
+-48 -149 Td
+/F2 9 Tf
+48 137.00 Td (  Duplicate contribution tests.) Tj
+-48 -137 Td
+/F2 9 Tf
+48 125.00 Td (  Ledger posting tests.) Tj
+-48 -125 Td
+/F2 9 Tf
+48 113.00 Td (  Locked month guard tests.) Tj
+-48 -113 Td
+/F1 11 Tf
+48 87.00 Td (BE-013: Loan Management API) Tj
+-48 -87 Td
+/F2 9 Tf
+48 64.00 Td (Priority: P0) Tj
+-48 -64 Td
+/F2 8 Tf
+509 28 Td (Page 8) Tj
+ET
+endstream
+endobj
+21 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 20 0 R >>
+endobj
+22 0 obj
+<< /Length 3593 >>
+stream
+BT
+/F2 9 Tf
+48 744.00 Td (Epic: Loans) Tj
+-48 -744 Td
+/F2 9 Tf
+48 726.00 Td (Description:) Tj
+-48 -726 Td
+/F2 9 Tf
+48 714.00 Td (Implement loan requests, approvals, disbursements, top-ups, and repayments.) Tj
+-48 -714 Td
+/F2 9 Tf
+48 696.00 Td (Subtasks:) Tj
+-48 -696 Td
+/F2 9 Tf
+48 678.00 Td (  Create loan request from declaration or admin.) Tj
+-48 -678 Td
+/F2 9 Tf
+48 666.00 Td (  Approve loan request.) Tj
+-48 -666 Td
+/F2 9 Tf
+48 654.00 Td (  Reject loan request.) Tj
+-48 -654 Td
+/F2 9 Tf
+48 642.00 Td (  Disburse approved loan.) Tj
+-48 -642 Td
+/F2 9 Tf
+48 630.00 Td (  Treat top-up as separate disbursement.) Tj
+-48 -630 Td
+/F2 9 Tf
+48 618.00 Td (  Record principal repayment.) Tj
+-48 -618 Td
+/F2 9 Tf
+48 606.00 Td (  Record interest repayment.) Tj
+-48 -606 Td
+/F2 9 Tf
+48 594.00 Td (  Compute outstanding loan summary.) Tj
+-48 -594 Td
+/F2 9 Tf
+48 582.00 Td (  Track cumulative borrowed amount separately from outstanding balance.) Tj
+-48 -582 Td
+/F2 9 Tf
+48 564.00 Td (Endpoints:) Tj
+-48 -564 Td
+/F3 6.2 Tf
+48 546.00 Td (GET /api/loans/requests) Tj
+-48 -546 Td
+/F3 6.2 Tf
+48 538.00 Td (POST /api/loans/requests) Tj
+-48 -538 Td
+/F3 6.2 Tf
+48 530.00 Td (POST /api/loans/requests/:id/approve) Tj
+-48 -530 Td
+/F3 6.2 Tf
+48 522.00 Td (POST /api/loans/requests/:id/reject) Tj
+-48 -522 Td
+/F3 6.2 Tf
+48 514.00 Td (POST /api/loans/disbursements) Tj
+-48 -514 Td
+/F3 6.2 Tf
+48 506.00 Td (POST /api/loans/repayments) Tj
+-48 -506 Td
+/F3 6.2 Tf
+48 498.00 Td (GET /api/loans/member/:cycleMemberId) Tj
+-48 -498 Td
+/F2 9 Tf
+48 478.00 Td (Acceptance Criteria:) Tj
+-48 -478 Td
+/F2 9 Tf
+48 460.00 Td (  Only admins approve/disburse loans.) Tj
+-48 -460 Td
+/F2 9 Tf
+48 448.00 Td (  Payout window is enforced.) Tj
+-48 -448 Td
+/F2 9 Tf
+48 436.00 Td (  Repayments split principal and interest.) Tj
+-48 -436 Td
+/F2 9 Tf
+48 424.00 Td (  Loan origin is preserved.) Tj
+-48 -424 Td
+/F2 9 Tf
+48 406.00 Td (Testing:) Tj
+-48 -406 Td
+/F2 9 Tf
+48 388.00 Td (  Request approval tests.) Tj
+-48 -388 Td
+/F2 9 Tf
+48 376.00 Td (  Disbursement tests.) Tj
+-48 -376 Td
+/F2 9 Tf
+48 364.00 Td (  Payout window tests.) Tj
+-48 -364 Td
+/F2 9 Tf
+48 352.00 Td (  Repayment tests.) Tj
+-48 -352 Td
+/F2 9 Tf
+48 340.00 Td (  Cumulative borrowing tests.) Tj
+-48 -340 Td
+/F2 9 Tf
+48 328.00 Td (  Permission tests.) Tj
+-48 -328 Td
+/F1 11 Tf
+48 302.00 Td (BE-014: Penalty Engine API) Tj
+-48 -302 Td
+/F2 9 Tf
+48 279.00 Td (Priority: P0) Tj
+-48 -279 Td
+/F2 9 Tf
+48 267.00 Td (Epic: Penalties) Tj
+-48 -267 Td
+/F2 9 Tf
+48 249.00 Td (Description:) Tj
+-48 -249 Td
+/F2 9 Tf
+48 237.00 Td (Implement penalty assessment, payment, waiver, reversal, and conversion to loan.) Tj
+-48 -237 Td
+/F2 9 Tf
+48 219.00 Td (Subtasks:) Tj
+-48 -219 Td
+/F2 9 Tf
+48 201.00 Td (  Assess failure-to-declare penalty.) Tj
+-48 -201 Td
+/F2 9 Tf
+48 189.00 Td (  Assess configurable penalty type.) Tj
+-48 -189 Td
+/F2 9 Tf
+48 177.00 Td (  Record penalty payment.) Tj
+-48 -177 Td
+/F2 9 Tf
+48 165.00 Td (  Convert unpaid penalty to loan.) Tj
+-48 -165 Td
+/F2 9 Tf
+48 153.00 Td (  Link converted loan to original penalty.) Tj
+-48 -153 Td
+/F2 9 Tf
+48 141.00 Td (  Waive penalty with reason.) Tj
+-48 -141 Td
+/F2 9 Tf
+48 129.00 Td (  Reverse erroneous penalty.) Tj
+-48 -129 Td
+/F2 9 Tf
+48 117.00 Td (  List penalty report data.) Tj
+-48 -117 Td
+/F2 9 Tf
+48 99.00 Td (Endpoints:) Tj
+-48 -99 Td
+/F3 6.2 Tf
+48 81.00 Td (GET /api/penalties) Tj
+-48 -81 Td
+/F3 6.2 Tf
+48 73.00 Td (POST /api/penalties) Tj
+-48 -73 Td
+/F3 6.2 Tf
+48 65.00 Td (POST /api/penalties/:id/pay) Tj
+-48 -65 Td
+/F3 6.2 Tf
+48 57.00 Td (POST /api/penalties/:id/convert-to-loan) Tj
+-48 -57 Td
+/F2 8 Tf
+509 28 Td (Page 9) Tj
+ET
+endstream
+endobj
+23 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 22 0 R >>
+endobj
+24 0 obj
+<< /Length 3279 >>
+stream
+BT
+/F3 6.2 Tf
+48 744.00 Td (POST /api/penalties/:id/waive) Tj
+-48 -744 Td
+/F3 6.2 Tf
+48 736.00 Td (POST /api/penalties/:id/reverse) Tj
+-48 -736 Td
+/F2 9 Tf
+48 716.00 Td (Acceptance Criteria:) Tj
+-48 -716 Td
+/F2 9 Tf
+48 698.00 Td (  K100 failure-to-declare penalty can be assessed.) Tj
+-48 -698 Td
+/F2 9 Tf
+48 686.00 Td (  Converted penalty becomes loan principal.) Tj
+-48 -686 Td
+/F2 9 Tf
+48 674.00 Td (  Converted penalty origin remains auditable.) Tj
+-48 -674 Td
+/F2 9 Tf
+48 662.00 Td (  Waiver and reversal require reason.) Tj
+-48 -662 Td
+/F2 9 Tf
+48 644.00 Td (Testing:) Tj
+-48 -644 Td
+/F2 9 Tf
+48 626.00 Td (  Penalty assessment tests.) Tj
+-48 -626 Td
+/F2 9 Tf
+48 614.00 Td (  Payment status tests.) Tj
+-48 -614 Td
+/F2 9 Tf
+48 602.00 Td (  Conversion to loan tests.) Tj
+-48 -602 Td
+/F2 9 Tf
+48 590.00 Td (  Converted loan interest eligibility tests.) Tj
+-48 -590 Td
+/F2 9 Tf
+48 578.00 Td (  Audit tests.) Tj
+-48 -578 Td
+/F1 14 Tf
+48 550.00 Td (9. Backend Phase 5: Financial Rules Engine) Tj
+-48 -550 Td
+/F1 11 Tf
+48 514.00 Td (BE-015: Ledger Posting Service) Tj
+-48 -514 Td
+/F2 9 Tf
+48 491.00 Td (Priority: P0) Tj
+-48 -491 Td
+/F2 9 Tf
+48 479.00 Td (Epic: Ledger) Tj
+-48 -479 Td
+/F2 9 Tf
+48 461.00 Td (Description:) Tj
+-48 -461 Td
+/F2 9 Tf
+48 449.00 Td (Implement immutable ledger transaction posting with debit and credit entries.) Tj
+-48 -449 Td
+/F2 9 Tf
+48 431.00 Td (Subtasks:) Tj
+-48 -431 Td
+/F2 9 Tf
+48 413.00 Td (  Create ledger posting service.) Tj
+-48 -413 Td
+/F2 9 Tf
+48 401.00 Td (  Validate balanced debit/credit entries.) Tj
+-48 -401 Td
+/F2 9 Tf
+48 389.00 Td (  Link transaction to source table and source ID.) Tj
+-48 -389 Td
+/F2 9 Tf
+48 377.00 Td (  Add reversal posting service.) Tj
+-48 -377 Td
+/F2 9 Tf
+48 365.00 Td (  Prevent deletion of posted transactions.) Tj
+-48 -365 Td
+/F2 9 Tf
+48 353.00 Td (  Add transaction wrapping for financial operations.) Tj
+-48 -353 Td
+/F2 9 Tf
+48 335.00 Td (Acceptance Criteria:) Tj
+-48 -335 Td
+/F2 9 Tf
+48 317.00 Td (  Every financial event creates a ledger transaction.) Tj
+-48 -317 Td
+/F2 9 Tf
+48 305.00 Td (  Ledger entries balance.) Tj
+-48 -305 Td
+/F2 9 Tf
+48 293.00 Td (  Reversals create new reversing entries.) Tj
+-48 -293 Td
+/F2 9 Tf
+48 281.00 Td (  Source workflow is preserved.) Tj
+-48 -281 Td
+/F2 9 Tf
+48 263.00 Td (Testing:) Tj
+-48 -263 Td
+/F2 9 Tf
+48 245.00 Td (  Ledger balance unit tests.) Tj
+-48 -245 Td
+/F2 9 Tf
+48 233.00 Td (  Posting integration tests.) Tj
+-48 -233 Td
+/F2 9 Tf
+48 221.00 Td (  Reversal tests.) Tj
+-48 -221 Td
+/F2 9 Tf
+48 209.00 Td (  Transaction rollback tests.) Tj
+-48 -209 Td
+/F1 11 Tf
+48 183.00 Td (BE-016: Savings Interest Calculator) Tj
+-48 -183 Td
+/F2 9 Tf
+48 160.00 Td (Priority: P0) Tj
+-48 -160 Td
+/F2 9 Tf
+48 148.00 Td (Epic: Financial Engine) Tj
+-48 -148 Td
+/F2 9 Tf
+48 130.00 Td (Description:) Tj
+-48 -130 Td
+/F2 9 Tf
+48 118.00 Td (Implement monthly savings interest calculation.) Tj
+-48 -118 Td
+/F2 9 Tf
+48 100.00 Td (Formula:) Tj
+-48 -100 Td
+/F3 6.2 Tf
+48 82.00 Td (savings_base = accumulated_savings_brought_forward + deposit_made) Tj
+-48 -82 Td
+/F3 6.2 Tf
+48 74.00 Td (savings_interest = savings_rate * savings_base) Tj
+-48 -74 Td
+/F3 6.2 Tf
+48 66.00 Td (accumulated_savings_carried_forward = savings_base + savings_interest) Tj
+-48 -66 Td
+/F2 8 Tf
+509 28 Td (Page 10) Tj
+ET
+endstream
+endobj
+25 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 24 0 R >>
+endobj
+26 0 obj
+<< /Length 3231 >>
+stream
+BT
+/F2 9 Tf
+48 738.00 Td (Subtasks:) Tj
+-48 -738 Td
+/F2 9 Tf
+48 720.00 Td (  Implement calculator.) Tj
+-48 -720 Td
+/F2 9 Tf
+48 708.00 Td (  Apply rounding policy.) Tj
+-48 -708 Td
+/F2 9 Tf
+48 696.00 Td (  Post savings interest ledger transactions.) Tj
+-48 -696 Td
+/F2 9 Tf
+48 684.00 Td (  Store monthly snapshot values.) Tj
+-48 -684 Td
+/F2 9 Tf
+48 672.00 Td (  Prevent duplicate posting for locked/finalized run.) Tj
+-48 -672 Td
+/F2 9 Tf
+48 654.00 Td (Acceptance Criteria:) Tj
+-48 -654 Td
+/F2 9 Tf
+48 636.00 Td (  Interest is calculated monthly.) Tj
+-48 -636 Td
+/F2 9 Tf
+48 624.00 Td (  Cap does not apply to accumulated interest.) Tj
+-48 -624 Td
+/F2 9 Tf
+48 612.00 Td (  Values match configured cycle rate.) Tj
+-48 -612 Td
+/F2 9 Tf
+48 594.00 Td (Testing:) Tj
+-48 -594 Td
+/F2 9 Tf
+48 576.00 Td (  Unit tests for formula.) Tj
+-48 -576 Td
+/F2 9 Tf
+48 564.00 Td (  Rounding tests.) Tj
+-48 -564 Td
+/F2 9 Tf
+48 552.00 Td (  Monthly posting tests.) Tj
+-48 -552 Td
+/F2 9 Tf
+48 540.00 Td (  Snapshot tests.) Tj
+-48 -540 Td
+/F1 11 Tf
+48 514.00 Td (BE-017: Loan Interest Calculator) Tj
+-48 -514 Td
+/F2 9 Tf
+48 491.00 Td (Priority: P0) Tj
+-48 -491 Td
+/F2 9 Tf
+48 479.00 Td (Epic: Financial Engine) Tj
+-48 -479 Td
+/F2 9 Tf
+48 461.00 Td (Description:) Tj
+-48 -461 Td
+/F2 9 Tf
+48 449.00 Td (Implement monthly loan interest on brought-forward outstanding balance.) Tj
+-48 -449 Td
+/F2 9 Tf
+48 431.00 Td (Formula:) Tj
+-48 -431 Td
+/F3 6.2 Tf
+48 413.00 Td (loan_interest = loan_rate * loan_brought_forward) Tj
+-48 -413 Td
+/F3 6.2 Tf
+48 405.00 Td (outstanding_before_new_loan = loan_brought_forward + loan_interest - principal_repaid - interest_repaid) Tj
+-48 -405 Td
+/F3 6.2 Tf
+48 397.00 Td (loan_carried_forward = outstanding_before_new_loan + new_loan) Tj
+-48 -397 Td
+/F2 9 Tf
+48 377.00 Td (Subtasks:) Tj
+-48 -377 Td
+/F2 9 Tf
+48 359.00 Td (  Implement calculator.) Tj
+-48 -359 Td
+/F2 9 Tf
+48 347.00 Td (  Apply configured cycle rate.) Tj
+-48 -347 Td
+/F2 9 Tf
+48 335.00 Td (  Apply rounding policy.) Tj
+-48 -335 Td
+/F2 9 Tf
+48 323.00 Td (  Post loan interest ledger transactions.) Tj
+-48 -323 Td
+/F2 9 Tf
+48 311.00 Td (  Ensure converted penalty loans are included in future standing loan balance.) Tj
+-48 -311 Td
+/F2 9 Tf
+48 293.00 Td (Acceptance Criteria:) Tj
+-48 -293 Td
+/F2 9 Tf
+48 275.00 Td (  Interest applies to brought-forward balance.) Tj
+-48 -275 Td
+/F2 9 Tf
+48 263.00 Td (  New loans in the same month are tracked separately.) Tj
+-48 -263 Td
+/F2 9 Tf
+48 251.00 Td (  Repayments reduce balances correctly.) Tj
+-48 -251 Td
+/F2 9 Tf
+48 233.00 Td (Testing:) Tj
+-48 -233 Td
+/F2 9 Tf
+48 215.00 Td (  Formula unit tests.) Tj
+-48 -215 Td
+/F2 9 Tf
+48 203.00 Td (  Repayment ordering tests.) Tj
+-48 -203 Td
+/F2 9 Tf
+48 191.00 Td (  Converted penalty loan tests.) Tj
+-48 -191 Td
+/F2 9 Tf
+48 179.00 Td (  Monthly snapshot tests.) Tj
+-48 -179 Td
+/F1 11 Tf
+48 153.00 Td (BE-018: Borrowing Compliance Classifier) Tj
+-48 -153 Td
+/F2 9 Tf
+48 130.00 Td (Priority: P0) Tj
+-48 -130 Td
+/F2 9 Tf
+48 118.00 Td (Epic: Financial Engine) Tj
+-48 -118 Td
+/F2 9 Tf
+48 100.00 Td (Description:) Tj
+-48 -100 Td
+/F2 9 Tf
+48 88.00 Td (Classify members by cumulative borrowing.) Tj
+-48 -88 Td
+/F2 9 Tf
+48 70.00 Td (Subtasks:) Tj
+-48 -70 Td
+/F2 8 Tf
+509 28 Td (Page 11) Tj
+ET
+endstream
+endobj
+27 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 26 0 R >>
+endobj
+28 0 obj
+<< /Length 3369 >>
+stream
+BT
+/F2 9 Tf
+48 744.00 Td (  Calculate cumulative borrowed amount.) Tj
+-48 -744 Td
+/F2 9 Tf
+48 732.00 Td (  Classify never borrowed.) Tj
+-48 -732 Td
+/F2 9 Tf
+48 720.00 Td (  Classify below minimum.) Tj
+-48 -720 Td
+/F2 9 Tf
+48 708.00 Td (  Classify at or above minimum.) Tj
+-48 -708 Td
+/F2 9 Tf
+48 696.00 Td (  Calculate borrowing shortfall.) Tj
+-48 -696 Td
+/F2 9 Tf
+48 678.00 Td (Acceptance Criteria:) Tj
+-48 -678 Td
+/F2 9 Tf
+48 660.00 Td (  Compliance status is correct per member per month.) Tj
+-48 -660 Td
+/F2 9 Tf
+48 648.00 Td (  Outstanding balance is not confused with cumulative borrowing.) Tj
+-48 -648 Td
+/F2 9 Tf
+48 630.00 Td (Testing:) Tj
+-48 -630 Td
+/F2 9 Tf
+48 612.00 Td (  Classification unit tests.) Tj
+-48 -612 Td
+/F2 9 Tf
+48 600.00 Td (  Edge case tests for exactly K20,000.) Tj
+-48 -600 Td
+/F2 9 Tf
+48 588.00 Td (  Tests for repaid loans still counting toward cumulative borrowing.) Tj
+-48 -588 Td
+/F1 11 Tf
+48 562.00 Td (BE-019: Common-Interest Engine) Tj
+-48 -562 Td
+/F2 9 Tf
+48 539.00 Td (Priority: P0) Tj
+-48 -539 Td
+/F2 9 Tf
+48 527.00 Td (Epic: Financial Engine) Tj
+-48 -527 Td
+/F2 9 Tf
+48 509.00 Td (Description:) Tj
+-48 -509 Td
+/F2 9 Tf
+48 497.00 Td (Calculate unborrowed money and allocate common interest.) Tj
+-48 -497 Td
+/F2 9 Tf
+48 479.00 Td (Subtasks:) Tj
+-48 -479 Td
+/F2 9 Tf
+48 461.00 Td (  Calculate total pool contributions.) Tj
+-48 -461 Td
+/F2 9 Tf
+48 449.00 Td (  Calculate total loans issued.) Tj
+-48 -449 Td
+/F2 9 Tf
+48 437.00 Td (  Calculate unborrowed money.) Tj
+-48 -437 Td
+/F2 9 Tf
+48 425.00 Td (  Calculate common-interest pool.) Tj
+-48 -425 Td
+/F2 9 Tf
+48 413.00 Td (  Implement only non-borrowers equal allocation.) Tj
+-48 -413 Td
+/F2 9 Tf
+48 401.00 Td (  Implement non-borrowers and below-minimum proportional allocation.) Tj
+-48 -401 Td
+/F2 9 Tf
+48 389.00 Td (  Implement all-members equal allocation.) Tj
+-48 -389 Td
+/F2 9 Tf
+48 377.00 Td (  Store run header and per-member allocation.) Tj
+-48 -377 Td
+/F2 9 Tf
+48 365.00 Td (  Post common-interest assessment ledger transactions.) Tj
+-48 -365 Td
+/F2 9 Tf
+48 353.00 Td (  Support authorized override.) Tj
+-48 -353 Td
+/F2 9 Tf
+48 335.00 Td (Acceptance Criteria:) Tj
+-48 -335 Td
+/F2 9 Tf
+48 317.00 Td (  Allocation method is stored.) Tj
+-48 -317 Td
+/F2 9 Tf
+48 305.00 Td (  Every allocation stores eligibility, shortfall, weight, base, calculated charge, and final) Tj
+-48 -305 Td
+/F2 9 Tf
+48 293.00 Td (charge.) Tj
+-48 -293 Td
+/F2 9 Tf
+48 281.00 Td (  Zero eligible member cases are handled explicitly.) Tj
+-48 -281 Td
+/F2 9 Tf
+48 263.00 Td (Testing:) Tj
+-48 -263 Td
+/F2 9 Tf
+48 245.00 Td (  Unit tests for all allocation methods.) Tj
+-48 -245 Td
+/F2 9 Tf
+48 233.00 Td (  Proportional shortfall tests.) Tj
+-48 -233 Td
+/F2 9 Tf
+48 221.00 Td (  Rounding distribution tests.) Tj
+-48 -221 Td
+/F2 9 Tf
+48 209.00 Td (  Override tests.) Tj
+-48 -209 Td
+/F2 9 Tf
+48 197.00 Td (  Ledger posting tests.) Tj
+-48 -197 Td
+/F1 11 Tf
+48 171.00 Td (BE-020: Monthly Closing Service) Tj
+-48 -171 Td
+/F2 9 Tf
+48 148.00 Td (Priority: P0) Tj
+-48 -148 Td
+/F2 9 Tf
+48 136.00 Td (Epic: Monthly Processing) Tj
+-48 -136 Td
+/F2 9 Tf
+48 118.00 Td (Description:) Tj
+-48 -118 Td
+/F2 9 Tf
+48 106.00 Td (Implement full month-end workflow.) Tj
+-48 -106 Td
+/F2 9 Tf
+48 88.00 Td (Subtasks:) Tj
+-48 -88 Td
+/F2 9 Tf
+48 70.00 Td (  Validate month can be processed.) Tj
+-48 -70 Td
+/F2 8 Tf
+509 28 Td (Page 12) Tj
+ET
+endstream
+endobj
+29 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 28 0 R >>
+endobj
+30 0 obj
+<< /Length 3396 >>
+stream
+BT
+/F2 9 Tf
+48 744.00 Td (  Detect missed declarations.) Tj
+-48 -744 Td
+/F2 9 Tf
+48 732.00 Td (  Post penalties.) Tj
+-48 -732 Td
+/F2 9 Tf
+48 720.00 Td (  Calculate savings interest.) Tj
+-48 -720 Td
+/F2 9 Tf
+48 708.00 Td (  Calculate loan interest.) Tj
+-48 -708 Td
+/F2 9 Tf
+48 696.00 Td (  Calculate common interest.) Tj
+-48 -696 Td
+/F2 9 Tf
+48 684.00 Td (  Generate member snapshots.) Tj
+-48 -684 Td
+/F2 9 Tf
+48 672.00 Td (  Generate cycle month summary.) Tj
+-48 -672 Td
+/F2 9 Tf
+48 660.00 Td (  Prepare review state.) Tj
+-48 -660 Td
+/F2 9 Tf
+48 648.00 Td (  Lock month.) Tj
+-48 -648 Td
+/F2 9 Tf
+48 636.00 Td (  Support draft recalculation before lock.) Tj
+-48 -636 Td
+/F2 9 Tf
+48 618.00 Td (Acceptance Criteria:) Tj
+-48 -618 Td
+/F2 9 Tf
+48 600.00 Td (  Monthly closing follows required steps.) Tj
+-48 -600 Td
+/F2 9 Tf
+48 588.00 Td (  Month cannot be locked with unresolved critical errors.) Tj
+-48 -588 Td
+/F2 9 Tf
+48 576.00 Td (  Locked month blocks ordinary edits.) Tj
+-48 -576 Td
+/F2 9 Tf
+48 564.00 Td (  Closing is auditable.) Tj
+-48 -564 Td
+/F2 9 Tf
+48 546.00 Td (Testing:) Tj
+-48 -546 Td
+/F2 9 Tf
+48 528.00 Td (  End-to-end monthly closing test.) Tj
+-48 -528 Td
+/F2 9 Tf
+48 516.00 Td (  Missed declaration penalty test.) Tj
+-48 -516 Td
+/F2 9 Tf
+48 504.00 Td (  Interest posting tests.) Tj
+-48 -504 Td
+/F2 9 Tf
+48 492.00 Td (  Common-interest integration tests.) Tj
+-48 -492 Td
+/F2 9 Tf
+48 480.00 Td (  Locked month edit prevention tests.) Tj
+-48 -480 Td
+/F2 9 Tf
+48 468.00 Td (  Recalculation tests.) Tj
+-48 -468 Td
+/F1 14 Tf
+48 440.00 Td (10. Backend Phase 6: Reporting, Audit, and Admin Controls) Tj
+-48 -440 Td
+/F1 11 Tf
+48 404.00 Td (BE-021: Reporting API) Tj
+-48 -404 Td
+/F2 9 Tf
+48 381.00 Td (Priority: P1) Tj
+-48 -381 Td
+/F2 9 Tf
+48 369.00 Td (Epic: Reports) Tj
+-48 -369 Td
+/F2 9 Tf
+48 351.00 Td (Description:) Tj
+-48 -351 Td
+/F2 9 Tf
+48 339.00 Td (Implement read APIs for statements and reports.) Tj
+-48 -339 Td
+/F2 9 Tf
+48 321.00 Td (Subtasks:) Tj
+-48 -321 Td
+/F2 9 Tf
+48 303.00 Td (  Member monthly statement.) Tj
+-48 -303 Td
+/F2 9 Tf
+48 291.00 Td (  Member cycle statement.) Tj
+-48 -291 Td
+/F2 9 Tf
+48 279.00 Td (  Monthly pool summary.) Tj
+-48 -279 Td
+/F2 9 Tf
+48 267.00 Td (  Savings report.) Tj
+-48 -267 Td
+/F2 9 Tf
+48 255.00 Td (  Loan report.) Tj
+-48 -255 Td
+/F2 9 Tf
+48 243.00 Td (  Common-interest allocation report.) Tj
+-48 -243 Td
+/F2 9 Tf
+48 231.00 Td (  Declaration compliance report.) Tj
+-48 -231 Td
+/F2 9 Tf
+48 219.00 Td (  Penalty report.) Tj
+-48 -219 Td
+/F2 9 Tf
+48 207.00 Td (  Converted penalty report.) Tj
+-48 -207 Td
+/F2 9 Tf
+48 195.00 Td (  Cycle closing report.) Tj
+-48 -195 Td
+/F2 9 Tf
+48 183.00 Td (  CSV/PDF export support where feasible.) Tj
+-48 -183 Td
+/F2 9 Tf
+48 165.00 Td (Endpoints:) Tj
+-48 -165 Td
+/F3 6.2 Tf
+48 147.00 Td (GET /api/reports/member-statement) Tj
+-48 -147 Td
+/F3 6.2 Tf
+48 139.00 Td (GET /api/reports/pool-summary) Tj
+-48 -139 Td
+/F3 6.2 Tf
+48 131.00 Td (GET /api/reports/savings) Tj
+-48 -131 Td
+/F3 6.2 Tf
+48 123.00 Td (GET /api/reports/loans) Tj
+-48 -123 Td
+/F3 6.2 Tf
+48 115.00 Td (GET /api/reports/common-interest) Tj
+-48 -115 Td
+/F3 6.2 Tf
+48 107.00 Td (GET /api/reports/declarations) Tj
+-48 -107 Td
+/F3 6.2 Tf
+48 99.00 Td (GET /api/reports/penalties) Tj
+-48 -99 Td
+/F3 6.2 Tf
+48 91.00 Td (GET /api/reports/cycle-closing) Tj
+-48 -91 Td
+/F2 9 Tf
+48 71.00 Td (Acceptance Criteria:) Tj
+-48 -71 Td
+/F2 8 Tf
+509 28 Td (Page 13) Tj
+ET
+endstream
+endobj
+31 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 30 0 R >>
+endobj
+32 0 obj
+<< /Length 3060 >>
+stream
+BT
+/F2 9 Tf
+48 744.00 Td (  Reports can filter by cycle, month, member, and status.) Tj
+-48 -744 Td
+/F2 9 Tf
+48 732.00 Td (  Reports reconcile with ledger/snapshots.) Tj
+-48 -732 Td
+/F2 9 Tf
+48 720.00 Td (  Members only access their own reports.) Tj
+-48 -720 Td
+/F2 9 Tf
+48 702.00 Td (Testing:) Tj
+-48 -702 Td
+/F2 9 Tf
+48 684.00 Td (  Report query tests.) Tj
+-48 -684 Td
+/F2 9 Tf
+48 672.00 Td (  Permission tests.) Tj
+-48 -672 Td
+/F2 9 Tf
+48 660.00 Td (  Snapshot reconciliation tests.) Tj
+-48 -660 Td
+/F2 9 Tf
+48 648.00 Td (  Export smoke tests.) Tj
+-48 -648 Td
+/F1 11 Tf
+48 622.00 Td (BE-022: Audit Trail and Override API) Tj
+-48 -622 Td
+/F2 9 Tf
+48 599.00 Td (Priority: P0) Tj
+-48 -599 Td
+/F2 9 Tf
+48 587.00 Td (Epic: Audit) Tj
+-48 -587 Td
+/F2 9 Tf
+48 569.00 Td (Description:) Tj
+-48 -569 Td
+/F2 9 Tf
+48 557.00 Td (Implement audit logging and override workflows.) Tj
+-48 -557 Td
+/F2 9 Tf
+48 539.00 Td (Subtasks:) Tj
+-48 -539 Td
+/F2 9 Tf
+48 521.00 Td (  Central audit logger.) Tj
+-48 -521 Td
+/F2 9 Tf
+48 509.00 Td (  Log creates, updates, approvals, postings, reversals, overrides, locks.) Tj
+-48 -509 Td
+/F2 9 Tf
+48 497.00 Td (  Create override endpoint.) Tj
+-48 -497 Td
+/F2 9 Tf
+48 485.00 Td (  Require reason for override.) Tj
+-48 -485 Td
+/F2 9 Tf
+48 473.00 Td (  Preserve original and overridden values.) Tj
+-48 -473 Td
+/F2 9 Tf
+48 461.00 Td (  List audit logs with filters.) Tj
+-48 -461 Td
+/F2 9 Tf
+48 443.00 Td (Endpoints:) Tj
+-48 -443 Td
+/F3 6.2 Tf
+48 425.00 Td (GET /api/audit) Tj
+-48 -425 Td
+/F3 6.2 Tf
+48 417.00 Td (POST /api/overrides) Tj
+-48 -417 Td
+/F3 6.2 Tf
+48 409.00 Td (GET /api/overrides) Tj
+-48 -409 Td
+/F2 9 Tf
+48 389.00 Td (Acceptance Criteria:) Tj
+-48 -389 Td
+/F2 9 Tf
+48 371.00 Td (  Sensitive actions are logged.) Tj
+-48 -371 Td
+/F2 9 Tf
+48 359.00 Td (  Overrides cannot be created without reason.) Tj
+-48 -359 Td
+/F2 9 Tf
+48 347.00 Td (  Original calculated value remains visible.) Tj
+-48 -347 Td
+/F2 9 Tf
+48 329.00 Td (Testing:) Tj
+-48 -329 Td
+/F2 9 Tf
+48 311.00 Td (  Audit log tests.) Tj
+-48 -311 Td
+/F2 9 Tf
+48 299.00 Td (  Override validation tests.) Tj
+-48 -299 Td
+/F2 9 Tf
+48 287.00 Td (  Permission tests.) Tj
+-48 -287 Td
+/F1 11 Tf
+48 261.00 Td (BE-023: Settings API) Tj
+-48 -261 Td
+/F2 9 Tf
+48 238.00 Td (Priority: P1) Tj
+-48 -238 Td
+/F2 9 Tf
+48 226.00 Td (Epic: Administration) Tj
+-48 -226 Td
+/F2 9 Tf
+48 208.00 Td (Description:) Tj
+-48 -208 Td
+/F2 9 Tf
+48 196.00 Td (Implement administrative settings.) Tj
+-48 -196 Td
+/F2 9 Tf
+48 178.00 Td (Subtasks:) Tj
+-48 -178 Td
+/F2 9 Tf
+48 160.00 Td (  Manage users.) Tj
+-48 -160 Td
+/F2 9 Tf
+48 148.00 Td (  Manage roles.) Tj
+-48 -148 Td
+/F2 9 Tf
+48 136.00 Td (  Manage penalty types.) Tj
+-48 -136 Td
+/F2 9 Tf
+48 124.00 Td (  Manage notification preferences.) Tj
+-48 -124 Td
+/F2 9 Tf
+48 112.00 Td (  Manage active cycle defaults.) Tj
+-48 -112 Td
+/F2 9 Tf
+48 100.00 Td (  Manage rounding policy for draft cycles.) Tj
+-48 -100 Td
+/F2 9 Tf
+48 82.00 Td (Acceptance Criteria:) Tj
+-48 -82 Td
+/F2 9 Tf
+48 64.00 Td (  Admin can invite users.) Tj
+-48 -64 Td
+/F2 8 Tf
+509 28 Td (Page 14) Tj
+ET
+endstream
+endobj
+33 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 32 0 R >>
+endobj
+34 0 obj
+<< /Length 3052 >>
+stream
+BT
+/F2 9 Tf
+48 744.00 Td (  Admin can configure penalty types per cycle.) Tj
+-48 -744 Td
+/F2 9 Tf
+48 732.00 Td (  Settings changes are audited.) Tj
+-48 -732 Td
+/F2 9 Tf
+48 714.00 Td (Testing:) Tj
+-48 -714 Td
+/F2 9 Tf
+48 696.00 Td (  User invitation tests.) Tj
+-48 -696 Td
+/F2 9 Tf
+48 684.00 Td (  Penalty type tests.) Tj
+-48 -684 Td
+/F2 9 Tf
+48 672.00 Td (  Settings permission tests.) Tj
+-48 -672 Td
+/F1 14 Tf
+48 644.00 Td (11. Backend Phase 7: Backend Quality, Security, and Performance) Tj
+-48 -644 Td
+/F1 11 Tf
+48 608.00 Td (BE-024: Backend Test Suite) Tj
+-48 -608 Td
+/F2 9 Tf
+48 585.00 Td (Priority: P0) Tj
+-48 -585 Td
+/F2 9 Tf
+48 573.00 Td (Epic: Quality) Tj
+-48 -573 Td
+/F2 9 Tf
+48 555.00 Td (Description:) Tj
+-48 -555 Td
+/F2 9 Tf
+48 543.00 Td (Build complete backend automated test suite.) Tj
+-48 -543 Td
+/F2 9 Tf
+48 525.00 Td (Subtasks:) Tj
+-48 -525 Td
+/F2 9 Tf
+48 507.00 Td (  Configure Jest or Vitest.) Tj
+-48 -507 Td
+/F2 9 Tf
+48 495.00 Td (  Add test database setup.) Tj
+-48 -495 Td
+/F2 9 Tf
+48 483.00 Td (  Add unit tests for calculators.) Tj
+-48 -483 Td
+/F2 9 Tf
+48 471.00 Td (  Add repository tests.) Tj
+-48 -471 Td
+/F2 9 Tf
+48 459.00 Td (  Add API integration tests.) Tj
+-48 -459 Td
+/F2 9 Tf
+48 447.00 Td (  Add monthly closing end-to-end tests.) Tj
+-48 -447 Td
+/F2 9 Tf
+48 435.00 Td (  Add auth and permission tests.) Tj
+-48 -435 Td
+/F2 9 Tf
+48 423.00 Td (  Add report tests.) Tj
+-48 -423 Td
+/F2 9 Tf
+48 405.00 Td (Acceptance Criteria:) Tj
+-48 -405 Td
+/F2 9 Tf
+48 387.00 Td (  Tests run with one command.) Tj
+-48 -387 Td
+/F2 9 Tf
+48 375.00 Td (  Financial formulas have strong unit coverage.) Tj
+-48 -375 Td
+/F2 9 Tf
+48 363.00 Td (  Critical workflows have integration coverage.) Tj
+-48 -363 Td
+/F2 9 Tf
+48 345.00 Td (Testing:) Tj
+-48 -345 Td
+/F2 9 Tf
+48 327.00 Td (  This task is complete when CI/local test suite passes.) Tj
+-48 -327 Td
+/F1 11 Tf
+48 301.00 Td (BE-025: Backend Security Hardening) Tj
+-48 -301 Td
+/F2 9 Tf
+48 278.00 Td (Priority: P0) Tj
+-48 -278 Td
+/F2 9 Tf
+48 266.00 Td (Epic: Security) Tj
+-48 -266 Td
+/F2 9 Tf
+48 248.00 Td (Description:) Tj
+-48 -248 Td
+/F2 9 Tf
+48 236.00 Td (Protect the API against common application risks.) Tj
+-48 -236 Td
+/F2 9 Tf
+48 218.00 Td (Subtasks:) Tj
+-48 -218 Td
+/F2 9 Tf
+48 200.00 Td (  Rate limit auth endpoints.) Tj
+-48 -200 Td
+/F2 9 Tf
+48 188.00 Td (  Add request size limits.) Tj
+-48 -188 Td
+/F2 9 Tf
+48 176.00 Td (  Sanitize inputs.) Tj
+-48 -176 Td
+/F2 9 Tf
+48 164.00 Td (  Use parameterized SQL/query builder.) Tj
+-48 -164 Td
+/F2 9 Tf
+48 152.00 Td (  Add password policy.) Tj
+-48 -152 Td
+/F2 9 Tf
+48 140.00 Td (  Protect reset tokens.) Tj
+-48 -140 Td
+/F2 9 Tf
+48 128.00 Td (  Add secure cookie/session settings if used.) Tj
+-48 -128 Td
+/F2 9 Tf
+48 116.00 Td (  Add audit logging for failed sensitive operations.) Tj
+-48 -116 Td
+/F2 9 Tf
+48 98.00 Td (Acceptance Criteria:) Tj
+-48 -98 Td
+/F2 9 Tf
+48 80.00 Td (  Authentication endpoints are rate-limited.) Tj
+-48 -80 Td
+/F2 9 Tf
+48 68.00 Td (  No raw interpolated SQL for user input.) Tj
+-48 -68 Td
+/F2 8 Tf
+509 28 Td (Page 15) Tj
+ET
+endstream
+endobj
+35 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 34 0 R >>
+endobj
+36 0 obj
+<< /Length 3112 >>
+stream
+BT
+/F2 9 Tf
+48 744.00 Td (  Sensitive data is not logged.) Tj
+-48 -744 Td
+/F2 9 Tf
+48 726.00 Td (Testing:) Tj
+-48 -726 Td
+/F2 9 Tf
+48 708.00 Td (  Security middleware tests.) Tj
+-48 -708 Td
+/F2 9 Tf
+48 696.00 Td (  Rate limit tests.) Tj
+-48 -696 Td
+/F2 9 Tf
+48 684.00 Td (  SQL injection smoke tests.) Tj
+-48 -684 Td
+/F1 11 Tf
+48 658.00 Td (BE-026: Backend Performance and Scalability) Tj
+-48 -658 Td
+/F2 9 Tf
+48 635.00 Td (Priority: P1) Tj
+-48 -635 Td
+/F2 9 Tf
+48 623.00 Td (Epic: Scalability) Tj
+-48 -623 Td
+/F2 9 Tf
+48 605.00 Td (Description:) Tj
+-48 -605 Td
+/F2 9 Tf
+48 593.00 Td (Prepare backend for larger groups, more cycles, and long-term history.) Tj
+-48 -593 Td
+/F2 9 Tf
+48 575.00 Td (Subtasks:) Tj
+-48 -575 Td
+/F2 9 Tf
+48 557.00 Td (  Add pagination to list endpoints.) Tj
+-48 -557 Td
+/F2 9 Tf
+48 545.00 Td (  Add database indexes for reports.) Tj
+-48 -545 Td
+/F2 9 Tf
+48 533.00 Td (  Add query performance checks.) Tj
+-48 -533 Td
+/F2 9 Tf
+48 521.00 Td (  Add caching strategy for read-heavy reports if needed.) Tj
+-48 -521 Td
+/F2 9 Tf
+48 509.00 Td (  Add background job structure for reminders and previews.) Tj
+-48 -509 Td
+/F2 9 Tf
+48 497.00 Td (  Add idempotency keys for financial posting endpoints.) Tj
+-48 -497 Td
+/F2 9 Tf
+48 479.00 Td (Acceptance Criteria:) Tj
+-48 -479 Td
+/F2 9 Tf
+48 461.00 Td (  Large member lists are paginated.) Tj
+-48 -461 Td
+/F2 9 Tf
+48 449.00 Td (  Report queries use indexes.) Tj
+-48 -449 Td
+/F2 9 Tf
+48 437.00 Td (  Duplicate financial posts are prevented.) Tj
+-48 -437 Td
+/F2 9 Tf
+48 419.00 Td (Testing:) Tj
+-48 -419 Td
+/F2 9 Tf
+48 401.00 Td (  Pagination tests.) Tj
+-48 -401 Td
+/F2 9 Tf
+48 389.00 Td (  Idempotency tests.) Tj
+-48 -389 Td
+/F2 9 Tf
+48 377.00 Td (  Query plan review for heavy reports.) Tj
+-48 -377 Td
+/F1 14 Tf
+48 349.00 Td (12. Frontend Phase 1: Project Foundation) Tj
+-48 -349 Td
+/F1 11 Tf
+48 313.00 Td (FE-001: Initialize React Project) Tj
+-48 -313 Td
+/F2 9 Tf
+48 290.00 Td (Priority: P0) Tj
+-48 -290 Td
+/F2 9 Tf
+48 278.00 Td (Epic: Frontend Foundation) Tj
+-48 -278 Td
+/F2 9 Tf
+48 260.00 Td (Description:) Tj
+-48 -260 Td
+/F2 9 Tf
+48 248.00 Td (Create the frontend using React and JavaScript.) Tj
+-48 -248 Td
+/F2 9 Tf
+48 230.00 Td (Subtasks:) Tj
+-48 -230 Td
+/F2 9 Tf
+48 212.00 Td (  Initialize React app with Vite.) Tj
+-48 -212 Td
+/F2 9 Tf
+48 200.00 Td (  Add routing.) Tj
+-48 -200 Td
+/F2 9 Tf
+48 188.00 Td (  Add API client.) Tj
+-48 -188 Td
+/F2 9 Tf
+48 176.00 Td (  Add auth state management.) Tj
+-48 -176 Td
+/F2 9 Tf
+48 164.00 Td (  Add global layout structure.) Tj
+-48 -164 Td
+/F2 9 Tf
+48 152.00 Td (  Add design tokens for colors, spacing, typography.) Tj
+-48 -152 Td
+/F2 9 Tf
+48 140.00 Td (  Add responsive CSS foundation.) Tj
+-48 -140 Td
+/F2 9 Tf
+48 128.00 Td (  Add test framework.) Tj
+-48 -128 Td
+/F2 9 Tf
+48 110.00 Td (Suggested structure:) Tj
+-48 -110 Td
+/F3 6.2 Tf
+48 92.00 Td (frontend/) Tj
+-48 -92 Td
+/F3 6.2 Tf
+48 84.00 Td (  src/) Tj
+-48 -84 Td
+/F3 6.2 Tf
+48 76.00 Td (    api/) Tj
+-48 -76 Td
+/F3 6.2 Tf
+48 68.00 Td (    components/) Tj
+-48 -68 Td
+/F3 6.2 Tf
+48 60.00 Td (    layouts/) Tj
+-48 -60 Td
+/F2 8 Tf
+509 28 Td (Page 16) Tj
+ET
+endstream
+endobj
+37 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 36 0 R >>
+endobj
+38 0 obj
+<< /Length 2993 >>
+stream
+BT
+/F3 6.2 Tf
+48 744.00 Td (    pages/) Tj
+-48 -744 Td
+/F3 6.2 Tf
+48 736.00 Td (    routes/) Tj
+-48 -736 Td
+/F3 6.2 Tf
+48 728.00 Td (    hooks/) Tj
+-48 -728 Td
+/F3 6.2 Tf
+48 720.00 Td (    state/) Tj
+-48 -720 Td
+/F3 6.2 Tf
+48 712.00 Td (    styles/) Tj
+-48 -712 Td
+/F3 6.2 Tf
+48 704.00 Td (    tests/) Tj
+-48 -704 Td
+/F2 9 Tf
+48 684.00 Td (Acceptance Criteria:) Tj
+-48 -684 Td
+/F2 9 Tf
+48 666.00 Td (  App runs locally.) Tj
+-48 -666 Td
+/F2 9 Tf
+48 654.00 Td (  Routes are configured.) Tj
+-48 -654 Td
+/F2 9 Tf
+48 642.00 Td (  API client handles auth token/session.) Tj
+-48 -642 Td
+/F2 9 Tf
+48 630.00 Td (  Base layout works on mobile and desktop.) Tj
+-48 -630 Td
+/F2 9 Tf
+48 612.00 Td (Testing:) Tj
+-48 -612 Td
+/F2 9 Tf
+48 594.00 Td (  Render smoke test.) Tj
+-48 -594 Td
+/F2 9 Tf
+48 582.00 Td (  Router smoke test.) Tj
+-48 -582 Td
+/F2 9 Tf
+48 570.00 Td (  API client test.) Tj
+-48 -570 Td
+/F1 11 Tf
+48 544.00 Td (FE-002: Design System Components) Tj
+-48 -544 Td
+/F2 9 Tf
+48 521.00 Td (Priority: P0) Tj
+-48 -521 Td
+/F2 9 Tf
+48 509.00 Td (Epic: UI System) Tj
+-48 -509 Td
+/F2 9 Tf
+48 491.00 Td (Description:) Tj
+-48 -491 Td
+/F2 9 Tf
+48 479.00 Td (Build reusable UI components for all screens.) Tj
+-48 -479 Td
+/F2 9 Tf
+48 461.00 Td (Subtasks:) Tj
+-48 -461 Td
+/F2 9 Tf
+48 443.00 Td (  Button component.) Tj
+-48 -443 Td
+/F2 9 Tf
+48 431.00 Td (  Icon button component.) Tj
+-48 -431 Td
+/F2 9 Tf
+48 419.00 Td (  Input component.) Tj
+-48 -419 Td
+/F2 9 Tf
+48 407.00 Td (  Select component.) Tj
+-48 -407 Td
+/F2 9 Tf
+48 395.00 Td (  Date input.) Tj
+-48 -395 Td
+/F2 9 Tf
+48 383.00 Td (  Number/currency input.) Tj
+-48 -383 Td
+/F2 9 Tf
+48 371.00 Td (  Textarea.) Tj
+-48 -371 Td
+/F2 9 Tf
+48 359.00 Td (  Badge.) Tj
+-48 -359 Td
+/F2 9 Tf
+48 347.00 Td (  Card.) Tj
+-48 -347 Td
+/F2 9 Tf
+48 335.00 Td (  Table.) Tj
+-48 -335 Td
+/F2 9 Tf
+48 323.00 Td (  Tabs.) Tj
+-48 -323 Td
+/F2 9 Tf
+48 311.00 Td (  Modal.) Tj
+-48 -311 Td
+/F2 9 Tf
+48 299.00 Td (  Drawer.) Tj
+-48 -299 Td
+/F2 9 Tf
+48 287.00 Td (  Toast/alert.) Tj
+-48 -287 Td
+/F2 9 Tf
+48 275.00 Td (  Stepper.) Tj
+-48 -275 Td
+/F2 9 Tf
+48 263.00 Td (  Pagination.) Tj
+-48 -263 Td
+/F2 9 Tf
+48 251.00 Td (  Empty state.) Tj
+-48 -251 Td
+/F2 9 Tf
+48 239.00 Td (  Loading skeleton.) Tj
+-48 -239 Td
+/F2 9 Tf
+48 227.00 Td (  Confirm dialog with reason field.) Tj
+-48 -227 Td
+/F2 9 Tf
+48 209.00 Td (Acceptance Criteria:) Tj
+-48 -209 Td
+/F2 9 Tf
+48 191.00 Td (  Components support disabled, loading, error, and responsive states.) Tj
+-48 -191 Td
+/F2 9 Tf
+48 179.00 Td (  Currency inputs handle Kwacha values.) Tj
+-48 -179 Td
+/F2 9 Tf
+48 167.00 Td (  Tables work on desktop and mobile.) Tj
+-48 -167 Td
+/F2 9 Tf
+48 149.00 Td (Testing:) Tj
+-48 -149 Td
+/F2 9 Tf
+48 131.00 Td (  Component render tests.) Tj
+-48 -131 Td
+/F2 9 Tf
+48 119.00 Td (  Interaction tests for modals, tabs, forms.) Tj
+-48 -119 Td
+/F2 9 Tf
+48 107.00 Td (  Accessibility checks for labels and buttons.) Tj
+-48 -107 Td
+/F1 11 Tf
+48 81.00 Td (FE-003: App Layouts) Tj
+-48 -81 Td
+/F2 8 Tf
+509 28 Td (Page 17) Tj
+ET
+endstream
+endobj
+39 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 38 0 R >>
+endobj
+40 0 obj
+<< /Length 2961 >>
+stream
+BT
+/F2 9 Tf
+48 744.00 Td (Priority: P0) Tj
+-48 -744 Td
+/F2 9 Tf
+48 732.00 Td (Epic: UI Layout) Tj
+-48 -732 Td
+/F2 9 Tf
+48 714.00 Td (Description:) Tj
+-48 -714 Td
+/F2 9 Tf
+48 702.00 Td (Create layouts for admin and member portals.) Tj
+-48 -702 Td
+/F2 9 Tf
+48 684.00 Td (Subtasks:) Tj
+-48 -684 Td
+/F2 9 Tf
+48 666.00 Td (  Admin sidebar layout.) Tj
+-48 -666 Td
+/F2 9 Tf
+48 654.00 Td (  Admin top bar with cycle/month selectors.) Tj
+-48 -654 Td
+/F2 9 Tf
+48 642.00 Td (  Mobile drawer navigation.) Tj
+-48 -642 Td
+/F2 9 Tf
+48 630.00 Td (  Member portal layout.) Tj
+-48 -630 Td
+/F2 9 Tf
+48 618.00 Td (  Protected route wrapper.) Tj
+-48 -618 Td
+/F2 9 Tf
+48 606.00 Td (  Public auth layout.) Tj
+-48 -606 Td
+/F2 9 Tf
+48 594.00 Td (  Breadcrumbs.) Tj
+-48 -594 Td
+/F2 9 Tf
+48 576.00 Td (Acceptance Criteria:) Tj
+-48 -576 Td
+/F2 9 Tf
+48 558.00 Td (  Desktop has persistent sidebar.) Tj
+-48 -558 Td
+/F2 9 Tf
+48 546.00 Td (  Mobile has collapsible navigation.) Tj
+-48 -546 Td
+/F2 9 Tf
+48 534.00 Td (  Active page is visible.) Tj
+-48 -534 Td
+/F2 9 Tf
+48 522.00 Td (  Cycle and month selectors are available where needed.) Tj
+-48 -522 Td
+/F2 9 Tf
+48 504.00 Td (Testing:) Tj
+-48 -504 Td
+/F2 9 Tf
+48 486.00 Td (  Responsive layout tests.) Tj
+-48 -486 Td
+/F2 9 Tf
+48 474.00 Td (  Protected route tests.) Tj
+-48 -474 Td
+/F2 9 Tf
+48 462.00 Td (  Navigation tests.) Tj
+-48 -462 Td
+/F1 14 Tf
+48 434.00 Td (13. Frontend Phase 2: Authentication Screens) Tj
+-48 -434 Td
+/F1 11 Tf
+48 398.00 Td (FE-004: Login Screen) Tj
+-48 -398 Td
+/F2 9 Tf
+48 375.00 Td (Priority: P0) Tj
+-48 -375 Td
+/F2 9 Tf
+48 363.00 Td (Epic: Auth UI) Tj
+-48 -363 Td
+/F2 9 Tf
+48 345.00 Td (Description:) Tj
+-48 -345 Td
+/F2 9 Tf
+48 333.00 Td (Build login page.) Tj
+-48 -333 Td
+/F2 9 Tf
+48 315.00 Td (Subtasks:) Tj
+-48 -315 Td
+/F2 9 Tf
+48 297.00 Td (  Email input.) Tj
+-48 -297 Td
+/F2 9 Tf
+48 285.00 Td (  Password input.) Tj
+-48 -285 Td
+/F2 9 Tf
+48 273.00 Td (  Remember me option if supported.) Tj
+-48 -273 Td
+/F2 9 Tf
+48 261.00 Td (  Forgot password link.) Tj
+-48 -261 Td
+/F2 9 Tf
+48 249.00 Td (  Create account link if supported.) Tj
+-48 -249 Td
+/F2 9 Tf
+48 237.00 Td (  Error messages.) Tj
+-48 -237 Td
+/F2 9 Tf
+48 225.00 Td (  Loading state.) Tj
+-48 -225 Td
+/F2 9 Tf
+48 213.00 Td (  Role-based redirect after login.) Tj
+-48 -213 Td
+/F2 9 Tf
+48 195.00 Td (Acceptance Criteria:) Tj
+-48 -195 Td
+/F2 9 Tf
+48 177.00 Td (  Admin redirects to dashboard.) Tj
+-48 -177 Td
+/F2 9 Tf
+48 165.00 Td (  Member redirects to member dashboard.) Tj
+-48 -165 Td
+/F2 9 Tf
+48 153.00 Td (  Invalid login shows friendly error.) Tj
+-48 -153 Td
+/F2 9 Tf
+48 141.00 Td (  Works on mobile.) Tj
+-48 -141 Td
+/F2 9 Tf
+48 123.00 Td (Testing:) Tj
+-48 -123 Td
+/F2 9 Tf
+48 105.00 Td (  Login form validation tests.) Tj
+-48 -105 Td
+/F2 9 Tf
+48 93.00 Td (  Successful login flow test.) Tj
+-48 -93 Td
+/F2 9 Tf
+48 81.00 Td (  Failed login test.) Tj
+-48 -81 Td
+/F2 9 Tf
+48 69.00 Td (  Mobile viewport check.) Tj
+-48 -69 Td
+/F2 8 Tf
+509 28 Td (Page 18) Tj
+ET
+endstream
+endobj
+41 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 40 0 R >>
+endobj
+42 0 obj
+<< /Length 2660 >>
+stream
+BT
+/F1 11 Tf
+48 736.00 Td (FE-005: Signup and Invitation Screen) Tj
+-48 -736 Td
+/F2 9 Tf
+48 713.00 Td (Priority: P1) Tj
+-48 -713 Td
+/F2 9 Tf
+48 701.00 Td (Epic: Auth UI) Tj
+-48 -701 Td
+/F2 9 Tf
+48 683.00 Td (Description:) Tj
+-48 -683 Td
+/F2 9 Tf
+48 671.00 Td (Build signup or invitation acceptance flow.) Tj
+-48 -671 Td
+/F2 9 Tf
+48 653.00 Td (Subtasks:) Tj
+-48 -653 Td
+/F2 9 Tf
+48 635.00 Td (  First name.) Tj
+-48 -635 Td
+/F2 9 Tf
+48 623.00 Td (  Last name.) Tj
+-48 -623 Td
+/F2 9 Tf
+48 611.00 Td (  Phone.) Tj
+-48 -611 Td
+/F2 9 Tf
+48 599.00 Td (  Email.) Tj
+-48 -599 Td
+/F2 9 Tf
+48 587.00 Td (  Password.) Tj
+-48 -587 Td
+/F2 9 Tf
+48 575.00 Td (  Confirm password.) Tj
+-48 -575 Td
+/F2 9 Tf
+48 563.00 Td (  Submit.) Tj
+-48 -563 Td
+/F2 9 Tf
+48 551.00 Td (  Back to login.) Tj
+-48 -551 Td
+/F2 9 Tf
+48 539.00 Td (  Success state.) Tj
+-48 -539 Td
+/F2 9 Tf
+48 521.00 Td (Acceptance Criteria:) Tj
+-48 -521 Td
+/F2 9 Tf
+48 503.00 Td (  Form validates required fields.) Tj
+-48 -503 Td
+/F2 9 Tf
+48 491.00 Td (  Password mismatch is blocked.) Tj
+-48 -491 Td
+/F2 9 Tf
+48 479.00 Td (  Successful signup shows next action.) Tj
+-48 -479 Td
+/F2 9 Tf
+48 461.00 Td (Testing:) Tj
+-48 -461 Td
+/F2 9 Tf
+48 443.00 Td (  Validation tests.) Tj
+-48 -443 Td
+/F2 9 Tf
+48 431.00 Td (  Submit success/failure tests.) Tj
+-48 -431 Td
+/F2 9 Tf
+48 419.00 Td (  Mobile viewport check.) Tj
+-48 -419 Td
+/F1 11 Tf
+48 393.00 Td (FE-006: Password Recovery Screens) Tj
+-48 -393 Td
+/F2 9 Tf
+48 370.00 Td (Priority: P1) Tj
+-48 -370 Td
+/F2 9 Tf
+48 358.00 Td (Epic: Auth UI) Tj
+-48 -358 Td
+/F2 9 Tf
+48 340.00 Td (Description:) Tj
+-48 -340 Td
+/F2 9 Tf
+48 328.00 Td (Build forgot password and reset password pages.) Tj
+-48 -328 Td
+/F2 9 Tf
+48 310.00 Td (Subtasks:) Tj
+-48 -310 Td
+/F2 9 Tf
+48 292.00 Td (  Forgot password form.) Tj
+-48 -292 Td
+/F2 9 Tf
+48 280.00 Td (  Reset password form.) Tj
+-48 -280 Td
+/F2 9 Tf
+48 268.00 Td (  Token expired state.) Tj
+-48 -268 Td
+/F2 9 Tf
+48 256.00 Td (  Success message.) Tj
+-48 -256 Td
+/F2 9 Tf
+48 244.00 Td (  Back to login action.) Tj
+-48 -244 Td
+/F2 9 Tf
+48 226.00 Td (Acceptance Criteria:) Tj
+-48 -226 Td
+/F2 9 Tf
+48 208.00 Td (  User can request reset link.) Tj
+-48 -208 Td
+/F2 9 Tf
+48 196.00 Td (  User can set a new password.) Tj
+-48 -196 Td
+/F2 9 Tf
+48 184.00 Td (  Invalid token is handled.) Tj
+-48 -184 Td
+/F2 9 Tf
+48 166.00 Td (Testing:) Tj
+-48 -166 Td
+/F2 9 Tf
+48 148.00 Td (  Forgot password validation.) Tj
+-48 -148 Td
+/F2 9 Tf
+48 136.00 Td (  Reset password validation.) Tj
+-48 -136 Td
+/F2 9 Tf
+48 124.00 Td (  Error state tests.) Tj
+-48 -124 Td
+/F1 14 Tf
+48 96.00 Td (14. Frontend Phase 3: Admin Screens) Tj
+-48 -96 Td
+/F2 8 Tf
+509 28 Td (Page 19) Tj
+ET
+endstream
+endobj
+43 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 42 0 R >>
+endobj
+44 0 obj
+<< /Length 2890 >>
+stream
+BT
+/F1 11 Tf
+48 736.00 Td (FE-007: Admin Dashboard) Tj
+-48 -736 Td
+/F2 9 Tf
+48 713.00 Td (Priority: P0) Tj
+-48 -713 Td
+/F2 9 Tf
+48 701.00 Td (Epic: Admin UI) Tj
+-48 -701 Td
+/F2 9 Tf
+48 683.00 Td (Description:) Tj
+-48 -683 Td
+/F2 9 Tf
+48 671.00 Td (Build admin dashboard.) Tj
+-48 -671 Td
+/F2 9 Tf
+48 653.00 Td (Subtasks:) Tj
+-48 -653 Td
+/F2 9 Tf
+48 635.00 Td (  Summary cards.) Tj
+-48 -635 Td
+/F2 9 Tf
+48 623.00 Td (  Active cycle/month selector.) Tj
+-48 -623 Td
+/F2 9 Tf
+48 611.00 Td (  Monthly closing progress panel.) Tj
+-48 -611 Td
+/F2 9 Tf
+48 599.00 Td (  Priority queue.) Tj
+-48 -599 Td
+/F2 9 Tf
+48 587.00 Td (  Pending loan approvals widget.) Tj
+-48 -587 Td
+/F2 9 Tf
+48 575.00 Td (  Missed declaration widget.) Tj
+-48 -575 Td
+/F2 9 Tf
+48 563.00 Td (  Penalty conversion widget.) Tj
+-48 -563 Td
+/F2 9 Tf
+48 551.00 Td (  Quick action buttons.) Tj
+-48 -551 Td
+/F2 9 Tf
+48 533.00 Td (Buttons:) Tj
+-48 -533 Td
+/F2 9 Tf
+48 515.00 Td (  Review Declarations.) Tj
+-48 -515 Td
+/F2 9 Tf
+48 503.00 Td (  Approve Loans.) Tj
+-48 -503 Td
+/F2 9 Tf
+48 491.00 Td (  Run Monthly Closing.) Tj
+-48 -491 Td
+/F2 9 Tf
+48 479.00 Td (  View Reports.) Tj
+-48 -479 Td
+/F2 9 Tf
+48 461.00 Td (Acceptance Criteria:) Tj
+-48 -461 Td
+/F2 9 Tf
+48 443.00 Td (  Dashboard loads live API data.) Tj
+-48 -443 Td
+/F2 9 Tf
+48 431.00 Td (  Cards drill down to relevant screens.) Tj
+-48 -431 Td
+/F2 9 Tf
+48 419.00 Td (  Mobile layout stacks cards and widgets cleanly.) Tj
+-48 -419 Td
+/F2 9 Tf
+48 401.00 Td (Testing:) Tj
+-48 -401 Td
+/F2 9 Tf
+48 383.00 Td (  Data loading test.) Tj
+-48 -383 Td
+/F2 9 Tf
+48 371.00 Td (  Empty state test.) Tj
+-48 -371 Td
+/F2 9 Tf
+48 359.00 Td (  Error state test.) Tj
+-48 -359 Td
+/F2 9 Tf
+48 347.00 Td (  Mobile and desktop visual checks.) Tj
+-48 -347 Td
+/F1 11 Tf
+48 321.00 Td (FE-008: Cycle Screens) Tj
+-48 -321 Td
+/F2 9 Tf
+48 298.00 Td (Priority: P0) Tj
+-48 -298 Td
+/F2 9 Tf
+48 286.00 Td (Epic: Cycle UI) Tj
+-48 -286 Td
+/F2 9 Tf
+48 268.00 Td (Description:) Tj
+-48 -268 Td
+/F2 9 Tf
+48 256.00 Td (Build cycle list, create/edit cycle, and cycle detail screens.) Tj
+-48 -256 Td
+/F2 9 Tf
+48 238.00 Td (Subtasks:) Tj
+-48 -238 Td
+/F2 9 Tf
+48 220.00 Td (  Cycle list table.) Tj
+-48 -220 Td
+/F2 9 Tf
+48 208.00 Td (  New cycle button.) Tj
+-48 -208 Td
+/F2 9 Tf
+48 196.00 Td (  Create cycle form.) Tj
+-48 -196 Td
+/F2 9 Tf
+48 184.00 Td (  Edit rules form.) Tj
+-48 -184 Td
+/F2 9 Tf
+48 172.00 Td (  Cycle detail tabs.) Tj
+-48 -172 Td
+/F2 9 Tf
+48 160.00 Td (  Month generation action.) Tj
+-48 -160 Td
+/F2 9 Tf
+48 148.00 Td (  Enroll members action.) Tj
+-48 -148 Td
+/F2 9 Tf
+48 136.00 Td (  Penalty types tab.) Tj
+-48 -136 Td
+/F2 9 Tf
+48 124.00 Td (  Audit tab.) Tj
+-48 -124 Td
+/F2 9 Tf
+48 106.00 Td (Buttons:) Tj
+-48 -106 Td
+/F2 9 Tf
+48 88.00 Td (  New Cycle.) Tj
+-48 -88 Td
+/F2 9 Tf
+48 76.00 Td (  Save Cycle.) Tj
+-48 -76 Td
+/F2 9 Tf
+48 64.00 Td (  Save Draft.) Tj
+-48 -64 Td
+/F2 8 Tf
+509 28 Td (Page 20) Tj
+ET
+endstream
+endobj
+45 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 44 0 R >>
+endobj
+46 0 obj
+<< /Length 3186 >>
+stream
+BT
+/F2 9 Tf
+48 744.00 Td (  Activate Cycle.) Tj
+-48 -744 Td
+/F2 9 Tf
+48 732.00 Td (  Generate Months.) Tj
+-48 -732 Td
+/F2 9 Tf
+48 720.00 Td (  Enroll Members.) Tj
+-48 -720 Td
+/F2 9 Tf
+48 708.00 Td (  Edit Rules.) Tj
+-48 -708 Td
+/F2 9 Tf
+48 696.00 Td (  Close Cycle.) Tj
+-48 -696 Td
+/F2 9 Tf
+48 684.00 Td (  Archive.) Tj
+-48 -684 Td
+/F2 9 Tf
+48 672.00 Td (  Cancel.) Tj
+-48 -672 Td
+/F2 9 Tf
+48 654.00 Td (Acceptance Criteria:) Tj
+-48 -654 Td
+/F2 9 Tf
+48 636.00 Td (  Admin can create and configure cycle rules.) Tj
+-48 -636 Td
+/F2 9 Tf
+48 624.00 Td (  Validation errors are shown beside fields.) Tj
+-48 -624 Td
+/F2 9 Tf
+48 612.00 Td (  Cycle detail shows rules, months, members, and audit.) Tj
+-48 -612 Td
+/F2 9 Tf
+48 600.00 Td (  Mobile form uses single-column layout.) Tj
+-48 -600 Td
+/F2 9 Tf
+48 582.00 Td (Testing:) Tj
+-48 -582 Td
+/F2 9 Tf
+48 564.00 Td (  Form validation tests.) Tj
+-48 -564 Td
+/F2 9 Tf
+48 552.00 Td (  Create/edit flow tests.) Tj
+-48 -552 Td
+/F2 9 Tf
+48 540.00 Td (  Month generation flow test.) Tj
+-48 -540 Td
+/F2 9 Tf
+48 528.00 Td (  Responsive layout tests.) Tj
+-48 -528 Td
+/F1 11 Tf
+48 502.00 Td (FE-009: Member Management Screens) Tj
+-48 -502 Td
+/F2 9 Tf
+48 479.00 Td (Priority: P0) Tj
+-48 -479 Td
+/F2 9 Tf
+48 467.00 Td (Epic: Member UI) Tj
+-48 -467 Td
+/F2 9 Tf
+48 449.00 Td (Description:) Tj
+-48 -449 Td
+/F2 9 Tf
+48 437.00 Td (Build member list, create member, edit member, and member detail.) Tj
+-48 -437 Td
+/F2 9 Tf
+48 419.00 Td (Subtasks:) Tj
+-48 -419 Td
+/F2 9 Tf
+48 401.00 Td (  Member list with search.) Tj
+-48 -401 Td
+/F2 9 Tf
+48 389.00 Td (  Filters for declaration, borrowing compliance, penalties.) Tj
+-48 -389 Td
+/F2 9 Tf
+48 377.00 Td (  Create member form.) Tj
+-48 -377 Td
+/F2 9 Tf
+48 365.00 Td (  Edit member form.) Tj
+-48 -365 Td
+/F2 9 Tf
+48 353.00 Td (  Member detail overview.) Tj
+-48 -353 Td
+/F2 9 Tf
+48 341.00 Td (  Member tabs: Savings, Loans, Declarations, Penalties, Statement, Audit.) Tj
+-48 -341 Td
+/F2 9 Tf
+48 329.00 Td (  Member action buttons.) Tj
+-48 -329 Td
+/F2 9 Tf
+48 311.00 Td (Buttons:) Tj
+-48 -311 Td
+/F2 9 Tf
+48 293.00 Td (  New Member.) Tj
+-48 -293 Td
+/F2 9 Tf
+48 281.00 Td (  Save Member.) Tj
+-48 -281 Td
+/F2 9 Tf
+48 269.00 Td (  Save and Add Another.) Tj
+-48 -269 Td
+/F2 9 Tf
+48 257.00 Td (  Edit Member.) Tj
+-48 -257 Td
+/F2 9 Tf
+48 245.00 Td (  Activate/Deactivate.) Tj
+-48 -245 Td
+/F2 9 Tf
+48 233.00 Td (  Enroll in Cycle.) Tj
+-48 -233 Td
+/F2 9 Tf
+48 221.00 Td (  Post Savings.) Tj
+-48 -221 Td
+/F2 9 Tf
+48 209.00 Td (  New Loan.) Tj
+-48 -209 Td
+/F2 9 Tf
+48 197.00 Td (  Record Payment.) Tj
+-48 -197 Td
+/F2 9 Tf
+48 185.00 Td (  Convert Penalty.) Tj
+-48 -185 Td
+/F2 9 Tf
+48 173.00 Td (  Export Statement.) Tj
+-48 -173 Td
+/F2 9 Tf
+48 161.00 Td (  View Transaction.) Tj
+-48 -161 Td
+/F2 9 Tf
+48 143.00 Td (Acceptance Criteria:) Tj
+-48 -143 Td
+/F2 9 Tf
+48 125.00 Td (  Member detail exposes all drill-down views.) Tj
+-48 -125 Td
+/F2 9 Tf
+48 113.00 Td (  Amounts link to transaction or report details.) Tj
+-48 -113 Td
+/F2 9 Tf
+48 101.00 Td (  Mobile table becomes card list.) Tj
+-48 -101 Td
+/F2 9 Tf
+48 83.00 Td (Testing:) Tj
+-48 -83 Td
+/F2 9 Tf
+48 65.00 Td (  Member list tests.) Tj
+-48 -65 Td
+/F2 8 Tf
+509 28 Td (Page 21) Tj
+ET
+endstream
+endobj
+47 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 46 0 R >>
+endobj
+48 0 obj
+<< /Length 3037 >>
+stream
+BT
+/F2 9 Tf
+48 744.00 Td (  Create/edit tests.) Tj
+-48 -744 Td
+/F2 9 Tf
+48 732.00 Td (  Detail tab tests.) Tj
+-48 -732 Td
+/F2 9 Tf
+48 720.00 Td (  Mobile card list tests.) Tj
+-48 -720 Td
+/F1 11 Tf
+48 694.00 Td (FE-010: Declaration Screens) Tj
+-48 -694 Td
+/F2 9 Tf
+48 671.00 Td (Priority: P0) Tj
+-48 -671 Td
+/F2 9 Tf
+48 659.00 Td (Epic: Declaration UI) Tj
+-48 -659 Td
+/F2 9 Tf
+48 641.00 Td (Description:) Tj
+-48 -641 Td
+/F2 9 Tf
+48 629.00 Td (Build admin and member declaration screens.) Tj
+-48 -629 Td
+/F2 9 Tf
+48 611.00 Td (Subtasks:) Tj
+-48 -611 Td
+/F2 9 Tf
+48 593.00 Td (  Declaration queue.) Tj
+-48 -593 Td
+/F2 9 Tf
+48 581.00 Td (  Declaration filters.) Tj
+-48 -581 Td
+/F2 9 Tf
+48 569.00 Td (  Submit declaration form.) Tj
+-48 -569 Td
+/F2 9 Tf
+48 557.00 Td (  Declaration detail page.) Tj
+-48 -557 Td
+/F2 9 Tf
+48 545.00 Td (  Edit declaration.) Tj
+-48 -545 Td
+/F2 9 Tf
+48 533.00 Td (  Missed declaration state.) Tj
+-48 -533 Td
+/F2 9 Tf
+48 521.00 Td (  Cancel declaration confirmation.) Tj
+-48 -521 Td
+/F2 9 Tf
+48 503.00 Td (Buttons:) Tj
+-48 -503 Td
+/F2 9 Tf
+48 485.00 Td (  New Declaration.) Tj
+-48 -485 Td
+/F2 9 Tf
+48 473.00 Td (  Submit Declaration.) Tj
+-48 -473 Td
+/F2 9 Tf
+48 461.00 Td (  Save Draft.) Tj
+-48 -461 Td
+/F2 9 Tf
+48 449.00 Td (  Edit Declaration.) Tj
+-48 -449 Td
+/F2 9 Tf
+48 437.00 Td (  Cancel Declaration.) Tj
+-48 -437 Td
+/F2 9 Tf
+48 425.00 Td (  Approve Inputs.) Tj
+-48 -425 Td
+/F2 9 Tf
+48 413.00 Td (  Create Loan Request.) Tj
+-48 -413 Td
+/F2 9 Tf
+48 401.00 Td (  Assess Penalty.) Tj
+-48 -401 Td
+/F2 9 Tf
+48 389.00 Td (  Back.) Tj
+-48 -389 Td
+/F2 9 Tf
+48 371.00 Td (Acceptance Criteria:) Tj
+-48 -371 Td
+/F2 9 Tf
+48 353.00 Td (  Declaration window status is visible.) Tj
+-48 -353 Td
+/F2 9 Tf
+48 341.00 Td (  Form supports savings, loan request, top-up, repayments, common interest, and notes.) Tj
+-48 -341 Td
+/F2 9 Tf
+48 329.00 Td (  Missed declarations are clearly marked.) Tj
+-48 -329 Td
+/F2 9 Tf
+48 317.00 Td (  Mobile form is easy to complete.) Tj
+-48 -317 Td
+/F2 9 Tf
+48 299.00 Td (Testing:) Tj
+-48 -299 Td
+/F2 9 Tf
+48 281.00 Td (  Declaration form validation.) Tj
+-48 -281 Td
+/F2 9 Tf
+48 269.00 Td (  Submit flow.) Tj
+-48 -269 Td
+/F2 9 Tf
+48 257.00 Td (  Late/missed state tests.) Tj
+-48 -257 Td
+/F2 9 Tf
+48 245.00 Td (  Mobile viewport checks.) Tj
+-48 -245 Td
+/F1 11 Tf
+48 219.00 Td (FE-011: Savings and Contribution Screens) Tj
+-48 -219 Td
+/F2 9 Tf
+48 196.00 Td (Priority: P0) Tj
+-48 -196 Td
+/F2 9 Tf
+48 184.00 Td (Epic: Savings UI) Tj
+-48 -184 Td
+/F2 9 Tf
+48 166.00 Td (Description:) Tj
+-48 -166 Td
+/F2 9 Tf
+48 154.00 Td (Build posting and detail screens for savings, social fund, and membership fee.) Tj
+-48 -154 Td
+/F2 9 Tf
+48 136.00 Td (Subtasks:) Tj
+-48 -136 Td
+/F2 9 Tf
+48 118.00 Td (  Savings posting form.) Tj
+-48 -118 Td
+/F2 9 Tf
+48 106.00 Td (  Cap warning display.) Tj
+-48 -106 Td
+/F2 9 Tf
+48 94.00 Td (  Social fund posting.) Tj
+-48 -94 Td
+/F2 9 Tf
+48 82.00 Td (  Membership fee posting.) Tj
+-48 -82 Td
+/F2 9 Tf
+48 70.00 Td (  Savings history.) Tj
+-48 -70 Td
+/F2 8 Tf
+509 28 Td (Page 22) Tj
+ET
+endstream
+endobj
+49 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 48 0 R >>
+endobj
+50 0 obj
+<< /Length 2998 >>
+stream
+BT
+/F2 9 Tf
+48 744.00 Td (  Contribution status.) Tj
+-48 -744 Td
+/F2 9 Tf
+48 726.00 Td (Buttons:) Tj
+-48 -726 Td
+/F2 9 Tf
+48 708.00 Td (  Post Savings.) Tj
+-48 -708 Td
+/F2 9 Tf
+48 696.00 Td (  Post Social Fund.) Tj
+-48 -696 Td
+/F2 9 Tf
+48 684.00 Td (  Post Membership Fee.) Tj
+-48 -684 Td
+/F2 9 Tf
+48 672.00 Td (  Reverse Posting.) Tj
+-48 -672 Td
+/F2 9 Tf
+48 660.00 Td (  View Ledger.) Tj
+-48 -660 Td
+/F2 9 Tf
+48 648.00 Td (  Cancel.) Tj
+-48 -648 Td
+/F2 9 Tf
+48 630.00 Td (Acceptance Criteria:) Tj
+-48 -630 Td
+/F2 9 Tf
+48 612.00 Td (  Savings cap progress is visible.) Tj
+-48 -612 Td
+/F2 9 Tf
+48 600.00 Td (  One-time contributions show paid/unpaid status.) Tj
+-48 -600 Td
+/F2 9 Tf
+48 588.00 Td (  All posts show confirmation before submission.) Tj
+-48 -588 Td
+/F2 9 Tf
+48 570.00 Td (Testing:) Tj
+-48 -570 Td
+/F2 9 Tf
+48 552.00 Td (  Currency input tests.) Tj
+-48 -552 Td
+/F2 9 Tf
+48 540.00 Td (  Cap warning tests.) Tj
+-48 -540 Td
+/F2 9 Tf
+48 528.00 Td (  Posting success/failure tests.) Tj
+-48 -528 Td
+/F2 9 Tf
+48 516.00 Td (  Mobile layout tests.) Tj
+-48 -516 Td
+/F1 11 Tf
+48 490.00 Td (FE-012: Loan Screens) Tj
+-48 -490 Td
+/F2 9 Tf
+48 467.00 Td (Priority: P0) Tj
+-48 -467 Td
+/F2 9 Tf
+48 455.00 Td (Epic: Loan UI) Tj
+-48 -455 Td
+/F2 9 Tf
+48 437.00 Td (Description:) Tj
+-48 -437 Td
+/F2 9 Tf
+48 425.00 Td (Build loan request queue, approval, disbursement, repayment, and loan detail screens.) Tj
+-48 -425 Td
+/F2 9 Tf
+48 407.00 Td (Subtasks:) Tj
+-48 -407 Td
+/F2 9 Tf
+48 389.00 Td (  Loan request table.) Tj
+-48 -389 Td
+/F2 9 Tf
+48 377.00 Td (  Approval drawer/modal.) Tj
+-48 -377 Td
+/F2 9 Tf
+48 365.00 Td (  Adjust approved amount.) Tj
+-48 -365 Td
+/F2 9 Tf
+48 353.00 Td (  Reject with reason.) Tj
+-48 -353 Td
+/F2 9 Tf
+48 341.00 Td (  Disbursement screen.) Tj
+-48 -341 Td
+/F2 9 Tf
+48 329.00 Td (  Repayment form.) Tj
+-48 -329 Td
+/F2 9 Tf
+48 317.00 Td (  Loan detail statement.) Tj
+-48 -317 Td
+/F2 9 Tf
+48 305.00 Td (  Top-up handling.) Tj
+-48 -305 Td
+/F2 9 Tf
+48 293.00 Td (  Converted penalty loan display.) Tj
+-48 -293 Td
+/F2 9 Tf
+48 275.00 Td (Buttons:) Tj
+-48 -275 Td
+/F2 9 Tf
+48 257.00 Td (  Approve.) Tj
+-48 -257 Td
+/F2 9 Tf
+48 245.00 Td (  Reject.) Tj
+-48 -245 Td
+/F2 9 Tf
+48 233.00 Td (  Adjust Amount.) Tj
+-48 -233 Td
+/F2 9 Tf
+48 221.00 Td (  Disburse Loan.) Tj
+-48 -221 Td
+/F2 9 Tf
+48 209.00 Td (  Record Repayment.) Tj
+-48 -209 Td
+/F2 9 Tf
+48 197.00 Td (  View Loan.) Tj
+-48 -197 Td
+/F2 9 Tf
+48 185.00 Td (  Reverse Transaction.) Tj
+-48 -185 Td
+/F2 9 Tf
+48 173.00 Td (  Back.) Tj
+-48 -173 Td
+/F2 9 Tf
+48 155.00 Td (Acceptance Criteria:) Tj
+-48 -155 Td
+/F2 9 Tf
+48 137.00 Td (  Admin sees effect before posting.) Tj
+-48 -137 Td
+/F2 9 Tf
+48 125.00 Td (  Principal and interest repayments are separate.) Tj
+-48 -125 Td
+/F2 9 Tf
+48 113.00 Td (  Loan origin is visible.) Tj
+-48 -113 Td
+/F2 9 Tf
+48 101.00 Td (  Mobile tables are usable.) Tj
+-48 -101 Td
+/F2 9 Tf
+48 83.00 Td (Testing:) Tj
+-48 -83 Td
+/F2 9 Tf
+48 65.00 Td (  Approval flow tests.) Tj
+-48 -65 Td
+/F2 8 Tf
+509 28 Td (Page 23) Tj
+ET
+endstream
+endobj
+51 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 50 0 R >>
+endobj
+52 0 obj
+<< /Length 3042 >>
+stream
+BT
+/F2 9 Tf
+48 744.00 Td (  Disbursement flow tests.) Tj
+-48 -744 Td
+/F2 9 Tf
+48 732.00 Td (  Repayment form tests.) Tj
+-48 -732 Td
+/F2 9 Tf
+48 720.00 Td (  Converted penalty display tests.) Tj
+-48 -720 Td
+/F2 9 Tf
+48 708.00 Td (  Responsive checks.) Tj
+-48 -708 Td
+/F1 11 Tf
+48 682.00 Td (FE-013: Common-Interest Screens) Tj
+-48 -682 Td
+/F2 9 Tf
+48 659.00 Td (Priority: P0) Tj
+-48 -659 Td
+/F2 9 Tf
+48 647.00 Td (Epic: Common Interest UI) Tj
+-48 -647 Td
+/F2 9 Tf
+48 629.00 Td (Description:) Tj
+-48 -629 Td
+/F2 9 Tf
+48 617.00 Td (Build common-interest run, allocation, and override screens.) Tj
+-48 -617 Td
+/F2 9 Tf
+48 599.00 Td (Subtasks:) Tj
+-48 -599 Td
+/F2 9 Tf
+48 581.00 Td (  Common-interest summary cards.) Tj
+-48 -581 Td
+/F2 9 Tf
+48 569.00 Td (  Allocation method selector.) Tj
+-48 -569 Td
+/F2 9 Tf
+48 557.00 Td (  Allocation preview table.) Tj
+-48 -557 Td
+/F2 9 Tf
+48 545.00 Td (  Member allocation detail.) Tj
+-48 -545 Td
+/F2 9 Tf
+48 533.00 Td (  Override form with reason.) Tj
+-48 -533 Td
+/F2 9 Tf
+48 521.00 Td (  Approval action.) Tj
+-48 -521 Td
+/F2 9 Tf
+48 509.00 Td (  Ledger links.) Tj
+-48 -509 Td
+/F2 9 Tf
+48 491.00 Td (Buttons:) Tj
+-48 -491 Td
+/F2 9 Tf
+48 473.00 Td (  Calculate Preview.) Tj
+-48 -473 Td
+/F2 9 Tf
+48 461.00 Td (  Approve Allocation.) Tj
+-48 -461 Td
+/F2 9 Tf
+48 449.00 Td (  Override Charge.) Tj
+-48 -449 Td
+/F2 9 Tf
+48 437.00 Td (  Save Override.) Tj
+-48 -437 Td
+/F2 9 Tf
+48 425.00 Td (  Cancel Override.) Tj
+-48 -425 Td
+/F2 9 Tf
+48 413.00 Td (  View Ledger.) Tj
+-48 -413 Td
+/F2 9 Tf
+48 401.00 Td (  Export.) Tj
+-48 -401 Td
+/F2 9 Tf
+48 383.00 Td (Acceptance Criteria:) Tj
+-48 -383 Td
+/F2 9 Tf
+48 365.00 Td (  Pool contributions, loans issued, unborrowed money, and pool are visible.) Tj
+-48 -365 Td
+/F2 9 Tf
+48 353.00 Td (  Allocation explains each member charge.) Tj
+-48 -353 Td
+/F2 9 Tf
+48 341.00 Td (  Overrides preserve original values.) Tj
+-48 -341 Td
+/F2 9 Tf
+48 323.00 Td (Testing:) Tj
+-48 -323 Td
+/F2 9 Tf
+48 305.00 Td (  Allocation table render tests.) Tj
+-48 -305 Td
+/F2 9 Tf
+48 293.00 Td (  Override validation tests.) Tj
+-48 -293 Td
+/F2 9 Tf
+48 281.00 Td (  Approval flow tests.) Tj
+-48 -281 Td
+/F2 9 Tf
+48 269.00 Td (  Mobile layout tests.) Tj
+-48 -269 Td
+/F1 11 Tf
+48 243.00 Td (FE-014: Penalty Screens) Tj
+-48 -243 Td
+/F2 9 Tf
+48 220.00 Td (Priority: P0) Tj
+-48 -220 Td
+/F2 9 Tf
+48 208.00 Td (Epic: Penalty UI) Tj
+-48 -208 Td
+/F2 9 Tf
+48 190.00 Td (Description:) Tj
+-48 -190 Td
+/F2 9 Tf
+48 178.00 Td (Build penalty list, detail, payment, conversion, waiver, and reversal screens.) Tj
+-48 -178 Td
+/F2 9 Tf
+48 160.00 Td (Subtasks:) Tj
+-48 -160 Td
+/F2 9 Tf
+48 142.00 Td (  Penalty table.) Tj
+-48 -142 Td
+/F2 9 Tf
+48 130.00 Td (  Penalty filters.) Tj
+-48 -130 Td
+/F2 9 Tf
+48 118.00 Td (  Penalty detail.) Tj
+-48 -118 Td
+/F2 9 Tf
+48 106.00 Td (  Mark paid form.) Tj
+-48 -106 Td
+/F2 9 Tf
+48 94.00 Td (  Convert to loan confirmation.) Tj
+-48 -94 Td
+/F2 9 Tf
+48 82.00 Td (  Waive penalty form.) Tj
+-48 -82 Td
+/F2 9 Tf
+48 70.00 Td (  Reverse penalty form.) Tj
+-48 -70 Td
+/F2 8 Tf
+509 28 Td (Page 24) Tj
+ET
+endstream
+endobj
+53 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 52 0 R >>
+endobj
+54 0 obj
+<< /Length 3010 >>
+stream
+BT
+/F2 9 Tf
+48 744.00 Td (Buttons:) Tj
+-48 -744 Td
+/F2 9 Tf
+48 726.00 Td (  Assess Penalty.) Tj
+-48 -726 Td
+/F2 9 Tf
+48 714.00 Td (  Mark Paid.) Tj
+-48 -714 Td
+/F2 9 Tf
+48 702.00 Td (  Convert to Loan.) Tj
+-48 -702 Td
+/F2 9 Tf
+48 690.00 Td (  Waive.) Tj
+-48 -690 Td
+/F2 9 Tf
+48 678.00 Td (  Reverse.) Tj
+-48 -678 Td
+/F2 9 Tf
+48 666.00 Td (  View Converted Loan.) Tj
+-48 -666 Td
+/F2 9 Tf
+48 654.00 Td (  View Ledger.) Tj
+-48 -654 Td
+/F2 9 Tf
+48 642.00 Td (  Cancel.) Tj
+-48 -642 Td
+/F2 9 Tf
+48 624.00 Td (Acceptance Criteria:) Tj
+-48 -624 Td
+/F2 9 Tf
+48 606.00 Td (  Penalty status is clear.) Tj
+-48 -606 Td
+/F2 9 Tf
+48 594.00 Td (  Conversion warning explains loan interest impact.) Tj
+-48 -594 Td
+/F2 9 Tf
+48 582.00 Td (  Reason is required for waiver and reversal.) Tj
+-48 -582 Td
+/F2 9 Tf
+48 564.00 Td (Testing:) Tj
+-48 -564 Td
+/F2 9 Tf
+48 546.00 Td (  Payment flow tests.) Tj
+-48 -546 Td
+/F2 9 Tf
+48 534.00 Td (  Conversion flow tests.) Tj
+-48 -534 Td
+/F2 9 Tf
+48 522.00 Td (  Waiver/reversal validation.) Tj
+-48 -522 Td
+/F2 9 Tf
+48 510.00 Td (  Mobile layout tests.) Tj
+-48 -510 Td
+/F1 11 Tf
+48 484.00 Td (FE-015: Monthly Closing Screens) Tj
+-48 -484 Td
+/F2 9 Tf
+48 461.00 Td (Priority: P0) Tj
+-48 -461 Td
+/F2 9 Tf
+48 449.00 Td (Epic: Monthly Closing UI) Tj
+-48 -449 Td
+/F2 9 Tf
+48 431.00 Td (Description:) Tj
+-48 -431 Td
+/F2 9 Tf
+48 419.00 Td (Build monthly closing wizard and review screens.) Tj
+-48 -419 Td
+/F2 9 Tf
+48 401.00 Td (Subtasks:) Tj
+-48 -401 Td
+/F2 9 Tf
+48 383.00 Td (  Stepper.) Tj
+-48 -383 Td
+/F2 9 Tf
+48 371.00 Td (  Validate inputs step.) Tj
+-48 -371 Td
+/F2 9 Tf
+48 359.00 Td (  Declaration compliance step.) Tj
+-48 -359 Td
+/F2 9 Tf
+48 347.00 Td (  Penalty posting step.) Tj
+-48 -347 Td
+/F2 9 Tf
+48 335.00 Td (  Savings interest step.) Tj
+-48 -335 Td
+/F2 9 Tf
+48 323.00 Td (  Loan interest step.) Tj
+-48 -323 Td
+/F2 9 Tf
+48 311.00 Td (  Common-interest step.) Tj
+-48 -311 Td
+/F2 9 Tf
+48 299.00 Td (  Snapshot review.) Tj
+-48 -299 Td
+/F2 9 Tf
+48 287.00 Td (  Lock month confirmation.) Tj
+-48 -287 Td
+/F2 9 Tf
+48 275.00 Td (  Recalculate draft action.) Tj
+-48 -275 Td
+/F2 9 Tf
+48 257.00 Td (Buttons:) Tj
+-48 -257 Td
+/F2 9 Tf
+48 239.00 Td (  Start Closing.) Tj
+-48 -239 Td
+/F2 9 Tf
+48 227.00 Td (  Continue.) Tj
+-48 -227 Td
+/F2 9 Tf
+48 215.00 Td (  Back.) Tj
+-48 -215 Td
+/F2 9 Tf
+48 203.00 Td (  Recalculate.) Tj
+-48 -203 Td
+/F2 9 Tf
+48 191.00 Td (  View Exceptions.) Tj
+-48 -191 Td
+/F2 9 Tf
+48 179.00 Td (  Approve Step.) Tj
+-48 -179 Td
+/F2 9 Tf
+48 167.00 Td (  Lock Month.) Tj
+-48 -167 Td
+/F2 9 Tf
+48 155.00 Td (  Export Closing Report.) Tj
+-48 -155 Td
+/F2 9 Tf
+48 137.00 Td (Acceptance Criteria:) Tj
+-48 -137 Td
+/F2 9 Tf
+48 119.00 Td (  Admin can see progress and exceptions.) Tj
+-48 -119 Td
+/F2 9 Tf
+48 107.00 Td (  Month cannot be locked without confirmation.) Tj
+-48 -107 Td
+/F2 9 Tf
+48 95.00 Td (  Locked status is obvious.) Tj
+-48 -95 Td
+/F2 9 Tf
+48 83.00 Td (  Mobile wizard is usable.) Tj
+-48 -83 Td
+/F2 9 Tf
+48 65.00 Td (Testing:) Tj
+-48 -65 Td
+/F2 8 Tf
+509 28 Td (Page 25) Tj
+ET
+endstream
+endobj
+55 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 54 0 R >>
+endobj
+56 0 obj
+<< /Length 2956 >>
+stream
+BT
+/F2 9 Tf
+48 738.00 Td (  Wizard navigation tests.) Tj
+-48 -738 Td
+/F2 9 Tf
+48 726.00 Td (  Exception state tests.) Tj
+-48 -726 Td
+/F2 9 Tf
+48 714.00 Td (  Lock confirmation tests.) Tj
+-48 -714 Td
+/F2 9 Tf
+48 702.00 Td (  Responsive tests.) Tj
+-48 -702 Td
+/F1 11 Tf
+48 676.00 Td (FE-016: Ledger and Audit Screens) Tj
+-48 -676 Td
+/F2 9 Tf
+48 653.00 Td (Priority: P1) Tj
+-48 -653 Td
+/F2 9 Tf
+48 641.00 Td (Epic: Ledger UI) Tj
+-48 -641 Td
+/F2 9 Tf
+48 623.00 Td (Description:) Tj
+-48 -623 Td
+/F2 9 Tf
+48 611.00 Td (Build ledger explorer, transaction detail, reversal workflow, and audit trail.) Tj
+-48 -611 Td
+/F2 9 Tf
+48 593.00 Td (Subtasks:) Tj
+-48 -593 Td
+/F2 9 Tf
+48 575.00 Td (  Ledger filter form.) Tj
+-48 -575 Td
+/F2 9 Tf
+48 563.00 Td (  Ledger transaction table.) Tj
+-48 -563 Td
+/F2 9 Tf
+48 551.00 Td (  Transaction detail.) Tj
+-48 -551 Td
+/F2 9 Tf
+48 539.00 Td (  Debit/credit lines.) Tj
+-48 -539 Td
+/F2 9 Tf
+48 527.00 Td (  Reverse transaction form.) Tj
+-48 -527 Td
+/F2 9 Tf
+48 515.00 Td (  Audit trail table.) Tj
+-48 -515 Td
+/F2 9 Tf
+48 503.00 Td (  Audit detail drawer.) Tj
+-48 -503 Td
+/F2 9 Tf
+48 485.00 Td (Buttons:) Tj
+-48 -485 Td
+/F2 9 Tf
+48 467.00 Td (  Filter.) Tj
+-48 -467 Td
+/F2 9 Tf
+48 455.00 Td (  Clear Filters.) Tj
+-48 -455 Td
+/F2 9 Tf
+48 443.00 Td (  View Transaction.) Tj
+-48 -443 Td
+/F2 9 Tf
+48 431.00 Td (  Reverse Transaction.) Tj
+-48 -431 Td
+/F2 9 Tf
+48 419.00 Td (  Export CSV.) Tj
+-48 -419 Td
+/F2 9 Tf
+48 407.00 Td (  View Audit Detail.) Tj
+-48 -407 Td
+/F2 9 Tf
+48 389.00 Td (Acceptance Criteria:) Tj
+-48 -389 Td
+/F2 9 Tf
+48 371.00 Td (  Ledger can be searched by member, month, type, and source.) Tj
+-48 -371 Td
+/F2 9 Tf
+48 359.00 Td (  Transaction detail shows source workflow.) Tj
+-48 -359 Td
+/F2 9 Tf
+48 347.00 Td (  Reversal requires reason.) Tj
+-48 -347 Td
+/F2 9 Tf
+48 329.00 Td (Testing:) Tj
+-48 -329 Td
+/F2 9 Tf
+48 311.00 Td (  Filter tests.) Tj
+-48 -311 Td
+/F2 9 Tf
+48 299.00 Td (  Detail view tests.) Tj
+-48 -299 Td
+/F2 9 Tf
+48 287.00 Td (  Reversal validation tests.) Tj
+-48 -287 Td
+/F2 9 Tf
+48 275.00 Td (  Responsive tests.) Tj
+-48 -275 Td
+/F1 11 Tf
+48 249.00 Td (FE-017: Reports Screens) Tj
+-48 -249 Td
+/F2 9 Tf
+48 226.00 Td (Priority: P1) Tj
+-48 -226 Td
+/F2 9 Tf
+48 214.00 Td (Epic: Reports UI) Tj
+-48 -214 Td
+/F2 9 Tf
+48 196.00 Td (Description:) Tj
+-48 -196 Td
+/F2 9 Tf
+48 184.00 Td (Build report center and report detail pages.) Tj
+-48 -184 Td
+/F2 9 Tf
+48 166.00 Td (Subtasks:) Tj
+-48 -166 Td
+/F2 9 Tf
+48 148.00 Td (  Report cards.) Tj
+-48 -148 Td
+/F2 9 Tf
+48 136.00 Td (  Report filters.) Tj
+-48 -136 Td
+/F2 9 Tf
+48 124.00 Td (  Member statement report.) Tj
+-48 -124 Td
+/F2 9 Tf
+48 112.00 Td (  Pool summary report.) Tj
+-48 -112 Td
+/F2 9 Tf
+48 100.00 Td (  Savings report.) Tj
+-48 -100 Td
+/F2 9 Tf
+48 88.00 Td (  Loan report.) Tj
+-48 -88 Td
+/F2 9 Tf
+48 76.00 Td (  Common-interest report.) Tj
+-48 -76 Td
+/F2 9 Tf
+48 64.00 Td (  Declaration compliance report.) Tj
+-48 -64 Td
+/F2 8 Tf
+509 28 Td (Page 26) Tj
+ET
+endstream
+endobj
+57 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 56 0 R >>
+endobj
+58 0 obj
+<< /Length 2954 >>
+stream
+BT
+/F2 9 Tf
+48 744.00 Td (  Penalty report.) Tj
+-48 -744 Td
+/F2 9 Tf
+48 732.00 Td (  Converted penalty report.) Tj
+-48 -732 Td
+/F2 9 Tf
+48 720.00 Td (  Cycle closing report.) Tj
+-48 -720 Td
+/F2 9 Tf
+48 708.00 Td (  Export actions.) Tj
+-48 -708 Td
+/F2 9 Tf
+48 690.00 Td (Buttons:) Tj
+-48 -690 Td
+/F2 9 Tf
+48 672.00 Td (  Run Report.) Tj
+-48 -672 Td
+/F2 9 Tf
+48 660.00 Td (  Download PDF.) Tj
+-48 -660 Td
+/F2 9 Tf
+48 648.00 Td (  Export CSV.) Tj
+-48 -648 Td
+/F2 9 Tf
+48 636.00 Td (  Clear Filters.) Tj
+-48 -636 Td
+/F2 9 Tf
+48 624.00 Td (  Open Member.) Tj
+-48 -624 Td
+/F2 9 Tf
+48 612.00 Td (  Open Ledger.) Tj
+-48 -612 Td
+/F2 9 Tf
+48 594.00 Td (Acceptance Criteria:) Tj
+-48 -594 Td
+/F2 9 Tf
+48 576.00 Td (  Reports support cycle, month, member, and status filters.) Tj
+-48 -576 Td
+/F2 9 Tf
+48 564.00 Td (  Exports are available where supported.) Tj
+-48 -564 Td
+/F2 9 Tf
+48 552.00 Td (  Mobile layout stacks filters and tables.) Tj
+-48 -552 Td
+/F2 9 Tf
+48 534.00 Td (Testing:) Tj
+-48 -534 Td
+/F2 9 Tf
+48 516.00 Td (  Filter form tests.) Tj
+-48 -516 Td
+/F2 9 Tf
+48 504.00 Td (  Report loading tests.) Tj
+-48 -504 Td
+/F2 9 Tf
+48 492.00 Td (  Empty state tests.) Tj
+-48 -492 Td
+/F2 9 Tf
+48 480.00 Td (  Export button tests.) Tj
+-48 -480 Td
+/F2 9 Tf
+48 468.00 Td (  Responsive tests.) Tj
+-48 -468 Td
+/F1 11 Tf
+48 442.00 Td (FE-018: Settings Screens) Tj
+-48 -442 Td
+/F2 9 Tf
+48 419.00 Td (Priority: P1) Tj
+-48 -419 Td
+/F2 9 Tf
+48 407.00 Td (Epic: Settings UI) Tj
+-48 -407 Td
+/F2 9 Tf
+48 389.00 Td (Description:) Tj
+-48 -389 Td
+/F2 9 Tf
+48 377.00 Td (Build settings pages for users, roles, penalty types, and notifications.) Tj
+-48 -377 Td
+/F2 9 Tf
+48 359.00 Td (Subtasks:) Tj
+-48 -359 Td
+/F2 9 Tf
+48 341.00 Td (  User management.) Tj
+-48 -341 Td
+/F2 9 Tf
+48 329.00 Td (  Invite user.) Tj
+-48 -329 Td
+/F2 9 Tf
+48 317.00 Td (  Edit role.) Tj
+-48 -317 Td
+/F2 9 Tf
+48 305.00 Td (  Disable user.) Tj
+-48 -305 Td
+/F2 9 Tf
+48 293.00 Td (  Penalty type management.) Tj
+-48 -293 Td
+/F2 9 Tf
+48 281.00 Td (  Notification preferences.) Tj
+-48 -281 Td
+/F2 9 Tf
+48 269.00 Td (  Rounding policy for draft cycles.) Tj
+-48 -269 Td
+/F2 9 Tf
+48 251.00 Td (Buttons:) Tj
+-48 -251 Td
+/F2 9 Tf
+48 233.00 Td (  Invite User.) Tj
+-48 -233 Td
+/F2 9 Tf
+48 221.00 Td (  Save User.) Tj
+-48 -221 Td
+/F2 9 Tf
+48 209.00 Td (  Disable User.) Tj
+-48 -209 Td
+/F2 9 Tf
+48 197.00 Td (  Add Penalty Type.) Tj
+-48 -197 Td
+/F2 9 Tf
+48 185.00 Td (  Save Penalty Type.) Tj
+-48 -185 Td
+/F2 9 Tf
+48 173.00 Td (  Save Settings.) Tj
+-48 -173 Td
+/F2 9 Tf
+48 161.00 Td (  Cancel.) Tj
+-48 -161 Td
+/F2 9 Tf
+48 143.00 Td (Acceptance Criteria:) Tj
+-48 -143 Td
+/F2 9 Tf
+48 125.00 Td (  Settings changes are admin-only.) Tj
+-48 -125 Td
+/F2 9 Tf
+48 113.00 Td (  Changes show success/error states.) Tj
+-48 -113 Td
+/F2 9 Tf
+48 101.00 Td (  Mobile layout is usable.) Tj
+-48 -101 Td
+/F2 9 Tf
+48 83.00 Td (Testing:) Tj
+-48 -83 Td
+/F2 9 Tf
+48 65.00 Td (  User invite tests.) Tj
+-48 -65 Td
+/F2 8 Tf
+509 28 Td (Page 27) Tj
+ET
+endstream
+endobj
+59 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 58 0 R >>
+endobj
+60 0 obj
+<< /Length 2762 >>
+stream
+BT
+/F2 9 Tf
+48 744.00 Td (  Role update tests.) Tj
+-48 -744 Td
+/F2 9 Tf
+48 732.00 Td (  Penalty type tests.) Tj
+-48 -732 Td
+/F2 9 Tf
+48 720.00 Td (  Permission tests.) Tj
+-48 -720 Td
+/F1 14 Tf
+48 692.00 Td (15. Frontend Phase 4: Member Portal) Tj
+-48 -692 Td
+/F1 11 Tf
+48 656.00 Td (FE-019: Member Dashboard) Tj
+-48 -656 Td
+/F2 9 Tf
+48 633.00 Td (Priority: P0) Tj
+-48 -633 Td
+/F2 9 Tf
+48 621.00 Td (Epic: Member Portal) Tj
+-48 -621 Td
+/F2 9 Tf
+48 603.00 Td (Description:) Tj
+-48 -603 Td
+/F2 9 Tf
+48 591.00 Td (Build member dashboard.) Tj
+-48 -591 Td
+/F2 9 Tf
+48 573.00 Td (Subtasks:) Tj
+-48 -573 Td
+/F2 9 Tf
+48 555.00 Td (  Savings card.) Tj
+-48 -555 Td
+/F2 9 Tf
+48 543.00 Td (  Loan card.) Tj
+-48 -543 Td
+/F2 9 Tf
+48 531.00 Td (  Common-interest due card.) Tj
+-48 -531 Td
+/F2 9 Tf
+48 519.00 Td (  Penalty card.) Tj
+-48 -519 Td
+/F2 9 Tf
+48 507.00 Td (  Declaration window status.) Tj
+-48 -507 Td
+/F2 9 Tf
+48 495.00 Td (  Monthly obligations panel.) Tj
+-48 -495 Td
+/F2 9 Tf
+48 483.00 Td (  Quick action buttons.) Tj
+-48 -483 Td
+/F2 9 Tf
+48 465.00 Td (Buttons:) Tj
+-48 -465 Td
+/F2 9 Tf
+48 447.00 Td (  Submit Declaration.) Tj
+-48 -447 Td
+/F2 9 Tf
+48 435.00 Td (  View Statement.) Tj
+-48 -435 Td
+/F2 9 Tf
+48 423.00 Td (  View Savings.) Tj
+-48 -423 Td
+/F2 9 Tf
+48 411.00 Td (  View Loans.) Tj
+-48 -411 Td
+/F2 9 Tf
+48 399.00 Td (  View Penalties.) Tj
+-48 -399 Td
+/F2 9 Tf
+48 381.00 Td (Acceptance Criteria:) Tj
+-48 -381 Td
+/F2 9 Tf
+48 363.00 Td (  Member only sees own data.) Tj
+-48 -363 Td
+/F2 9 Tf
+48 351.00 Td (  Current obligations are clear.) Tj
+-48 -351 Td
+/F2 9 Tf
+48 339.00 Td (  Mobile view is first-class.) Tj
+-48 -339 Td
+/F2 9 Tf
+48 321.00 Td (Testing:) Tj
+-48 -321 Td
+/F2 9 Tf
+48 303.00 Td (  Member dashboard data tests.) Tj
+-48 -303 Td
+/F2 9 Tf
+48 291.00 Td (  Permission tests.) Tj
+-48 -291 Td
+/F2 9 Tf
+48 279.00 Td (  Mobile viewport tests.) Tj
+-48 -279 Td
+/F1 11 Tf
+48 253.00 Td (FE-020: Member Declaration Screen) Tj
+-48 -253 Td
+/F2 9 Tf
+48 230.00 Td (Priority: P0) Tj
+-48 -230 Td
+/F2 9 Tf
+48 218.00 Td (Epic: Member Portal) Tj
+-48 -218 Td
+/F2 9 Tf
+48 200.00 Td (Description:) Tj
+-48 -200 Td
+/F2 9 Tf
+48 188.00 Td (Build member-facing declaration form.) Tj
+-48 -188 Td
+/F2 9 Tf
+48 170.00 Td (Subtasks:) Tj
+-48 -170 Td
+/F2 9 Tf
+48 152.00 Td (  Savings input.) Tj
+-48 -152 Td
+/F2 9 Tf
+48 140.00 Td (  Loan request input.) Tj
+-48 -140 Td
+/F2 9 Tf
+48 128.00 Td (  Top-up input.) Tj
+-48 -128 Td
+/F2 9 Tf
+48 116.00 Td (  Principal repayment input.) Tj
+-48 -116 Td
+/F2 9 Tf
+48 104.00 Td (  Loan interest repayment input.) Tj
+-48 -104 Td
+/F2 9 Tf
+48 92.00 Td (  Common-interest payment input.) Tj
+-48 -92 Td
+/F2 9 Tf
+48 80.00 Td (  Notes.) Tj
+-48 -80 Td
+/F2 9 Tf
+48 68.00 Td (  Submit and save draft states.) Tj
+-48 -68 Td
+/F2 8 Tf
+509 28 Td (Page 28) Tj
+ET
+endstream
+endobj
+61 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 60 0 R >>
+endobj
+62 0 obj
+<< /Length 2759 >>
+stream
+BT
+/F2 9 Tf
+48 744.00 Td (Buttons:) Tj
+-48 -744 Td
+/F2 9 Tf
+48 726.00 Td (  Submit.) Tj
+-48 -726 Td
+/F2 9 Tf
+48 714.00 Td (  Save Draft.) Tj
+-48 -714 Td
+/F2 9 Tf
+48 702.00 Td (  Cancel.) Tj
+-48 -702 Td
+/F2 9 Tf
+48 684.00 Td (Acceptance Criteria:) Tj
+-48 -684 Td
+/F2 9 Tf
+48 666.00 Td (  Member can submit within declaration window.) Tj
+-48 -666 Td
+/F2 9 Tf
+48 654.00 Td (  Member sees late or closed window state.) Tj
+-48 -654 Td
+/F2 9 Tf
+48 642.00 Td (  Form is easy on mobile.) Tj
+-48 -642 Td
+/F2 9 Tf
+48 624.00 Td (Testing:) Tj
+-48 -624 Td
+/F2 9 Tf
+48 606.00 Td (  Validation tests.) Tj
+-48 -606 Td
+/F2 9 Tf
+48 594.00 Td (  Submit tests.) Tj
+-48 -594 Td
+/F2 9 Tf
+48 582.00 Td (  Closed window tests.) Tj
+-48 -582 Td
+/F2 9 Tf
+48 570.00 Td (  Mobile tests.) Tj
+-48 -570 Td
+/F1 11 Tf
+48 544.00 Td (FE-021: Member Statement and Detail Screens) Tj
+-48 -544 Td
+/F2 9 Tf
+48 521.00 Td (Priority: P0) Tj
+-48 -521 Td
+/F2 9 Tf
+48 509.00 Td (Epic: Member Portal) Tj
+-48 -509 Td
+/F2 9 Tf
+48 491.00 Td (Description:) Tj
+-48 -491 Td
+/F2 9 Tf
+48 479.00 Td (Build member views for statements, savings, loans, and penalties.) Tj
+-48 -479 Td
+/F2 9 Tf
+48 461.00 Td (Subtasks:) Tj
+-48 -461 Td
+/F2 9 Tf
+48 443.00 Td (  My statement.) Tj
+-48 -443 Td
+/F2 9 Tf
+48 431.00 Td (  My savings detail.) Tj
+-48 -431 Td
+/F2 9 Tf
+48 419.00 Td (  My loan detail.) Tj
+-48 -419 Td
+/F2 9 Tf
+48 407.00 Td (  My penalties.) Tj
+-48 -407 Td
+/F2 9 Tf
+48 395.00 Td (  Transaction detail read-only view.) Tj
+-48 -395 Td
+/F2 9 Tf
+48 383.00 Td (  Download statement action.) Tj
+-48 -383 Td
+/F2 9 Tf
+48 365.00 Td (Buttons:) Tj
+-48 -365 Td
+/F2 9 Tf
+48 347.00 Td (  Download PDF.) Tj
+-48 -347 Td
+/F2 9 Tf
+48 335.00 Td (  View Transaction.) Tj
+-48 -335 Td
+/F2 9 Tf
+48 323.00 Td (  View Loan Detail.) Tj
+-48 -323 Td
+/F2 9 Tf
+48 311.00 Td (  View Savings Detail.) Tj
+-48 -311 Td
+/F2 9 Tf
+48 299.00 Td (  View Penalty Detail.) Tj
+-48 -299 Td
+/F2 9 Tf
+48 287.00 Td (  Back.) Tj
+-48 -287 Td
+/F2 9 Tf
+48 269.00 Td (Acceptance Criteria:) Tj
+-48 -269 Td
+/F2 9 Tf
+48 251.00 Td (  Member cannot see other members.) Tj
+-48 -251 Td
+/F2 9 Tf
+48 239.00 Td (  Statement matches admin statement.) Tj
+-48 -239 Td
+/F2 9 Tf
+48 227.00 Td (  Mobile layout is readable.) Tj
+-48 -227 Td
+/F2 9 Tf
+48 209.00 Td (Testing:) Tj
+-48 -209 Td
+/F2 9 Tf
+48 191.00 Td (  Statement render tests.) Tj
+-48 -191 Td
+/F2 9 Tf
+48 179.00 Td (  Ownership tests.) Tj
+-48 -179 Td
+/F2 9 Tf
+48 167.00 Td (  Download action tests.) Tj
+-48 -167 Td
+/F2 9 Tf
+48 155.00 Td (  Responsive tests.) Tj
+-48 -155 Td
+/F1 14 Tf
+48 127.00 Td (16. Frontend Phase 5: Responsive and Accessibility Work) Tj
+-48 -127 Td
+/F1 11 Tf
+48 91.00 Td (FE-022: Responsive Design Pass) Tj
+-48 -91 Td
+/F2 9 Tf
+48 68.00 Td (Priority: P0) Tj
+-48 -68 Td
+/F2 8 Tf
+509 28 Td (Page 29) Tj
+ET
+endstream
+endobj
+63 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 62 0 R >>
+endobj
+64 0 obj
+<< /Length 3062 >>
+stream
+BT
+/F2 9 Tf
+48 744.00 Td (Epic: Responsive UI) Tj
+-48 -744 Td
+/F2 9 Tf
+48 726.00 Td (Description:) Tj
+-48 -726 Td
+/F2 9 Tf
+48 714.00 Td (Ensure all screens work on mobile, tablet, and desktop.) Tj
+-48 -714 Td
+/F2 9 Tf
+48 696.00 Td (Breakpoints:) Tj
+-48 -696 Td
+/F3 6.2 Tf
+48 678.00 Td (Mobile: 360px to 767px) Tj
+-48 -678 Td
+/F3 6.2 Tf
+48 670.00 Td (Tablet: 768px to 1023px) Tj
+-48 -670 Td
+/F3 6.2 Tf
+48 662.00 Td (Desktop: 1024px and above) Tj
+-48 -662 Td
+/F2 9 Tf
+48 642.00 Td (Subtasks:) Tj
+-48 -642 Td
+/F2 9 Tf
+48 624.00 Td (  Convert wide tables to horizontal scroll or card lists.) Tj
+-48 -624 Td
+/F2 9 Tf
+48 612.00 Td (  Make side navigation collapse on mobile.) Tj
+-48 -612 Td
+/F2 9 Tf
+48 600.00 Td (  Ensure forms become single column on mobile.) Tj
+-48 -600 Td
+/F2 9 Tf
+48 588.00 Td (  Keep buttons reachable and readable.) Tj
+-48 -588 Td
+/F2 9 Tf
+48 576.00 Td (  Avoid overlapping text.) Tj
+-48 -576 Td
+/F2 9 Tf
+48 564.00 Td (  Verify modals and drawers fit mobile screens.) Tj
+-48 -564 Td
+/F2 9 Tf
+48 546.00 Td (Acceptance Criteria:) Tj
+-48 -546 Td
+/F2 9 Tf
+48 528.00 Td (  No screen has broken layout at 360px width.) Tj
+-48 -528 Td
+/F2 9 Tf
+48 516.00 Td (  Admin workflows are still usable on tablet.) Tj
+-48 -516 Td
+/F2 9 Tf
+48 504.00 Td (  Desktop remains dense and efficient.) Tj
+-48 -504 Td
+/F2 9 Tf
+48 486.00 Td (Testing:) Tj
+-48 -486 Td
+/F2 9 Tf
+48 468.00 Td (  Responsive Playwright tests.) Tj
+-48 -468 Td
+/F2 9 Tf
+48 456.00 Td (  Manual screenshot review for core screens.) Tj
+-48 -456 Td
+/F2 9 Tf
+48 444.00 Td (  Text overflow checks.) Tj
+-48 -444 Td
+/F1 11 Tf
+48 418.00 Td (FE-023: Accessibility Pass) Tj
+-48 -418 Td
+/F2 9 Tf
+48 395.00 Td (Priority: P1) Tj
+-48 -395 Td
+/F2 9 Tf
+48 383.00 Td (Epic: Accessibility) Tj
+-48 -383 Td
+/F2 9 Tf
+48 365.00 Td (Description:) Tj
+-48 -365 Td
+/F2 9 Tf
+48 353.00 Td (Improve keyboard and screen reader usability.) Tj
+-48 -353 Td
+/F2 9 Tf
+48 335.00 Td (Subtasks:) Tj
+-48 -335 Td
+/F2 9 Tf
+48 317.00 Td (  Add labels to all inputs.) Tj
+-48 -317 Td
+/F2 9 Tf
+48 305.00 Td (  Add aria labels where needed.) Tj
+-48 -305 Td
+/F2 9 Tf
+48 293.00 Td (  Ensure color contrast.) Tj
+-48 -293 Td
+/F2 9 Tf
+48 281.00 Td (  Add focus states.) Tj
+-48 -281 Td
+/F2 9 Tf
+48 269.00 Td (  Support keyboard navigation in modals.) Tj
+-48 -269 Td
+/F2 9 Tf
+48 257.00 Td (  Ensure error messages are announced.) Tj
+-48 -257 Td
+/F2 9 Tf
+48 239.00 Td (Acceptance Criteria:) Tj
+-48 -239 Td
+/F2 9 Tf
+48 221.00 Td (  Forms are label-complete.) Tj
+-48 -221 Td
+/F2 9 Tf
+48 209.00 Td (  Buttons are keyboard accessible.) Tj
+-48 -209 Td
+/F2 9 Tf
+48 197.00 Td (  Color contrast is acceptable.) Tj
+-48 -197 Td
+/F2 9 Tf
+48 179.00 Td (Testing:) Tj
+-48 -179 Td
+/F2 9 Tf
+48 161.00 Td (  Accessibility automated checks.) Tj
+-48 -161 Td
+/F2 9 Tf
+48 149.00 Td (  Keyboard navigation tests.) Tj
+-48 -149 Td
+/F2 9 Tf
+48 137.00 Td (  Screen reader label review.) Tj
+-48 -137 Td
+/F1 14 Tf
+48 109.00 Td (17. Integration and QA Phase) Tj
+-48 -109 Td
+/F1 11 Tf
+48 73.00 Td (QA-001: End-to-End Admin Workflow) Tj
+-48 -73 Td
+/F2 8 Tf
+509 28 Td (Page 30) Tj
+ET
+endstream
+endobj
+65 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 64 0 R >>
+endobj
+66 0 obj
+<< /Length 2834 >>
+stream
+BT
+/F2 9 Tf
+48 744.00 Td (Priority: P0) Tj
+-48 -744 Td
+/F2 9 Tf
+48 732.00 Td (Epic: QA) Tj
+-48 -732 Td
+/F2 9 Tf
+48 714.00 Td (Description:) Tj
+-48 -714 Td
+/F2 9 Tf
+48 702.00 Td (Test complete admin path from cycle setup to month lock.) Tj
+-48 -702 Td
+/F2 9 Tf
+48 684.00 Td (Subtasks:) Tj
+-48 -684 Td
+/F2 9 Tf
+48 666.00 Td (  Create cycle.) Tj
+-48 -666 Td
+/F2 9 Tf
+48 654.00 Td (  Generate months.) Tj
+-48 -654 Td
+/F2 9 Tf
+48 642.00 Td (  Add members.) Tj
+-48 -642 Td
+/F2 9 Tf
+48 630.00 Td (  Submit declarations.) Tj
+-48 -630 Td
+/F2 9 Tf
+48 618.00 Td (  Post savings.) Tj
+-48 -618 Td
+/F2 9 Tf
+48 606.00 Td (  Approve loans.) Tj
+-48 -606 Td
+/F2 9 Tf
+48 594.00 Td (  Assess penalties.) Tj
+-48 -594 Td
+/F2 9 Tf
+48 582.00 Td (  Run monthly closing.) Tj
+-48 -582 Td
+/F2 9 Tf
+48 570.00 Td (  Review common interest.) Tj
+-48 -570 Td
+/F2 9 Tf
+48 558.00 Td (  Lock month.) Tj
+-48 -558 Td
+/F2 9 Tf
+48 546.00 Td (  Generate reports.) Tj
+-48 -546 Td
+/F2 9 Tf
+48 528.00 Td (Acceptance Criteria:) Tj
+-48 -528 Td
+/F2 9 Tf
+48 510.00 Td (  Full workflow completes without manual database edits.) Tj
+-48 -510 Td
+/F2 9 Tf
+48 498.00 Td (  All financial records are traceable.) Tj
+-48 -498 Td
+/F2 9 Tf
+48 480.00 Td (Testing:) Tj
+-48 -480 Td
+/F2 9 Tf
+48 462.00 Td (  Playwright end-to-end test.) Tj
+-48 -462 Td
+/F2 9 Tf
+48 450.00 Td (  Backend integration test.) Tj
+-48 -450 Td
+/F2 9 Tf
+48 438.00 Td (  Report reconciliation check.) Tj
+-48 -438 Td
+/F1 11 Tf
+48 412.00 Td (QA-002: End-to-End Member Workflow) Tj
+-48 -412 Td
+/F2 9 Tf
+48 389.00 Td (Priority: P0) Tj
+-48 -389 Td
+/F2 9 Tf
+48 377.00 Td (Epic: QA) Tj
+-48 -377 Td
+/F2 9 Tf
+48 359.00 Td (Description:) Tj
+-48 -359 Td
+/F2 9 Tf
+48 347.00 Td (Test full member journey.) Tj
+-48 -347 Td
+/F2 9 Tf
+48 329.00 Td (Subtasks:) Tj
+-48 -329 Td
+/F2 9 Tf
+48 311.00 Td (  Login as member.) Tj
+-48 -311 Td
+/F2 9 Tf
+48 299.00 Td (  View dashboard.) Tj
+-48 -299 Td
+/F2 9 Tf
+48 287.00 Td (  Submit declaration.) Tj
+-48 -287 Td
+/F2 9 Tf
+48 275.00 Td (  View statement.) Tj
+-48 -275 Td
+/F2 9 Tf
+48 263.00 Td (  View loan/savings/penalty detail.) Tj
+-48 -263 Td
+/F2 9 Tf
+48 251.00 Td (  Download statement.) Tj
+-48 -251 Td
+/F2 9 Tf
+48 233.00 Td (Acceptance Criteria:) Tj
+-48 -233 Td
+/F2 9 Tf
+48 215.00 Td (  Member only sees own data.) Tj
+-48 -215 Td
+/F2 9 Tf
+48 203.00 Td (  Member screens work on mobile.) Tj
+-48 -203 Td
+/F2 9 Tf
+48 185.00 Td (Testing:) Tj
+-48 -185 Td
+/F2 9 Tf
+48 167.00 Td (  Playwright member E2E test.) Tj
+-48 -167 Td
+/F2 9 Tf
+48 155.00 Td (  Ownership security test.) Tj
+-48 -155 Td
+/F2 9 Tf
+48 143.00 Td (  Mobile E2E test.) Tj
+-48 -143 Td
+/F1 11 Tf
+48 117.00 Td (QA-003: Financial Accuracy Test Pack) Tj
+-48 -117 Td
+/F2 9 Tf
+48 94.00 Td (Priority: P0) Tj
+-48 -94 Td
+/F2 9 Tf
+48 82.00 Td (Epic: QA) Tj
+-48 -82 Td
+/F2 9 Tf
+48 64.00 Td (Description:) Tj
+-48 -64 Td
+/F2 8 Tf
+509 28 Td (Page 31) Tj
+ET
+endstream
+endobj
+67 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 66 0 R >>
+endobj
+68 0 obj
+<< /Length 2943 >>
+stream
+BT
+/F2 9 Tf
+48 744.00 Td (Create known calculation scenarios and expected outputs.) Tj
+-48 -744 Td
+/F2 9 Tf
+48 726.00 Td (Subtasks:) Tj
+-48 -726 Td
+/F2 9 Tf
+48 708.00 Td (  Savings interest scenario.) Tj
+-48 -708 Td
+/F2 9 Tf
+48 696.00 Td (  Loan interest scenario.) Tj
+-48 -696 Td
+/F2 9 Tf
+48 684.00 Td (  Loan repayment scenario.) Tj
+-48 -684 Td
+/F2 9 Tf
+48 672.00 Td (  Converted penalty loan scenario.) Tj
+-48 -672 Td
+/F2 9 Tf
+48 660.00 Td (  Common-interest only non-borrowers scenario.) Tj
+-48 -660 Td
+/F2 9 Tf
+48 648.00 Td (  Common-interest proportional scenario.) Tj
+-48 -648 Td
+/F2 9 Tf
+48 636.00 Td (  All-members common-interest scenario.) Tj
+-48 -636 Td
+/F2 9 Tf
+48 624.00 Td (  Locked month reversal scenario.) Tj
+-48 -624 Td
+/F2 9 Tf
+48 606.00 Td (Acceptance Criteria:) Tj
+-48 -606 Td
+/F2 9 Tf
+48 588.00 Td (  Expected results are documented.) Tj
+-48 -588 Td
+/F2 9 Tf
+48 576.00 Td (  Automated tests match expected financial outputs.) Tj
+-48 -576 Td
+/F2 9 Tf
+48 558.00 Td (Testing:) Tj
+-48 -558 Td
+/F2 9 Tf
+48 540.00 Td (  Unit test each scenario.) Tj
+-48 -540 Td
+/F2 9 Tf
+48 528.00 Td (  Integration test monthly closing scenario.) Tj
+-48 -528 Td
+/F1 11 Tf
+48 502.00 Td (QA-004: Regression Test Suite) Tj
+-48 -502 Td
+/F2 9 Tf
+48 479.00 Td (Priority: P1) Tj
+-48 -479 Td
+/F2 9 Tf
+48 467.00 Td (Epic: QA) Tj
+-48 -467 Td
+/F2 9 Tf
+48 449.00 Td (Description:) Tj
+-48 -449 Td
+/F2 9 Tf
+48 437.00 Td (Create regression coverage for future changes.) Tj
+-48 -437 Td
+/F2 9 Tf
+48 419.00 Td (Subtasks:) Tj
+-48 -419 Td
+/F2 9 Tf
+48 401.00 Td (  Auth regression tests.) Tj
+-48 -401 Td
+/F2 9 Tf
+48 389.00 Td (  Member CRUD regression tests.) Tj
+-48 -389 Td
+/F2 9 Tf
+48 377.00 Td (  Cycle rules regression tests.) Tj
+-48 -377 Td
+/F2 9 Tf
+48 365.00 Td (  Ledger posting regression tests.) Tj
+-48 -365 Td
+/F2 9 Tf
+48 353.00 Td (  Monthly closing regression tests.) Tj
+-48 -353 Td
+/F2 9 Tf
+48 341.00 Td (  Report regression tests.) Tj
+-48 -341 Td
+/F2 9 Tf
+48 329.00 Td (  Responsive regression screenshots.) Tj
+-48 -329 Td
+/F2 9 Tf
+48 311.00 Td (Acceptance Criteria:) Tj
+-48 -311 Td
+/F2 9 Tf
+48 293.00 Td (  Regression suite runs before release.) Tj
+-48 -293 Td
+/F2 9 Tf
+48 281.00 Td (  Critical financial paths are protected.) Tj
+-48 -281 Td
+/F2 9 Tf
+48 263.00 Td (Testing:) Tj
+-48 -263 Td
+/F2 9 Tf
+48 245.00 Td (  CI test run.) Tj
+-48 -245 Td
+/F2 9 Tf
+48 233.00 Td (  Screenshot comparison where available.) Tj
+-48 -233 Td
+/F1 14 Tf
+48 205.00 Td (18. DevOps and Release Phase) Tj
+-48 -205 Td
+/F1 11 Tf
+48 169.00 Td (DO-001: Local Development Environment) Tj
+-48 -169 Td
+/F2 9 Tf
+48 146.00 Td (Priority: P0) Tj
+-48 -146 Td
+/F2 9 Tf
+48 134.00 Td (Epic: DevOps) Tj
+-48 -134 Td
+/F2 9 Tf
+48 116.00 Td (Description:) Tj
+-48 -116 Td
+/F2 9 Tf
+48 104.00 Td (Create local development setup.) Tj
+-48 -104 Td
+/F2 9 Tf
+48 86.00 Td (Subtasks:) Tj
+-48 -86 Td
+/F2 9 Tf
+48 68.00 Td (  Docker Compose for PostgreSQL.) Tj
+-48 -68 Td
+/F2 8 Tf
+509 28 Td (Page 32) Tj
+ET
+endstream
+endobj
+69 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 68 0 R >>
+endobj
+70 0 obj
+<< /Length 2827 >>
+stream
+BT
+/F2 9 Tf
+48 744.00 Td (  Backend dev command.) Tj
+-48 -744 Td
+/F2 9 Tf
+48 732.00 Td (  Frontend dev command.) Tj
+-48 -732 Td
+/F2 9 Tf
+48 720.00 Td (  Database migration command.) Tj
+-48 -720 Td
+/F2 9 Tf
+48 708.00 Td (  Seed data command.) Tj
+-48 -708 Td
+/F2 9 Tf
+48 696.00 Td (  README setup guide.) Tj
+-48 -696 Td
+/F2 9 Tf
+48 678.00 Td (Acceptance Criteria:) Tj
+-48 -678 Td
+/F2 9 Tf
+48 660.00 Td (  New developer can run app locally.) Tj
+-48 -660 Td
+/F2 9 Tf
+48 648.00 Td (  Seed data creates usable demo cycle and members.) Tj
+-48 -648 Td
+/F2 9 Tf
+48 630.00 Td (Testing:) Tj
+-48 -630 Td
+/F2 9 Tf
+48 612.00 Td (  Fresh setup test.) Tj
+-48 -612 Td
+/F2 9 Tf
+48 600.00 Td (  Seed data smoke test.) Tj
+-48 -600 Td
+/F1 11 Tf
+48 574.00 Td (DO-002: CI Pipeline) Tj
+-48 -574 Td
+/F2 9 Tf
+48 551.00 Td (Priority: P0) Tj
+-48 -551 Td
+/F2 9 Tf
+48 539.00 Td (Epic: DevOps) Tj
+-48 -539 Td
+/F2 9 Tf
+48 521.00 Td (Description:) Tj
+-48 -521 Td
+/F2 9 Tf
+48 509.00 Td (Add automated checks.) Tj
+-48 -509 Td
+/F2 9 Tf
+48 491.00 Td (Subtasks:) Tj
+-48 -491 Td
+/F2 9 Tf
+48 473.00 Td (  Install dependencies.) Tj
+-48 -473 Td
+/F2 9 Tf
+48 461.00 Td (  Run backend tests.) Tj
+-48 -461 Td
+/F2 9 Tf
+48 449.00 Td (  Run frontend tests.) Tj
+-48 -449 Td
+/F2 9 Tf
+48 437.00 Td (  Run lint.) Tj
+-48 -437 Td
+/F2 9 Tf
+48 425.00 Td (  Run migrations against test DB.) Tj
+-48 -425 Td
+/F2 9 Tf
+48 413.00 Td (  Run E2E smoke tests if feasible.) Tj
+-48 -413 Td
+/F2 9 Tf
+48 395.00 Td (Acceptance Criteria:) Tj
+-48 -395 Td
+/F2 9 Tf
+48 377.00 Td (  Pull requests show pass/fail checks.) Tj
+-48 -377 Td
+/F2 9 Tf
+48 365.00 Td (  Broken tests block merge.) Tj
+-48 -365 Td
+/F2 9 Tf
+48 347.00 Td (Testing:) Tj
+-48 -347 Td
+/F2 9 Tf
+48 329.00 Td (  CI dry run.) Tj
+-48 -329 Td
+/F1 11 Tf
+48 303.00 Td (DO-003: Production Deployment) Tj
+-48 -303 Td
+/F2 9 Tf
+48 280.00 Td (Priority: P1) Tj
+-48 -280 Td
+/F2 9 Tf
+48 268.00 Td (Epic: DevOps) Tj
+-48 -268 Td
+/F2 9 Tf
+48 250.00 Td (Description:) Tj
+-48 -250 Td
+/F2 9 Tf
+48 238.00 Td (Prepare production deployment.) Tj
+-48 -238 Td
+/F2 9 Tf
+48 220.00 Td (Subtasks:) Tj
+-48 -220 Td
+/F2 9 Tf
+48 202.00 Td (  Choose hosting platform.) Tj
+-48 -202 Td
+/F2 9 Tf
+48 190.00 Td (  Configure production PostgreSQL.) Tj
+-48 -190 Td
+/F2 9 Tf
+48 178.00 Td (  Configure environment variables.) Tj
+-48 -178 Td
+/F2 9 Tf
+48 166.00 Td (  Configure migrations on deploy.) Tj
+-48 -166 Td
+/F2 9 Tf
+48 154.00 Td (  Configure backups.) Tj
+-48 -154 Td
+/F2 9 Tf
+48 142.00 Td (  Configure logging.) Tj
+-48 -142 Td
+/F2 9 Tf
+48 130.00 Td (  Configure monitoring.) Tj
+-48 -130 Td
+/F2 9 Tf
+48 118.00 Td (  Configure HTTPS.) Tj
+-48 -118 Td
+/F2 9 Tf
+48 100.00 Td (Acceptance Criteria:) Tj
+-48 -100 Td
+/F2 9 Tf
+48 82.00 Td (  App deploys to staging.) Tj
+-48 -82 Td
+/F2 9 Tf
+48 70.00 Td (  Database backups are enabled.) Tj
+-48 -70 Td
+/F2 8 Tf
+509 28 Td (Page 33) Tj
+ET
+endstream
+endobj
+71 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 70 0 R >>
+endobj
+72 0 obj
+<< /Length 2717 >>
+stream
+BT
+/F2 9 Tf
+48 744.00 Td (  Logs are available for debugging.) Tj
+-48 -744 Td
+/F2 9 Tf
+48 726.00 Td (Testing:) Tj
+-48 -726 Td
+/F2 9 Tf
+48 708.00 Td (  Staging smoke test.) Tj
+-48 -708 Td
+/F2 9 Tf
+48 696.00 Td (  Backup restore drill.) Tj
+-48 -696 Td
+/F2 9 Tf
+48 684.00 Td (  Health-check monitoring test.) Tj
+-48 -684 Td
+/F1 14 Tf
+48 656.00 Td (19. Documentation Phase) Tj
+-48 -656 Td
+/F1 11 Tf
+48 620.00 Td (DOC-001: Developer Documentation) Tj
+-48 -620 Td
+/F2 9 Tf
+48 597.00 Td (Priority: P1) Tj
+-48 -597 Td
+/F2 9 Tf
+48 585.00 Td (Epic: Documentation) Tj
+-48 -585 Td
+/F2 9 Tf
+48 567.00 Td (Subtasks:) Tj
+-48 -567 Td
+/F2 9 Tf
+48 549.00 Td (  Setup guide.) Tj
+-48 -549 Td
+/F2 9 Tf
+48 537.00 Td (  Architecture overview.) Tj
+-48 -537 Td
+/F2 9 Tf
+48 525.00 Td (  API conventions.) Tj
+-48 -525 Td
+/F2 9 Tf
+48 513.00 Td (  Database migration guide.) Tj
+-48 -513 Td
+/F2 9 Tf
+48 501.00 Td (  Testing guide.) Tj
+-48 -501 Td
+/F2 9 Tf
+48 489.00 Td (  Ledger posting guide.) Tj
+-48 -489 Td
+/F2 9 Tf
+48 477.00 Td (  Monthly closing guide.) Tj
+-48 -477 Td
+/F2 9 Tf
+48 459.00 Td (Acceptance Criteria:) Tj
+-48 -459 Td
+/F2 9 Tf
+48 441.00 Td (  Developer can understand project structure and run tests.) Tj
+-48 -441 Td
+/F1 11 Tf
+48 415.00 Td (DOC-002: Admin User Guide) Tj
+-48 -415 Td
+/F2 9 Tf
+48 392.00 Td (Priority: P1) Tj
+-48 -392 Td
+/F2 9 Tf
+48 380.00 Td (Epic: Documentation) Tj
+-48 -380 Td
+/F2 9 Tf
+48 362.00 Td (Subtasks:) Tj
+-48 -362 Td
+/F2 9 Tf
+48 344.00 Td (  Cycle setup guide.) Tj
+-48 -344 Td
+/F2 9 Tf
+48 332.00 Td (  Member management guide.) Tj
+-48 -332 Td
+/F2 9 Tf
+48 320.00 Td (  Declaration guide.) Tj
+-48 -320 Td
+/F2 9 Tf
+48 308.00 Td (  Loan approval guide.) Tj
+-48 -308 Td
+/F2 9 Tf
+48 296.00 Td (  Monthly closing guide.) Tj
+-48 -296 Td
+/F2 9 Tf
+48 284.00 Td (  Penalty conversion guide.) Tj
+-48 -284 Td
+/F2 9 Tf
+48 272.00 Td (  Reporting guide.) Tj
+-48 -272 Td
+/F2 9 Tf
+48 260.00 Td (  Reversal and override guide.) Tj
+-48 -260 Td
+/F2 9 Tf
+48 242.00 Td (Acceptance Criteria:) Tj
+-48 -242 Td
+/F2 9 Tf
+48 224.00 Td (  Admin can perform monthly workflow from guide.) Tj
+-48 -224 Td
+/F1 11 Tf
+48 198.00 Td (DOC-003: Member User Guide) Tj
+-48 -198 Td
+/F2 9 Tf
+48 175.00 Td (Priority: P2) Tj
+-48 -175 Td
+/F2 9 Tf
+48 163.00 Td (Epic: Documentation) Tj
+-48 -163 Td
+/F2 9 Tf
+48 145.00 Td (Subtasks:) Tj
+-48 -145 Td
+/F2 9 Tf
+48 127.00 Td (  Login guide.) Tj
+-48 -127 Td
+/F2 9 Tf
+48 115.00 Td (  Declaration submission guide.) Tj
+-48 -115 Td
+/F2 9 Tf
+48 103.00 Td (  Statement guide.) Tj
+-48 -103 Td
+/F2 9 Tf
+48 91.00 Td (  Savings and loan viewing guide.) Tj
+-48 -91 Td
+/F2 9 Tf
+48 79.00 Td (  Penalty explanation.) Tj
+-48 -79 Td
+/F2 9 Tf
+48 61.00 Td (Acceptance Criteria:) Tj
+-48 -61 Td
+/F2 8 Tf
+509 28 Td (Page 34) Tj
+ET
+endstream
+endobj
+73 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 72 0 R >>
+endobj
+74 0 obj
+<< /Length 3692 >>
+stream
+BT
+/F2 9 Tf
+48 738.00 Td (  Member can understand portal usage.) Tj
+-48 -738 Td
+/F1 14 Tf
+48 710.00 Td (20. Suggested MVP Release Scope) Tj
+-48 -710 Td
+/F2 9 Tf
+48 682.00 Td (MVP must include:) Tj
+-48 -682 Td
+/F2 9 Tf
+48 664.00 Td (  Authentication and roles.) Tj
+-48 -664 Td
+/F2 9 Tf
+48 652.00 Td (  Member management.) Tj
+-48 -652 Td
+/F2 9 Tf
+48 640.00 Td (  Cycle management.) Tj
+-48 -640 Td
+/F2 9 Tf
+48 628.00 Td (  Cycle member enrollment.) Tj
+-48 -628 Td
+/F2 9 Tf
+48 616.00 Td (  Declarations.) Tj
+-48 -616 Td
+/F2 9 Tf
+48 604.00 Td (  Savings deposits.) Tj
+-48 -604 Td
+/F2 9 Tf
+48 592.00 Td (  Social fund and membership fees.) Tj
+-48 -592 Td
+/F2 9 Tf
+48 580.00 Td (  Loan requests, approvals, disbursements, and repayments.) Tj
+-48 -580 Td
+/F2 9 Tf
+48 568.00 Td (  Penalty assessment and conversion.) Tj
+-48 -568 Td
+/F2 9 Tf
+48 556.00 Td (  Ledger posting.) Tj
+-48 -556 Td
+/F2 9 Tf
+48 544.00 Td (  Savings interest.) Tj
+-48 -544 Td
+/F2 9 Tf
+48 532.00 Td (  Loan interest.) Tj
+-48 -532 Td
+/F2 9 Tf
+48 520.00 Td (  Common-interest calculation and allocation.) Tj
+-48 -520 Td
+/F2 9 Tf
+48 508.00 Td (  Monthly closing and month locking.) Tj
+-48 -508 Td
+/F2 9 Tf
+48 496.00 Td (  Member statements.) Tj
+-48 -496 Td
+/F2 9 Tf
+48 484.00 Td (  Admin reports.) Tj
+-48 -484 Td
+/F2 9 Tf
+48 472.00 Td (  Member portal.) Tj
+-48 -472 Td
+/F2 9 Tf
+48 460.00 Td (  Responsive mobile and desktop layouts.) Tj
+-48 -460 Td
+/F1 14 Tf
+48 432.00 Td (21. Suggested Implementation Order) Tj
+-48 -432 Td
+/F2 9 Tf
+48 404.00 Td (1. BE-001 to BE-006: backend foundation and schema.) Tj
+-48 -404 Td
+/F2 9 Tf
+48 392.00 Td (2. BE-007 to BE-008: auth and permissions.) Tj
+-48 -392 Td
+/F2 9 Tf
+48 380.00 Td (3. BE-009 to BE-014: core operational APIs.) Tj
+-48 -380 Td
+/F2 9 Tf
+48 368.00 Td (4. BE-015 to BE-020: ledger and financial engine.) Tj
+-48 -368 Td
+/F2 9 Tf
+48 356.00 Td (5. BE-021 to BE-026: reports, audit, security, performance.) Tj
+-48 -356 Td
+/F2 9 Tf
+48 344.00 Td (6. FE-001 to FE-003: frontend foundation.) Tj
+-48 -344 Td
+/F2 9 Tf
+48 332.00 Td (7. FE-004 to FE-006: authentication UI.) Tj
+-48 -332 Td
+/F2 9 Tf
+48 320.00 Td (8. FE-007 to FE-018: admin UI.) Tj
+-48 -320 Td
+/F2 9 Tf
+48 308.00 Td (9. FE-019 to FE-021: member portal.) Tj
+-48 -308 Td
+/F2 9 Tf
+48 296.00 Td (10. FE-022 to FE-023: responsive and accessibility passes.) Tj
+-48 -296 Td
+/F2 9 Tf
+48 284.00 Td (11. QA-001 to QA-004: full workflow and regression testing.) Tj
+-48 -284 Td
+/F2 9 Tf
+48 272.00 Td (12. DO-001 to DO-003: local setup, CI, staging, production.) Tj
+-48 -272 Td
+/F2 9 Tf
+48 260.00 Td (13. DOC-001 to DOC-003: documentation.) Tj
+-48 -260 Td
+/F1 14 Tf
+48 232.00 Td (22. Release Readiness Checklist) Tj
+-48 -232 Td
+/F2 9 Tf
+48 204.00 Td (  All P0 backend tasks complete.) Tj
+-48 -204 Td
+/F2 9 Tf
+48 192.00 Td (  All P0 frontend tasks complete.) Tj
+-48 -192 Td
+/F2 9 Tf
+48 180.00 Td (  Monthly closing E2E test passes.) Tj
+-48 -180 Td
+/F2 9 Tf
+48 168.00 Td (  Financial accuracy test pack passes.) Tj
+-48 -168 Td
+/F2 9 Tf
+48 156.00 Td (  Member ownership security tests pass.) Tj
+-48 -156 Td
+/F2 9 Tf
+48 144.00 Td (  Locked month edit prevention works.) Tj
+-48 -144 Td
+/F2 9 Tf
+48 132.00 Td (  Ledger reversals work.) Tj
+-48 -132 Td
+/F2 9 Tf
+48 120.00 Td (  Reports reconcile with snapshots and ledger.) Tj
+-48 -120 Td
+/F2 9 Tf
+48 108.00 Td (  Mobile screens checked at 360px width.) Tj
+-48 -108 Td
+/F2 9 Tf
+48 96.00 Td (  Desktop screens checked at 1366px width.) Tj
+-48 -96 Td
+/F2 9 Tf
+48 84.00 Td (  Database backup configured.) Tj
+-48 -84 Td
+/F2 9 Tf
+48 72.00 Td (  Admin user guide complete.) Tj
+-48 -72 Td
+/F2 9 Tf
+48 60.00 Td (  Production environment variables configured.) Tj
+-48 -60 Td
+/F2 8 Tf
+509 28 Td (Page 35) Tj
+ET
+endstream
+endobj
+75 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 74 0 R >>
+endobj
+xref
+0 76
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000353 00000 n 
+0000000428 00000 n 
+0000000498 00000 n 
+0000000566 00000 n 
+0000003861 00000 n 
+0000004007 00000 n 
+0000007371 00000 n 
+0000007517 00000 n 
+0000010665 00000 n 
+0000010813 00000 n 
+0000014040 00000 n 
+0000014188 00000 n 
+0000017574 00000 n 
+0000017722 00000 n 
+0000020892 00000 n 
+0000021040 00000 n 
+0000024399 00000 n 
+0000024547 00000 n 
+0000027876 00000 n 
+0000028024 00000 n 
+0000031670 00000 n 
+0000031818 00000 n 
+0000035150 00000 n 
+0000035298 00000 n 
+0000038582 00000 n 
+0000038730 00000 n 
+0000042152 00000 n 
+0000042300 00000 n 
+0000045749 00000 n 
+0000045897 00000 n 
+0000049010 00000 n 
+0000049158 00000 n 
+0000052263 00000 n 
+0000052411 00000 n 
+0000055576 00000 n 
+0000055724 00000 n 
+0000058770 00000 n 
+0000058918 00000 n 
+0000061932 00000 n 
+0000062080 00000 n 
+0000064793 00000 n 
+0000064941 00000 n 
+0000067884 00000 n 
+0000068032 00000 n 
+0000071271 00000 n 
+0000071419 00000 n 
+0000074509 00000 n 
+0000074657 00000 n 
+0000077708 00000 n 
+0000077856 00000 n 
+0000080951 00000 n 
+0000081099 00000 n 
+0000084162 00000 n 
+0000084310 00000 n 
+0000087319 00000 n 
+0000087467 00000 n 
+0000090474 00000 n 
+0000090622 00000 n 
+0000093437 00000 n 
+0000093585 00000 n 
+0000096397 00000 n 
+0000096545 00000 n 
+0000099660 00000 n 
+0000099808 00000 n 
+0000102695 00000 n 
+0000102843 00000 n 
+0000105839 00000 n 
+0000105987 00000 n 
+0000108867 00000 n 
+0000109015 00000 n 
+0000111785 00000 n 
+0000111933 00000 n 
+0000115678 00000 n 
+trailer
+<< /Size 76 /Root 1 0 R >>
+startxref
+115826
+%%EOF

@@ -1,0 +1,2599 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [7 0 R 9 0 R 11 0 R 13 0 R 15 0 R 17 0 R 19 0 R 21 0 R 23 0 R 25 0 R 27 0 R 29 0 R 31 0 R] /Count 13 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Courier >>
+endobj
+6 0 obj
+<< /Length 3688 >>
+stream
+BT
+/F1 18 Tf
+48 736.00 Td (Village Banking Web Application) Tj
+-48 -736 Td
+/F1 18 Tf
+48 700.00 Td (Database Schema and ERD Design) Tj
+-48 -700 Td
+/F1 14 Tf
+48 656.00 Td (1. Design Position) Tj
+-48 -656 Td
+/F2 9 Tf
+48 628.00 Td (This schema is designed for PostgreSQL and follows a ledger-first financial model.) Tj
+-48 -628 Td
+/F2 9 Tf
+48 610.00 Td (The core idea is:) Tj
+-48 -610 Td
+/F2 9 Tf
+48 592.00 Td (  cycle rules are stored per cycle,) Tj
+-48 -592 Td
+/F2 9 Tf
+48 580.00 Td (  declarations capture member intent,) Tj
+-48 -580 Td
+/F2 9 Tf
+48 568.00 Td (  ledger transactions capture actual financial postings,) Tj
+-48 -568 Td
+/F2 9 Tf
+48 556.00 Td (  monthly processing creates controlled snapshots,) Tj
+-48 -556 Td
+/F2 9 Tf
+48 544.00 Td (  locked months prevent ordinary edits,) Tj
+-48 -544 Td
+/F2 9 Tf
+48 532.00 Td (  reversals and overrides preserve audit history.) Tj
+-48 -532 Td
+/F2 9 Tf
+48 514.00 Td (Balances should be derived from ledger entries or from monthly snapshots generated from ledger) Tj
+-48 -514 Td
+/F2 9 Tf
+48 502.00 Td (entries. Financial balances should not be silently edited.) Tj
+-48 -502 Td
+/F1 14 Tf
+48 474.00 Td (2. Recommended PostgreSQL Extensions) Tj
+-48 -474 Td
+/F3 6.2 Tf
+48 446.00 Td (CREATE EXTENSION IF NOT EXISTS pgcrypto;) Tj
+-48 -446 Td
+/F2 9 Tf
+48 426.00 Td (UUID primary keys are recommended for public-facing application identifiers.) Tj
+-48 -426 Td
+/F1 14 Tf
+48 398.00 Td (3. Enum Types) Tj
+-48 -398 Td
+/F3 6.2 Tf
+48 370.00 Td (CREATE TYPE user_role AS ENUM \() Tj
+-48 -370 Td
+/F3 6.2 Tf
+48 362.00 Td (  'ADMIN',) Tj
+-48 -362 Td
+/F3 6.2 Tf
+48 354.00 Td (  'MEMBER',) Tj
+-48 -354 Td
+/F3 6.2 Tf
+48 346.00 Td (  'AUDITOR') Tj
+-48 -346 Td
+/F3 6.2 Tf
+48 338.00 Td (\);) Tj
+-48 -338 Td
+/F3 6.2 Tf
+48 330.00 Td () Tj
+-48 -330 Td
+/F3 6.2 Tf
+48 322.00 Td (CREATE TYPE cycle_status AS ENUM \() Tj
+-48 -322 Td
+/F3 6.2 Tf
+48 314.00 Td (  'DRAFT',) Tj
+-48 -314 Td
+/F3 6.2 Tf
+48 306.00 Td (  'ACTIVE',) Tj
+-48 -306 Td
+/F3 6.2 Tf
+48 298.00 Td (  'CLOSED',) Tj
+-48 -298 Td
+/F3 6.2 Tf
+48 290.00 Td (  'ARCHIVED') Tj
+-48 -290 Td
+/F3 6.2 Tf
+48 282.00 Td (\);) Tj
+-48 -282 Td
+/F3 6.2 Tf
+48 274.00 Td () Tj
+-48 -274 Td
+/F3 6.2 Tf
+48 266.00 Td (CREATE TYPE cycle_member_status AS ENUM \() Tj
+-48 -266 Td
+/F3 6.2 Tf
+48 258.00 Td (  'ACTIVE',) Tj
+-48 -258 Td
+/F3 6.2 Tf
+48 250.00 Td (  'INACTIVE',) Tj
+-48 -250 Td
+/F3 6.2 Tf
+48 242.00 Td (  'REMOVED') Tj
+-48 -242 Td
+/F3 6.2 Tf
+48 234.00 Td (\);) Tj
+-48 -234 Td
+/F3 6.2 Tf
+48 226.00 Td () Tj
+-48 -226 Td
+/F3 6.2 Tf
+48 218.00 Td (CREATE TYPE cycle_month_status AS ENUM \() Tj
+-48 -218 Td
+/F3 6.2 Tf
+48 210.00 Td (  'OPEN',) Tj
+-48 -210 Td
+/F3 6.2 Tf
+48 202.00 Td (  'DECLARATION_PERIOD',) Tj
+-48 -202 Td
+/F3 6.2 Tf
+48 194.00 Td (  'PAYOUT_PERIOD',) Tj
+-48 -194 Td
+/F3 6.2 Tf
+48 186.00 Td (  'PROCESSING',) Tj
+-48 -186 Td
+/F3 6.2 Tf
+48 178.00 Td (  'REVIEW',) Tj
+-48 -178 Td
+/F3 6.2 Tf
+48 170.00 Td (  'LOCKED',) Tj
+-48 -170 Td
+/F3 6.2 Tf
+48 162.00 Td (  'REOPENED') Tj
+-48 -162 Td
+/F3 6.2 Tf
+48 154.00 Td (\);) Tj
+-48 -154 Td
+/F3 6.2 Tf
+48 146.00 Td () Tj
+-48 -146 Td
+/F3 6.2 Tf
+48 138.00 Td (CREATE TYPE declaration_status AS ENUM \() Tj
+-48 -138 Td
+/F3 6.2 Tf
+48 130.00 Td (  'DRAFT',) Tj
+-48 -130 Td
+/F3 6.2 Tf
+48 122.00 Td (  'SUBMITTED',) Tj
+-48 -122 Td
+/F3 6.2 Tf
+48 114.00 Td (  'LATE',) Tj
+-48 -114 Td
+/F3 6.2 Tf
+48 106.00 Td (  'MISSED',) Tj
+-48 -106 Td
+/F3 6.2 Tf
+48 98.00 Td (  'CANCELLED') Tj
+-48 -98 Td
+/F3 6.2 Tf
+48 90.00 Td (\);) Tj
+-48 -90 Td
+/F3 6.2 Tf
+48 82.00 Td () Tj
+-48 -82 Td
+/F3 6.2 Tf
+48 74.00 Td (CREATE TYPE approval_status AS ENUM \() Tj
+-48 -74 Td
+/F3 6.2 Tf
+48 66.00 Td (  'PENDING',) Tj
+-48 -66 Td
+/F3 6.2 Tf
+48 58.00 Td (  'APPROVED',) Tj
+-48 -58 Td
+/F2 8 Tf
+509 28 Td (Page 1) Tj
+ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 6 0 R >>
+endobj
+8 0 obj
+<< /Length 4962 >>
+stream
+BT
+/F3 6.2 Tf
+48 744.00 Td (  'REJECTED',) Tj
+-48 -744 Td
+/F3 6.2 Tf
+48 736.00 Td (  'CANCELLED') Tj
+-48 -736 Td
+/F3 6.2 Tf
+48 728.00 Td (\);) Tj
+-48 -728 Td
+/F3 6.2 Tf
+48 720.00 Td () Tj
+-48 -720 Td
+/F3 6.2 Tf
+48 712.00 Td (CREATE TYPE borrowing_compliance_status AS ENUM \() Tj
+-48 -712 Td
+/F3 6.2 Tf
+48 704.00 Td (  'NEVER_BORROWED',) Tj
+-48 -704 Td
+/F3 6.2 Tf
+48 696.00 Td (  'BORROWED_BELOW_MINIMUM',) Tj
+-48 -696 Td
+/F3 6.2 Tf
+48 688.00 Td (  'AT_OR_ABOVE_MINIMUM') Tj
+-48 -688 Td
+/F3 6.2 Tf
+48 680.00 Td (\);) Tj
+-48 -680 Td
+/F3 6.2 Tf
+48 672.00 Td () Tj
+-48 -672 Td
+/F3 6.2 Tf
+48 664.00 Td (CREATE TYPE ledger_transaction_type AS ENUM \() Tj
+-48 -664 Td
+/F3 6.2 Tf
+48 656.00 Td (  'SAVINGS_DEPOSIT',) Tj
+-48 -656 Td
+/F3 6.2 Tf
+48 648.00 Td (  'SAVINGS_INTEREST',) Tj
+-48 -648 Td
+/F3 6.2 Tf
+48 640.00 Td (  'SOCIAL_FUND_PAYMENT',) Tj
+-48 -640 Td
+/F3 6.2 Tf
+48 632.00 Td (  'MEMBERSHIP_FEE_PAYMENT',) Tj
+-48 -632 Td
+/F3 6.2 Tf
+48 624.00 Td (  'LOAN_DISBURSEMENT',) Tj
+-48 -624 Td
+/F3 6.2 Tf
+48 616.00 Td (  'LOAN_TOP_UP',) Tj
+-48 -616 Td
+/F3 6.2 Tf
+48 608.00 Td (  'PRINCIPAL_REPAYMENT',) Tj
+-48 -608 Td
+/F3 6.2 Tf
+48 600.00 Td (  'LOAN_INTEREST_ASSESSMENT',) Tj
+-48 -600 Td
+/F3 6.2 Tf
+48 592.00 Td (  'LOAN_INTEREST_REPAYMENT',) Tj
+-48 -592 Td
+/F3 6.2 Tf
+48 584.00 Td (  'COMMON_INTEREST_ASSESSMENT',) Tj
+-48 -584 Td
+/F3 6.2 Tf
+48 576.00 Td (  'COMMON_INTEREST_PAYMENT',) Tj
+-48 -576 Td
+/F3 6.2 Tf
+48 568.00 Td (  'PENALTY_ASSESSMENT',) Tj
+-48 -568 Td
+/F3 6.2 Tf
+48 560.00 Td (  'PENALTY_PAYMENT',) Tj
+-48 -560 Td
+/F3 6.2 Tf
+48 552.00 Td (  'CONVERTED_PENALTY_LOAN',) Tj
+-48 -552 Td
+/F3 6.2 Tf
+48 544.00 Td (  'ADMIN_ADJUSTMENT',) Tj
+-48 -544 Td
+/F3 6.2 Tf
+48 536.00 Td (  'REVERSAL') Tj
+-48 -536 Td
+/F3 6.2 Tf
+48 528.00 Td (\);) Tj
+-48 -528 Td
+/F3 6.2 Tf
+48 520.00 Td () Tj
+-48 -520 Td
+/F3 6.2 Tf
+48 512.00 Td (CREATE TYPE ledger_account_type AS ENUM \() Tj
+-48 -512 Td
+/F3 6.2 Tf
+48 504.00 Td (  'SAVINGS_PRINCIPAL',) Tj
+-48 -504 Td
+/F3 6.2 Tf
+48 496.00 Td (  'SAVINGS_INTEREST',) Tj
+-48 -496 Td
+/F3 6.2 Tf
+48 488.00 Td (  'SOCIAL_FUND',) Tj
+-48 -488 Td
+/F3 6.2 Tf
+48 480.00 Td (  'MEMBERSHIP_FEE',) Tj
+-48 -480 Td
+/F3 6.2 Tf
+48 472.00 Td (  'LOAN_PRINCIPAL',) Tj
+-48 -472 Td
+/F3 6.2 Tf
+48 464.00 Td (  'LOAN_INTEREST',) Tj
+-48 -464 Td
+/F3 6.2 Tf
+48 456.00 Td (  'COMMON_INTEREST',) Tj
+-48 -456 Td
+/F3 6.2 Tf
+48 448.00 Td (  'PENALTY',) Tj
+-48 -448 Td
+/F3 6.2 Tf
+48 440.00 Td (  'CASH_POOL',) Tj
+-48 -440 Td
+/F3 6.2 Tf
+48 432.00 Td (  'ADJUSTMENT') Tj
+-48 -432 Td
+/F3 6.2 Tf
+48 424.00 Td (\);) Tj
+-48 -424 Td
+/F3 6.2 Tf
+48 416.00 Td () Tj
+-48 -416 Td
+/F3 6.2 Tf
+48 408.00 Td (CREATE TYPE loan_origin_type AS ENUM \() Tj
+-48 -408 Td
+/F3 6.2 Tf
+48 400.00 Td (  'ORIGINAL_LOAN',) Tj
+-48 -400 Td
+/F3 6.2 Tf
+48 392.00 Td (  'TOP_UP',) Tj
+-48 -392 Td
+/F3 6.2 Tf
+48 384.00 Td (  'CONVERTED_PENALTY',) Tj
+-48 -384 Td
+/F3 6.2 Tf
+48 376.00 Td (  'ADMIN_CONVERSION') Tj
+-48 -376 Td
+/F3 6.2 Tf
+48 368.00 Td (\);) Tj
+-48 -368 Td
+/F3 6.2 Tf
+48 360.00 Td () Tj
+-48 -360 Td
+/F3 6.2 Tf
+48 352.00 Td (CREATE TYPE penalty_status AS ENUM \() Tj
+-48 -352 Td
+/F3 6.2 Tf
+48 344.00 Td (  'ASSESSED',) Tj
+-48 -344 Td
+/F3 6.2 Tf
+48 336.00 Td (  'PAID',) Tj
+-48 -336 Td
+/F3 6.2 Tf
+48 328.00 Td (  'PARTIALLY_PAID',) Tj
+-48 -328 Td
+/F3 6.2 Tf
+48 320.00 Td (  'CONVERTED_TO_LOAN',) Tj
+-48 -320 Td
+/F3 6.2 Tf
+48 312.00 Td (  'WAIVED',) Tj
+-48 -312 Td
+/F3 6.2 Tf
+48 304.00 Td (  'REVERSED') Tj
+-48 -304 Td
+/F3 6.2 Tf
+48 296.00 Td (\);) Tj
+-48 -296 Td
+/F3 6.2 Tf
+48 288.00 Td () Tj
+-48 -288 Td
+/F3 6.2 Tf
+48 280.00 Td (CREATE TYPE common_interest_allocation_method AS ENUM \() Tj
+-48 -280 Td
+/F3 6.2 Tf
+48 272.00 Td (  'ONLY_NON_BORROWERS_EQUAL',) Tj
+-48 -272 Td
+/F3 6.2 Tf
+48 264.00 Td (  'NON_BORROWERS_AND_BELOW_MINIMUM_PROPORTIONAL',) Tj
+-48 -264 Td
+/F3 6.2 Tf
+48 256.00 Td (  'ALL_MEMBERS_EQUAL',) Tj
+-48 -256 Td
+/F3 6.2 Tf
+48 248.00 Td (  'MANUAL_OVERRIDE') Tj
+-48 -248 Td
+/F3 6.2 Tf
+48 240.00 Td (\);) Tj
+-48 -240 Td
+/F3 6.2 Tf
+48 232.00 Td () Tj
+-48 -232 Td
+/F3 6.2 Tf
+48 224.00 Td (CREATE TYPE contribution_type AS ENUM \() Tj
+-48 -224 Td
+/F3 6.2 Tf
+48 216.00 Td (  'SOCIAL_FUND',) Tj
+-48 -216 Td
+/F3 6.2 Tf
+48 208.00 Td (  'MEMBERSHIP_FEE') Tj
+-48 -208 Td
+/F3 6.2 Tf
+48 200.00 Td (\);) Tj
+-48 -200 Td
+/F3 6.2 Tf
+48 192.00 Td () Tj
+-48 -192 Td
+/F3 6.2 Tf
+48 184.00 Td (CREATE TYPE audit_action AS ENUM \() Tj
+-48 -184 Td
+/F3 6.2 Tf
+48 176.00 Td (  'CREATE',) Tj
+-48 -176 Td
+/F3 6.2 Tf
+48 168.00 Td (  'UPDATE',) Tj
+-48 -168 Td
+/F3 6.2 Tf
+48 160.00 Td (  'DELETE',) Tj
+-48 -160 Td
+/F3 6.2 Tf
+48 152.00 Td (  'APPROVE',) Tj
+-48 -152 Td
+/F3 6.2 Tf
+48 144.00 Td (  'REJECT',) Tj
+-48 -144 Td
+/F3 6.2 Tf
+48 136.00 Td (  'POST',) Tj
+-48 -136 Td
+/F3 6.2 Tf
+48 128.00 Td (  'REVERSE',) Tj
+-48 -128 Td
+/F3 6.2 Tf
+48 120.00 Td (  'OVERRIDE',) Tj
+-48 -120 Td
+/F3 6.2 Tf
+48 112.00 Td (  'LOCK',) Tj
+-48 -112 Td
+/F3 6.2 Tf
+48 104.00 Td (  'REOPEN',) Tj
+-48 -104 Td
+/F3 6.2 Tf
+48 96.00 Td (  'LOGIN') Tj
+-48 -96 Td
+/F3 6.2 Tf
+48 88.00 Td (\);) Tj
+-48 -88 Td
+/F2 8 Tf
+509 28 Td (Page 2) Tj
+ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 8 0 R >>
+endobj
+10 0 obj
+<< /Length 4724 >>
+stream
+BT
+/F1 14 Tf
+48 734.00 Td (4. Core Identity and Access Tables) Tj
+-48 -734 Td
+/F1 11 Tf
+48 698.00 Td (users) Tj
+-48 -698 Td
+/F2 9 Tf
+48 675.00 Td (Application login accounts.) Tj
+-48 -675 Td
+/F3 6.2 Tf
+48 657.00 Td (CREATE TABLE users \() Tj
+-48 -657 Td
+/F3 6.2 Tf
+48 649.00 Td (  id UUID PRIMARY KEY DEFAULT gen_random_uuid\(\),) Tj
+-48 -649 Td
+/F3 6.2 Tf
+48 641.00 Td (  email TEXT NOT NULL UNIQUE,) Tj
+-48 -641 Td
+/F3 6.2 Tf
+48 633.00 Td (  password_hash TEXT NOT NULL,) Tj
+-48 -633 Td
+/F3 6.2 Tf
+48 625.00 Td (  role user_role NOT NULL,) Tj
+-48 -625 Td
+/F3 6.2 Tf
+48 617.00 Td (  is_active BOOLEAN NOT NULL DEFAULT TRUE,) Tj
+-48 -617 Td
+/F3 6.2 Tf
+48 609.00 Td (  last_login_at TIMESTAMPTZ,) Tj
+-48 -609 Td
+/F3 6.2 Tf
+48 601.00 Td (  created_at TIMESTAMPTZ NOT NULL DEFAULT now\(\),) Tj
+-48 -601 Td
+/F3 6.2 Tf
+48 593.00 Td (  updated_at TIMESTAMPTZ NOT NULL DEFAULT now\(\)) Tj
+-48 -593 Td
+/F3 6.2 Tf
+48 585.00 Td (\);) Tj
+-48 -585 Td
+/F1 11 Tf
+48 557.00 Td (members) Tj
+-48 -557 Td
+/F2 9 Tf
+48 534.00 Td (Member profile independent of any cycle.) Tj
+-48 -534 Td
+/F3 6.2 Tf
+48 516.00 Td (CREATE TABLE members \() Tj
+-48 -516 Td
+/F3 6.2 Tf
+48 508.00 Td (  id UUID PRIMARY KEY DEFAULT gen_random_uuid\(\),) Tj
+-48 -508 Td
+/F3 6.2 Tf
+48 500.00 Td (  user_id UUID UNIQUE REFERENCES users\(id\),) Tj
+-48 -500 Td
+/F3 6.2 Tf
+48 492.00 Td (  member_code TEXT UNIQUE,) Tj
+-48 -492 Td
+/F3 6.2 Tf
+48 484.00 Td (  first_name TEXT NOT NULL,) Tj
+-48 -484 Td
+/F3 6.2 Tf
+48 476.00 Td (  last_name TEXT NOT NULL,) Tj
+-48 -476 Td
+/F3 6.2 Tf
+48 468.00 Td (  phone TEXT,) Tj
+-48 -468 Td
+/F3 6.2 Tf
+48 460.00 Td (  national_id TEXT,) Tj
+-48 -460 Td
+/F3 6.2 Tf
+48 452.00 Td (  address TEXT,) Tj
+-48 -452 Td
+/F3 6.2 Tf
+48 444.00 Td (  is_active BOOLEAN NOT NULL DEFAULT TRUE,) Tj
+-48 -444 Td
+/F3 6.2 Tf
+48 436.00 Td (  created_at TIMESTAMPTZ NOT NULL DEFAULT now\(\),) Tj
+-48 -436 Td
+/F3 6.2 Tf
+48 428.00 Td (  updated_at TIMESTAMPTZ NOT NULL DEFAULT now\(\)) Tj
+-48 -428 Td
+/F3 6.2 Tf
+48 420.00 Td (\);) Tj
+-48 -420 Td
+/F1 14 Tf
+48 390.00 Td (5. Cycle Configuration Tables) Tj
+-48 -390 Td
+/F1 11 Tf
+48 354.00 Td (cycles) Tj
+-48 -354 Td
+/F2 9 Tf
+48 331.00 Td (Stores one banking cycle and its financial rules.) Tj
+-48 -331 Td
+/F3 6.2 Tf
+48 313.00 Td (CREATE TABLE cycles \() Tj
+-48 -313 Td
+/F3 6.2 Tf
+48 305.00 Td (  id UUID PRIMARY KEY DEFAULT gen_random_uuid\(\),) Tj
+-48 -305 Td
+/F3 6.2 Tf
+48 297.00 Td (  name TEXT NOT NULL,) Tj
+-48 -297 Td
+/F3 6.2 Tf
+48 289.00 Td (  description TEXT,) Tj
+-48 -289 Td
+/F3 6.2 Tf
+48 281.00 Td (  start_date DATE NOT NULL,) Tj
+-48 -281 Td
+/F3 6.2 Tf
+48 273.00 Td (  end_date DATE NOT NULL,) Tj
+-48 -273 Td
+/F3 6.2 Tf
+48 265.00 Td (  status cycle_status NOT NULL DEFAULT 'DRAFT',) Tj
+-48 -265 Td
+/F3 6.2 Tf
+48 257.00 Td () Tj
+-48 -257 Td
+/F3 6.2 Tf
+48 249.00 Td (  savings_cap NUMERIC\(14,2\) NOT NULL,) Tj
+-48 -249 Td
+/F3 6.2 Tf
+48 241.00 Td (  minimum_borrowing_amount NUMERIC\(14,2\) NOT NULL,) Tj
+-48 -241 Td
+/F3 6.2 Tf
+48 233.00 Td (  savings_interest_rate NUMERIC\(8,6\) NOT NULL,) Tj
+-48 -233 Td
+/F3 6.2 Tf
+48 225.00 Td (  loan_interest_rate NUMERIC\(8,6\) NOT NULL,) Tj
+-48 -225 Td
+/F3 6.2 Tf
+48 217.00 Td (  common_interest_rate NUMERIC\(8,6\) NOT NULL,) Tj
+-48 -217 Td
+/F3 6.2 Tf
+48 209.00 Td () Tj
+-48 -209 Td
+/F3 6.2 Tf
+48 201.00 Td (  social_fund_amount NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -201 Td
+/F3 6.2 Tf
+48 193.00 Td (  membership_fee_amount NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -193 Td
+/F3 6.2 Tf
+48 185.00 Td () Tj
+-48 -185 Td
+/F3 6.2 Tf
+48 177.00 Td (  declaration_start_day SMALLINT NOT NULL,) Tj
+-48 -177 Td
+/F3 6.2 Tf
+48 169.00 Td (  declaration_end_day SMALLINT NOT NULL,) Tj
+-48 -169 Td
+/F3 6.2 Tf
+48 161.00 Td (  payout_start_day SMALLINT NOT NULL,) Tj
+-48 -161 Td
+/F3 6.2 Tf
+48 153.00 Td (  payout_end_day SMALLINT NOT NULL,) Tj
+-48 -153 Td
+/F3 6.2 Tf
+48 145.00 Td () Tj
+-48 -145 Td
+/F3 6.2 Tf
+48 137.00 Td (  rounding_scale SMALLINT NOT NULL DEFAULT 2,) Tj
+-48 -137 Td
+/F3 6.2 Tf
+48 129.00 Td (  rounding_mode TEXT NOT NULL DEFAULT 'HALF_UP',) Tj
+-48 -129 Td
+/F3 6.2 Tf
+48 121.00 Td () Tj
+-48 -121 Td
+/F3 6.2 Tf
+48 113.00 Td (  created_by UUID REFERENCES users\(id\),) Tj
+-48 -113 Td
+/F3 6.2 Tf
+48 105.00 Td (  created_at TIMESTAMPTZ NOT NULL DEFAULT now\(\),) Tj
+-48 -105 Td
+/F3 6.2 Tf
+48 97.00 Td (  updated_at TIMESTAMPTZ NOT NULL DEFAULT now\(\),) Tj
+-48 -97 Td
+/F3 6.2 Tf
+48 89.00 Td () Tj
+-48 -89 Td
+/F3 6.2 Tf
+48 81.00 Td (  CONSTRAINT cycles_date_check CHECK \(end_date >= start_date\),) Tj
+-48 -81 Td
+/F3 6.2 Tf
+48 73.00 Td (  CONSTRAINT cycles_rates_check CHECK \() Tj
+-48 -73 Td
+/F3 6.2 Tf
+48 65.00 Td (    savings_interest_rate >= 0) Tj
+-48 -65 Td
+/F3 6.2 Tf
+48 57.00 Td (    AND loan_interest_rate >= 0) Tj
+-48 -57 Td
+/F2 8 Tf
+509 28 Td (Page 3) Tj
+ET
+endstream
+endobj
+11 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 10 0 R >>
+endobj
+12 0 obj
+<< /Length 4609 >>
+stream
+BT
+/F3 6.2 Tf
+48 744.00 Td (    AND common_interest_rate >= 0) Tj
+-48 -744 Td
+/F3 6.2 Tf
+48 736.00 Td (  \),) Tj
+-48 -736 Td
+/F3 6.2 Tf
+48 728.00 Td (  CONSTRAINT cycles_amounts_check CHECK \() Tj
+-48 -728 Td
+/F3 6.2 Tf
+48 720.00 Td (    savings_cap >= 0) Tj
+-48 -720 Td
+/F3 6.2 Tf
+48 712.00 Td (    AND minimum_borrowing_amount >= 0) Tj
+-48 -712 Td
+/F3 6.2 Tf
+48 704.00 Td (    AND social_fund_amount >= 0) Tj
+-48 -704 Td
+/F3 6.2 Tf
+48 696.00 Td (    AND membership_fee_amount >= 0) Tj
+-48 -696 Td
+/F3 6.2 Tf
+48 688.00 Td (  \)) Tj
+-48 -688 Td
+/F3 6.2 Tf
+48 680.00 Td (\);) Tj
+-48 -680 Td
+/F1 11 Tf
+48 652.00 Td (cycle_months) Tj
+-48 -652 Td
+/F2 9 Tf
+48 629.00 Td (One row per operational month in a cycle.) Tj
+-48 -629 Td
+/F3 6.2 Tf
+48 611.00 Td (CREATE TABLE cycle_months \() Tj
+-48 -611 Td
+/F3 6.2 Tf
+48 603.00 Td (  id UUID PRIMARY KEY DEFAULT gen_random_uuid\(\),) Tj
+-48 -603 Td
+/F3 6.2 Tf
+48 595.00 Td (  cycle_id UUID NOT NULL REFERENCES cycles\(id\),) Tj
+-48 -595 Td
+/F3 6.2 Tf
+48 587.00 Td (  month_number INTEGER NOT NULL,) Tj
+-48 -587 Td
+/F3 6.2 Tf
+48 579.00 Td (  period_start DATE NOT NULL,) Tj
+-48 -579 Td
+/F3 6.2 Tf
+48 571.00 Td (  period_end DATE NOT NULL,) Tj
+-48 -571 Td
+/F3 6.2 Tf
+48 563.00 Td (  declaration_window_start DATE NOT NULL,) Tj
+-48 -563 Td
+/F3 6.2 Tf
+48 555.00 Td (  declaration_window_end DATE NOT NULL,) Tj
+-48 -555 Td
+/F3 6.2 Tf
+48 547.00 Td (  payout_window_start DATE NOT NULL,) Tj
+-48 -547 Td
+/F3 6.2 Tf
+48 539.00 Td (  payout_window_end DATE NOT NULL,) Tj
+-48 -539 Td
+/F3 6.2 Tf
+48 531.00 Td (  status cycle_month_status NOT NULL DEFAULT 'OPEN',) Tj
+-48 -531 Td
+/F3 6.2 Tf
+48 523.00 Td (  locked_at TIMESTAMPTZ,) Tj
+-48 -523 Td
+/F3 6.2 Tf
+48 515.00 Td (  locked_by UUID REFERENCES users\(id\),) Tj
+-48 -515 Td
+/F3 6.2 Tf
+48 507.00 Td (  created_at TIMESTAMPTZ NOT NULL DEFAULT now\(\),) Tj
+-48 -507 Td
+/F3 6.2 Tf
+48 499.00 Td (  updated_at TIMESTAMPTZ NOT NULL DEFAULT now\(\),) Tj
+-48 -499 Td
+/F3 6.2 Tf
+48 491.00 Td () Tj
+-48 -491 Td
+/F3 6.2 Tf
+48 483.00 Td (  UNIQUE \(cycle_id, month_number\),) Tj
+-48 -483 Td
+/F3 6.2 Tf
+48 475.00 Td (  CONSTRAINT cycle_months_date_check CHECK \(period_end >= period_start\)) Tj
+-48 -475 Td
+/F3 6.2 Tf
+48 467.00 Td (\);) Tj
+-48 -467 Td
+/F1 11 Tf
+48 439.00 Td (cycle_members) Tj
+-48 -439 Td
+/F2 9 Tf
+48 416.00 Td (Member enrollment into a cycle.) Tj
+-48 -416 Td
+/F3 6.2 Tf
+48 398.00 Td (CREATE TABLE cycle_members \() Tj
+-48 -398 Td
+/F3 6.2 Tf
+48 390.00 Td (  id UUID PRIMARY KEY DEFAULT gen_random_uuid\(\),) Tj
+-48 -390 Td
+/F3 6.2 Tf
+48 382.00 Td (  cycle_id UUID NOT NULL REFERENCES cycles\(id\),) Tj
+-48 -382 Td
+/F3 6.2 Tf
+48 374.00 Td (  member_id UUID NOT NULL REFERENCES members\(id\),) Tj
+-48 -374 Td
+/F3 6.2 Tf
+48 366.00 Td (  status cycle_member_status NOT NULL DEFAULT 'ACTIVE',) Tj
+-48 -366 Td
+/F3 6.2 Tf
+48 358.00 Td (  joined_at DATE NOT NULL,) Tj
+-48 -358 Td
+/F3 6.2 Tf
+48 350.00 Td (  left_at DATE,) Tj
+-48 -350 Td
+/F3 6.2 Tf
+48 342.00 Td (  created_at TIMESTAMPTZ NOT NULL DEFAULT now\(\),) Tj
+-48 -342 Td
+/F3 6.2 Tf
+48 334.00 Td (  updated_at TIMESTAMPTZ NOT NULL DEFAULT now\(\),) Tj
+-48 -334 Td
+/F3 6.2 Tf
+48 326.00 Td () Tj
+-48 -326 Td
+/F3 6.2 Tf
+48 318.00 Td (  UNIQUE \(cycle_id, member_id\)) Tj
+-48 -318 Td
+/F3 6.2 Tf
+48 310.00 Td (\);) Tj
+-48 -310 Td
+/F1 11 Tf
+48 282.00 Td (penalty_types) Tj
+-48 -282 Td
+/F2 9 Tf
+48 259.00 Td (Configurable penalty definitions per cycle.) Tj
+-48 -259 Td
+/F3 6.2 Tf
+48 241.00 Td (CREATE TABLE penalty_types \() Tj
+-48 -241 Td
+/F3 6.2 Tf
+48 233.00 Td (  id UUID PRIMARY KEY DEFAULT gen_random_uuid\(\),) Tj
+-48 -233 Td
+/F3 6.2 Tf
+48 225.00 Td (  cycle_id UUID NOT NULL REFERENCES cycles\(id\),) Tj
+-48 -225 Td
+/F3 6.2 Tf
+48 217.00 Td (  code TEXT NOT NULL,) Tj
+-48 -217 Td
+/F3 6.2 Tf
+48 209.00 Td (  name TEXT NOT NULL,) Tj
+-48 -209 Td
+/F3 6.2 Tf
+48 201.00 Td (  description TEXT,) Tj
+-48 -201 Td
+/F3 6.2 Tf
+48 193.00 Td (  amount NUMERIC\(14,2\) NOT NULL,) Tj
+-48 -193 Td
+/F3 6.2 Tf
+48 185.00 Td (  is_convertible_to_loan BOOLEAN NOT NULL DEFAULT TRUE,) Tj
+-48 -185 Td
+/F3 6.2 Tf
+48 177.00 Td (  is_active BOOLEAN NOT NULL DEFAULT TRUE,) Tj
+-48 -177 Td
+/F3 6.2 Tf
+48 169.00 Td (  created_at TIMESTAMPTZ NOT NULL DEFAULT now\(\),) Tj
+-48 -169 Td
+/F3 6.2 Tf
+48 161.00 Td () Tj
+-48 -161 Td
+/F3 6.2 Tf
+48 153.00 Td (  UNIQUE \(cycle_id, code\),) Tj
+-48 -153 Td
+/F3 6.2 Tf
+48 145.00 Td (  CONSTRAINT penalty_types_amount_check CHECK \(amount >= 0\)) Tj
+-48 -145 Td
+/F3 6.2 Tf
+48 137.00 Td (\);) Tj
+-48 -137 Td
+/F1 14 Tf
+48 107.00 Td (6. Declaration and Operational Input Tables) Tj
+-48 -107 Td
+/F1 11 Tf
+48 71.00 Td (declarations) Tj
+-48 -71 Td
+/F2 8 Tf
+509 28 Td (Page 4) Tj
+ET
+endstream
+endobj
+13 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 12 0 R >>
+endobj
+14 0 obj
+<< /Length 5767 >>
+stream
+BT
+/F2 9 Tf
+48 744.00 Td (Monthly declaration submitted by a member or admin.) Tj
+-48 -744 Td
+/F3 6.2 Tf
+48 726.00 Td (CREATE TABLE declarations \() Tj
+-48 -726 Td
+/F3 6.2 Tf
+48 718.00 Td (  id UUID PRIMARY KEY DEFAULT gen_random_uuid\(\),) Tj
+-48 -718 Td
+/F3 6.2 Tf
+48 710.00 Td (  cycle_id UUID NOT NULL REFERENCES cycles\(id\),) Tj
+-48 -710 Td
+/F3 6.2 Tf
+48 702.00 Td (  cycle_month_id UUID NOT NULL REFERENCES cycle_months\(id\),) Tj
+-48 -702 Td
+/F3 6.2 Tf
+48 694.00 Td (  cycle_member_id UUID NOT NULL REFERENCES cycle_members\(id\),) Tj
+-48 -694 Td
+/F3 6.2 Tf
+48 686.00 Td () Tj
+-48 -686 Td
+/F3 6.2 Tf
+48 678.00 Td (  savings_amount NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -678 Td
+/F3 6.2 Tf
+48 670.00 Td (  loan_request_amount NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -670 Td
+/F3 6.2 Tf
+48 662.00 Td (  loan_top_up_amount NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -662 Td
+/F3 6.2 Tf
+48 654.00 Td (  principal_repayment_amount NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -654 Td
+/F3 6.2 Tf
+48 646.00 Td (  loan_interest_repayment_amount NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -646 Td
+/F3 6.2 Tf
+48 638.00 Td (  common_interest_payment_amount NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -638 Td
+/F3 6.2 Tf
+48 630.00 Td (  other_obligation_amount NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -630 Td
+/F3 6.2 Tf
+48 622.00 Td () Tj
+-48 -622 Td
+/F3 6.2 Tf
+48 614.00 Td (  status declaration_status NOT NULL DEFAULT 'SUBMITTED',) Tj
+-48 -614 Td
+/F3 6.2 Tf
+48 606.00 Td (  submitted_at TIMESTAMPTZ NOT NULL DEFAULT now\(\),) Tj
+-48 -606 Td
+/F3 6.2 Tf
+48 598.00 Td (  submitted_by UUID REFERENCES users\(id\),) Tj
+-48 -598 Td
+/F3 6.2 Tf
+48 590.00 Td (  is_within_window BOOLEAN NOT NULL,) Tj
+-48 -590 Td
+/F3 6.2 Tf
+48 582.00 Td (  notes TEXT,) Tj
+-48 -582 Td
+/F3 6.2 Tf
+48 574.00 Td (  created_at TIMESTAMPTZ NOT NULL DEFAULT now\(\),) Tj
+-48 -574 Td
+/F3 6.2 Tf
+48 566.00 Td (  updated_at TIMESTAMPTZ NOT NULL DEFAULT now\(\),) Tj
+-48 -566 Td
+/F3 6.2 Tf
+48 558.00 Td () Tj
+-48 -558 Td
+/F3 6.2 Tf
+48 550.00 Td (  UNIQUE \(cycle_month_id, cycle_member_id\),) Tj
+-48 -550 Td
+/F3 6.2 Tf
+48 542.00 Td (  CONSTRAINT declarations_amounts_check CHECK \() Tj
+-48 -542 Td
+/F3 6.2 Tf
+48 534.00 Td (    savings_amount >= 0) Tj
+-48 -534 Td
+/F3 6.2 Tf
+48 526.00 Td (    AND loan_request_amount >= 0) Tj
+-48 -526 Td
+/F3 6.2 Tf
+48 518.00 Td (    AND loan_top_up_amount >= 0) Tj
+-48 -518 Td
+/F3 6.2 Tf
+48 510.00 Td (    AND principal_repayment_amount >= 0) Tj
+-48 -510 Td
+/F3 6.2 Tf
+48 502.00 Td (    AND loan_interest_repayment_amount >= 0) Tj
+-48 -502 Td
+/F3 6.2 Tf
+48 494.00 Td (    AND common_interest_payment_amount >= 0) Tj
+-48 -494 Td
+/F3 6.2 Tf
+48 486.00 Td (    AND other_obligation_amount >= 0) Tj
+-48 -486 Td
+/F3 6.2 Tf
+48 478.00 Td (  \)) Tj
+-48 -478 Td
+/F3 6.2 Tf
+48 470.00 Td (\);) Tj
+-48 -470 Td
+/F1 11 Tf
+48 442.00 Td (contribution_payments) Tj
+-48 -442 Td
+/F2 9 Tf
+48 419.00 Td (One-time social fund and membership fee payments.) Tj
+-48 -419 Td
+/F3 6.2 Tf
+48 401.00 Td (CREATE TABLE contribution_payments \() Tj
+-48 -401 Td
+/F3 6.2 Tf
+48 393.00 Td (  id UUID PRIMARY KEY DEFAULT gen_random_uuid\(\),) Tj
+-48 -393 Td
+/F3 6.2 Tf
+48 385.00 Td (  cycle_id UUID NOT NULL REFERENCES cycles\(id\),) Tj
+-48 -385 Td
+/F3 6.2 Tf
+48 377.00 Td (  cycle_member_id UUID NOT NULL REFERENCES cycle_members\(id\),) Tj
+-48 -377 Td
+/F3 6.2 Tf
+48 369.00 Td (  contribution_type contribution_type NOT NULL,) Tj
+-48 -369 Td
+/F3 6.2 Tf
+48 361.00 Td (  amount NUMERIC\(14,2\) NOT NULL,) Tj
+-48 -361 Td
+/F3 6.2 Tf
+48 353.00 Td (  paid_at TIMESTAMPTZ NOT NULL DEFAULT now\(\),) Tj
+-48 -353 Td
+/F3 6.2 Tf
+48 345.00 Td (  ledger_transaction_id UUID,) Tj
+-48 -345 Td
+/F3 6.2 Tf
+48 337.00 Td (  posted_by UUID REFERENCES users\(id\),) Tj
+-48 -337 Td
+/F3 6.2 Tf
+48 329.00 Td (  notes TEXT,) Tj
+-48 -329 Td
+/F3 6.2 Tf
+48 321.00 Td (  created_at TIMESTAMPTZ NOT NULL DEFAULT now\(\),) Tj
+-48 -321 Td
+/F3 6.2 Tf
+48 313.00 Td () Tj
+-48 -313 Td
+/F3 6.2 Tf
+48 305.00 Td (  UNIQUE \(cycle_id, cycle_member_id, contribution_type\),) Tj
+-48 -305 Td
+/F3 6.2 Tf
+48 297.00 Td (  CONSTRAINT contribution_payments_amount_check CHECK \(amount >= 0\)) Tj
+-48 -297 Td
+/F3 6.2 Tf
+48 289.00 Td (\);) Tj
+-48 -289 Td
+/F1 14 Tf
+48 259.00 Td (7. Loan Tables) Tj
+-48 -259 Td
+/F1 11 Tf
+48 223.00 Td (loan_requests) Tj
+-48 -223 Td
+/F2 9 Tf
+48 200.00 Td (Loan or top-up request before disbursement.) Tj
+-48 -200 Td
+/F3 6.2 Tf
+48 182.00 Td (CREATE TABLE loan_requests \() Tj
+-48 -182 Td
+/F3 6.2 Tf
+48 174.00 Td (  id UUID PRIMARY KEY DEFAULT gen_random_uuid\(\),) Tj
+-48 -174 Td
+/F3 6.2 Tf
+48 166.00 Td (  cycle_id UUID NOT NULL REFERENCES cycles\(id\),) Tj
+-48 -166 Td
+/F3 6.2 Tf
+48 158.00 Td (  cycle_month_id UUID NOT NULL REFERENCES cycle_months\(id\),) Tj
+-48 -158 Td
+/F3 6.2 Tf
+48 150.00 Td (  cycle_member_id UUID NOT NULL REFERENCES cycle_members\(id\),) Tj
+-48 -150 Td
+/F3 6.2 Tf
+48 142.00 Td (  declaration_id UUID REFERENCES declarations\(id\),) Tj
+-48 -142 Td
+/F3 6.2 Tf
+48 134.00 Td (  requested_amount NUMERIC\(14,2\) NOT NULL,) Tj
+-48 -134 Td
+/F3 6.2 Tf
+48 126.00 Td (  origin_type loan_origin_type NOT NULL DEFAULT 'ORIGINAL_LOAN',) Tj
+-48 -126 Td
+/F3 6.2 Tf
+48 118.00 Td (  status approval_status NOT NULL DEFAULT 'PENDING',) Tj
+-48 -118 Td
+/F3 6.2 Tf
+48 110.00 Td (  requested_at TIMESTAMPTZ NOT NULL DEFAULT now\(\),) Tj
+-48 -110 Td
+/F3 6.2 Tf
+48 102.00 Td (  approved_amount NUMERIC\(14,2\),) Tj
+-48 -102 Td
+/F3 6.2 Tf
+48 94.00 Td (  approved_by UUID REFERENCES users\(id\),) Tj
+-48 -94 Td
+/F3 6.2 Tf
+48 86.00 Td (  approved_at TIMESTAMPTZ,) Tj
+-48 -86 Td
+/F3 6.2 Tf
+48 78.00 Td (  rejection_reason TEXT,) Tj
+-48 -78 Td
+/F3 6.2 Tf
+48 70.00 Td (  notes TEXT,) Tj
+-48 -70 Td
+/F3 6.2 Tf
+48 62.00 Td (  created_at TIMESTAMPTZ NOT NULL DEFAULT now\(\),) Tj
+-48 -62 Td
+/F2 8 Tf
+509 28 Td (Page 5) Tj
+ET
+endstream
+endobj
+15 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 14 0 R >>
+endobj
+16 0 obj
+<< /Length 5320 >>
+stream
+BT
+/F3 6.2 Tf
+48 744.00 Td (  updated_at TIMESTAMPTZ NOT NULL DEFAULT now\(\),) Tj
+-48 -744 Td
+/F3 6.2 Tf
+48 736.00 Td () Tj
+-48 -736 Td
+/F3 6.2 Tf
+48 728.00 Td (  CONSTRAINT loan_requests_amount_check CHECK \(requested_amount > 0\),) Tj
+-48 -728 Td
+/F3 6.2 Tf
+48 720.00 Td (  CONSTRAINT loan_requests_approved_amount_check CHECK \() Tj
+-48 -720 Td
+/F3 6.2 Tf
+48 712.00 Td (    approved_amount IS NULL OR approved_amount > 0) Tj
+-48 -712 Td
+/F3 6.2 Tf
+48 704.00 Td (  \)) Tj
+-48 -704 Td
+/F3 6.2 Tf
+48 696.00 Td (\);) Tj
+-48 -696 Td
+/F1 11 Tf
+48 668.00 Td (loan_disbursements) Tj
+-48 -668 Td
+/F2 9 Tf
+48 645.00 Td (Actual loan posting event.) Tj
+-48 -645 Td
+/F3 6.2 Tf
+48 627.00 Td (CREATE TABLE loan_disbursements \() Tj
+-48 -627 Td
+/F3 6.2 Tf
+48 619.00 Td (  id UUID PRIMARY KEY DEFAULT gen_random_uuid\(\),) Tj
+-48 -619 Td
+/F3 6.2 Tf
+48 611.00 Td (  cycle_id UUID NOT NULL REFERENCES cycles\(id\),) Tj
+-48 -611 Td
+/F3 6.2 Tf
+48 603.00 Td (  cycle_month_id UUID NOT NULL REFERENCES cycle_months\(id\),) Tj
+-48 -603 Td
+/F3 6.2 Tf
+48 595.00 Td (  cycle_member_id UUID NOT NULL REFERENCES cycle_members\(id\),) Tj
+-48 -595 Td
+/F3 6.2 Tf
+48 587.00 Td (  loan_request_id UUID REFERENCES loan_requests\(id\),) Tj
+-48 -587 Td
+/F3 6.2 Tf
+48 579.00 Td (  source_penalty_id UUID,) Tj
+-48 -579 Td
+/F3 6.2 Tf
+48 571.00 Td (  origin_type loan_origin_type NOT NULL,) Tj
+-48 -571 Td
+/F3 6.2 Tf
+48 563.00 Td (  amount NUMERIC\(14,2\) NOT NULL,) Tj
+-48 -563 Td
+/F3 6.2 Tf
+48 555.00 Td (  disbursed_at TIMESTAMPTZ NOT NULL DEFAULT now\(\),) Tj
+-48 -555 Td
+/F3 6.2 Tf
+48 547.00 Td (  disbursed_by UUID REFERENCES users\(id\),) Tj
+-48 -547 Td
+/F3 6.2 Tf
+48 539.00 Td (  ledger_transaction_id UUID,) Tj
+-48 -539 Td
+/F3 6.2 Tf
+48 531.00 Td (  notes TEXT,) Tj
+-48 -531 Td
+/F3 6.2 Tf
+48 523.00 Td (  created_at TIMESTAMPTZ NOT NULL DEFAULT now\(\),) Tj
+-48 -523 Td
+/F3 6.2 Tf
+48 515.00 Td () Tj
+-48 -515 Td
+/F3 6.2 Tf
+48 507.00 Td (  CONSTRAINT loan_disbursements_amount_check CHECK \(amount > 0\)) Tj
+-48 -507 Td
+/F3 6.2 Tf
+48 499.00 Td (\);) Tj
+-48 -499 Td
+/F1 11 Tf
+48 471.00 Td (loan_repayments) Tj
+-48 -471 Td
+/F2 9 Tf
+48 448.00 Td (Repayments split between principal and interest.) Tj
+-48 -448 Td
+/F3 6.2 Tf
+48 430.00 Td (CREATE TABLE loan_repayments \() Tj
+-48 -430 Td
+/F3 6.2 Tf
+48 422.00 Td (  id UUID PRIMARY KEY DEFAULT gen_random_uuid\(\),) Tj
+-48 -422 Td
+/F3 6.2 Tf
+48 414.00 Td (  cycle_id UUID NOT NULL REFERENCES cycles\(id\),) Tj
+-48 -414 Td
+/F3 6.2 Tf
+48 406.00 Td (  cycle_month_id UUID NOT NULL REFERENCES cycle_months\(id\),) Tj
+-48 -406 Td
+/F3 6.2 Tf
+48 398.00 Td (  cycle_member_id UUID NOT NULL REFERENCES cycle_members\(id\),) Tj
+-48 -398 Td
+/F3 6.2 Tf
+48 390.00 Td (  principal_amount NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -390 Td
+/F3 6.2 Tf
+48 382.00 Td (  interest_amount NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -382 Td
+/F3 6.2 Tf
+48 374.00 Td (  paid_at TIMESTAMPTZ NOT NULL DEFAULT now\(\),) Tj
+-48 -374 Td
+/F3 6.2 Tf
+48 366.00 Td (  principal_ledger_transaction_id UUID,) Tj
+-48 -366 Td
+/F3 6.2 Tf
+48 358.00 Td (  interest_ledger_transaction_id UUID,) Tj
+-48 -358 Td
+/F3 6.2 Tf
+48 350.00 Td (  posted_by UUID REFERENCES users\(id\),) Tj
+-48 -350 Td
+/F3 6.2 Tf
+48 342.00 Td (  notes TEXT,) Tj
+-48 -342 Td
+/F3 6.2 Tf
+48 334.00 Td (  created_at TIMESTAMPTZ NOT NULL DEFAULT now\(\),) Tj
+-48 -334 Td
+/F3 6.2 Tf
+48 326.00 Td () Tj
+-48 -326 Td
+/F3 6.2 Tf
+48 318.00 Td (  CONSTRAINT loan_repayments_amount_check CHECK \() Tj
+-48 -318 Td
+/F3 6.2 Tf
+48 310.00 Td (    principal_amount >= 0) Tj
+-48 -310 Td
+/F3 6.2 Tf
+48 302.00 Td (    AND interest_amount >= 0) Tj
+-48 -302 Td
+/F3 6.2 Tf
+48 294.00 Td (    AND principal_amount + interest_amount > 0) Tj
+-48 -294 Td
+/F3 6.2 Tf
+48 286.00 Td (  \)) Tj
+-48 -286 Td
+/F3 6.2 Tf
+48 278.00 Td (\);) Tj
+-48 -278 Td
+/F1 14 Tf
+48 248.00 Td (8. Penalty Tables) Tj
+-48 -248 Td
+/F1 11 Tf
+48 212.00 Td (penalties) Tj
+-48 -212 Td
+/F2 9 Tf
+48 189.00 Td (Penalty assessment and lifecycle tracking.) Tj
+-48 -189 Td
+/F3 6.2 Tf
+48 171.00 Td (CREATE TABLE penalties \() Tj
+-48 -171 Td
+/F3 6.2 Tf
+48 163.00 Td (  id UUID PRIMARY KEY DEFAULT gen_random_uuid\(\),) Tj
+-48 -163 Td
+/F3 6.2 Tf
+48 155.00 Td (  cycle_id UUID NOT NULL REFERENCES cycles\(id\),) Tj
+-48 -155 Td
+/F3 6.2 Tf
+48 147.00 Td (  cycle_month_id UUID NOT NULL REFERENCES cycle_months\(id\),) Tj
+-48 -147 Td
+/F3 6.2 Tf
+48 139.00 Td (  cycle_member_id UUID NOT NULL REFERENCES cycle_members\(id\),) Tj
+-48 -139 Td
+/F3 6.2 Tf
+48 131.00 Td (  penalty_type_id UUID NOT NULL REFERENCES penalty_types\(id\),) Tj
+-48 -131 Td
+/F3 6.2 Tf
+48 123.00 Td (  declaration_id UUID REFERENCES declarations\(id\),) Tj
+-48 -123 Td
+/F3 6.2 Tf
+48 115.00 Td (  amount_assessed NUMERIC\(14,2\) NOT NULL,) Tj
+-48 -115 Td
+/F3 6.2 Tf
+48 107.00 Td (  amount_paid NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -107 Td
+/F3 6.2 Tf
+48 99.00 Td (  status penalty_status NOT NULL DEFAULT 'ASSESSED',) Tj
+-48 -99 Td
+/F3 6.2 Tf
+48 91.00 Td (  assessed_at TIMESTAMPTZ NOT NULL DEFAULT now\(\),) Tj
+-48 -91 Td
+/F3 6.2 Tf
+48 83.00 Td (  assessed_by UUID REFERENCES users\(id\),) Tj
+-48 -83 Td
+/F3 6.2 Tf
+48 75.00 Td (  assessment_ledger_transaction_id UUID,) Tj
+-48 -75 Td
+/F3 6.2 Tf
+48 67.00 Td (  payment_ledger_transaction_id UUID,) Tj
+-48 -67 Td
+/F3 6.2 Tf
+48 59.00 Td (  converted_loan_disbursement_id UUID,) Tj
+-48 -59 Td
+/F2 8 Tf
+509 28 Td (Page 6) Tj
+ET
+endstream
+endobj
+17 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 16 0 R >>
+endobj
+18 0 obj
+<< /Length 5349 >>
+stream
+BT
+/F3 6.2 Tf
+48 744.00 Td (  notes TEXT,) Tj
+-48 -744 Td
+/F3 6.2 Tf
+48 736.00 Td (  created_at TIMESTAMPTZ NOT NULL DEFAULT now\(\),) Tj
+-48 -736 Td
+/F3 6.2 Tf
+48 728.00 Td (  updated_at TIMESTAMPTZ NOT NULL DEFAULT now\(\),) Tj
+-48 -728 Td
+/F3 6.2 Tf
+48 720.00 Td () Tj
+-48 -720 Td
+/F3 6.2 Tf
+48 712.00 Td (  CONSTRAINT penalties_amount_check CHECK \() Tj
+-48 -712 Td
+/F3 6.2 Tf
+48 704.00 Td (    amount_assessed >= 0) Tj
+-48 -704 Td
+/F3 6.2 Tf
+48 696.00 Td (    AND amount_paid >= 0) Tj
+-48 -696 Td
+/F3 6.2 Tf
+48 688.00 Td (    AND amount_paid <= amount_assessed) Tj
+-48 -688 Td
+/F3 6.2 Tf
+48 680.00 Td (  \)) Tj
+-48 -680 Td
+/F3 6.2 Tf
+48 672.00 Td (\);) Tj
+-48 -672 Td
+/F1 14 Tf
+48 642.00 Td (9. Common-Interest Tables) Tj
+-48 -642 Td
+/F1 11 Tf
+48 606.00 Td (common_interest_runs) Tj
+-48 -606 Td
+/F2 9 Tf
+48 583.00 Td (Monthly common-interest calculation header.) Tj
+-48 -583 Td
+/F3 6.2 Tf
+48 565.00 Td (CREATE TABLE common_interest_runs \() Tj
+-48 -565 Td
+/F3 6.2 Tf
+48 557.00 Td (  id UUID PRIMARY KEY DEFAULT gen_random_uuid\(\),) Tj
+-48 -557 Td
+/F3 6.2 Tf
+48 549.00 Td (  cycle_id UUID NOT NULL REFERENCES cycles\(id\),) Tj
+-48 -549 Td
+/F3 6.2 Tf
+48 541.00 Td (  cycle_month_id UUID NOT NULL REFERENCES cycle_months\(id\),) Tj
+-48 -541 Td
+/F3 6.2 Tf
+48 533.00 Td (  allocation_method common_interest_allocation_method NOT NULL,) Tj
+-48 -533 Td
+/F3 6.2 Tf
+48 525.00 Td (  total_pool_contributions NUMERIC\(14,2\) NOT NULL,) Tj
+-48 -525 Td
+/F3 6.2 Tf
+48 517.00 Td (  total_loans_issued NUMERIC\(14,2\) NOT NULL,) Tj
+-48 -517 Td
+/F3 6.2 Tf
+48 509.00 Td (  unborrowed_money NUMERIC\(14,2\) NOT NULL,) Tj
+-48 -509 Td
+/F3 6.2 Tf
+48 501.00 Td (  common_interest_rate NUMERIC\(8,6\) NOT NULL,) Tj
+-48 -501 Td
+/F3 6.2 Tf
+48 493.00 Td (  common_interest_pool NUMERIC\(14,2\) NOT NULL,) Tj
+-48 -493 Td
+/F3 6.2 Tf
+48 485.00 Td (  status approval_status NOT NULL DEFAULT 'PENDING',) Tj
+-48 -485 Td
+/F3 6.2 Tf
+48 477.00 Td (  calculated_at TIMESTAMPTZ NOT NULL DEFAULT now\(\),) Tj
+-48 -477 Td
+/F3 6.2 Tf
+48 469.00 Td (  calculated_by UUID REFERENCES users\(id\),) Tj
+-48 -469 Td
+/F3 6.2 Tf
+48 461.00 Td (  approved_by UUID REFERENCES users\(id\),) Tj
+-48 -461 Td
+/F3 6.2 Tf
+48 453.00 Td (  approved_at TIMESTAMPTZ,) Tj
+-48 -453 Td
+/F3 6.2 Tf
+48 445.00 Td (  notes TEXT,) Tj
+-48 -445 Td
+/F3 6.2 Tf
+48 437.00 Td (  created_at TIMESTAMPTZ NOT NULL DEFAULT now\(\),) Tj
+-48 -437 Td
+/F3 6.2 Tf
+48 429.00 Td () Tj
+-48 -429 Td
+/F3 6.2 Tf
+48 421.00 Td (  UNIQUE \(cycle_month_id\),) Tj
+-48 -421 Td
+/F3 6.2 Tf
+48 413.00 Td (  CONSTRAINT common_interest_runs_amount_check CHECK \() Tj
+-48 -413 Td
+/F3 6.2 Tf
+48 405.00 Td (    total_pool_contributions >= 0) Tj
+-48 -405 Td
+/F3 6.2 Tf
+48 397.00 Td (    AND total_loans_issued >= 0) Tj
+-48 -397 Td
+/F3 6.2 Tf
+48 389.00 Td (    AND unborrowed_money >= 0) Tj
+-48 -389 Td
+/F3 6.2 Tf
+48 381.00 Td (    AND common_interest_pool >= 0) Tj
+-48 -381 Td
+/F3 6.2 Tf
+48 373.00 Td (  \)) Tj
+-48 -373 Td
+/F3 6.2 Tf
+48 365.00 Td (\);) Tj
+-48 -365 Td
+/F1 11 Tf
+48 337.00 Td (common_interest_allocations) Tj
+-48 -337 Td
+/F2 9 Tf
+48 314.00 Td (Per-member allocation details.) Tj
+-48 -314 Td
+/F3 6.2 Tf
+48 296.00 Td (CREATE TABLE common_interest_allocations \() Tj
+-48 -296 Td
+/F3 6.2 Tf
+48 288.00 Td (  id UUID PRIMARY KEY DEFAULT gen_random_uuid\(\),) Tj
+-48 -288 Td
+/F3 6.2 Tf
+48 280.00 Td (  common_interest_run_id UUID NOT NULL REFERENCES common_interest_runs\(id\),) Tj
+-48 -280 Td
+/F3 6.2 Tf
+48 272.00 Td (  cycle_id UUID NOT NULL REFERENCES cycles\(id\),) Tj
+-48 -272 Td
+/F3 6.2 Tf
+48 264.00 Td (  cycle_month_id UUID NOT NULL REFERENCES cycle_months\(id\),) Tj
+-48 -264 Td
+/F3 6.2 Tf
+48 256.00 Td (  cycle_member_id UUID NOT NULL REFERENCES cycle_members\(id\),) Tj
+-48 -256 Td
+/F3 6.2 Tf
+48 248.00 Td (  compliance_status borrowing_compliance_status NOT NULL,) Tj
+-48 -248 Td
+/F3 6.2 Tf
+48 240.00 Td (  cumulative_borrowed_amount NUMERIC\(14,2\) NOT NULL,) Tj
+-48 -240 Td
+/F3 6.2 Tf
+48 232.00 Td (  borrowing_shortfall NUMERIC\(14,2\) NOT NULL,) Tj
+-48 -232 Td
+/F3 6.2 Tf
+48 224.00 Td (  allocation_weight NUMERIC\(18,10\) NOT NULL DEFAULT 0,) Tj
+-48 -224 Td
+/F3 6.2 Tf
+48 216.00 Td (  assigned_base NUMERIC\(14,2\) NOT NULL,) Tj
+-48 -216 Td
+/F3 6.2 Tf
+48 208.00 Td (  calculated_charge NUMERIC\(14,2\) NOT NULL,) Tj
+-48 -208 Td
+/F3 6.2 Tf
+48 200.00 Td (  final_charge NUMERIC\(14,2\) NOT NULL,) Tj
+-48 -200 Td
+/F3 6.2 Tf
+48 192.00 Td (  ledger_transaction_id UUID,) Tj
+-48 -192 Td
+/F3 6.2 Tf
+48 184.00 Td (  override_id UUID,) Tj
+-48 -184 Td
+/F3 6.2 Tf
+48 176.00 Td (  created_at TIMESTAMPTZ NOT NULL DEFAULT now\(\),) Tj
+-48 -176 Td
+/F3 6.2 Tf
+48 168.00 Td () Tj
+-48 -168 Td
+/F3 6.2 Tf
+48 160.00 Td (  UNIQUE \(common_interest_run_id, cycle_member_id\),) Tj
+-48 -160 Td
+/F3 6.2 Tf
+48 152.00 Td (  CONSTRAINT common_interest_allocations_amount_check CHECK \() Tj
+-48 -152 Td
+/F3 6.2 Tf
+48 144.00 Td (    cumulative_borrowed_amount >= 0) Tj
+-48 -144 Td
+/F3 6.2 Tf
+48 136.00 Td (    AND borrowing_shortfall >= 0) Tj
+-48 -136 Td
+/F3 6.2 Tf
+48 128.00 Td (    AND allocation_weight >= 0) Tj
+-48 -128 Td
+/F3 6.2 Tf
+48 120.00 Td (    AND assigned_base >= 0) Tj
+-48 -120 Td
+/F3 6.2 Tf
+48 112.00 Td (    AND calculated_charge >= 0) Tj
+-48 -112 Td
+/F3 6.2 Tf
+48 104.00 Td (    AND final_charge >= 0) Tj
+-48 -104 Td
+/F3 6.2 Tf
+48 96.00 Td (  \)) Tj
+-48 -96 Td
+/F3 6.2 Tf
+48 88.00 Td (\);) Tj
+-48 -88 Td
+/F2 8 Tf
+509 28 Td (Page 7) Tj
+ET
+endstream
+endobj
+19 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 18 0 R >>
+endobj
+20 0 obj
+<< /Length 4756 >>
+stream
+BT
+/F1 14 Tf
+48 734.00 Td (10. Ledger Tables) Tj
+-48 -734 Td
+/F1 11 Tf
+48 698.00 Td (ledger_transactions) Tj
+-48 -698 Td
+/F2 9 Tf
+48 675.00 Td (Header for every financial posting.) Tj
+-48 -675 Td
+/F3 6.2 Tf
+48 657.00 Td (CREATE TABLE ledger_transactions \() Tj
+-48 -657 Td
+/F3 6.2 Tf
+48 649.00 Td (  id UUID PRIMARY KEY DEFAULT gen_random_uuid\(\),) Tj
+-48 -649 Td
+/F3 6.2 Tf
+48 641.00 Td (  cycle_id UUID NOT NULL REFERENCES cycles\(id\),) Tj
+-48 -641 Td
+/F3 6.2 Tf
+48 633.00 Td (  cycle_month_id UUID REFERENCES cycle_months\(id\),) Tj
+-48 -633 Td
+/F3 6.2 Tf
+48 625.00 Td (  cycle_member_id UUID REFERENCES cycle_members\(id\),) Tj
+-48 -625 Td
+/F3 6.2 Tf
+48 617.00 Td (  transaction_type ledger_transaction_type NOT NULL,) Tj
+-48 -617 Td
+/F3 6.2 Tf
+48 609.00 Td (  transaction_date DATE NOT NULL DEFAULT CURRENT_DATE,) Tj
+-48 -609 Td
+/F3 6.2 Tf
+48 601.00 Td (  amount NUMERIC\(14,2\) NOT NULL,) Tj
+-48 -601 Td
+/F3 6.2 Tf
+48 593.00 Td (  description TEXT,) Tj
+-48 -593 Td
+/F3 6.2 Tf
+48 585.00 Td (  source_table TEXT,) Tj
+-48 -585 Td
+/F3 6.2 Tf
+48 577.00 Td (  source_id UUID,) Tj
+-48 -577 Td
+/F3 6.2 Tf
+48 569.00 Td (  reversed_transaction_id UUID REFERENCES ledger_transactions\(id\),) Tj
+-48 -569 Td
+/F3 6.2 Tf
+48 561.00 Td (  reversal_reason TEXT,) Tj
+-48 -561 Td
+/F3 6.2 Tf
+48 553.00 Td (  posted_by UUID REFERENCES users\(id\),) Tj
+-48 -553 Td
+/F3 6.2 Tf
+48 545.00 Td (  posted_at TIMESTAMPTZ NOT NULL DEFAULT now\(\),) Tj
+-48 -545 Td
+/F3 6.2 Tf
+48 537.00 Td (  is_reversal BOOLEAN NOT NULL DEFAULT FALSE,) Tj
+-48 -537 Td
+/F3 6.2 Tf
+48 529.00 Td (  created_at TIMESTAMPTZ NOT NULL DEFAULT now\(\),) Tj
+-48 -529 Td
+/F3 6.2 Tf
+48 521.00 Td () Tj
+-48 -521 Td
+/F3 6.2 Tf
+48 513.00 Td (  CONSTRAINT ledger_transactions_amount_check CHECK \(amount >= 0\)) Tj
+-48 -513 Td
+/F3 6.2 Tf
+48 505.00 Td (\);) Tj
+-48 -505 Td
+/F1 11 Tf
+48 477.00 Td (ledger_entries) Tj
+-48 -477 Td
+/F2 9 Tf
+48 454.00 Td (Double-entry style ledger lines. Each transaction should normally have at least two entries, with) Tj
+-48 -454 Td
+/F2 9 Tf
+48 442.00 Td (debit and credit totals balancing.) Tj
+-48 -442 Td
+/F3 6.2 Tf
+48 424.00 Td (CREATE TABLE ledger_entries \() Tj
+-48 -424 Td
+/F3 6.2 Tf
+48 416.00 Td (  id UUID PRIMARY KEY DEFAULT gen_random_uuid\(\),) Tj
+-48 -416 Td
+/F3 6.2 Tf
+48 408.00 Td (  ledger_transaction_id UUID NOT NULL REFERENCES ledger_transactions\(id\),) Tj
+-48 -408 Td
+/F3 6.2 Tf
+48 400.00 Td (  cycle_id UUID NOT NULL REFERENCES cycles\(id\),) Tj
+-48 -400 Td
+/F3 6.2 Tf
+48 392.00 Td (  cycle_member_id UUID REFERENCES cycle_members\(id\),) Tj
+-48 -392 Td
+/F3 6.2 Tf
+48 384.00 Td (  account_type ledger_account_type NOT NULL,) Tj
+-48 -384 Td
+/F3 6.2 Tf
+48 376.00 Td (  debit NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -376 Td
+/F3 6.2 Tf
+48 368.00 Td (  credit NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -368 Td
+/F3 6.2 Tf
+48 360.00 Td (  memo TEXT,) Tj
+-48 -360 Td
+/F3 6.2 Tf
+48 352.00 Td (  created_at TIMESTAMPTZ NOT NULL DEFAULT now\(\),) Tj
+-48 -352 Td
+/F3 6.2 Tf
+48 344.00 Td () Tj
+-48 -344 Td
+/F3 6.2 Tf
+48 336.00 Td (  CONSTRAINT ledger_entries_amount_check CHECK \() Tj
+-48 -336 Td
+/F3 6.2 Tf
+48 328.00 Td (    debit >= 0) Tj
+-48 -328 Td
+/F3 6.2 Tf
+48 320.00 Td (    AND credit >= 0) Tj
+-48 -320 Td
+/F3 6.2 Tf
+48 312.00 Td (    AND NOT \(debit > 0 AND credit > 0\)) Tj
+-48 -312 Td
+/F3 6.2 Tf
+48 304.00 Td (  \)) Tj
+-48 -304 Td
+/F3 6.2 Tf
+48 296.00 Td (\);) Tj
+-48 -296 Td
+/F2 9 Tf
+48 276.00 Td (Recommended application-level rule:) Tj
+-48 -276 Td
+/F3 6.2 Tf
+48 258.00 Td (For each ledger_transaction_id:) Tj
+-48 -258 Td
+/F3 6.2 Tf
+48 250.00 Td (SUM\(debit\) = SUM\(credit\)) Tj
+-48 -250 Td
+/F2 9 Tf
+48 230.00 Td (This should be enforced by the posting service, and optionally by a deferred database trigger.) Tj
+-48 -230 Td
+/F1 14 Tf
+48 202.00 Td (11. Monthly Processing and Snapshot Tables) Tj
+-48 -202 Td
+/F1 11 Tf
+48 166.00 Td (monthly_closing_runs) Tj
+-48 -166 Td
+/F2 9 Tf
+48 143.00 Td (Tracks each monthly closing attempt.) Tj
+-48 -143 Td
+/F3 6.2 Tf
+48 125.00 Td (CREATE TABLE monthly_closing_runs \() Tj
+-48 -125 Td
+/F3 6.2 Tf
+48 117.00 Td (  id UUID PRIMARY KEY DEFAULT gen_random_uuid\(\),) Tj
+-48 -117 Td
+/F3 6.2 Tf
+48 109.00 Td (  cycle_id UUID NOT NULL REFERENCES cycles\(id\),) Tj
+-48 -109 Td
+/F3 6.2 Tf
+48 101.00 Td (  cycle_month_id UUID NOT NULL REFERENCES cycle_months\(id\),) Tj
+-48 -101 Td
+/F3 6.2 Tf
+48 93.00 Td (  run_number INTEGER NOT NULL DEFAULT 1,) Tj
+-48 -93 Td
+/F3 6.2 Tf
+48 85.00 Td (  status approval_status NOT NULL DEFAULT 'PENDING',) Tj
+-48 -85 Td
+/F3 6.2 Tf
+48 77.00 Td (  started_at TIMESTAMPTZ NOT NULL DEFAULT now\(\),) Tj
+-48 -77 Td
+/F3 6.2 Tf
+48 69.00 Td (  completed_at TIMESTAMPTZ,) Tj
+-48 -69 Td
+/F3 6.2 Tf
+48 61.00 Td (  started_by UUID REFERENCES users\(id\),) Tj
+-48 -61 Td
+/F2 8 Tf
+509 28 Td (Page 8) Tj
+ET
+endstream
+endobj
+21 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 20 0 R >>
+endobj
+22 0 obj
+<< /Length 6481 >>
+stream
+BT
+/F3 6.2 Tf
+48 744.00 Td (  approved_by UUID REFERENCES users\(id\),) Tj
+-48 -744 Td
+/F3 6.2 Tf
+48 736.00 Td (  approved_at TIMESTAMPTZ,) Tj
+-48 -736 Td
+/F3 6.2 Tf
+48 728.00 Td (  notes TEXT,) Tj
+-48 -728 Td
+/F3 6.2 Tf
+48 720.00 Td (  created_at TIMESTAMPTZ NOT NULL DEFAULT now\(\),) Tj
+-48 -720 Td
+/F3 6.2 Tf
+48 712.00 Td () Tj
+-48 -712 Td
+/F3 6.2 Tf
+48 704.00 Td (  UNIQUE \(cycle_month_id, run_number\)) Tj
+-48 -704 Td
+/F3 6.2 Tf
+48 696.00 Td (\);) Tj
+-48 -696 Td
+/F1 11 Tf
+48 668.00 Td (member_monthly_snapshots) Tj
+-48 -668 Td
+/F2 9 Tf
+48 645.00 Td (Official monthly member state after processing.) Tj
+-48 -645 Td
+/F3 6.2 Tf
+48 627.00 Td (CREATE TABLE member_monthly_snapshots \() Tj
+-48 -627 Td
+/F3 6.2 Tf
+48 619.00 Td (  id UUID PRIMARY KEY DEFAULT gen_random_uuid\(\),) Tj
+-48 -619 Td
+/F3 6.2 Tf
+48 611.00 Td (  cycle_id UUID NOT NULL REFERENCES cycles\(id\),) Tj
+-48 -611 Td
+/F3 6.2 Tf
+48 603.00 Td (  cycle_month_id UUID NOT NULL REFERENCES cycle_months\(id\),) Tj
+-48 -603 Td
+/F3 6.2 Tf
+48 595.00 Td (  cycle_member_id UUID NOT NULL REFERENCES cycle_members\(id\),) Tj
+-48 -595 Td
+/F3 6.2 Tf
+48 587.00 Td (  monthly_closing_run_id UUID REFERENCES monthly_closing_runs\(id\),) Tj
+-48 -587 Td
+/F3 6.2 Tf
+48 579.00 Td () Tj
+-48 -579 Td
+/F3 6.2 Tf
+48 571.00 Td (  declaration_status declaration_status NOT NULL,) Tj
+-48 -571 Td
+/F3 6.2 Tf
+48 563.00 Td (  borrowing_compliance_status borrowing_compliance_status NOT NULL,) Tj
+-48 -563 Td
+/F3 6.2 Tf
+48 555.00 Td () Tj
+-48 -555 Td
+/F3 6.2 Tf
+48 547.00 Td (  savings_brought_forward NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -547 Td
+/F3 6.2 Tf
+48 539.00 Td (  savings_deposit NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -539 Td
+/F3 6.2 Tf
+48 531.00 Td (  savings_interest NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -531 Td
+/F3 6.2 Tf
+48 523.00 Td (  accumulated_savings_carried_forward NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -523 Td
+/F3 6.2 Tf
+48 515.00 Td (  cumulative_savings_principal NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -515 Td
+/F3 6.2 Tf
+48 507.00 Td () Tj
+-48 -507 Td
+/F3 6.2 Tf
+48 499.00 Td (  loan_brought_forward NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -499 Td
+/F3 6.2 Tf
+48 491.00 Td (  new_loan_amount NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -491 Td
+/F3 6.2 Tf
+48 483.00 Td (  top_up_amount NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -483 Td
+/F3 6.2 Tf
+48 475.00 Td (  converted_penalty_loan_amount NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -475 Td
+/F3 6.2 Tf
+48 467.00 Td (  loan_interest_assessed NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -467 Td
+/F3 6.2 Tf
+48 459.00 Td (  principal_repaid NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -459 Td
+/F3 6.2 Tf
+48 451.00 Td (  interest_repaid NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -451 Td
+/F3 6.2 Tf
+48 443.00 Td (  loan_carried_forward NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -443 Td
+/F3 6.2 Tf
+48 435.00 Td (  cumulative_borrowed_amount NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -435 Td
+/F3 6.2 Tf
+48 427.00 Td (  borrowing_shortfall NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -427 Td
+/F3 6.2 Tf
+48 419.00 Td () Tj
+-48 -419 Td
+/F3 6.2 Tf
+48 411.00 Td (  common_interest_charge NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -411 Td
+/F3 6.2 Tf
+48 403.00 Td (  common_interest_paid NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -403 Td
+/F3 6.2 Tf
+48 395.00 Td () Tj
+-48 -395 Td
+/F3 6.2 Tf
+48 387.00 Td (  penalties_assessed NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -387 Td
+/F3 6.2 Tf
+48 379.00 Td (  penalties_paid NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -379 Td
+/F3 6.2 Tf
+48 371.00 Td (  penalties_converted_to_loan NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -371 Td
+/F3 6.2 Tf
+48 363.00 Td () Tj
+-48 -363 Td
+/F3 6.2 Tf
+48 355.00 Td (  created_at TIMESTAMPTZ NOT NULL DEFAULT now\(\),) Tj
+-48 -355 Td
+/F3 6.2 Tf
+48 347.00 Td () Tj
+-48 -347 Td
+/F3 6.2 Tf
+48 339.00 Td (  UNIQUE \(cycle_month_id, cycle_member_id\)) Tj
+-48 -339 Td
+/F3 6.2 Tf
+48 331.00 Td (\);) Tj
+-48 -331 Td
+/F1 11 Tf
+48 303.00 Td (cycle_month_summaries) Tj
+-48 -303 Td
+/F2 9 Tf
+48 280.00 Td (Official monthly cycle-level summary.) Tj
+-48 -280 Td
+/F3 6.2 Tf
+48 262.00 Td (CREATE TABLE cycle_month_summaries \() Tj
+-48 -262 Td
+/F3 6.2 Tf
+48 254.00 Td (  id UUID PRIMARY KEY DEFAULT gen_random_uuid\(\),) Tj
+-48 -254 Td
+/F3 6.2 Tf
+48 246.00 Td (  cycle_id UUID NOT NULL REFERENCES cycles\(id\),) Tj
+-48 -246 Td
+/F3 6.2 Tf
+48 238.00 Td (  cycle_month_id UUID NOT NULL REFERENCES cycle_months\(id\),) Tj
+-48 -238 Td
+/F3 6.2 Tf
+48 230.00 Td (  monthly_closing_run_id UUID REFERENCES monthly_closing_runs\(id\),) Tj
+-48 -230 Td
+/F3 6.2 Tf
+48 222.00 Td () Tj
+-48 -222 Td
+/F3 6.2 Tf
+48 214.00 Td (  total_savings_deposits NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -214 Td
+/F3 6.2 Tf
+48 206.00 Td (  total_savings_interest NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -206 Td
+/F3 6.2 Tf
+48 198.00 Td (  total_accumulated_savings NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -198 Td
+/F3 6.2 Tf
+48 190.00 Td () Tj
+-48 -190 Td
+/F3 6.2 Tf
+48 182.00 Td (  total_social_fund NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -182 Td
+/F3 6.2 Tf
+48 174.00 Td (  total_membership_fees NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -174 Td
+/F3 6.2 Tf
+48 166.00 Td () Tj
+-48 -166 Td
+/F3 6.2 Tf
+48 158.00 Td (  total_loans_issued NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -158 Td
+/F3 6.2 Tf
+48 150.00 Td (  total_top_ups NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -150 Td
+/F3 6.2 Tf
+48 142.00 Td (  total_converted_penalty_loans NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -142 Td
+/F3 6.2 Tf
+48 134.00 Td (  total_principal_repaid NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -134 Td
+/F3 6.2 Tf
+48 126.00 Td (  total_loan_interest_assessed NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -126 Td
+/F3 6.2 Tf
+48 118.00 Td (  total_loan_interest_repaid NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -118 Td
+/F3 6.2 Tf
+48 110.00 Td (  total_outstanding_loans NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -110 Td
+/F3 6.2 Tf
+48 102.00 Td () Tj
+-48 -102 Td
+/F3 6.2 Tf
+48 94.00 Td (  total_pool_contributions NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -94 Td
+/F3 6.2 Tf
+48 86.00 Td (  unborrowed_money NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -86 Td
+/F3 6.2 Tf
+48 78.00 Td (  common_interest_pool NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -78 Td
+/F3 6.2 Tf
+48 70.00 Td (  total_common_interest_charged NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -70 Td
+/F3 6.2 Tf
+48 62.00 Td (  total_common_interest_paid NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -62 Td
+/F2 8 Tf
+509 28 Td (Page 9) Tj
+ET
+endstream
+endobj
+23 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 22 0 R >>
+endobj
+24 0 obj
+<< /Length 5229 >>
+stream
+BT
+/F3 6.2 Tf
+48 744.00 Td () Tj
+-48 -744 Td
+/F3 6.2 Tf
+48 736.00 Td (  total_penalties_assessed NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -736 Td
+/F3 6.2 Tf
+48 728.00 Td (  total_penalties_paid NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -728 Td
+/F3 6.2 Tf
+48 720.00 Td (  total_penalties_converted NUMERIC\(14,2\) NOT NULL DEFAULT 0,) Tj
+-48 -720 Td
+/F3 6.2 Tf
+48 712.00 Td () Tj
+-48 -712 Td
+/F3 6.2 Tf
+48 704.00 Td (  created_at TIMESTAMPTZ NOT NULL DEFAULT now\(\),) Tj
+-48 -704 Td
+/F3 6.2 Tf
+48 696.00 Td () Tj
+-48 -696 Td
+/F3 6.2 Tf
+48 688.00 Td (  UNIQUE \(cycle_month_id\)) Tj
+-48 -688 Td
+/F3 6.2 Tf
+48 680.00 Td (\);) Tj
+-48 -680 Td
+/F1 14 Tf
+48 650.00 Td (12. Override and Audit Tables) Tj
+-48 -650 Td
+/F1 11 Tf
+48 614.00 Td (overrides) Tj
+-48 -614 Td
+/F2 9 Tf
+48 591.00 Td (Stores authorized overrides of calculated values.) Tj
+-48 -591 Td
+/F3 6.2 Tf
+48 573.00 Td (CREATE TABLE overrides \() Tj
+-48 -573 Td
+/F3 6.2 Tf
+48 565.00 Td (  id UUID PRIMARY KEY DEFAULT gen_random_uuid\(\),) Tj
+-48 -565 Td
+/F3 6.2 Tf
+48 557.00 Td (  cycle_id UUID NOT NULL REFERENCES cycles\(id\),) Tj
+-48 -557 Td
+/F3 6.2 Tf
+48 549.00 Td (  cycle_month_id UUID REFERENCES cycle_months\(id\),) Tj
+-48 -549 Td
+/F3 6.2 Tf
+48 541.00 Td (  target_table TEXT NOT NULL,) Tj
+-48 -541 Td
+/F3 6.2 Tf
+48 533.00 Td (  target_id UUID NOT NULL,) Tj
+-48 -533 Td
+/F3 6.2 Tf
+48 525.00 Td (  field_name TEXT NOT NULL,) Tj
+-48 -525 Td
+/F3 6.2 Tf
+48 517.00 Td (  original_value NUMERIC\(14,2\) NOT NULL,) Tj
+-48 -517 Td
+/F3 6.2 Tf
+48 509.00 Td (  overridden_value NUMERIC\(14,2\) NOT NULL,) Tj
+-48 -509 Td
+/F3 6.2 Tf
+48 501.00 Td (  reason TEXT NOT NULL,) Tj
+-48 -501 Td
+/F3 6.2 Tf
+48 493.00 Td (  approved_by UUID REFERENCES users\(id\),) Tj
+-48 -493 Td
+/F3 6.2 Tf
+48 485.00 Td (  approved_at TIMESTAMPTZ NOT NULL DEFAULT now\(\),) Tj
+-48 -485 Td
+/F3 6.2 Tf
+48 477.00 Td (  created_at TIMESTAMPTZ NOT NULL DEFAULT now\(\)) Tj
+-48 -477 Td
+/F3 6.2 Tf
+48 469.00 Td (\);) Tj
+-48 -469 Td
+/F1 11 Tf
+48 441.00 Td (audit_logs) Tj
+-48 -441 Td
+/F2 9 Tf
+48 418.00 Td (General audit trail for sensitive system actions.) Tj
+-48 -418 Td
+/F3 6.2 Tf
+48 400.00 Td (CREATE TABLE audit_logs \() Tj
+-48 -400 Td
+/F3 6.2 Tf
+48 392.00 Td (  id UUID PRIMARY KEY DEFAULT gen_random_uuid\(\),) Tj
+-48 -392 Td
+/F3 6.2 Tf
+48 384.00 Td (  actor_user_id UUID REFERENCES users\(id\),) Tj
+-48 -384 Td
+/F3 6.2 Tf
+48 376.00 Td (  action audit_action NOT NULL,) Tj
+-48 -376 Td
+/F3 6.2 Tf
+48 368.00 Td (  entity_table TEXT NOT NULL,) Tj
+-48 -368 Td
+/F3 6.2 Tf
+48 360.00 Td (  entity_id UUID,) Tj
+-48 -360 Td
+/F3 6.2 Tf
+48 352.00 Td (  before_data JSONB,) Tj
+-48 -352 Td
+/F3 6.2 Tf
+48 344.00 Td (  after_data JSONB,) Tj
+-48 -344 Td
+/F3 6.2 Tf
+48 336.00 Td (  reason TEXT,) Tj
+-48 -336 Td
+/F3 6.2 Tf
+48 328.00 Td (  ip_address INET,) Tj
+-48 -328 Td
+/F3 6.2 Tf
+48 320.00 Td (  user_agent TEXT,) Tj
+-48 -320 Td
+/F3 6.2 Tf
+48 312.00 Td (  created_at TIMESTAMPTZ NOT NULL DEFAULT now\(\)) Tj
+-48 -312 Td
+/F3 6.2 Tf
+48 304.00 Td (\);) Tj
+-48 -304 Td
+/F1 14 Tf
+48 274.00 Td (13. Recommended Indexes) Tj
+-48 -274 Td
+/F3 6.2 Tf
+48 246.00 Td (CREATE INDEX idx_cycle_months_cycle ON cycle_months\(cycle_id\);) Tj
+-48 -246 Td
+/F3 6.2 Tf
+48 238.00 Td (CREATE INDEX idx_cycle_members_cycle ON cycle_members\(cycle_id\);) Tj
+-48 -238 Td
+/F3 6.2 Tf
+48 230.00 Td (CREATE INDEX idx_cycle_members_member ON cycle_members\(member_id\);) Tj
+-48 -230 Td
+/F3 6.2 Tf
+48 222.00 Td () Tj
+-48 -222 Td
+/F3 6.2 Tf
+48 214.00 Td (CREATE INDEX idx_declarations_month_member ON declarations\(cycle_month_id, cycle_member_id\);) Tj
+-48 -214 Td
+/F3 6.2 Tf
+48 206.00 Td (CREATE INDEX idx_declarations_status ON declarations\(status\);) Tj
+-48 -206 Td
+/F3 6.2 Tf
+48 198.00 Td () Tj
+-48 -198 Td
+/F3 6.2 Tf
+48 190.00 Td (CREATE INDEX idx_loan_requests_member_month ON loan_requests\(cycle_member_id, cycle_month_id\);) Tj
+-48 -190 Td
+/F3 6.2 Tf
+48 182.00 Td (CREATE INDEX idx_loan_disbursements_member_month ON loan_disbursements\(cycle_member_id, cycle_month_id\);) Tj
+-48 -182 Td
+/F3 6.2 Tf
+48 174.00 Td (CREATE INDEX idx_loan_repayments_member_month ON loan_repayments\(cycle_member_id, cycle_month_id\);) Tj
+-48 -174 Td
+/F3 6.2 Tf
+48 166.00 Td () Tj
+-48 -166 Td
+/F3 6.2 Tf
+48 158.00 Td (CREATE INDEX idx_penalties_member_month ON penalties\(cycle_member_id, cycle_month_id\);) Tj
+-48 -158 Td
+/F3 6.2 Tf
+48 150.00 Td (CREATE INDEX idx_penalties_status ON penalties\(status\);) Tj
+-48 -150 Td
+/F3 6.2 Tf
+48 142.00 Td () Tj
+-48 -142 Td
+/F3 6.2 Tf
+48 134.00 Td (CREATE INDEX idx_common_interest_allocations_member_month) Tj
+-48 -134 Td
+/F3 6.2 Tf
+48 126.00 Td (  ON common_interest_allocations\(cycle_member_id, cycle_month_id\);) Tj
+-48 -126 Td
+/F3 6.2 Tf
+48 118.00 Td () Tj
+-48 -118 Td
+/F3 6.2 Tf
+48 110.00 Td (CREATE INDEX idx_ledger_transactions_cycle_month) Tj
+-48 -110 Td
+/F3 6.2 Tf
+48 102.00 Td (  ON ledger_transactions\(cycle_id, cycle_month_id\);) Tj
+-48 -102 Td
+/F3 6.2 Tf
+48 94.00 Td () Tj
+-48 -94 Td
+/F3 6.2 Tf
+48 86.00 Td (CREATE INDEX idx_ledger_transactions_member) Tj
+-48 -86 Td
+/F3 6.2 Tf
+48 78.00 Td (  ON ledger_transactions\(cycle_member_id\);) Tj
+-48 -78 Td
+/F3 6.2 Tf
+48 70.00 Td () Tj
+-48 -70 Td
+/F3 6.2 Tf
+48 62.00 Td (CREATE INDEX idx_ledger_transactions_type) Tj
+-48 -62 Td
+/F2 8 Tf
+509 28 Td (Page 10) Tj
+ET
+endstream
+endobj
+25 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 24 0 R >>
+endobj
+26 0 obj
+<< /Length 4897 >>
+stream
+BT
+/F3 6.2 Tf
+48 744.00 Td (  ON ledger_transactions\(transaction_type\);) Tj
+-48 -744 Td
+/F3 6.2 Tf
+48 736.00 Td () Tj
+-48 -736 Td
+/F3 6.2 Tf
+48 728.00 Td (CREATE INDEX idx_ledger_entries_transaction) Tj
+-48 -728 Td
+/F3 6.2 Tf
+48 720.00 Td (  ON ledger_entries\(ledger_transaction_id\);) Tj
+-48 -720 Td
+/F3 6.2 Tf
+48 712.00 Td () Tj
+-48 -712 Td
+/F3 6.2 Tf
+48 704.00 Td (CREATE INDEX idx_ledger_entries_member_account) Tj
+-48 -704 Td
+/F3 6.2 Tf
+48 696.00 Td (  ON ledger_entries\(cycle_member_id, account_type\);) Tj
+-48 -696 Td
+/F3 6.2 Tf
+48 688.00 Td () Tj
+-48 -688 Td
+/F3 6.2 Tf
+48 680.00 Td (CREATE INDEX idx_member_monthly_snapshots_member_month) Tj
+-48 -680 Td
+/F3 6.2 Tf
+48 672.00 Td (  ON member_monthly_snapshots\(cycle_member_id, cycle_month_id\);) Tj
+-48 -672 Td
+/F3 6.2 Tf
+48 664.00 Td () Tj
+-48 -664 Td
+/F3 6.2 Tf
+48 656.00 Td (CREATE INDEX idx_audit_logs_entity) Tj
+-48 -656 Td
+/F3 6.2 Tf
+48 648.00 Td (  ON audit_logs\(entity_table, entity_id\);) Tj
+-48 -648 Td
+/F3 6.2 Tf
+48 640.00 Td () Tj
+-48 -640 Td
+/F3 6.2 Tf
+48 632.00 Td (CREATE INDEX idx_audit_logs_actor) Tj
+-48 -632 Td
+/F3 6.2 Tf
+48 624.00 Td (  ON audit_logs\(actor_user_id\);) Tj
+-48 -624 Td
+/F1 14 Tf
+48 594.00 Td (14. Important Database-Level Rules) Tj
+-48 -594 Td
+/F2 9 Tf
+48 566.00 Td (The database should enforce:) Tj
+-48 -566 Td
+/F2 9 Tf
+48 548.00 Td (  no duplicate member enrollment in the same cycle,) Tj
+-48 -548 Td
+/F2 9 Tf
+48 536.00 Td (  no duplicate declaration per member per month,) Tj
+-48 -536 Td
+/F2 9 Tf
+48 524.00 Td (  no duplicate one-time social fund or membership payment per member per cycle,) Tj
+-48 -524 Td
+/F2 9 Tf
+48 512.00 Td (  no duplicate common-interest run per month unless a previous run is reversed or superseded,) Tj
+-48 -512 Td
+/F2 9 Tf
+48 500.00 Td (  no duplicate monthly snapshot per member per month,) Tj
+-48 -500 Td
+/F2 9 Tf
+48 488.00 Td (  no duplicate monthly summary per month.) Tj
+-48 -488 Td
+/F2 9 Tf
+48 470.00 Td (The application service layer should enforce:) Tj
+-48 -470 Td
+/F2 9 Tf
+48 452.00 Td (  no ordinary posting into locked months,) Tj
+-48 -452 Td
+/F2 9 Tf
+48 440.00 Td (  savings cap checks against cumulative savings principal,) Tj
+-48 -440 Td
+/F2 9 Tf
+48 428.00 Td (  declaration window validation,) Tj
+-48 -428 Td
+/F2 9 Tf
+48 416.00 Td (  payout window validation,) Tj
+-48 -416 Td
+/F2 9 Tf
+48 404.00 Td (  loan interest calculation timing,) Tj
+-48 -404 Td
+/F2 9 Tf
+48 392.00 Td (  savings interest calculation timing,) Tj
+-48 -392 Td
+/F2 9 Tf
+48 380.00 Td (  common-interest allocation eligibility,) Tj
+-48 -380 Td
+/F2 9 Tf
+48 368.00 Td (  ledger transaction balancing,) Tj
+-48 -368 Td
+/F2 9 Tf
+48 356.00 Td (  reversal instead of deletion,) Tj
+-48 -356 Td
+/F2 9 Tf
+48 344.00 Td (  override reason requirement.) Tj
+-48 -344 Td
+/F1 14 Tf
+48 316.00 Td (15. ERD Diagram) Tj
+-48 -316 Td
+/F1 11 Tf
+48 280.00 Td (ERD Diagram Source) Tj
+-48 -280 Td
+/F3 6.2 Tf
+48 263.00 Td (erDiagram) Tj
+-48 -263 Td
+/F3 6.2 Tf
+48 255.00 Td (  USERS ||--o| MEMBERS : "login_for") Tj
+-48 -255 Td
+/F3 6.2 Tf
+48 247.00 Td (  USERS ||--o{ CYCLES : "creates") Tj
+-48 -247 Td
+/F3 6.2 Tf
+48 239.00 Td (  USERS ||--o{ AUDIT_LOGS : "performs") Tj
+-48 -239 Td
+/F3 6.2 Tf
+48 231.00 Td () Tj
+-48 -231 Td
+/F3 6.2 Tf
+48 223.00 Td (  MEMBERS ||--o{ CYCLE_MEMBERS : "enrolled_as") Tj
+-48 -223 Td
+/F3 6.2 Tf
+48 215.00 Td (  CYCLES ||--o{ CYCLE_MEMBERS : "has_members") Tj
+-48 -215 Td
+/F3 6.2 Tf
+48 207.00 Td (  CYCLES ||--o{ CYCLE_MONTHS : "has_months") Tj
+-48 -207 Td
+/F3 6.2 Tf
+48 199.00 Td (  CYCLES ||--o{ PENALTY_TYPES : "defines") Tj
+-48 -199 Td
+/F3 6.2 Tf
+48 191.00 Td () Tj
+-48 -191 Td
+/F3 6.2 Tf
+48 183.00 Td (  CYCLE_MONTHS ||--o{ DECLARATIONS : "receives") Tj
+-48 -183 Td
+/F3 6.2 Tf
+48 175.00 Td (  CYCLE_MEMBERS ||--o{ DECLARATIONS : "submits") Tj
+-48 -175 Td
+/F3 6.2 Tf
+48 167.00 Td () Tj
+-48 -167 Td
+/F3 6.2 Tf
+48 159.00 Td (  CYCLE_MEMBERS ||--o{ CONTRIBUTION_PAYMENTS : "makes") Tj
+-48 -159 Td
+/F3 6.2 Tf
+48 151.00 Td (  CYCLES ||--o{ CONTRIBUTION_PAYMENTS : "contains") Tj
+-48 -151 Td
+/F3 6.2 Tf
+48 143.00 Td () Tj
+-48 -143 Td
+/F3 6.2 Tf
+48 135.00 Td (  DECLARATIONS ||--o{ LOAN_REQUESTS : "may_create") Tj
+-48 -135 Td
+/F3 6.2 Tf
+48 127.00 Td (  CYCLE_MONTHS ||--o{ LOAN_REQUESTS : "contains") Tj
+-48 -127 Td
+/F3 6.2 Tf
+48 119.00 Td (  CYCLE_MEMBERS ||--o{ LOAN_REQUESTS : "requests") Tj
+-48 -119 Td
+/F3 6.2 Tf
+48 111.00 Td () Tj
+-48 -111 Td
+/F3 6.2 Tf
+48 103.00 Td (  LOAN_REQUESTS ||--o{ LOAN_DISBURSEMENTS : "approved_into") Tj
+-48 -103 Td
+/F3 6.2 Tf
+48 95.00 Td (  CYCLE_MONTHS ||--o{ LOAN_DISBURSEMENTS : "contains") Tj
+-48 -95 Td
+/F3 6.2 Tf
+48 87.00 Td (  CYCLE_MEMBERS ||--o{ LOAN_DISBURSEMENTS : "receives") Tj
+-48 -87 Td
+/F3 6.2 Tf
+48 79.00 Td () Tj
+-48 -79 Td
+/F3 6.2 Tf
+48 71.00 Td (  CYCLE_MONTHS ||--o{ LOAN_REPAYMENTS : "contains") Tj
+-48 -71 Td
+/F3 6.2 Tf
+48 63.00 Td (  CYCLE_MEMBERS ||--o{ LOAN_REPAYMENTS : "makes") Tj
+-48 -63 Td
+/F2 8 Tf
+509 28 Td (Page 11) Tj
+ET
+endstream
+endobj
+27 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 26 0 R >>
+endobj
+28 0 obj
+<< /Length 4530 >>
+stream
+BT
+/F3 6.2 Tf
+48 744.00 Td () Tj
+-48 -744 Td
+/F3 6.2 Tf
+48 736.00 Td (  PENALTY_TYPES ||--o{ PENALTIES : "classifies") Tj
+-48 -736 Td
+/F3 6.2 Tf
+48 728.00 Td (  DECLARATIONS ||--o{ PENALTIES : "may_reference") Tj
+-48 -728 Td
+/F3 6.2 Tf
+48 720.00 Td (  CYCLE_MONTHS ||--o{ PENALTIES : "contains") Tj
+-48 -720 Td
+/F3 6.2 Tf
+48 712.00 Td (  CYCLE_MEMBERS ||--o{ PENALTIES : "assessed_to") Tj
+-48 -712 Td
+/F3 6.2 Tf
+48 704.00 Td (  PENALTIES ||--o| LOAN_DISBURSEMENTS : "converted_to") Tj
+-48 -704 Td
+/F3 6.2 Tf
+48 696.00 Td () Tj
+-48 -696 Td
+/F3 6.2 Tf
+48 688.00 Td (  CYCLE_MONTHS ||--o| COMMON_INTEREST_RUNS : "has") Tj
+-48 -688 Td
+/F3 6.2 Tf
+48 680.00 Td (  COMMON_INTEREST_RUNS ||--o{ COMMON_INTEREST_ALLOCATIONS : "allocates") Tj
+-48 -680 Td
+/F3 6.2 Tf
+48 672.00 Td (  CYCLE_MEMBERS ||--o{ COMMON_INTEREST_ALLOCATIONS : "charged") Tj
+-48 -672 Td
+/F3 6.2 Tf
+48 664.00 Td () Tj
+-48 -664 Td
+/F3 6.2 Tf
+48 656.00 Td (  CYCLES ||--o{ LEDGER_TRANSACTIONS : "posts") Tj
+-48 -656 Td
+/F3 6.2 Tf
+48 648.00 Td (  CYCLE_MONTHS ||--o{ LEDGER_TRANSACTIONS : "posts") Tj
+-48 -648 Td
+/F3 6.2 Tf
+48 640.00 Td (  CYCLE_MEMBERS ||--o{ LEDGER_TRANSACTIONS : "affected_by") Tj
+-48 -640 Td
+/F3 6.2 Tf
+48 632.00 Td (  LEDGER_TRANSACTIONS ||--o{ LEDGER_ENTRIES : "contains") Tj
+-48 -632 Td
+/F3 6.2 Tf
+48 624.00 Td (  LEDGER_TRANSACTIONS ||--o| LEDGER_TRANSACTIONS : "reverses") Tj
+-48 -624 Td
+/F3 6.2 Tf
+48 616.00 Td () Tj
+-48 -616 Td
+/F3 6.2 Tf
+48 608.00 Td (  LEDGER_TRANSACTIONS ||--o| CONTRIBUTION_PAYMENTS : "backs") Tj
+-48 -608 Td
+/F3 6.2 Tf
+48 600.00 Td (  LEDGER_TRANSACTIONS ||--o| LOAN_DISBURSEMENTS : "backs") Tj
+-48 -600 Td
+/F3 6.2 Tf
+48 592.00 Td (  LEDGER_TRANSACTIONS ||--o| PENALTIES : "backs") Tj
+-48 -592 Td
+/F3 6.2 Tf
+48 584.00 Td (  LEDGER_TRANSACTIONS ||--o| COMMON_INTEREST_ALLOCATIONS : "backs") Tj
+-48 -584 Td
+/F3 6.2 Tf
+48 576.00 Td () Tj
+-48 -576 Td
+/F3 6.2 Tf
+48 568.00 Td (  CYCLE_MONTHS ||--o{ MONTHLY_CLOSING_RUNS : "processed_by") Tj
+-48 -568 Td
+/F3 6.2 Tf
+48 560.00 Td (  MONTHLY_CLOSING_RUNS ||--o{ MEMBER_MONTHLY_SNAPSHOTS : "creates") Tj
+-48 -560 Td
+/F3 6.2 Tf
+48 552.00 Td (  MONTHLY_CLOSING_RUNS ||--o| CYCLE_MONTH_SUMMARIES : "creates") Tj
+-48 -552 Td
+/F3 6.2 Tf
+48 544.00 Td (  CYCLE_MEMBERS ||--o{ MEMBER_MONTHLY_SNAPSHOTS : "summarized_in") Tj
+-48 -544 Td
+/F3 6.2 Tf
+48 536.00 Td (  CYCLE_MONTHS ||--o{ MEMBER_MONTHLY_SNAPSHOTS : "has") Tj
+-48 -536 Td
+/F3 6.2 Tf
+48 528.00 Td (  CYCLE_MONTHS ||--o| CYCLE_MONTH_SUMMARIES : "summarized_by") Tj
+-48 -528 Td
+/F3 6.2 Tf
+48 520.00 Td () Tj
+-48 -520 Td
+/F3 6.2 Tf
+48 512.00 Td (  CYCLES ||--o{ OVERRIDES : "contains") Tj
+-48 -512 Td
+/F3 6.2 Tf
+48 504.00 Td (  CYCLE_MONTHS ||--o{ OVERRIDES : "may_contain") Tj
+-48 -504 Td
+/F3 6.2 Tf
+48 496.00 Td (  OVERRIDES ||--o| COMMON_INTEREST_ALLOCATIONS : "may_adjust") Tj
+-48 -496 Td
+/F1 14 Tf
+48 466.00 Td (16. Notes Before Implementation) Tj
+-48 -466 Td
+/F1 11 Tf
+48 430.00 Td (Money Precision) Tj
+-48 -430 Td
+/F2 9 Tf
+48 407.00 Td (Use NUMERIC\(14,2\) for stored money values. Rates use NUMERIC\(8,6\) so 15% is stored as 0.150000.) Tj
+-48 -407 Td
+/F1 11 Tf
+48 381.00 Td (Ledger Sign Convention) Tj
+-48 -381 Td
+/F2 9 Tf
+48 358.00 Td (Use debit and credit columns instead of signed amounts for ledger entries. This makes audit and) Tj
+-48 -358 Td
+/F2 9 Tf
+48 346.00 Td (accounting reports easier to reason about.) Tj
+-48 -346 Td
+/F1 11 Tf
+48 320.00 Td (Snapshots Are Not the Source of Truth) Tj
+-48 -320 Td
+/F2 9 Tf
+48 297.00 Td (Monthly snapshots are official reporting records, but they must remain explainable from:) Tj
+-48 -297 Td
+/F2 9 Tf
+48 279.00 Td (  cycle rules,) Tj
+-48 -279 Td
+/F2 9 Tf
+48 267.00 Td (  declarations,) Tj
+-48 -267 Td
+/F2 9 Tf
+48 255.00 Td (  ledger transactions,) Tj
+-48 -255 Td
+/F2 9 Tf
+48 243.00 Td (  common-interest allocations,) Tj
+-48 -243 Td
+/F2 9 Tf
+48 231.00 Td (  penalties,) Tj
+-48 -231 Td
+/F2 9 Tf
+48 219.00 Td (  monthly closing runs.) Tj
+-48 -219 Td
+/F1 11 Tf
+48 193.00 Td (Locked Months) Tj
+-48 -193 Td
+/F2 9 Tf
+48 170.00 Td (Locked months should not allow ordinary inserts, updates, or deletes for financial records. This) Tj
+-48 -170 Td
+/F2 9 Tf
+48 158.00 Td (is best enforced in the application service layer and, if desired, reinforced with database) Tj
+-48 -158 Td
+/F2 9 Tf
+48 146.00 Td (triggers.) Tj
+-48 -146 Td
+/F1 11 Tf
+48 120.00 Td (Reversals) Tj
+-48 -120 Td
+/F2 9 Tf
+48 97.00 Td (Corrections should create reversal ledger transactions. Original rows should remain available for) Tj
+-48 -97 Td
+/F2 9 Tf
+48 85.00 Td (audit.) Tj
+-48 -85 Td
+/F2 8 Tf
+509 28 Td (Page 12) Tj
+ET
+endstream
+endobj
+29 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 28 0 R >>
+endobj
+30 0 obj
+<< /Length 998 >>
+stream
+BT
+/F1 11 Tf
+48 736.00 Td (Polymorphic Source Links) Tj
+-48 -736 Td
+/F2 9 Tf
+48 713.00 Td (ledger_transactions.source_table and source_id allow the ledger to reference the workflow that) Tj
+-48 -713 Td
+/F2 9 Tf
+48 701.00 Td (caused the posting. The application should validate these references because PostgreSQL cannot) Tj
+-48 -701 Td
+/F2 9 Tf
+48 689.00 Td (enforce a foreign key across multiple possible source tables.) Tj
+-48 -689 Td
+/F1 14 Tf
+48 661.00 Td (17. Suggested Next Implementation Step) Tj
+-48 -661 Td
+/F2 9 Tf
+48 633.00 Td (The next step is to convert this schema into:) Tj
+-48 -633 Td
+/F2 9 Tf
+48 615.00 Td (1. a Prisma schema or SQL migration,) Tj
+-48 -615 Td
+/F2 9 Tf
+48 603.00 Td (2. seed data for the current cycle rules,) Tj
+-48 -603 Td
+/F2 9 Tf
+48 591.00 Td (3. domain services for ledger posting,) Tj
+-48 -591 Td
+/F2 9 Tf
+48 579.00 Td (4. tests for savings interest, loan interest, penalties, and common-interest allocation.) Tj
+-48 -579 Td
+/F2 8 Tf
+509 28 Td (Page 13) Tj
+ET
+endstream
+endobj
+31 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 30 0 R >>
+endobj
+xref
+0 32
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000199 00000 n 
+0000000274 00000 n 
+0000000344 00000 n 
+0000000412 00000 n 
+0000004152 00000 n 
+0000004298 00000 n 
+0000009312 00000 n 
+0000009458 00000 n 
+0000014235 00000 n 
+0000014383 00000 n 
+0000019045 00000 n 
+0000019193 00000 n 
+0000025013 00000 n 
+0000025161 00000 n 
+0000030534 00000 n 
+0000030682 00000 n 
+0000036084 00000 n 
+0000036232 00000 n 
+0000041041 00000 n 
+0000041189 00000 n 
+0000047723 00000 n 
+0000047871 00000 n 
+0000053153 00000 n 
+0000053301 00000 n 
+0000058251 00000 n 
+0000058399 00000 n 
+0000062982 00000 n 
+0000063130 00000 n 
+0000064180 00000 n 
+trailer
+<< /Size 32 /Root 1 0 R >>
+startxref
+64328
+%%EOF

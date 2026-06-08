@@ -1,0 +1,53 @@
+.closing-context,
+.closing-steps-panel,
+.closing-result {
+  margin-bottom: 18px;
+}
+
+.closing-metrics {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.closing-detail-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.closing-lock-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  font-weight: 800;
+  color: #172033;
+}
+
+.closing-lock-toggle input {
+  width: 17px;
+  height: 17px;
+}
+
+.closing-lock-toggle span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+@media (max-width: 1180px) {
+  .closing-metrics {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1024px) {
+  .closing-detail-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .closing-metrics,
+  .closing-detail-grid,
+  .closing-context .form-grid.three {
+    grid-template-columns: 1fr;
+  }
+}

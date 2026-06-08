@@ -1,0 +1,33 @@
+.loan-metrics {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.loan-detail-panel,
+.loan-ledger {
+  margin-bottom: 18px;
+}
+
+.loan-detail-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.loan-form {
+  display: grid;
+  gap: 14px;
+}
+
+@media (max-width: 1024px) {
+  .loan-metrics,
+  .loan-detail-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .loan-metrics,
+  .loan-detail-grid,
+  .loan-form .form-grid.two,
+  .loan-form .form-grid.three {
+    grid-template-columns: 1fr;
+  }
+}

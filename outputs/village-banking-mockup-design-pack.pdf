@@ -1,0 +1,4606 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [6 0 R 8 0 R 10 0 R 12 0 R 14 0 R 16 0 R 18 0 R 20 0 R 22 0 R 24 0 R 26 0 R 28 0 R 30 0 R] /Count 13 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+5 0 obj
+<< /Length 3588 >>
+stream
+q
+0.965 0.973 0.984 rg
+0 0 842 595 re f
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 20 Tf
+34 561.00 Td (Village Banking Mockup Design Pack) Tj
+-34 -561 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 9 Tf
+34 537.00 Td (Visual direction, screen mockups, and workflow guidance) Tj
+-34 -537 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+34 85 774 418 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 15 Tf
+58 469.00 Td (Design Personality) Tj
+-58 -469 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 10 Tf
+58 445.00 Td (Quiet financial operations interface: clear, auditable, compact, and built for repeated) Tj
+-58 -445 Td
+58 432.00 Td (monthly work.) Tj
+-58 -432 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F1 12 Tf
+58 400.00 Td (Typography) Tj
+-58 -400 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 9 Tf
+58 381.00 Td (Primary app font: Inter. Fallbacks: system-ui, Segoe UI, Helvetica, Arial, sans-serif.) Tj
+-58 -381 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 9 Tf
+58 364.00 Td (Page titles: 20-24px semibold. Section titles: 14-16px semibold. Tables/forms: 13-14px regular.) Tj
+-58 -364 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F1 12 Tf
+450 469.00 Td (Color Palette) Tj
+-450 -469 Td
+ET
+q
+0.090 0.125 0.200 rg
+0.847 0.882 0.922 RG
+1 w
+450 425 30 24 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 8 Tf
+488 439.00 Td (Ink) Tj
+-488 -439 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 7 Tf
+488 426.00 Td (#172033) Tj
+-488 -426 Td
+ET
+q
+0.396 0.459 0.545 rg
+0.847 0.882 0.922 RG
+1 w
+595 425 30 24 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 8 Tf
+633 439.00 Td (Muted) Tj
+-633 -439 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 7 Tf
+633 426.00 Td (#65758b) Tj
+-633 -426 Td
+ET
+q
+0.086 0.396 0.204 rg
+0.847 0.882 0.922 RG
+1 w
+450 383 30 24 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 8 Tf
+488 397.00 Td (Primary) Tj
+-488 -397 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 7 Tf
+488 384.00 Td (#166534) Tj
+-488 -384 Td
+ET
+q
+0.059 0.463 0.431 rg
+0.847 0.882 0.922 RG
+1 w
+595 383 30 24 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 8 Tf
+633 397.00 Td (Teal) Tj
+-633 -397 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 7 Tf
+633 384.00 Td (#0f766e) Tj
+-633 -384 Td
+ET
+q
+0.145 0.388 0.922 rg
+0.847 0.882 0.922 RG
+1 w
+450 341 30 24 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 8 Tf
+488 355.00 Td (Blue) Tj
+-488 -355 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 7 Tf
+488 342.00 Td (#2563eb) Tj
+-488 -342 Td
+ET
+q
+0.706 0.325 0.035 rg
+0.847 0.882 0.922 RG
+1 w
+595 341 30 24 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 8 Tf
+633 355.00 Td (Warning) Tj
+-633 -355 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 7 Tf
+633 342.00 Td (#b45309) Tj
+-633 -342 Td
+ET
+q
+0.706 0.137 0.094 rg
+0.847 0.882 0.922 RG
+1 w
+450 299 30 24 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 8 Tf
+488 313.00 Td (Danger) Tj
+-488 -313 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 7 Tf
+488 300.00 Td (#b42318) Tj
+-488 -300 Td
+ET
+q
+0.965 0.973 0.984 rg
+0.847 0.882 0.922 RG
+1 w
+595 299 30 24 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 8 Tf
+633 313.00 Td (Surface) Tj
+-633 -313 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 7 Tf
+633 300.00 Td (#f6f8fb) Tj
+-633 -300 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F1 12 Tf
+58 315.00 Td (UI Rules) Tj
+-58 -315 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 9 Tf
+72 293.00 Td (  Use dense tables for financial records and compact cards for totals.) Tj
+-72 -293 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 9 Tf
+72 275.00 Td (  Every amount should drill into its ledger source.) Tj
+-72 -275 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 9 Tf
+72 257.00 Td (  Use badges for compliance, locked states, approvals, and penalties.) Tj
+-72 -257 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 9 Tf
+72 239.00 Td (  Keep destructive actions behind confirmation dialogs with reason fields.) Tj
+-72 -239 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 9 Tf
+72 221.00 Td (  Avoid decorative hero layouts. This is an operations product.) Tj
+-72 -221 Td
+ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 5 0 R >>
+endobj
+7 0 obj
+<< /Length 2372 >>
+stream
+q
+0.965 0.973 0.984 rg
+0 0 842 595 re f
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 20 Tf
+34 561.00 Td (Primary App Flow) Tj
+-34 -561 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 9 Tf
+34 537.00 Td (Admin and member journeys through the monthly operating cycle) Tj
+-34 -537 Td
+ET
+q
+0.859 0.918 0.996 rg
+0.847 0.882 0.922 RG
+1 w
+62 411 118 56 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 10 Tf
+76 435.00 Td (Cycle Setup) Tj
+-76 -435 Td
+ET
+q
+0.859 0.918 0.996 rg
+0.847 0.882 0.922 RG
+1 w
+210 411 118 56 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 10 Tf
+224 435.00 Td (Enroll Members) Tj
+-224 -435 Td
+ET
+q
+0.863 0.988 0.906 rg
+0.847 0.882 0.922 RG
+1 w
+358 411 118 56 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 10 Tf
+372 435.00 Td (Monthly Declarations) Tj
+-372 -435 Td
+ET
+q
+0.996 0.953 0.780 rg
+0.847 0.882 0.922 RG
+1 w
+526 411 118 56 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 10 Tf
+540 435.00 Td (Loan Payout Window) Tj
+-540 -435 Td
+ET
+q
+0.863 0.988 0.906 rg
+0.847 0.882 0.922 RG
+1 w
+62 261 118 56 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 10 Tf
+76 285.00 Td (Monthly Closing) Tj
+-76 -285 Td
+ET
+q
+0.996 0.953 0.780 rg
+0.847 0.882 0.922 RG
+1 w
+230 261 118 56 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 10 Tf
+244 285.00 Td (Interest + Penalties) Tj
+-244 -285 Td
+ET
+q
+0.859 0.918 0.996 rg
+0.847 0.882 0.922 RG
+1 w
+398 261 118 56 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 10 Tf
+412 285.00 Td (Common Interest) Tj
+-412 -285 Td
+ET
+q
+0.996 0.886 0.886 rg
+0.847 0.882 0.922 RG
+1 w
+566 261 118 56 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 10 Tf
+580 285.00 Td (Lock Month + Reports) Tj
+-580 -285 Td
+ET
+q
+0.086 0.396 0.204 RG
+1.8 w
+180 439 m 210 439 l S
+Q
+q
+0.086 0.396 0.204 RG
+1.8 w
+328 439 m 358 439 l S
+Q
+q
+0.086 0.396 0.204 RG
+1.8 w
+476 439 m 526 439 l S
+Q
+q
+0.086 0.396 0.204 RG
+1.8 w
+121 411 m 121 317 l S
+Q
+q
+0.086 0.396 0.204 RG
+1.8 w
+180 289 m 230 289 l S
+Q
+q
+0.086 0.396 0.204 RG
+1.8 w
+348 289 m 398 289 l S
+Q
+q
+0.086 0.396 0.204 RG
+1.8 w
+516 289 m 566 289 l S
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 12 Tf
+82 175.00 Td (Member Flow) Tj
+-82 -175 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 9 Tf
+82 153.00 Td (Login -> View obligations -> Submit declaration -> Track savings, loans, penalties, and statements.) Tj
+-82 -153 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F1 12 Tf
+82 121.00 Td (Admin Flow) Tj
+-82 -121 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 9 Tf
+82 99.00 Td (Configure cycle -> approve activity -> post ledger transactions -> run closing -> review snapshots -> lock month.) Tj
+-82 -99 Td
+ET
+endstream
+endobj
+8 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 7 0 R >>
+endobj
+9 0 obj
+<< /Length 5425 >>
+stream
+q
+0.965 0.973 0.984 rg
+0 0 842 595 re f
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 20 Tf
+34 561.00 Td (Screen 1: Admin Dashboard) Tj
+-34 -561 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 9 Tf
+34 537.00 Td (First admin screen: current month health, pending actions, and financial totals) Tj
+-34 -537 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+34 55 774 456 re B
+Q
+q
+0.063 0.165 0.263 rg
+34 55 148 456 re f
+Q
+BT
+1.000 1.000 1.000 rg
+/F1 13 Tf
+52 484.00 Td (Village Bank) Tj
+-52 -484 Td
+ET
+q
+0.118 0.310 0.471 rg
+46 448 118 20 re f
+Q
+BT
+0.906 0.933 0.969 rg
+/F1 7.7 Tf
+55 455.00 Td (Dashboard) Tj
+-55 -455 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 430.00 Td (Cycles) Tj
+-55 -430 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 405.00 Td (Members) Tj
+-55 -405 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 380.00 Td (Declarations) Tj
+-55 -380 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 355.00 Td (Savings) Tj
+-55 -355 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 330.00 Td (Loans) Tj
+-55 -330 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 305.00 Td (Common Interest) Tj
+-55 -305 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 280.00 Td (Penalties) Tj
+-55 -280 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 255.00 Td (Monthly Closing) Tj
+-55 -255 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 230.00 Td (Ledger) Tj
+-55 -230 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 205.00 Td (Reports) Tj
+-55 -205 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 180.00 Td (Audit Trail) Tj
+-55 -180 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+182 459 626 52 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 13 Tf
+202 482.00 Td (Admin Dashboard) Tj
+-202 -482 Td
+ET
+q
+0.859 0.918 0.996 rg
+613 477 72 18 re f
+Q
+BT
+0.145 0.388 0.922 rg
+/F1 7.5 Tf
+620 483.00 Td (Cycle 2026) Tj
+-620 -483 Td
+ET
+q
+0.933 0.957 0.973 rg
+694 477 52 18 re f
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 7.5 Tf
+701 483.00 Td (March) Tj
+-701 -483 Td
+ET
+q
+0.863 0.988 0.906 rg
+754 477 38 18 re f
+Q
+BT
+0.086 0.396 0.204 rg
+/F1 7.5 Tf
+761 483.00 Td (Admin) Tj
+-761 -483 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+202 361 135 76 re B
+Q
+q
+0.086 0.396 0.204 rg
+202 361 4 76 re f
+Q
+BT
+0.396 0.459 0.545 rg
+/F1 8 Tf
+215 419.00 Td (Savings Collected) Tj
+-215 -419 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F1 18 Tf
+215 394.00 Td (K84,000) Tj
+-215 -394 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 7.5 Tf
+215 376.00 Td (+K6,000 this month) Tj
+-215 -376 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+352 361 135 76 re B
+Q
+q
+0.145 0.388 0.922 rg
+352 361 4 76 re f
+Q
+BT
+0.396 0.459 0.545 rg
+/F1 8 Tf
+365 419.00 Td (Loans Outstanding) Tj
+-365 -419 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F1 18 Tf
+365 394.00 Td (K51,500) Tj
+-365 -394 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 7.5 Tf
+365 376.00 Td (11 active balances) Tj
+-365 -376 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+502 361 135 76 re B
+Q
+q
+0.059 0.463 0.431 rg
+502 361 4 76 re f
+Q
+BT
+0.396 0.459 0.545 rg
+/F1 8 Tf
+515 419.00 Td (Common Interest) Tj
+-515 -419 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F1 18 Tf
+515 394.00 Td (K4,200) Tj
+-515 -394 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 7.5 Tf
+515 376.00 Td (Preview for March) Tj
+-515 -376 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+652 361 135 76 re B
+Q
+q
+0.706 0.325 0.035 rg
+652 361 4 76 re f
+Q
+BT
+0.396 0.459 0.545 rg
+/F1 8 Tf
+665 419.00 Td (Unpaid Penalties) Tj
+-665 -419 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F1 18 Tf
+665 394.00 Td (K700) Tj
+-665 -394 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 7.5 Tf
+665 376.00 Td (7 members flagged) Tj
+-665 -376 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+202 147 360 196 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 12 Tf
+220 317.00 Td (Monthly Closing Progress) Tj
+-220 -317 Td
+ET
+q
+0.863 0.988 0.906 rg
+222 273 44 18 re f
+Q
+BT
+0.086 0.396 0.204 rg
+/F1 7.5 Tf
+229 279.00 Td (Done) Tj
+-229 -279 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 8.5 Tf
+278 278.00 Td (Validate inputs) Tj
+-278 -278 Td
+ET
+q
+0.863 0.988 0.906 rg
+222 248 44 18 re f
+Q
+BT
+0.086 0.396 0.204 rg
+/F1 7.5 Tf
+229 254.00 Td (Done) Tj
+-229 -254 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 8.5 Tf
+278 253.00 Td (Assess declarations) Tj
+-278 -253 Td
+ET
+q
+0.859 0.918 0.996 rg
+222 223 44 18 re f
+Q
+BT
+0.145 0.388 0.922 rg
+/F1 7.5 Tf
+229 229.00 Td (Now) Tj
+-229 -229 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 8.5 Tf
+278 228.00 Td (Calculate interest) Tj
+-278 -228 Td
+ET
+q
+0.933 0.957 0.973 rg
+222 198 44 18 re f
+Q
+BT
+0.145 0.388 0.922 rg
+/F1 7.5 Tf
+229 204.00 Td (Next) Tj
+-229 -204 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 8.5 Tf
+278 203.00 Td (Allocate common interest) Tj
+-278 -203 Td
+ET
+q
+0.933 0.957 0.973 rg
+222 173 44 18 re f
+Q
+BT
+0.145 0.388 0.922 rg
+/F1 7.5 Tf
+229 179.00 Td (Next) Tj
+-229 -179 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 8.5 Tf
+278 178.00 Td (Review and lock) Tj
+-278 -178 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+584 147 203 196 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 12 Tf
+602 317.00 Td (Priority Queue) Tj
+-602 -317 Td
+ET
+BT
+0.086 0.396 0.204 rg
+/F1 16 Tf
+606 284.00 Td (5) Tj
+-606 -284 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 8.5 Tf
+636 284.00 Td (Loan approvals) Tj
+-636 -284 Td
+ET
+BT
+0.706 0.325 0.035 rg
+/F1 16 Tf
+606 250.00 Td (7) Tj
+-606 -250 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 8.5 Tf
+636 250.00 Td (Failed declarations) Tj
+-636 -250 Td
+ET
+BT
+0.086 0.396 0.204 rg
+/F1 16 Tf
+606 216.00 Td (3) Tj
+-606 -216 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 8.5 Tf
+636 216.00 Td (Penalty conversions) Tj
+-636 -216 Td
+ET
+BT
+0.086 0.396 0.204 rg
+/F1 16 Tf
+606 182.00 Td (1) Tj
+-606 -182 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 8.5 Tf
+636 182.00 Td (Month ready to close) Tj
+-636 -182 Td
+ET
+endstream
+endobj
+10 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 9 0 R >>
+endobj
+11 0 obj
+<< /Length 4483 >>
+stream
+q
+0.965 0.973 0.984 rg
+0 0 842 595 re f
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 20 Tf
+34 561.00 Td (Screen 2: Cycle Setup) Tj
+-34 -561 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 9 Tf
+34 537.00 Td (Cycle-specific business rules before members begin operating) Tj
+-34 -537 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+34 55 774 456 re B
+Q
+q
+0.063 0.165 0.263 rg
+34 55 148 456 re f
+Q
+BT
+1.000 1.000 1.000 rg
+/F1 13 Tf
+52 484.00 Td (Village Bank) Tj
+-52 -484 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 455.00 Td (Dashboard) Tj
+-55 -455 Td
+ET
+q
+0.118 0.310 0.471 rg
+46 423 118 20 re f
+Q
+BT
+0.906 0.933 0.969 rg
+/F1 7.7 Tf
+55 430.00 Td (Cycles) Tj
+-55 -430 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 405.00 Td (Members) Tj
+-55 -405 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 380.00 Td (Declarations) Tj
+-55 -380 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 355.00 Td (Savings) Tj
+-55 -355 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 330.00 Td (Loans) Tj
+-55 -330 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 305.00 Td (Common Interest) Tj
+-55 -305 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 280.00 Td (Penalties) Tj
+-55 -280 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 255.00 Td (Monthly Closing) Tj
+-55 -255 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 230.00 Td (Ledger) Tj
+-55 -230 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 205.00 Td (Reports) Tj
+-55 -205 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 180.00 Td (Audit Trail) Tj
+-55 -180 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+182 459 626 52 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 13 Tf
+202 482.00 Td (Create Cycle) Tj
+-202 -482 Td
+ET
+q
+0.859 0.918 0.996 rg
+613 477 72 18 re f
+Q
+BT
+0.145 0.388 0.922 rg
+/F1 7.5 Tf
+620 483.00 Td (Cycle 2026) Tj
+-620 -483 Td
+ET
+q
+0.933 0.957 0.973 rg
+694 477 52 18 re f
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 7.5 Tf
+701 483.00 Td (March) Tj
+-701 -483 Td
+ET
+q
+0.863 0.988 0.906 rg
+754 477 38 18 re f
+Q
+BT
+0.086 0.396 0.204 rg
+/F1 7.5 Tf
+761 483.00 Td (Admin) Tj
+-761 -483 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+202 319 278 118 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 12 Tf
+218 412.00 Td (Cycle Dates) Tj
+-218 -412 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 8 Tf
+220 384.00 Td (Start date) Tj
+-220 -384 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F1 9 Tf
+347 384.00 Td (01 Jan 2026) Tj
+-347 -384 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 8 Tf
+220 360.00 Td (End date) Tj
+-220 -360 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F1 9 Tf
+347 360.00 Td (31 Dec 2026) Tj
+-347 -360 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 8 Tf
+220 336.00 Td (Rounding) Tj
+-220 -336 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F1 9 Tf
+347 336.00 Td (HALF_UP, 2 decimals) Tj
+-347 -336 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+508 319 278 118 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 12 Tf
+524 412.00 Td (Savings Rules) Tj
+-524 -412 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 8 Tf
+526 384.00 Td (Savings cap) Tj
+-526 -384 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F1 9 Tf
+653 384.00 Td (K30,000) Tj
+-653 -384 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 8 Tf
+526 360.00 Td (Savings interest) Tj
+-526 -360 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F1 9 Tf
+653 360.00 Td (15% monthly) Tj
+-653 -360 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 8 Tf
+526 336.00 Td (Social fund) Tj
+-526 -336 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F1 9 Tf
+653 336.00 Td (K240 once) Tj
+-653 -336 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+202 171 278 118 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 12 Tf
+218 264.00 Td (Loan Rules) Tj
+-218 -264 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 8 Tf
+220 236.00 Td (Minimum borrowing) Tj
+-220 -236 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F1 9 Tf
+347 236.00 Td (K20,000) Tj
+-347 -236 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 8 Tf
+220 212.00 Td (Loan interest) Tj
+-220 -212 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F1 9 Tf
+347 212.00 Td (15% monthly) Tj
+-347 -212 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 8 Tf
+220 188.00 Td (Payout window) Tj
+-220 -188 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F1 9 Tf
+347 188.00 Td (4th to 5th) Tj
+-347 -188 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+508 171 278 118 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 12 Tf
+524 264.00 Td (Penalty Rules) Tj
+-524 -264 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 8 Tf
+526 236.00 Td (Failure to declare) Tj
+-526 -236 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F1 9 Tf
+653 236.00 Td (K100) Tj
+-653 -236 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 8 Tf
+526 212.00 Td (Convertible) Tj
+-526 -212 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F1 9 Tf
+653 212.00 Td (Yes) Tj
+-653 -212 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 8 Tf
+526 188.00 Td (Declaration window) Tj
+-526 -188 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F1 9 Tf
+653 188.00 Td (28th to 3rd) Tj
+-653 -188 Td
+ET
+endstream
+endobj
+12 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 11 0 R >>
+endobj
+13 0 obj
+<< /Length 5798 >>
+stream
+q
+0.965 0.973 0.984 rg
+0 0 842 595 re f
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 20 Tf
+34 561.00 Td (Screen 3: Members) Tj
+-34 -561 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 9 Tf
+34 537.00 Td (Operational member table with compliance and balances) Tj
+-34 -537 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+34 55 774 456 re B
+Q
+q
+0.063 0.165 0.263 rg
+34 55 148 456 re f
+Q
+BT
+1.000 1.000 1.000 rg
+/F1 13 Tf
+52 484.00 Td (Village Bank) Tj
+-52 -484 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 455.00 Td (Dashboard) Tj
+-55 -455 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 430.00 Td (Cycles) Tj
+-55 -430 Td
+ET
+q
+0.118 0.310 0.471 rg
+46 398 118 20 re f
+Q
+BT
+0.906 0.933 0.969 rg
+/F1 7.7 Tf
+55 405.00 Td (Members) Tj
+-55 -405 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 380.00 Td (Declarations) Tj
+-55 -380 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 355.00 Td (Savings) Tj
+-55 -355 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 330.00 Td (Loans) Tj
+-55 -330 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 305.00 Td (Common Interest) Tj
+-55 -305 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 280.00 Td (Penalties) Tj
+-55 -280 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 255.00 Td (Monthly Closing) Tj
+-55 -255 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 230.00 Td (Ledger) Tj
+-55 -230 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 205.00 Td (Reports) Tj
+-55 -205 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 180.00 Td (Audit Trail) Tj
+-55 -180 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+182 459 626 52 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 13 Tf
+202 482.00 Td (Members) Tj
+-202 -482 Td
+ET
+q
+0.859 0.918 0.996 rg
+613 477 72 18 re f
+Q
+BT
+0.145 0.388 0.922 rg
+/F1 7.5 Tf
+620 483.00 Td (Cycle 2026) Tj
+-620 -483 Td
+ET
+q
+0.933 0.957 0.973 rg
+694 477 52 18 re f
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 7.5 Tf
+701 483.00 Td (March) Tj
+-701 -483 Td
+ET
+q
+0.863 0.988 0.906 rg
+754 477 38 18 re f
+Q
+BT
+0.086 0.396 0.204 rg
+/F1 7.5 Tf
+761 483.00 Td (Admin) Tj
+-761 -483 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+202 397 586 44 re B
+Q
+BT
+0.396 0.459 0.545 rg
+/F2 9 Tf
+220 414.00 Td (Search members, filter by declaration, borrowing compliance, or penalty status) Tj
+-220 -414 Td
+ET
+q
+0.933 0.957 0.973 rg
+0.847 0.882 0.922 RG
+1 w
+202 353 535 24 re B
+Q
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+209 362.00 Td (Member) Tj
+-209 -362 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+304 362.00 Td (Savings) Tj
+-304 -362 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+376 362.00 Td (Borrowed) Tj
+-376 -362 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+452 362.00 Td (Loan) Tj
+-452 -362 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+520 362.00 Td (Declaration) Tj
+-520 -362 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+604 362.00 Td (Compliance) Tj
+-604 -362 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+682 362.00 Td (Penalty) Tj
+-682 -362 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+202 329 535 24 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+209 338.00 Td (M. Phiri) Tj
+-209 -338 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+304 338.00 Td (K12,500) Tj
+-304 -338 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+376 338.00 Td (K0) Tj
+-376 -338 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+452 338.00 Td (K0) Tj
+-452 -338 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+520 338.00 Td (Missed) Tj
+-520 -338 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+604 338.00 Td (Never) Tj
+-604 -338 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+682 338.00 Td (K100) Tj
+-682 -338 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+202 305 535 24 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+209 314.00 Td (A. Banda) Tj
+-209 -314 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+304 314.00 Td (K30,000) Tj
+-304 -314 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+376 314.00 Td (K22,000) Tj
+-376 -314 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+452 314.00 Td (K8,900) Tj
+-452 -314 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+520 314.00 Td (Declared) Tj
+-520 -314 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+604 314.00 Td (Met) Tj
+-604 -314 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+682 314.00 Td (K0) Tj
+-682 -314 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+202 281 535 24 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+209 290.00 Td (T. Mwansa) Tj
+-209 -290 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+304 290.00 Td (K18,000) Tj
+-304 -290 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+376 290.00 Td (K9,000) Tj
+-376 -290 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+452 290.00 Td (K10,350) Tj
+-452 -290 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+520 290.00 Td (Declared) Tj
+-520 -290 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+604 290.00 Td (Below) Tj
+-604 -290 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+682 290.00 Td (K0) Tj
+-682 -290 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+202 257 535 24 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+209 266.00 Td (L. Tembo) Tj
+-209 -266 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+304 266.00 Td (K25,000) Tj
+-304 -266 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+376 266.00 Td (K20,000) Tj
+-376 -266 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+452 266.00 Td (K4,100) Tj
+-452 -266 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+520 266.00 Td (Declared) Tj
+-520 -266 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+604 266.00 Td (Met) Tj
+-604 -266 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+682 266.00 Td (K0) Tj
+-682 -266 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+202 233 535 24 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+209 242.00 Td (N. Chanda) Tj
+-209 -242 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+304 242.00 Td (K7,500) Tj
+-304 -242 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+376 242.00 Td (K0) Tj
+-376 -242 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+452 242.00 Td (K0) Tj
+-452 -242 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+520 242.00 Td (Missed) Tj
+-520 -242 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+604 242.00 Td (Never) Tj
+-604 -242 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+682 242.00 Td (K100) Tj
+-682 -242 Td
+ET
+endstream
+endobj
+14 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 13 0 R >>
+endobj
+15 0 obj
+<< /Length 6103 >>
+stream
+q
+0.965 0.973 0.984 rg
+0 0 842 595 re f
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 20 Tf
+34 561.00 Td (Screen 4: Member Statement) Tj
+-34 -561 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 9 Tf
+34 537.00 Td (Traceable monthly statement with running financial components) Tj
+-34 -537 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+34 55 774 456 re B
+Q
+q
+0.063 0.165 0.263 rg
+34 55 148 456 re f
+Q
+BT
+1.000 1.000 1.000 rg
+/F1 13 Tf
+52 484.00 Td (Village Bank) Tj
+-52 -484 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 455.00 Td (Dashboard) Tj
+-55 -455 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 430.00 Td (Cycles) Tj
+-55 -430 Td
+ET
+q
+0.118 0.310 0.471 rg
+46 398 118 20 re f
+Q
+BT
+0.906 0.933 0.969 rg
+/F1 7.7 Tf
+55 405.00 Td (Members) Tj
+-55 -405 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 380.00 Td (Declarations) Tj
+-55 -380 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 355.00 Td (Savings) Tj
+-55 -355 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 330.00 Td (Loans) Tj
+-55 -330 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 305.00 Td (Common Interest) Tj
+-55 -305 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 280.00 Td (Penalties) Tj
+-55 -280 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 255.00 Td (Monthly Closing) Tj
+-55 -255 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 230.00 Td (Ledger) Tj
+-55 -230 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 205.00 Td (Reports) Tj
+-55 -205 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 180.00 Td (Audit Trail) Tj
+-55 -180 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+182 459 626 52 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 13 Tf
+202 482.00 Td (Member Statement: Mary Phiri) Tj
+-202 -482 Td
+ET
+q
+0.859 0.918 0.996 rg
+613 477 72 18 re f
+Q
+BT
+0.145 0.388 0.922 rg
+/F1 7.5 Tf
+620 483.00 Td (Cycle 2026) Tj
+-620 -483 Td
+ET
+q
+0.933 0.957 0.973 rg
+694 477 52 18 re f
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 7.5 Tf
+701 483.00 Td (March) Tj
+-701 -483 Td
+ET
+q
+0.863 0.988 0.906 rg
+754 477 38 18 re f
+Q
+BT
+0.086 0.396 0.204 rg
+/F1 7.5 Tf
+761 483.00 Td (Admin) Tj
+-761 -483 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+202 369 135 68 re B
+Q
+q
+0.086 0.396 0.204 rg
+202 369 4 68 re f
+Q
+BT
+0.396 0.459 0.545 rg
+/F1 8 Tf
+215 419.00 Td (Accumulated Savings) Tj
+-215 -419 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F1 18 Tf
+215 394.00 Td (K14,375) Tj
+-215 -394 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 7.5 Tf
+215 376.00 Td (Principal K12,500) Tj
+-215 -376 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+352 369 135 68 re B
+Q
+q
+0.145 0.388 0.922 rg
+352 369 4 68 re f
+Q
+BT
+0.396 0.459 0.545 rg
+/F1 8 Tf
+365 419.00 Td (Outstanding Loan) Tj
+-365 -419 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F1 18 Tf
+365 394.00 Td (K0) Tj
+-365 -394 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 7.5 Tf
+365 376.00 Td (No active loan) Tj
+-365 -376 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+502 369 135 68 re B
+Q
+q
+0.706 0.325 0.035 rg
+502 369 4 68 re f
+Q
+BT
+0.396 0.459 0.545 rg
+/F1 8 Tf
+515 419.00 Td (Borrowing Status) Tj
+-515 -419 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F1 18 Tf
+515 394.00 Td (Never) Tj
+-515 -394 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 7.5 Tf
+515 376.00 Td (K20,000 shortfall) Tj
+-515 -376 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+652 369 135 68 re B
+Q
+q
+0.706 0.137 0.094 rg
+652 369 4 68 re f
+Q
+BT
+0.396 0.459 0.545 rg
+/F1 8 Tf
+665 419.00 Td (Penalties) Tj
+-665 -419 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F1 18 Tf
+665 394.00 Td (K100) Tj
+-665 -394 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 7.5 Tf
+665 376.00 Td (Failure to declare) Tj
+-665 -376 Td
+ET
+q
+0.933 0.957 0.973 rg
+0.847 0.882 0.922 RG
+1 w
+202 317 550 24 re B
+Q
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+209 326.00 Td (Date) Tj
+-209 -326 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+273 326.00 Td (Type) Tj
+-273 -326 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+405 326.00 Td (Debit) Tj
+-405 -326 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+475 326.00 Td (Credit) Tj
+-475 -326 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+545 326.00 Td (Balance) Tj
+-545 -326 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+627 326.00 Td (Source) Tj
+-627 -326 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+202 293 550 24 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+209 302.00 Td (01 Mar) Tj
+-209 -302 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+273 302.00 Td (B/F savings) Tj
+-273 -302 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+405 302.00 Td (-) Tj
+-405 -302 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+475 302.00 Td (-) Tj
+-475 -302 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+545 302.00 Td (K12,500) Tj
+-545 -302 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+627 302.00 Td (Feb close) Tj
+-627 -302 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+202 269 550 24 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+209 278.00 Td (03 Mar) Tj
+-209 -278 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+273 278.00 Td (Savings interest) Tj
+-273 -278 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+405 278.00 Td (-) Tj
+-405 -278 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+475 278.00 Td (K1,875) Tj
+-475 -278 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+545 278.00 Td (K14,375) Tj
+-545 -278 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+627 278.00 Td (Monthly close) Tj
+-627 -278 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+202 245 550 24 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+209 254.00 Td (04 Mar) Tj
+-209 -254 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+273 254.00 Td (Penalty assessed) Tj
+-273 -254 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+405 254.00 Td (K100) Tj
+-405 -254 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+475 254.00 Td (-) Tj
+-475 -254 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+545 254.00 Td (K100 due) Tj
+-545 -254 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+627 254.00 Td (Missed declaration) Tj
+-627 -254 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+202 221 550 24 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+209 230.00 Td (05 Mar) Tj
+-209 -230 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+273 230.00 Td (Common interest) Tj
+-273 -230 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+405 230.00 Td (K430) Tj
+-405 -230 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+475 230.00 Td (-) Tj
+-475 -230 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+545 230.00 Td (K430 due) Tj
+-545 -230 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+627 230.00 Td (Allocation run) Tj
+-627 -230 Td
+ET
+endstream
+endobj
+16 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 15 0 R >>
+endobj
+17 0 obj
+<< /Length 3651 >>
+stream
+q
+0.965 0.973 0.984 rg
+0 0 842 595 re f
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 20 Tf
+34 561.00 Td (Screen 5: Declaration Form) Tj
+-34 -561 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 9 Tf
+34 537.00 Td (Member-facing monthly declaration with window status) Tj
+-34 -537 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+34 55 774 456 re B
+Q
+q
+0.063 0.165 0.263 rg
+34 55 148 456 re f
+Q
+BT
+1.000 1.000 1.000 rg
+/F1 13 Tf
+52 484.00 Td (Village Bank) Tj
+-52 -484 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 455.00 Td (Dashboard) Tj
+-55 -455 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 430.00 Td (Cycles) Tj
+-55 -430 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 405.00 Td (Members) Tj
+-55 -405 Td
+ET
+q
+0.118 0.310 0.471 rg
+46 373 118 20 re f
+Q
+BT
+0.906 0.933 0.969 rg
+/F1 7.7 Tf
+55 380.00 Td (Declarations) Tj
+-55 -380 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 355.00 Td (Savings) Tj
+-55 -355 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 330.00 Td (Loans) Tj
+-55 -330 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 305.00 Td (Common Interest) Tj
+-55 -305 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 280.00 Td (Penalties) Tj
+-55 -280 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 255.00 Td (Monthly Closing) Tj
+-55 -255 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 230.00 Td (Ledger) Tj
+-55 -230 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 205.00 Td (Reports) Tj
+-55 -205 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 180.00 Td (Audit Trail) Tj
+-55 -180 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+182 459 626 52 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 13 Tf
+202 482.00 Td (Submit Declaration) Tj
+-202 -482 Td
+ET
+q
+0.859 0.918 0.996 rg
+613 477 72 18 re f
+Q
+BT
+0.145 0.388 0.922 rg
+/F1 7.5 Tf
+620 483.00 Td (Cycle 2026) Tj
+-620 -483 Td
+ET
+q
+0.933 0.957 0.973 rg
+694 477 52 18 re f
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 7.5 Tf
+701 483.00 Td (March) Tj
+-701 -483 Td
+ET
+q
+0.863 0.988 0.906 rg
+754 477 38 18 re f
+Q
+BT
+0.086 0.396 0.204 rg
+/F1 7.5 Tf
+761 483.00 Td (Admin) Tj
+-761 -483 Td
+ET
+q
+0.863 0.988 0.906 rg
+0.847 0.882 0.922 RG
+1 w
+202 399 586 42 re B
+Q
+BT
+0.086 0.396 0.204 rg
+/F1 10 Tf
+222 415.00 Td (Declaration window open: 28 Feb 2026 to 3 Mar 2026) Tj
+-222 -415 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 8 Tf
+222 365.00 Td (Savings amount) Tj
+-222 -365 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+222 321 240 34 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F2 11 Tf
+234 333.00 Td (K1,000) Tj
+-234 -333 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 8 Tf
+504 365.00 Td (Loan request) Tj
+-504 -365 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+504 321 240 34 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F2 11 Tf
+516 333.00 Td (K5,000) Tj
+-516 -333 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 8 Tf
+222 295.00 Td (Loan top-up) Tj
+-222 -295 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+222 251 240 34 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F2 11 Tf
+234 263.00 Td (K0) Tj
+-234 -263 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 8 Tf
+504 295.00 Td (Principal repayment) Tj
+-504 -295 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+504 251 240 34 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F2 11 Tf
+516 263.00 Td (K0) Tj
+-516 -263 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 8 Tf
+222 225.00 Td (Loan interest repayment) Tj
+-222 -225 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+222 181 240 34 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F2 11 Tf
+234 193.00 Td (K0) Tj
+-234 -193 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 8 Tf
+504 225.00 Td (Common-interest payment) Tj
+-504 -225 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+504 181 240 34 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F2 11 Tf
+516 193.00 Td (K430) Tj
+-516 -193 Td
+ET
+q
+0.086 0.396 0.204 rg
+222 105 116 34 re f
+Q
+BT
+1.000 1.000 1.000 rg
+/F1 9 Tf
+238 117.00 Td (Submit Declaration) Tj
+-238 -117 Td
+ET
+endstream
+endobj
+18 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 17 0 R >>
+endobj
+19 0 obj
+<< /Length 5057 >>
+stream
+q
+0.965 0.973 0.984 rg
+0 0 842 595 re f
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 20 Tf
+34 561.00 Td (Screen 6: Loan Approval) Tj
+-34 -561 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 9 Tf
+34 537.00 Td (Admin review queue for original loans and top-ups) Tj
+-34 -537 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+34 55 774 456 re B
+Q
+q
+0.063 0.165 0.263 rg
+34 55 148 456 re f
+Q
+BT
+1.000 1.000 1.000 rg
+/F1 13 Tf
+52 484.00 Td (Village Bank) Tj
+-52 -484 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 455.00 Td (Dashboard) Tj
+-55 -455 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 430.00 Td (Cycles) Tj
+-55 -430 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 405.00 Td (Members) Tj
+-55 -405 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 380.00 Td (Declarations) Tj
+-55 -380 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 355.00 Td (Savings) Tj
+-55 -355 Td
+ET
+q
+0.118 0.310 0.471 rg
+46 323 118 20 re f
+Q
+BT
+0.906 0.933 0.969 rg
+/F1 7.7 Tf
+55 330.00 Td (Loans) Tj
+-55 -330 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 305.00 Td (Common Interest) Tj
+-55 -305 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 280.00 Td (Penalties) Tj
+-55 -280 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 255.00 Td (Monthly Closing) Tj
+-55 -255 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 230.00 Td (Ledger) Tj
+-55 -230 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 205.00 Td (Reports) Tj
+-55 -205 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 180.00 Td (Audit Trail) Tj
+-55 -180 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+182 459 626 52 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 13 Tf
+202 482.00 Td (Loan Approval Queue) Tj
+-202 -482 Td
+ET
+q
+0.859 0.918 0.996 rg
+613 477 72 18 re f
+Q
+BT
+0.145 0.388 0.922 rg
+/F1 7.5 Tf
+620 483.00 Td (Cycle 2026) Tj
+-620 -483 Td
+ET
+q
+0.933 0.957 0.973 rg
+694 477 52 18 re f
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 7.5 Tf
+701 483.00 Td (March) Tj
+-701 -483 Td
+ET
+q
+0.863 0.988 0.906 rg
+754 477 38 18 re f
+Q
+BT
+0.086 0.396 0.204 rg
+/F1 7.5 Tf
+761 483.00 Td (Admin) Tj
+-761 -483 Td
+ET
+q
+0.933 0.957 0.973 rg
+0.847 0.882 0.922 RG
+1 w
+202 405 546 24 re B
+Q
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+209 414.00 Td (Member) Tj
+-209 -414 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+301 414.00 Td (Type) Tj
+-301 -414 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+376 414.00 Td (Requested) Tj
+-376 -414 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+451 414.00 Td (Borrowed) Tj
+-451 -414 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+526 414.00 Td (Outstanding) Tj
+-526 -414 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+608 414.00 Td (Status) Tj
+-608 -414 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+680 414.00 Td (Action) Tj
+-680 -414 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+202 381 546 24 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+209 390.00 Td (A. Banda) Tj
+-209 -390 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+301 390.00 Td (Top-up) Tj
+-301 -390 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+376 390.00 Td (K3,000) Tj
+-376 -390 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+451 390.00 Td (K22,000) Tj
+-451 -390 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+526 390.00 Td (K8,900) Tj
+-526 -390 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+608 390.00 Td (Pending) Tj
+-608 -390 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+680 390.00 Td (Approve) Tj
+-680 -390 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+202 357 546 24 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+209 366.00 Td (M. Phiri) Tj
+-209 -366 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+301 366.00 Td (Original) Tj
+-301 -366 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+376 366.00 Td (K5,000) Tj
+-376 -366 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+451 366.00 Td (K0) Tj
+-451 -366 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+526 366.00 Td (K0) Tj
+-526 -366 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+608 366.00 Td (Pending) Tj
+-608 -366 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+680 366.00 Td (Review) Tj
+-680 -366 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+202 333 546 24 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+209 342.00 Td (T. Mwansa) Tj
+-209 -342 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+301 342.00 Td (Original) Tj
+-301 -342 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+376 342.00 Td (K11,000) Tj
+-376 -342 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+451 342.00 Td (K9,000) Tj
+-451 -342 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+526 342.00 Td (K10,350) Tj
+-526 -342 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+608 342.00 Td (Pending) Tj
+-608 -342 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+680 342.00 Td (Approve) Tj
+-680 -342 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+202 155 586 136 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 12 Tf
+222 265.00 Td (Approval Drawer) Tj
+-222 -265 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 9 Tf
+222 241.00 Td (Shows effect before posting: new loan principal, expected monthly interest, cumulative) Tj
+-222 -241 Td
+222 229.00 Td (borrowed amount, and ledger transaction preview.) Tj
+-222 -229 Td
+ET
+q
+0.086 0.396 0.204 rg
+222 169 92 30 re f
+Q
+BT
+1.000 1.000 1.000 rg
+/F1 9 Tf
+248 179.00 Td (Approve) Tj
+-248 -179 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.706 0.137 0.094 RG
+1 w
+326 169 92 30 re B
+Q
+BT
+0.706 0.137 0.094 rg
+/F1 9 Tf
+355 179.00 Td (Reject) Tj
+-355 -179 Td
+ET
+endstream
+endobj
+20 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 19 0 R >>
+endobj
+21 0 obj
+<< /Length 5246 >>
+stream
+q
+0.965 0.973 0.984 rg
+0 0 842 595 re f
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 20 Tf
+34 561.00 Td (Screen 7: Monthly Closing Wizard) Tj
+-34 -561 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 9 Tf
+34 537.00 Td (Controlled workflow for official monthly processing) Tj
+-34 -537 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+34 55 774 456 re B
+Q
+q
+0.063 0.165 0.263 rg
+34 55 148 456 re f
+Q
+BT
+1.000 1.000 1.000 rg
+/F1 13 Tf
+52 484.00 Td (Village Bank) Tj
+-52 -484 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 455.00 Td (Dashboard) Tj
+-55 -455 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 430.00 Td (Cycles) Tj
+-55 -430 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 405.00 Td (Members) Tj
+-55 -405 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 380.00 Td (Declarations) Tj
+-55 -380 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 355.00 Td (Savings) Tj
+-55 -355 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 330.00 Td (Loans) Tj
+-55 -330 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 305.00 Td (Common Interest) Tj
+-55 -305 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 280.00 Td (Penalties) Tj
+-55 -280 Td
+ET
+q
+0.118 0.310 0.471 rg
+46 248 118 20 re f
+Q
+BT
+0.906 0.933 0.969 rg
+/F1 7.7 Tf
+55 255.00 Td (Monthly Closing) Tj
+-55 -255 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 230.00 Td (Ledger) Tj
+-55 -230 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 205.00 Td (Reports) Tj
+-55 -205 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 180.00 Td (Audit Trail) Tj
+-55 -180 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+182 459 626 52 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 13 Tf
+202 482.00 Td (March Closing) Tj
+-202 -482 Td
+ET
+q
+0.859 0.918 0.996 rg
+613 477 72 18 re f
+Q
+BT
+0.145 0.388 0.922 rg
+/F1 7.5 Tf
+620 483.00 Td (Cycle 2026) Tj
+-620 -483 Td
+ET
+q
+0.933 0.957 0.973 rg
+694 477 52 18 re f
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 7.5 Tf
+701 483.00 Td (March) Tj
+-701 -483 Td
+ET
+q
+0.863 0.988 0.906 rg
+754 477 38 18 re f
+Q
+BT
+0.086 0.396 0.204 rg
+/F1 7.5 Tf
+761 483.00 Td (Admin) Tj
+-761 -483 Td
+ET
+q
+0.863 0.988 0.906 rg
+0.847 0.882 0.922 RG
+1 w
+212 395 42 42 re B
+Q
+BT
+0.086 0.396 0.204 rg
+/F1 13 Tf
+228 412.00 Td (1) Tj
+-228 -412 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 6.5 Tf
+205 377.00 Td (Validate Inputs) Tj
+-205 -377 Td
+ET
+q
+0.863 0.988 0.906 rg
+0.847 0.882 0.922 RG
+1 w
+282 395 42 42 re B
+Q
+BT
+0.086 0.396 0.204 rg
+/F1 13 Tf
+298 412.00 Td (2) Tj
+-298 -412 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 6.5 Tf
+275 377.00 Td (Declarations) Tj
+-275 -377 Td
+ET
+q
+0.863 0.988 0.906 rg
+0.847 0.882 0.922 RG
+1 w
+352 395 42 42 re B
+Q
+BT
+0.086 0.396 0.204 rg
+/F1 13 Tf
+368 412.00 Td (3) Tj
+-368 -412 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 6.5 Tf
+345 377.00 Td (Penalties) Tj
+-345 -377 Td
+ET
+q
+0.859 0.918 0.996 rg
+0.847 0.882 0.922 RG
+1 w
+422 395 42 42 re B
+Q
+BT
+0.145 0.388 0.922 rg
+/F1 13 Tf
+438 412.00 Td (4) Tj
+-438 -412 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 6.5 Tf
+415 377.00 Td (Savings Interest) Tj
+-415 -377 Td
+ET
+q
+0.933 0.957 0.973 rg
+0.847 0.882 0.922 RG
+1 w
+492 395 42 42 re B
+Q
+BT
+0.145 0.388 0.922 rg
+/F1 13 Tf
+508 412.00 Td (5) Tj
+-508 -412 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 6.5 Tf
+485 377.00 Td (Loan Interest) Tj
+-485 -377 Td
+ET
+q
+0.933 0.957 0.973 rg
+0.847 0.882 0.922 RG
+1 w
+562 395 42 42 re B
+Q
+BT
+0.145 0.388 0.922 rg
+/F1 13 Tf
+578 412.00 Td (6) Tj
+-578 -412 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 6.5 Tf
+555 377.00 Td (Common Interest) Tj
+-555 -377 Td
+ET
+q
+0.933 0.957 0.973 rg
+0.847 0.882 0.922 RG
+1 w
+632 395 42 42 re B
+Q
+BT
+0.145 0.388 0.922 rg
+/F1 13 Tf
+648 412.00 Td (7) Tj
+-648 -412 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 6.5 Tf
+625 377.00 Td (Review) Tj
+-625 -377 Td
+ET
+q
+0.933 0.957 0.973 rg
+0.847 0.882 0.922 RG
+1 w
+702 395 42 42 re B
+Q
+BT
+0.145 0.388 0.922 rg
+/F1 13 Tf
+718 412.00 Td (8) Tj
+-718 -412 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 6.5 Tf
+695 377.00 Td (Lock) Tj
+-695 -377 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+202 149 586 190 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 14 Tf
+222 309.00 Td (Step 4: Calculate Savings Interest) Tj
+-222 -309 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 9 Tf
+222 281.00 Td (Formula: savings interest = 15% x \(brought forward accumulated savings + current month) Tj
+-222 -281 Td
+222 269.00 Td (deposit\).) Tj
+-222 -269 Td
+ET
+q
+0.933 0.957 0.973 rg
+0.847 0.882 0.922 RG
+1 w
+222 229 422 24 re B
+Q
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+229 238.00 Td (Members) Tj
+-229 -238 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+319 238.00 Td (Base) Tj
+-319 -238 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+419 238.00 Td (Interest) Tj
+-419 -238 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+519 238.00 Td (Exceptions) Tj
+-519 -238 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+222 205 422 24 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+229 214.00 Td (42) Tj
+-229 -214 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+319 214.00 Td (K116,400) Tj
+-319 -214 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+419 214.00 Td (K17,460) Tj
+-419 -214 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+519 214.00 Td (0) Tj
+-519 -214 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+222 181 422 24 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+229 190.00 Td (Cap warnings) Tj
+-229 -190 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+319 190.00 Td (2 members) Tj
+-319 -190 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+419 190.00 Td (-) Tj
+-419 -190 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+519 190.00 Td (Needs review) Tj
+-519 -190 Td
+ET
+endstream
+endobj
+22 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 21 0 R >>
+endobj
+23 0 obj
+<< /Length 5841 >>
+stream
+q
+0.965 0.973 0.984 rg
+0 0 842 595 re f
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 20 Tf
+34 561.00 Td (Screen 8: Common-Interest Allocation) Tj
+-34 -561 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 9 Tf
+34 537.00 Td (Transparent allocation based on borrowing compliance) Tj
+-34 -537 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+34 55 774 456 re B
+Q
+q
+0.063 0.165 0.263 rg
+34 55 148 456 re f
+Q
+BT
+1.000 1.000 1.000 rg
+/F1 13 Tf
+52 484.00 Td (Village Bank) Tj
+-52 -484 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 455.00 Td (Dashboard) Tj
+-55 -455 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 430.00 Td (Cycles) Tj
+-55 -430 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 405.00 Td (Members) Tj
+-55 -405 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 380.00 Td (Declarations) Tj
+-55 -380 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 355.00 Td (Savings) Tj
+-55 -355 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 330.00 Td (Loans) Tj
+-55 -330 Td
+ET
+q
+0.118 0.310 0.471 rg
+46 298 118 20 re f
+Q
+BT
+0.906 0.933 0.969 rg
+/F1 7.7 Tf
+55 305.00 Td (Common Interest) Tj
+-55 -305 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 280.00 Td (Penalties) Tj
+-55 -280 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 255.00 Td (Monthly Closing) Tj
+-55 -255 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 230.00 Td (Ledger) Tj
+-55 -230 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 205.00 Td (Reports) Tj
+-55 -205 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 180.00 Td (Audit Trail) Tj
+-55 -180 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+182 459 626 52 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 13 Tf
+202 482.00 Td (Common Interest Allocation) Tj
+-202 -482 Td
+ET
+q
+0.859 0.918 0.996 rg
+613 477 72 18 re f
+Q
+BT
+0.145 0.388 0.922 rg
+/F1 7.5 Tf
+620 483.00 Td (Cycle 2026) Tj
+-620 -483 Td
+ET
+q
+0.933 0.957 0.973 rg
+694 477 52 18 re f
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 7.5 Tf
+701 483.00 Td (March) Tj
+-701 -483 Td
+ET
+q
+0.863 0.988 0.906 rg
+754 477 38 18 re f
+Q
+BT
+0.086 0.396 0.204 rg
+/F1 7.5 Tf
+761 483.00 Td (Admin) Tj
+-761 -483 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+202 369 135 68 re B
+Q
+q
+0.086 0.396 0.204 rg
+202 369 4 68 re f
+Q
+BT
+0.396 0.459 0.545 rg
+/F1 8 Tf
+215 419.00 Td (Pool Contributions) Tj
+-215 -419 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F1 18 Tf
+215 394.00 Td (K96,000) Tj
+-215 -394 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 7.5 Tf
+215 376.00 Td (Savings + fees) Tj
+-215 -376 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+352 369 135 68 re B
+Q
+q
+0.145 0.388 0.922 rg
+352 369 4 68 re f
+Q
+BT
+0.396 0.459 0.545 rg
+/F1 8 Tf
+365 419.00 Td (Loans Issued) Tj
+-365 -419 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F1 18 Tf
+365 394.00 Td (K68,000) Tj
+-365 -394 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 7.5 Tf
+365 376.00 Td (March payouts) Tj
+-365 -376 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+502 369 135 68 re B
+Q
+q
+0.706 0.325 0.035 rg
+502 369 4 68 re f
+Q
+BT
+0.396 0.459 0.545 rg
+/F1 8 Tf
+515 419.00 Td (Unborrowed Money) Tj
+-515 -419 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F1 18 Tf
+515 394.00 Td (K28,000) Tj
+-515 -394 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 7.5 Tf
+515 376.00 Td (Contribution less loans) Tj
+-515 -376 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+652 369 135 68 re B
+Q
+q
+0.059 0.463 0.431 rg
+652 369 4 68 re f
+Q
+BT
+0.396 0.459 0.545 rg
+/F1 8 Tf
+665 419.00 Td (CI Pool) Tj
+-665 -419 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F1 18 Tf
+665 394.00 Td (K4,200) Tj
+-665 -394 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 7.5 Tf
+665 376.00 Td (15% of unborrowed) Tj
+-665 -376 Td
+ET
+q
+0.933 0.957 0.973 rg
+0.847 0.882 0.922 RG
+1 w
+202 313 518 24 re B
+Q
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+209 322.00 Td (Member) Tj
+-209 -322 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+295 322.00 Td (Borrowed) Tj
+-295 -322 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+369 322.00 Td (Status) Tj
+-369 -322 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+441 322.00 Td (Shortfall) Tj
+-441 -322 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+519 322.00 Td (Weight) Tj
+-519 -322 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+581 322.00 Td (Base) Tj
+-581 -322 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+655 322.00 Td (Charge) Tj
+-655 -322 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+202 289 518 24 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+209 298.00 Td (M. Phiri) Tj
+-209 -298 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+295 298.00 Td (K0) Tj
+-295 -298 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+369 298.00 Td (Never) Tj
+-369 -298 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+441 298.00 Td (K20,000) Tj
+-441 -298 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+519 298.00 Td (0.40) Tj
+-519 -298 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+581 298.00 Td (K11,200) Tj
+-581 -298 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+655 298.00 Td (K1,680) Tj
+-655 -298 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+202 265 518 24 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+209 274.00 Td (N. Chanda) Tj
+-209 -274 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+295 274.00 Td (K0) Tj
+-295 -274 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+369 274.00 Td (Never) Tj
+-369 -274 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+441 274.00 Td (K20,000) Tj
+-441 -274 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+519 274.00 Td (0.40) Tj
+-519 -274 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+581 274.00 Td (K11,200) Tj
+-581 -274 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+655 274.00 Td (K1,680) Tj
+-655 -274 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+202 241 518 24 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+209 250.00 Td (T. Mwansa) Tj
+-209 -250 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+295 250.00 Td (K9,000) Tj
+-295 -250 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+369 250.00 Td (Below) Tj
+-369 -250 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+441 250.00 Td (K11,000) Tj
+-441 -250 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+519 250.00 Td (0.20) Tj
+-519 -250 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+581 250.00 Td (K5,600) Tj
+-581 -250 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+655 250.00 Td (K840) Tj
+-655 -250 Td
+ET
+endstream
+endobj
+24 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 23 0 R >>
+endobj
+25 0 obj
+<< /Length 4936 >>
+stream
+q
+0.965 0.973 0.984 rg
+0 0 842 595 re f
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 20 Tf
+34 561.00 Td (Screen 9: Penalties) Tj
+-34 -561 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 9 Tf
+34 537.00 Td (Assess, pay, waive, or convert penalties into auditable loan balances) Tj
+-34 -537 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+34 55 774 456 re B
+Q
+q
+0.063 0.165 0.263 rg
+34 55 148 456 re f
+Q
+BT
+1.000 1.000 1.000 rg
+/F1 13 Tf
+52 484.00 Td (Village Bank) Tj
+-52 -484 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 455.00 Td (Dashboard) Tj
+-55 -455 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 430.00 Td (Cycles) Tj
+-55 -430 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 405.00 Td (Members) Tj
+-55 -405 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 380.00 Td (Declarations) Tj
+-55 -380 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 355.00 Td (Savings) Tj
+-55 -355 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 330.00 Td (Loans) Tj
+-55 -330 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 305.00 Td (Common Interest) Tj
+-55 -305 Td
+ET
+q
+0.118 0.310 0.471 rg
+46 273 118 20 re f
+Q
+BT
+0.906 0.933 0.969 rg
+/F1 7.7 Tf
+55 280.00 Td (Penalties) Tj
+-55 -280 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 255.00 Td (Monthly Closing) Tj
+-55 -255 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 230.00 Td (Ledger) Tj
+-55 -230 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 205.00 Td (Reports) Tj
+-55 -205 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 180.00 Td (Audit Trail) Tj
+-55 -180 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+182 459 626 52 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 13 Tf
+202 482.00 Td (Penalty Management) Tj
+-202 -482 Td
+ET
+q
+0.859 0.918 0.996 rg
+613 477 72 18 re f
+Q
+BT
+0.145 0.388 0.922 rg
+/F1 7.5 Tf
+620 483.00 Td (Cycle 2026) Tj
+-620 -483 Td
+ET
+q
+0.933 0.957 0.973 rg
+694 477 52 18 re f
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 7.5 Tf
+701 483.00 Td (March) Tj
+-701 -483 Td
+ET
+q
+0.863 0.988 0.906 rg
+754 477 38 18 re f
+Q
+BT
+0.086 0.396 0.204 rg
+/F1 7.5 Tf
+761 483.00 Td (Admin) Tj
+-761 -483 Td
+ET
+q
+0.933 0.957 0.973 rg
+0.847 0.882 0.922 RG
+1 w
+202 405 546 24 re B
+Q
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+209 414.00 Td (Member) Tj
+-209 -414 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+295 414.00 Td (Month) Tj
+-295 -414 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+349 414.00 Td (Type) Tj
+-349 -414 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+465 414.00 Td (Assessed) Tj
+-465 -414 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+537 414.00 Td (Paid) Tj
+-537 -414 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+595 414.00 Td (Status) Tj
+-595 -414 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F1 7.2 Tf
+679 414.00 Td (Action) Tj
+-679 -414 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+202 381 546 24 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+209 390.00 Td (M. Phiri) Tj
+-209 -390 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+295 390.00 Td (Mar) Tj
+-295 -390 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+349 390.00 Td (Failure declare) Tj
+-349 -390 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+465 390.00 Td (K100) Tj
+-465 -390 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+537 390.00 Td (K0) Tj
+-537 -390 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+595 390.00 Td (Assessed) Tj
+-595 -390 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+679 390.00 Td (Convert) Tj
+-679 -390 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+202 357 546 24 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+209 366.00 Td (N. Chanda) Tj
+-209 -366 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+295 366.00 Td (Mar) Tj
+-295 -366 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+349 366.00 Td (Failure declare) Tj
+-349 -366 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+465 366.00 Td (K100) Tj
+-465 -366 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+537 366.00 Td (K0) Tj
+-537 -366 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+595 366.00 Td (Assessed) Tj
+-595 -366 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+679 366.00 Td (Mark paid) Tj
+-679 -366 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+202 333 546 24 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+209 342.00 Td (B. Zulu) Tj
+-209 -342 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+295 342.00 Td (Feb) Tj
+-295 -342 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+349 342.00 Td (Late payment) Tj
+-349 -342 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+465 342.00 Td (K50) Tj
+-465 -342 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+537 342.00 Td (K50) Tj
+-537 -342 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+595 342.00 Td (Paid) Tj
+-595 -342 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 7.4 Tf
+679 342.00 Td (View) Tj
+-679 -342 Td
+ET
+q
+0.996 0.886 0.886 rg
+0.847 0.882 0.922 RG
+1 w
+202 161 586 130 re B
+Q
+BT
+0.706 0.137 0.094 rg
+/F1 12 Tf
+222 263.00 Td (Conversion Confirmation) Tj
+-222 -263 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F2 9 Tf
+222 237.00 Td (Converting an unpaid penalty creates a CONVERTED_PENALTY_LOAN ledger transaction. It) Tj
+-222 -237 Td
+222 225.00 Td (becomes part of standing loan balance and starts accruing monthly loan interest.) Tj
+-222 -225 Td
+ET
+BT
+0.706 0.137 0.094 rg
+/F1 9 Tf
+222 195.00 Td (Required: admin approval and reason.) Tj
+-222 -195 Td
+ET
+endstream
+endobj
+26 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 25 0 R >>
+endobj
+27 0 obj
+<< /Length 3874 >>
+stream
+q
+0.965 0.973 0.984 rg
+0 0 842 595 re f
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 20 Tf
+34 561.00 Td (Screen 10: Reports) Tj
+-34 -561 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 9 Tf
+34 537.00 Td (Exportable reports driven by ledger and official monthly snapshots) Tj
+-34 -537 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+34 55 774 456 re B
+Q
+q
+0.063 0.165 0.263 rg
+34 55 148 456 re f
+Q
+BT
+1.000 1.000 1.000 rg
+/F1 13 Tf
+52 484.00 Td (Village Bank) Tj
+-52 -484 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 455.00 Td (Dashboard) Tj
+-55 -455 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 430.00 Td (Cycles) Tj
+-55 -430 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 405.00 Td (Members) Tj
+-55 -405 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 380.00 Td (Declarations) Tj
+-55 -380 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 355.00 Td (Savings) Tj
+-55 -355 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 330.00 Td (Loans) Tj
+-55 -330 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 305.00 Td (Common Interest) Tj
+-55 -305 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 280.00 Td (Penalties) Tj
+-55 -280 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 255.00 Td (Monthly Closing) Tj
+-55 -255 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 230.00 Td (Ledger) Tj
+-55 -230 Td
+ET
+q
+0.118 0.310 0.471 rg
+46 198 118 20 re f
+Q
+BT
+0.906 0.933 0.969 rg
+/F1 7.7 Tf
+55 205.00 Td (Reports) Tj
+-55 -205 Td
+ET
+BT
+0.906 0.933 0.969 rg
+/F2 7.7 Tf
+55 180.00 Td (Audit Trail) Tj
+-55 -180 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+182 459 626 52 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 13 Tf
+202 482.00 Td (Reports) Tj
+-202 -482 Td
+ET
+q
+0.859 0.918 0.996 rg
+613 477 72 18 re f
+Q
+BT
+0.145 0.388 0.922 rg
+/F1 7.5 Tf
+620 483.00 Td (Cycle 2026) Tj
+-620 -483 Td
+ET
+q
+0.933 0.957 0.973 rg
+694 477 52 18 re f
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 7.5 Tf
+701 483.00 Td (March) Tj
+-701 -483 Td
+ET
+q
+0.863 0.988 0.906 rg
+754 477 38 18 re f
+Q
+BT
+0.086 0.396 0.204 rg
+/F1 7.5 Tf
+761 483.00 Td (Admin) Tj
+-761 -483 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+210 351 166 78 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 11 Tf
+226 401.00 Td (Member Statements) Tj
+-226 -401 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 8 Tf
+226 378.00 Td (Monthly and cycle-wide) Tj
+-226 -378 Td
+226 367.00 Td (balances) Tj
+-226 -367 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+400 351 166 78 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 11 Tf
+416 401.00 Td (Pool Summary) Tj
+-416 -401 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 8 Tf
+416 378.00 Td (Inflows, loans, unborrowed) Tj
+-416 -378 Td
+416 367.00 Td (money) Tj
+-416 -367 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+590 351 166 78 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 11 Tf
+606 401.00 Td (Savings Report) Tj
+-606 -401 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 8 Tf
+606 378.00 Td (Principal, interest, cap) Tj
+-606 -378 Td
+606 367.00 Td (progress) Tj
+-606 -367 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+210 245 166 78 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 11 Tf
+226 295.00 Td (Loan Report) Tj
+-226 -295 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 8 Tf
+226 272.00 Td (Disbursements, repayments,) Tj
+-226 -272 Td
+226 261.00 Td (balances) Tj
+-226 -261 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+400 245 166 78 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 11 Tf
+416 295.00 Td (Common Interest) Tj
+-416 -295 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 8 Tf
+416 272.00 Td (Eligibility, shortfall,) Tj
+-416 -272 Td
+416 261.00 Td (charges) Tj
+-416 -261 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+590 245 166 78 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 11 Tf
+606 295.00 Td (Penalty Report) Tj
+-606 -295 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 8 Tf
+606 272.00 Td (Assessed, paid, converted,) Tj
+-606 -272 Td
+606 261.00 Td (waived) Tj
+-606 -261 Td
+ET
+q
+0.933 0.957 0.973 rg
+0.847 0.882 0.922 RG
+1 w
+210 147 548 44 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 9 Tf
+232 164.00 Td (Filters: Cycle, Month, Member, Status, Date Range, Export PDF/CSV) Tj
+-232 -164 Td
+ET
+endstream
+endobj
+28 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 27 0 R >>
+endobj
+29 0 obj
+<< /Length 2561 >>
+stream
+q
+0.965 0.973 0.984 rg
+0 0 842 595 re f
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 20 Tf
+34 561.00 Td (Screen 11: Member Dashboard) Tj
+-34 -561 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 9 Tf
+34 537.00 Td (Simplified member experience focused on obligations and personal progress) Tj
+-34 -537 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+34 55 774 456 re B
+Q
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+34 457 774 54 re B
+Q
+BT
+0.086 0.396 0.204 rg
+/F1 14 Tf
+58 478.00 Td (Village Bank) Tj
+-58 -478 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F1 13 Tf
+214 478.00 Td (My Dashboard) Tj
+-214 -478 Td
+ET
+q
+0.863 0.988 0.906 rg
+654 475 94 18 re f
+Q
+BT
+0.086 0.396 0.204 rg
+/F1 7.5 Tf
+661 481.00 Td (Declaration Open) Tj
+-661 -481 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+64 353 160 76 re B
+Q
+q
+0.086 0.396 0.204 rg
+64 353 4 76 re f
+Q
+BT
+0.396 0.459 0.545 rg
+/F1 8 Tf
+77 411.00 Td (My Savings) Tj
+-77 -411 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F1 18 Tf
+77 386.00 Td (K14,375) Tj
+-77 -386 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 7.5 Tf
+77 368.00 Td (Interest included) Tj
+-77 -368 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+244 353 160 76 re B
+Q
+q
+0.145 0.388 0.922 rg
+244 353 4 76 re f
+Q
+BT
+0.396 0.459 0.545 rg
+/F1 8 Tf
+257 411.00 Td (My Loan) Tj
+-257 -411 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F1 18 Tf
+257 386.00 Td (K0) Tj
+-257 -386 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 7.5 Tf
+257 368.00 Td (No standing loan) Tj
+-257 -368 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+424 353 160 76 re B
+Q
+q
+0.706 0.325 0.035 rg
+424 353 4 76 re f
+Q
+BT
+0.396 0.459 0.545 rg
+/F1 8 Tf
+437 411.00 Td (Common Interest Due) Tj
+-437 -411 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F1 18 Tf
+437 386.00 Td (K1,680) Tj
+-437 -386 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 7.5 Tf
+437 368.00 Td (Due this month) Tj
+-437 -368 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+604 353 160 76 re B
+Q
+q
+0.706 0.137 0.094 rg
+604 353 4 76 re f
+Q
+BT
+0.396 0.459 0.545 rg
+/F1 8 Tf
+617 411.00 Td (Penalty) Tj
+-617 -411 Td
+ET
+BT
+0.090 0.125 0.200 rg
+/F1 18 Tf
+617 386.00 Td (K100) Tj
+-617 -386 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 7.5 Tf
+617 368.00 Td (Missed declaration) Tj
+-617 -368 Td
+ET
+q
+1.000 1.000 1.000 rg
+0.847 0.882 0.922 RG
+1 w
+64 183 700 132 re B
+Q
+BT
+0.090 0.125 0.200 rg
+/F1 13 Tf
+84 287.00 Td (This Month) Tj
+-84 -287 Td
+ET
+BT
+0.396 0.459 0.545 rg
+/F2 9 Tf
+84 261.00 Td (Submit declaration, pay obligations, and track progress toward the K20,000 borrowing requirement.) Tj
+-84 -261 Td
+ET
+q
+0.086 0.396 0.204 rg
+84 191 132 34 re f
+Q
+BT
+1.000 1.000 1.000 rg
+/F1 9 Tf
+105 203.00 Td (Submit Declaration) Tj
+-105 -203 Td
+ET
+endstream
+endobj
+30 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 29 0 R >>
+endobj
+xref
+0 31
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000199 00000 n 
+0000000274 00000 n 
+0000000344 00000 n 
+0000003984 00000 n 
+0000004120 00000 n 
+0000006544 00000 n 
+0000006680 00000 n 
+0000012157 00000 n 
+0000012294 00000 n 
+0000016830 00000 n 
+0000016968 00000 n 
+0000022819 00000 n 
+0000022957 00000 n 
+0000029113 00000 n 
+0000029251 00000 n 
+0000032955 00000 n 
+0000033093 00000 n 
+0000038203 00000 n 
+0000038341 00000 n 
+0000043640 00000 n 
+0000043778 00000 n 
+0000049672 00000 n 
+0000049810 00000 n 
+0000054799 00000 n 
+0000054937 00000 n 
+0000058864 00000 n 
+0000059002 00000 n 
+0000061616 00000 n 
+trailer
+<< /Size 31 /Root 1 0 R >>
+startxref
+61754
+%%EOF

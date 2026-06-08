@@ -1,0 +1,88 @@
+.cycle-metrics {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.cycle-detail {
+  display: grid;
+  gap: 16px;
+}
+
+.cycle-detail-head {
+  background: white;
+  border: 1px solid #d8e1eb;
+  padding: 18px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.cycle-detail-head span {
+  color: #65758b;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.cycle-detail-head h2 {
+  margin: 5px 0 4px;
+  font-size: 20px;
+}
+
+.cycle-detail-head p {
+  margin: 0;
+  color: #65758b;
+}
+
+.cycle-actions {
+  background: white;
+  border: 1px solid #d8e1eb;
+  padding: 12px;
+}
+
+.cycle-tab-panel {
+  margin-bottom: 0;
+}
+
+.cycle-tab-panel .table-wrap {
+  margin-top: 8px;
+}
+
+.cycle-detail-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.cycle-form h3 {
+  margin: 14px 0 10px;
+  font-size: 14px;
+  color: #42526b;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1024px) {
+  .cycle-metrics,
+  .cycle-detail-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .cycle-metrics,
+  .cycle-detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cycle-detail-head {
+    display: grid;
+  }
+
+  .cycle-actions .btn {
+    width: 100%;
+  }
+
+  .cycle-form .form-grid.two,
+  .cycle-form .form-grid.three,
+  .cycle-form .form-grid.four {
+    grid-template-columns: 1fr;
+  }
+}

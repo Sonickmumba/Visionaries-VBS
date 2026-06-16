@@ -521,7 +521,7 @@ export function LoanScreensPage({
               ])}
             />
           ) : (
-            <EmptyState title="No loan requests" message="Create requests from declarations or from this screen, then approve and disburse during the payout window." />
+            <EmptyState title="No loan requests" message="Create requests from declarations or from this screen, then approve and disburse approved requests when funds are available." />
           )}
         </section>
       ) : null}

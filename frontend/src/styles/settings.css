@@ -1,0 +1,55 @@
+.settings-metrics {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.settings-form-panel,
+.settings-form {
+  margin-bottom: 18px;
+}
+
+.settings-detail-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 14px;
+}
+
+.settings-check {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 800;
+  color: #172033;
+}
+
+.settings-check input {
+  width: 17px;
+  height: 17px;
+}
+
+.settings-app-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+@media (max-width: 1024px) {
+  .settings-metrics,
+  .settings-detail-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .settings-app-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 767px) {
+  .settings-metrics,
+  .settings-detail-grid,
+  .settings-form .form-grid.three,
+  .settings-form .form-grid.four,
+  .settings-form-panel .form-grid.three,
+  .settings-form-panel .form-grid.four {
+    grid-template-columns: 1fr;
+  }
+}

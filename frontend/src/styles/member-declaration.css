@@ -1,0 +1,74 @@
+.member-declaration-context {
+  margin-bottom: 18px;
+}
+
+.member-declaration-context .ui-alert {
+  margin-top: 14px;
+}
+
+.member-declaration-context .form-grid > div {
+  min-width: 0;
+}
+
+.member-declaration-context .form-grid strong {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.member-declaration-context .form-grid span {
+  display: block;
+  color: var(--text);
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.payment-proof-panel {
+  margin-top: 18px;
+}
+
+.proof-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.proof-upload {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  display: grid;
+  gap: 9px;
+  min-width: 0;
+  padding: 14px;
+}
+
+.proof-upload.has-error {
+  border-color: #dc2626;
+}
+
+.proof-upload > span {
+  align-items: center;
+  color: var(--text);
+  display: flex;
+  font-weight: 800;
+  gap: 8px;
+}
+
+.proof-upload input {
+  max-width: 100%;
+}
+
+.proof-upload small {
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 767px) {
+  .member-declaration-context .form-grid,
+  .proof-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -16,6 +16,14 @@ import {
   loanIntentOriginType,
   resolveDeclarationStatus,
 } from "../../services/declarationService.js";
+import {
+  buildPaymentProofUploadSignature,
+  resourceTypeForContentType,
+  signedPaymentProofUrl,
+  validateCloudinaryUploadResult,
+  validatePaymentProofRequest,
+} from "../../services/paymentProofService.js";
+import { badRequest, forbidden, notFound } from "../../utils/httpError.js";
 
 export const declarationsRouter = express.Router();
 declarationsRouter.use(requireAuth);
@@ -43,6 +51,70 @@ const missedDeclarationSchema = z.object({
   amount: z.number().nonnegative().optional().default(0),
   notes: z.string().optional().nullable(),
 });
+
+const proofSignatureSchema = z.object({
+  attachmentType: z.enum([
+    "SAVINGS_PAYMENT_PROOF",
+    "PRINCIPAL_REPAYMENT_PROOF",
+    "LOAN_INTEREST_PAYMENT_PROOF",
+    "COMMON_INTEREST_PAYMENT_PROOF",
+  ]),
+  filename: z.string().min(1).max(255),
+  contentType: z.enum(["image/jpeg", "image/png", "image/webp", "application/pdf"]),
+  fileSizeBytes: z.number().int().positive(),
+});
+
+const proofConfirmSchema = z.object({
+  attachmentType: proofSignatureSchema.shape.attachmentType,
+  expectedPublicId: z.string().min(1),
+  originalFilename: z.string().min(1).max(255),
+  contentType: proofSignatureSchema.shape.contentType,
+  fileSizeBytes: z.number().int().positive(),
+  cloudinary: z.object({
+    assetId: z.string().optional().nullable(),
+    publicId: z.string().min(1),
+    resourceType: z.string().min(1),
+    deliveryType: z.string().optional().nullable(),
+    format: z.string().optional().nullable(),
+    version: z.number().int().optional().nullable(),
+    bytes: z.number().int().positive().optional().nullable(),
+    secureUrl: z.string().optional().nullable(),
+  }),
+});
+
+async function getDeclarationForAccess(id, { lock = false, client = null } = {}) {
+  const db = client || { query };
+  const { rows } = await db.query(
+    `SELECT d.*, cm.status AS cycle_month_status, m.user_id
+     FROM declarations d
+     JOIN cycle_months cm ON cm.id = d.cycle_month_id
+     JOIN cycle_members cycle_member ON cycle_member.id = d.cycle_member_id
+     JOIN members m ON m.id = cycle_member.member_id
+     WHERE d.id = $1${lock ? " FOR UPDATE" : ""}`,
+    [id]
+  );
+  return rows[0] || null;
+}
+
+function assertDeclarationAccess(req, declaration) {
+  if (!declaration) throw notFound("Declaration not found");
+  if (["ADMIN", "AUDITOR"].includes(req.user.role)) return;
+  if (String(declaration.user_id) !== String(req.user.id)) {
+    throw forbidden("You can only access your own declaration proofs");
+  }
+}
+
+function attachmentRowsQuery(ownerWhere = "") {
+  return `SELECT da.*
+    FROM declaration_attachments da
+    JOIN declarations d ON d.id = da.declaration_id
+    JOIN cycle_members cm ON cm.id = d.cycle_member_id
+    JOIN members m ON m.id = cm.member_id
+    WHERE da.declaration_id = $1
+      AND da.status <> 'DELETED'
+      ${ownerWhere}
+    ORDER BY da.uploaded_at DESC`;
+}
 
 declarationsRouter.get("/queue", requireRole("ADMIN", "AUDITOR"), async (req, res, next) => {
   try {
@@ -331,6 +403,148 @@ declarationsRouter.post("/missed", requireRole("ADMIN"), validate(missedDeclarat
       return { declaration, penalty };
     });
     res.status(201).json({ data: result });
+  } catch (error) {
+    next(error);
+  }
+});
+
+declarationsRouter.get("/attachments/:attachmentId/download-url", async (req, res, next) => {
+  try {
+    const params = [req.params.attachmentId];
+    let ownerWhere = "";
+    if (req.user.role === "MEMBER") {
+      params.push(req.user.id);
+      ownerWhere = " AND m.user_id = $2";
+    }
+    const { rows } = await query(
+      `SELECT da.*
+       FROM declaration_attachments da
+       JOIN declarations d ON d.id = da.declaration_id
+       JOIN cycle_members cm ON cm.id = d.cycle_member_id
+       JOIN members m ON m.id = cm.member_id
+       WHERE da.id = $1
+         AND da.status <> 'DELETED'
+         ${ownerWhere}`,
+      params
+    );
+    const attachment = rows[0];
+    if (!attachment) throw notFound("Payment proof not found");
+    res.json({
+      data: {
+        url: signedPaymentProofUrl(attachment, { asAttachment: req.query.download === "true" }),
+        expiresInSeconds: 300,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+declarationsRouter.get("/:id/attachments", async (req, res, next) => {
+  try {
+    const declaration = await getDeclarationForAccess(req.params.id);
+    assertDeclarationAccess(req, declaration);
+    const params = [req.params.id];
+    let ownerWhere = "";
+    if (req.user.role === "MEMBER") {
+      params.push(req.user.id);
+      ownerWhere = `AND m.user_id = $${params.length}`;
+    }
+    const { rows } = await query(attachmentRowsQuery(ownerWhere), params);
+    res.json({ data: rows });
+  } catch (error) {
+    next(error);
+  }
+});
+
+declarationsRouter.post("/:id/attachments/upload-signature", validate(proofSignatureSchema), requireUnlockedMonthForDeclarationParam(), async (req, res, next) => {
+  try {
+    const declaration = await getDeclarationForAccess(req.params.id);
+    assertDeclarationAccess(req, declaration);
+    validatePaymentProofRequest({
+      declaration,
+      attachmentType: req.body.attachmentType,
+      contentType: req.body.contentType,
+      fileSizeBytes: req.body.fileSizeBytes,
+    });
+    const signature = buildPaymentProofUploadSignature({
+      declaration,
+      attachmentType: req.body.attachmentType,
+      contentType: req.body.contentType,
+    });
+    res.json({ data: signature });
+  } catch (error) {
+    next(error);
+  }
+});
+
+declarationsRouter.post("/:id/attachments", validate(proofConfirmSchema), requireUnlockedMonthForDeclarationParam(), async (req, res, next) => {
+  try {
+    const attachment = await withTransaction(async (client) => {
+      const declaration = await getDeclarationForAccess(req.params.id, { lock: true, client });
+      assertDeclarationAccess(req, declaration);
+      validatePaymentProofRequest({
+        declaration,
+        attachmentType: req.body.attachmentType,
+        contentType: req.body.contentType,
+        fileSizeBytes: req.body.fileSizeBytes,
+      });
+      validateCloudinaryUploadResult({
+        expectedPublicId: req.body.expectedPublicId,
+        expectedResourceType: resourceTypeForContentType(req.body.contentType),
+        upload: {
+          publicId: req.body.cloudinary.publicId,
+          resourceType: req.body.cloudinary.resourceType,
+          bytes: req.body.cloudinary.bytes || req.body.fileSizeBytes,
+        },
+      });
+      if (!String(req.body.cloudinary.publicId).includes(`/${declaration.id}/`)) {
+        throw badRequest("Uploaded proof does not belong to this declaration.");
+      }
+
+      const { rows } = await client.query(
+        `INSERT INTO declaration_attachments
+          (declaration_id, cycle_id, cycle_month_id, cycle_member_id, uploaded_by,
+           attachment_type, cloudinary_asset_id, public_id, resource_type, delivery_type,
+           format, version, original_filename, content_type, file_size_bytes, secure_url)
+         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)
+         ON CONFLICT (public_id) DO UPDATE SET
+           original_filename = EXCLUDED.original_filename,
+           file_size_bytes = EXCLUDED.file_size_bytes,
+           secure_url = EXCLUDED.secure_url,
+           updated_at = now()
+         RETURNING *`,
+        [
+          declaration.id,
+          declaration.cycle_id,
+          declaration.cycle_month_id,
+          declaration.cycle_member_id,
+          req.user.id,
+          req.body.attachmentType,
+          req.body.cloudinary.assetId || null,
+          req.body.cloudinary.publicId,
+          req.body.cloudinary.resourceType,
+          req.body.cloudinary.deliveryType || "authenticated",
+          req.body.cloudinary.format || null,
+          req.body.cloudinary.version || null,
+          req.body.originalFilename,
+          req.body.contentType,
+          req.body.cloudinary.bytes || req.body.fileSizeBytes,
+          req.body.cloudinary.secureUrl || null,
+        ]
+      );
+      await audit(client, {
+        actorUserId: req.user.id,
+        action: "CREATE",
+        entityTable: "declaration_attachments",
+        entityId: rows[0].id,
+        afterData: rows[0],
+        reason: "Payment proof uploaded",
+        req,
+      });
+      return rows[0];
+    });
+    res.status(201).json({ data: attachment });
   } catch (error) {
     next(error);
   }

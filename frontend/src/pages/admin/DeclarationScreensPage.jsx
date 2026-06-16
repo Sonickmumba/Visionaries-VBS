@@ -5,6 +5,7 @@ import {
   CheckCircle2,
   ClipboardList,
   Edit3,
+  Eye,
   PiggyBank,
   Plus,
   RefreshCw,
@@ -33,6 +34,12 @@ import "../../styles/declarations.css";
 const money = (value) => `K${Number(value || 0).toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
 const dateOnly = (value) => value ? String(value).slice(0, 10) : "-";
 const dateTime = (value) => value ? String(value).slice(0, 19).replace("T", " ") : "-";
+const proofTypeLabels = {
+  SAVINGS_PAYMENT_PROOF: "Savings proof",
+  PRINCIPAL_REPAYMENT_PROOF: "Principal repayment proof",
+  LOAN_INTEREST_PAYMENT_PROOF: "Loan interest proof",
+  COMMON_INTEREST_PAYMENT_PROOF: "Common-interest proof",
+};
 
 const EMPTY_FORM = {
   cycleMemberId: "",
@@ -172,7 +179,7 @@ function DetailValue({ label, value }) {
   return <div><strong>{label}</strong><span>{value}</span></div>;
 }
 
-function DeclarationDetail({ detail, onEdit, onApprove, onLoanRequest, onCancel, onClose, loading }) {
+function DeclarationDetail({ detail, onEdit, onApprove, onLoanRequest, onCancel, onClose, onViewAttachment, loading }) {
   const detailIsClosed = ["CANCELLED", "MISSED"].includes(detail.status);
   const hasLoanIntent = Number(detail.loan_request_amount || 0) > 0 || Number(detail.loan_top_up_amount || 0) > 0;
   return (
@@ -196,6 +203,23 @@ function DeclarationDetail({ detail, onEdit, onApprove, onLoanRequest, onCancel,
         <DetailValue label="Within Window" value={detail.is_within_window ? "Yes" : "No"} />
       </div>
       {detail.notes ? <p className="muted">{detail.notes}</p> : null}
+      <section className="declaration-proof-review" aria-label="Payment proofs">
+        <h3>Payment Proofs</h3>
+        {detail.attachments?.length ? (
+          <DataTable
+            columns={["Proof", "File", "Uploaded", "Status", "Action"]}
+            rows={detail.attachments.map((attachment) => [
+              proofTypeLabels[attachment.attachment_type] || attachment.attachment_type,
+              attachment.original_filename,
+              dateTime(attachment.uploaded_at),
+              <Badge text={attachment.status} tone={attachment.status === "UPLOADED" ? "green" : "amber"} />,
+              <Button type="button" size="sm" variant="secondary" icon={Eye} onClick={() => onViewAttachment(attachment)}>View</Button>,
+            ])}
+          />
+        ) : (
+          <p className="muted">No payment proof uploaded for this declaration.</p>
+        )}
+      </section>
       <div className="button-row">
         <Button type="button" variant="secondary" icon={Edit3} onClick={onEdit} disabled={detailIsClosed}>Edit Declaration</Button>
         <Button type="button" icon={Banknote} onClick={onLoanRequest} disabled={detailIsClosed || detail.has_loan_request || !hasLoanIntent} loading={loading === "loan"}>
@@ -354,11 +378,27 @@ export function DeclarationScreensPage({
     setError("");
     setBusy(`detail-${id}`);
     try {
-      const response = await declarationApi(`/declarations/${id}`);
-      setDetail(response.data);
+      const [response, attachmentsResponse] = await Promise.all([
+        declarationApi(`/declarations/${id}`),
+        declarationApi(`/declarations/${id}/attachments`),
+      ]);
+      setDetail({ ...response.data, attachments: attachmentsResponse.data || [] });
       setActiveTab("submitted");
     } catch (err) {
       setError(err.message || "Declaration detail could not load.");
+    } finally {
+      setBusy("");
+    }
+  }
+
+  async function viewAttachment(attachment) {
+    setBusy(`attachment-${attachment.id}`);
+    setError("");
+    try {
+      const response = await declarationApi(`/declarations/attachments/${attachment.id}/download-url`);
+      window.open(response.data.url, "_blank", "noopener,noreferrer");
+    } catch (err) {
+      setError(err.message || "Payment proof could not be opened.");
     } finally {
       setBusy("");
     }
@@ -497,6 +537,7 @@ export function DeclarationScreensPage({
           onLoanRequest={createLoanRequest}
           onCancel={() => setCancelOpen(true)}
           onClose={() => { setDetail(null); setSelectedId(""); }}
+          onViewAttachment={viewAttachment}
           loading={busy}
         />
       ) : null}

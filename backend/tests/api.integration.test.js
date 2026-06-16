@@ -699,7 +699,6 @@ describe("API integration smoke tests", () => {
       method: "POST",
       url: "/api/loans/disbursements",
       body: {
-        loanRequestId: "44444444-4444-4444-8444-444444444444",
         cycleId: "11111111-1111-4111-8111-111111111111",
         cycleMonthId: "22222222-2222-4222-8222-222222222222",
         cycleMemberId: "33333333-3333-4333-8333-333333333333",
@@ -719,14 +718,6 @@ describe("API integration smoke tests", () => {
       .mockResolvedValueOnce({ rows: [{ id: "33333333-3333-4333-8333-333333333333", cycle_id: "11111111-1111-4111-8111-111111111111" }] })
       .mockResolvedValueOnce({ rows: [{ id: "22222222-2222-4222-8222-222222222222", status: "PAYOUT_PERIOD" }] });
     mocks.clientQuery
-      .mockResolvedValueOnce({
-        rows: [{
-          id: "22222222-2222-4222-8222-222222222222",
-          status: "PAYOUT_PERIOD",
-          payout_window_start: "2020-01-04",
-          payout_window_end: "2020-01-05",
-        }],
-      })
       .mockResolvedValueOnce({
         rows: [{
           id: "44444444-4444-4444-8444-444444444444",
@@ -766,8 +757,8 @@ describe("API integration smoke tests", () => {
 
     expect(response.status).toBe(201);
     expect(response.body.data.origin_type).toBe("TOP_UP");
-    expect(mocks.clientQuery.mock.calls[3][0]).toContain("INSERT INTO ledger_transactions");
-    expect(mocks.clientQuery.mock.calls[6][0]).toContain("INSERT INTO loan_disbursements");
+    expect(mocks.clientQuery.mock.calls[2][0]).toContain("INSERT INTO ledger_transactions");
+    expect(mocks.clientQuery.mock.calls[5][0]).toContain("INSERT INTO loan_disbursements");
   });
 
   it("records principal and interest repayments separately", async () => {

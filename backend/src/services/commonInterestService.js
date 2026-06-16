@@ -7,7 +7,10 @@ export async function buildCommonInterestPreview(clientOrPool, { cycleId, cycleM
   const cycle = (await clientOrPool.query("SELECT * FROM cycles WHERE id = $1", [cycleId])).rows[0];
   const cycleMonth = (await clientOrPool.query("SELECT * FROM cycle_months WHERE id = $1", [cycleMonthId])).rows[0];
   const pool = await clientOrPool.query(
-    `SELECT
+    `WITH selected_month AS (
+       SELECT month_number FROM cycle_months WHERE id = $2
+     )
+     SELECT
       COALESCE(SUM(CASE
         WHEN lt.transaction_type IN (
           'SAVINGS_DEPOSIT','SOCIAL_FUND_PAYMENT','MEMBERSHIP_FEE_PAYMENT',
@@ -16,24 +19,36 @@ export async function buildCommonInterestPreview(clientOrPool, { cycleId, cycleM
         ) AND rev.id IS NULL THEN lt.amount ELSE 0 END),0) AS contributions,
       COALESCE(SUM(CASE WHEN lt.transaction_type IN ('LOAN_DISBURSEMENT','LOAN_TOP_UP') AND rev.id IS NULL THEN lt.amount ELSE 0 END),0) AS loans
      FROM ledger_transactions lt
+     JOIN cycle_months cmn ON cmn.id = lt.cycle_month_id
      LEFT JOIN ledger_transactions rev ON rev.reversed_transaction_id = lt.id
-     WHERE lt.cycle_id = $1 AND lt.cycle_month_id = $2 AND lt.is_reversal = FALSE`,
+     WHERE lt.cycle_id = $1
+       AND lt.is_reversal = FALSE
+       AND cmn.month_number <= (SELECT month_number FROM selected_month)`,
     [cycleId, cycleMonthId]
   );
   const totalPoolContributions = Number(pool.rows[0].contributions);
   const totalLoansIssued = Number(pool.rows[0].loans);
   const unborrowedMoney = Math.max(0, totalPoolContributions - totalLoansIssued);
   const memberRows = await clientOrPool.query(
-    `SELECT cm.id AS cycle_member_id, m.first_name, m.last_name, m.member_code,
-      COALESCE(SUM(CASE WHEN lt.transaction_type IN ('LOAN_DISBURSEMENT','LOAN_TOP_UP','CONVERTED_PENALTY_LOAN') AND rev.id IS NULL THEN lt.amount ELSE 0 END),0) AS borrowed
+    `WITH selected_month AS (
+       SELECT month_number FROM cycle_months WHERE id = $2
+     )
+     SELECT cm.id AS cycle_member_id, m.first_name, m.last_name, m.member_code,
+      COALESCE(SUM(CASE
+        WHEN lt.transaction_type IN ('LOAN_DISBURSEMENT','LOAN_TOP_UP','CONVERTED_PENALTY_LOAN')
+          AND rev.id IS NULL
+          AND cmn.month_number <= (SELECT month_number FROM selected_month)
+        THEN lt.amount ELSE 0 END),0) AS borrowed
      FROM cycle_members cm
      JOIN members m ON m.id = cm.member_id
-     LEFT JOIN ledger_transactions lt ON lt.cycle_member_id = cm.id AND lt.is_reversal = FALSE
+     LEFT JOIN ledger_transactions lt ON lt.cycle_member_id = cm.id AND lt.cycle_id = $1 AND lt.is_reversal = FALSE
+     LEFT JOIN cycle_months cmn ON cmn.id = lt.cycle_month_id
      LEFT JOIN ledger_transactions rev ON rev.reversed_transaction_id = lt.id
-     WHERE cm.cycle_id = $1 AND cm.status = 'ACTIVE'
+     WHERE cm.cycle_id = $1
+       AND cm.status = 'ACTIVE'
      GROUP BY cm.id, m.first_name, m.last_name, m.member_code
      ORDER BY m.first_name, m.last_name`,
-    [cycleId]
+    [cycleId, cycleMonthId]
   );
   const classified = memberRows.rows.map((member) => {
     const c = classifyBorrowing(member.borrowed, cycle.minimum_borrowing_amount);

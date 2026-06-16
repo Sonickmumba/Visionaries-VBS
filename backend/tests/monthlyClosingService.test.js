@@ -32,7 +32,7 @@ describe("monthly closing calculations", () => {
     expect(result.cumulativeSavingsPrincipal).toBe(15000);
   });
 
-  it("calculates loan interest from brought-forward balance before current repayments", () => {
+  it("calculates loan interest from brought-forward plus current-month new loans before repayments", () => {
     const result = calculateMemberMonthlyClosing({
       cycle,
       declarationStatus: "APPROVED",
@@ -50,13 +50,13 @@ describe("monthly closing calculations", () => {
     });
 
     expect(result.loanBroughtForward).toBe(10000);
-    expect(result.loanInterestAssessed).toBe(1500);
-    expect(result.loanCarriedForward).toBe(12800);
+    expect(result.loanInterestAssessed).toBe(1875);
+    expect(result.loanCarriedForward).toBe(13175);
     expect(result.cumulativeBorrowedAmount).toBe(12500);
     expect(result.borrowingStatus).toBe("BORROWED_BELOW_MINIMUM");
   });
 
-  it("does not assess interest on current-month new loans until a later month", () => {
+  it("assesses interest on current-month new loans during the same closing", () => {
     const result = calculateMemberMonthlyClosing({
       cycle,
       declarationStatus: "APPROVED",
@@ -69,8 +69,8 @@ describe("monthly closing calculations", () => {
     });
 
     expect(result.loanBroughtForward).toBe(0);
-    expect(result.loanInterestAssessed).toBe(0);
-    expect(result.loanCarriedForward).toBe(5000);
+    expect(result.loanInterestAssessed).toBe(750);
+    expect(result.loanCarriedForward).toBe(5750);
     expect(result.newLoanAmount).toBe(5000);
   });
 

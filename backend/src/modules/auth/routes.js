@@ -1,6 +1,7 @@
 import express from "express";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+import { promisify } from "node:util";
+import { passport } from "../../auth/passport.js";
 import { z } from "zod";
 import { env } from "../../config/env.js";
 import { query } from "../../db/pool.js";
@@ -31,10 +32,6 @@ const signupSchema = z.object({
   password: z.string().min(10),
 });
 
-function tokenFor(user) {
-  return jwt.sign({ sub: user.id, role: user.role }, env.jwtSecret, { expiresIn: env.jwtExpiresIn });
-}
-
 async function auditLoginAttempt({ req, user = null, success, reason }) {
   try {
     await query(
@@ -55,27 +52,22 @@ async function auditLoginAttempt({ req, user = null, success, reason }) {
 }
 
 authRouter.post("/login", authRateLimit, validate(loginSchema), async (req, res, next) => {
-  try {
-    const { rows } = await query("SELECT * FROM users WHERE email = $1", [req.body.email.toLowerCase()]);
-    const user = rows[0];
-    if (!user || !user.is_active) {
-      await auditLoginAttempt({ req, user, success: false, reason: "Invalid login attempt" });
-      throw unauthorized("Invalid email or password");
+  passport.authenticate("local", async (error, user) => {
+    try {
+      if (error) throw error;
+      if (!user) {
+        await auditLoginAttempt({ req, user: null, success: false, reason: "Invalid login attempt" });
+        throw unauthorized("Invalid email or password");
+      }
+
+      await promisify(req.login.bind(req))(user);
+      await query("UPDATE users SET last_login_at = now() WHERE id = $1", [user.id]);
+      await auditLoginAttempt({ req, user, success: true, reason: "Successful login" });
+      res.json({ user });
+    } catch (innerError) {
+      next(innerError);
     }
-    const ok = await bcrypt.compare(req.body.password, user.password_hash);
-    if (!ok) {
-      await auditLoginAttempt({ req, user, success: false, reason: "Invalid login attempt" });
-      throw unauthorized("Invalid email or password");
-    }
-    await query("UPDATE users SET last_login_at = now() WHERE id = $1", [user.id]);
-    await auditLoginAttempt({ req, user, success: true, reason: "Successful login" });
-    res.json({
-      token: tokenFor(user),
-      user: { id: user.id, email: user.email, role: user.role },
-    });
-  } catch (error) {
-    next(error);
-  }
+  })(req, res, next);
 });
 
 authRouter.post("/signup", authRateLimit, validate(signupSchema), async (req, res, next) => {
@@ -96,10 +88,22 @@ authRouter.post("/signup", authRateLimit, validate(signupSchema), async (req, re
        VALUES ($1,$2,$3,$4)`,
       [user.id, req.body.firstName, req.body.lastName, req.body.phone || null]
     );
-    res.status(201).json({ token: tokenFor(user), user });
+    await promisify(req.login.bind(req))({ ...user, is_active: true });
+    res.status(201).json({ user: { ...user, is_active: true } });
   } catch (error) {
     next(error);
   }
+});
+
+authRouter.post("/logout", requireAuth, async (req, res, next) => {
+  req.logout((logoutError) => {
+    if (logoutError) return next(logoutError);
+    req.session.destroy((destroyError) => {
+      if (destroyError) return next(destroyError);
+      res.clearCookie(env.sessionCookieName);
+      return res.json({ message: "Logged out" });
+    });
+  });
 });
 
 authRouter.get("/me", requireAuth, async (req, res, next) => {

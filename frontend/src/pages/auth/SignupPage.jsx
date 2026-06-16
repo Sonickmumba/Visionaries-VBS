@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { UserPlus } from "lucide-react";
-import { api, setSession } from "../../api/client.js";
+import { api } from "../../api/client.js";
 import { Alert, Button, Field } from "../../components/ui/index.jsx";
 import { AuthLayout } from "../../layouts/AppLayouts.jsx";
 import { landingPageForRole } from "./LoginPage.jsx";
@@ -81,7 +81,6 @@ export function SignupPage({ onSignup, onBackToLogin, authApi = api }) {
     setLoading(true);
     try {
       const session = await performSignup({ form, authApi });
-      setSession(session);
       setSuccess(session);
     } catch (err) {
       setError(err.validationErrors ? "Check the highlighted fields." : err.message || "Signup failed.");

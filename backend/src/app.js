@@ -3,9 +3,11 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import { env } from "./config/env.js";
+import { passport } from "./auth/passport.js";
 import { requestId } from "./middleware/requestId.js";
 import { errorHandler, notFoundHandler } from "./middleware/errorHandler.js";
 import { sanitizeInput } from "./middleware/sanitizeInput.js";
+import { sessionMiddleware } from "./middleware/session.js";
 import { authRouter } from "./modules/auth/routes.js";
 import { cyclesRouter } from "./modules/cycles/routes.js";
 import { membersRouter } from "./modules/members/routes.js";
@@ -25,10 +27,13 @@ import { settingsRouter } from "./modules/settings/routes.js";
 export const app = express();
 
 app.use(helmet());
+if (env.nodeEnv === "production") app.set("trust proxy", 1);
 const allowedOrigins = new Set([
   env.frontendOrigin,
   "http://localhost:5173",
   "http://127.0.0.1:5173",
+  "http://localhost:4173",
+  "http://127.0.0.1:4173",
 ]);
 
 app.use(cors({
@@ -42,6 +47,9 @@ app.use(express.json({ limit: env.requestSizeLimit }));
 app.use(sanitizeInput);
 app.use(requestId);
 app.use(morgan("dev"));
+app.use(sessionMiddleware());
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.get("/health", (req, res) => {
   res.json({ status: "ok", timestamp: new Date().toISOString(), requestId: req.requestId });

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Lock, Mail } from "lucide-react";
-import { api, setSession } from "../../api/client.js";
+import { api } from "../../api/client.js";
 import { Alert, Button, Field } from "../../components/ui/index.jsx";
 import { AuthLayout } from "../../layouts/AppLayouts.jsx";
 import "../../styles/auth.css";
@@ -76,7 +76,6 @@ export function LoginPage({
     setLoading(true);
     try {
       const session = await performLogin({ email, password, authApi });
-      setSession(session);
       onLogin?.(session.user, landingPageForRole(session.user?.role), { rememberMe });
     } catch (err) {
       setError(err.validationErrors ? "Check the highlighted fields." : friendlyLoginError(err));

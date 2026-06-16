@@ -36,6 +36,14 @@ const portal = {
       penalties: "100",
       penalties_paid: "40",
     },
+    financialPosition: {
+      month_number: 2,
+      pool_contributions: "25000",
+      loans_issued: "10000",
+      unborrowed_money: "15000",
+      common_interest_pool: "2250",
+      total_accumulated_savings: "45000",
+    },
     transactions: [
       {
         transaction_date: "2026-01-31",
@@ -77,6 +85,14 @@ describe("member dashboard", () => {
       penaltyDue: 60,
       borrowingShortfall: 10000,
       borrowingStatus: "BORROWED_BELOW_MINIMUM",
+      groupPoolScope: "up to Month 2",
+      groupPool: {
+        poolContributions: 25000,
+        loansIssued: 10000,
+        unborrowedMoney: 15000,
+        commonInterestPool: 2250,
+        totalAccumulatedSavings: 45000,
+      },
     });
   });
 
@@ -105,9 +121,14 @@ describe("member dashboard", () => {
     expect(html).toContain("My Dashboard");
     expect(html).toContain("Submit Declaration");
     expect(html).toContain("View Statement");
-    expect(html).toContain("My Savings");
+    expect(html).toContain("My Accumulated Savings");
+    expect(html).toContain("My Loan Balance");
     expect(html).toContain("K17,250");
     expect(html).toContain("K9,000");
+    expect(html).toContain("Group Pool Snapshot up to Month 2");
+    expect(html).toContain("Latest Calculated");
+    expect(html).toContain("Group Accumulated Savings");
+    expect(html).toContain("K45,000");
     expect(html).toContain("Cycle Position");
     expect(html).toContain("Recent Transactions");
     expect(html).toContain("Penalty Snapshot");

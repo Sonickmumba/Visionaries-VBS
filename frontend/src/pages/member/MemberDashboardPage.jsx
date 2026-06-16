@@ -16,6 +16,10 @@ function memberName(member) {
   return `${member?.first_name || ""} ${member?.last_name || ""}`.trim() || "Member";
 }
 
+function monthScope(financialPosition) {
+  return financialPosition?.month_number ? `up to Month ${financialPosition.month_number}` : "latest calculated";
+}
+
 export function chooseActiveMembership(memberships = []) {
   return memberships.find((membership) => membership.cycle_status === "ACTIVE")
     || memberships.find((membership) => membership.status === "ACTIVE")
@@ -62,6 +66,8 @@ export function memberDashboardTotals(portal) {
   const savingsInterest = Number(totals.savings_interest || 0);
   const minimumBorrowing = Number(portal?.activeMembership?.minimum_borrowing_amount || 0);
   const savingsCap = Number(portal?.activeMembership?.savings_cap || 0);
+  const financialPosition = portal?.statement?.financialPosition || {};
+  const groupPoolScope = monthScope(financialPosition);
 
   return {
     savingsPrincipal,
@@ -75,6 +81,14 @@ export function memberDashboardTotals(portal) {
     penaltyDue: penalties - penaltiesPaid,
     borrowingShortfall: Math.max(0, minimumBorrowing - borrowed),
     borrowingStatus: borrowed <= 0 ? "NEVER_BORROWED" : borrowed < minimumBorrowing ? "BORROWED_BELOW_MINIMUM" : "AT_OR_ABOVE_MINIMUM",
+    groupPoolScope,
+    groupPool: {
+      poolContributions: Number(financialPosition.pool_contributions || 0),
+      loansIssued: Number(financialPosition.loans_issued || 0),
+      unborrowedMoney: Number(financialPosition.unborrowed_money || 0),
+      commonInterestPool: Number(financialPosition.common_interest_pool || 0),
+      totalAccumulatedSavings: Number(financialPosition.total_accumulated_savings || 0),
+    },
   };
 }
 
@@ -138,11 +152,25 @@ export function MemberDashboardPage({
       ) : (
         <>
           <div className="metrics member-dashboard-metrics">
-            <Card title="My Savings" value={money(totals.accumulatedSavings)} note={`${money(totals.savingsPrincipal)} principal`} icon={PiggyBank} />
-            <Card title="My Loan" value={money(totals.outstandingLoan)} note={`${money(totals.borrowingShortfall)} shortfall`} tone="blue" icon={Banknote} />
+            <Card title="My Accumulated Savings" value={money(totals.accumulatedSavings)} note={`${money(totals.savingsPrincipal)} principal`} icon={PiggyBank} />
+            <Card title="My Loan Balance" value={money(totals.outstandingLoan)} note={`${money(totals.borrowingShortfall)} shortfall`} tone="blue" icon={Banknote} />
             <Card title="Common Interest Due" value={money(totals.commonInterestDue)} note="Assessed less paid" tone="amber" icon={Scale} />
             <Card title="Penalty Due" value={money(totals.penaltyDue)} note="Outstanding penalties" tone={totals.penaltyDue > 0 ? "red" : "green"} icon={AlertTriangle} />
           </div>
+
+          <section className="panel member-pool-panel">
+            <div className="panel-head">
+              <h2>Group Pool Snapshot {totals.groupPoolScope}</h2>
+              <Badge text="Latest Calculated" tone="blue" />
+            </div>
+            <div className="metrics member-pool-metrics">
+              <Card title="Pool Contributions" value={money(totals.groupPool.poolContributions)} note={`Calculated ${totals.groupPoolScope}`} icon={PiggyBank} />
+              <Card title="Loans Issued" value={money(totals.groupPool.loansIssued)} note={`Calculated ${totals.groupPoolScope}`} tone="blue" icon={Banknote} />
+              <Card title="Unborrowed Money" value={money(totals.groupPool.unborrowedMoney)} note={`Balance ${totals.groupPoolScope}`} tone="amber" icon={Scale} />
+              <Card title="CI Pool" value={money(totals.groupPool.commonInterestPool)} note="Latest calculated month" tone="teal" icon={Scale} />
+              <Card title="Group Accumulated Savings" value={money(totals.groupPool.totalAccumulatedSavings)} note="All members" icon={PiggyBank} />
+            </div>
+          </section>
 
           <section className="panel member-cycle-panel">
             <div className="panel-head">

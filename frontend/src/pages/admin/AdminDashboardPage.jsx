@@ -15,6 +15,10 @@ import "../../styles/dashboard.css";
 
 const money = (value) => `K${Number(value || 0).toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
 
+function monthScope(financialPosition) {
+  return financialPosition?.month_number ? `up to Month ${financialPosition.month_number}` : "latest calculated";
+}
+
 export function dashboardViewModel(data) {
   const totals = data?.totals || {};
   const declarations = data?.declarationStats || {};
@@ -22,12 +26,52 @@ export function dashboardViewModel(data) {
   const missed = Number(declarations.current_month_missed || declarations.missed || 0);
   const awaitingReview = Number(declarations.awaiting_review || 0);
   const penalties = Number(totals.penalties || 0);
+  const financialPosition = data?.financialPosition || {};
+  const financialPositionScope = monthScope(financialPosition);
 
   return {
     cycleName: data?.cycle?.name || "No active cycle",
     monthLabel: data?.cycleMonth?.month_number ? `Month ${data.cycleMonth.month_number}` : "No active month",
     totals,
     declarations,
+    financialPosition,
+    financialPositionScope,
+    poolCards: [
+      {
+        title: "Pool Contributions",
+        value: money(financialPosition.pool_contributions),
+        note: `Calculated ${financialPositionScope}`,
+        icon: PiggyBank,
+      },
+      {
+        title: "Loans Issued",
+        value: money(financialPosition.loans_issued),
+        note: `Calculated ${financialPositionScope}`,
+        tone: "blue",
+        icon: Banknote,
+      },
+      {
+        title: "Unborrowed Money",
+        value: money(financialPosition.unborrowed_money),
+        note: `Balance ${financialPositionScope}`,
+        tone: "amber",
+        icon: Scale,
+      },
+      {
+        title: "CI Pool",
+        value: money(financialPosition.common_interest_pool),
+        note: `Latest calculated month`,
+        tone: "teal",
+        icon: Scale,
+      },
+      {
+        title: "Total Accumulated Savings",
+        value: money(financialPosition.total_accumulated_savings),
+        note: `Through ${financialPositionScope.replace("up to ", "")}`,
+        tone: "green",
+        icon: PiggyBank,
+      },
+    ],
     cards: [
       {
         title: "Savings Collected",
@@ -237,6 +281,16 @@ export function AdminDashboardPage({ setPage, dashboardApi = api, initialData = 
               </button>
             ))}
           </div>
+
+          <section className="panel dashboard-panel dashboard-financial-position">
+            <div className="panel-head">
+              <h2>Cycle Financial Position {view.financialPositionScope}</h2>
+              <Button type="button" size="sm" variant="secondary" onClick={() => setPage?.("common-interest")}>Open Common Interest</Button>
+            </div>
+            <div className="metrics dashboard-pool-metrics">
+              {view.poolCards.map((card) => <Card key={card.title} {...card} />)}
+            </div>
+          </section>
 
           <div className="grid two">
             <ProgressPanel setPage={setPage} />

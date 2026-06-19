@@ -89,6 +89,126 @@ async function getReportMembers(req, cycleId) {
   );
 }
 
+async function getCycleFinancialPosition(cycleId, cycleMonthId = null) {
+  if (!cycleId) return null;
+  const result = await query(
+    `WITH selected_month AS (
+       SELECT id, month_number
+       FROM cycle_months
+       WHERE cycle_id = $1 AND ($2::uuid IS NULL OR id = $2::uuid)
+       ORDER BY
+         CASE status
+           WHEN 'DECLARATION_PERIOD' THEN 1
+           WHEN 'OPEN' THEN 2
+           WHEN 'PAYOUT_PERIOD' THEN 3
+           ELSE 4
+         END,
+         month_number
+       LIMIT 1
+     ),
+     ledger_savings AS (
+       SELECT COALESCE(SUM(CASE
+         WHEN lt.transaction_type IN ('SAVINGS_DEPOSIT','SAVINGS_INTEREST') AND rev.id IS NULL THEN lt.amount
+         ELSE 0
+       END),0) AS total_accumulated_savings
+       FROM ledger_transactions lt
+       LEFT JOIN ledger_transactions rev ON rev.reversed_transaction_id = lt.id
+       WHERE lt.cycle_id = $1 AND lt.is_reversal = FALSE
+     ),
+     ledger_through_month AS (
+       SELECT
+         ranked_months.id AS cycle_month_id,
+         COALESCE(SUM(CASE
+           WHEN lt.transaction_type IN ('LOAN_DISBURSEMENT','LOAN_TOP_UP','CONVERTED_PENALTY_LOAN') AND rev.id IS NULL THEN lt.amount
+           ELSE 0
+         END),0) AS loans_issued
+       FROM cycle_months ranked_months
+       LEFT JOIN cycle_months ledger_months
+         ON ledger_months.cycle_id = ranked_months.cycle_id
+        AND ledger_months.month_number <= ranked_months.month_number
+       LEFT JOIN ledger_transactions lt
+         ON lt.cycle_month_id = ledger_months.id
+        AND lt.cycle_id = $1
+        AND lt.is_reversal = FALSE
+       LEFT JOIN ledger_transactions rev ON rev.reversed_transaction_id = lt.id
+       WHERE ranked_months.cycle_id = $1
+       GROUP BY ranked_months.id
+     ),
+     position_sources AS (
+       SELECT sm.id AS cycle_month_id, sm.month_number,
+         cms.total_pool_contributions AS pool_contributions,
+         cms.total_loans_issued AS loans_issued,
+         cms.unborrowed_money,
+         cms.common_interest_pool,
+         cms.total_accumulated_savings,
+         1 AS priority
+       FROM selected_month sm
+       JOIN cycle_month_summaries cms ON cms.cycle_month_id = sm.id
+       UNION ALL
+       SELECT sm.id AS cycle_month_id, sm.month_number,
+         cir.total_pool_contributions AS pool_contributions,
+         cir.total_loans_issued AS loans_issued,
+         cir.unborrowed_money,
+         cir.common_interest_pool,
+         0 AS total_accumulated_savings,
+         2 AS priority
+       FROM selected_month sm
+       JOIN common_interest_runs cir ON cir.cycle_month_id = sm.id
+       UNION ALL
+       SELECT cm.id AS cycle_month_id, cm.month_number,
+         cms.total_pool_contributions AS pool_contributions,
+         cms.total_loans_issued AS loans_issued,
+         cms.unborrowed_money,
+         cms.common_interest_pool,
+         cms.total_accumulated_savings,
+         3 AS priority
+       FROM cycle_months cm
+       JOIN cycle_month_summaries cms ON cms.cycle_month_id = cm.id
+       WHERE cm.cycle_id = $1
+       UNION ALL
+       SELECT cm.id AS cycle_month_id, cm.month_number,
+         cir.total_pool_contributions AS pool_contributions,
+         cir.total_loans_issued AS loans_issued,
+         cir.unborrowed_money,
+         cir.common_interest_pool,
+         0 AS total_accumulated_savings,
+         4 AS priority
+       FROM cycle_months cm
+       JOIN common_interest_runs cir ON cir.cycle_month_id = cm.id
+       WHERE cm.cycle_id = $1
+       UNION ALL
+       SELECT sm.id AS cycle_month_id, sm.month_number, 0, 0, 0, 0, 0, 5 AS priority
+       FROM selected_month sm
+     ),
+     ranked AS (
+       SELECT *,
+         (COALESCE(pool_contributions,0) <> 0
+          OR COALESCE(loans_issued,0) <> 0
+          OR COALESCE(unborrowed_money,0) <> 0
+          OR COALESCE(common_interest_pool,0) <> 0
+          OR COALESCE(total_accumulated_savings,0) <> 0) AS has_values
+       FROM position_sources
+     )
+     SELECT
+       ranked.cycle_month_id,
+       ranked.month_number,
+       COALESCE(ranked.pool_contributions,0) AS pool_contributions,
+       COALESCE(NULLIF(ranked.loans_issued,0), ledger_through_month.loans_issued, 0) AS loans_issued,
+       COALESCE(ranked.unborrowed_money,0) AS unborrowed_money,
+       COALESCE(ranked.common_interest_pool,0) AS common_interest_pool,
+       COALESCE(NULLIF(ranked.total_accumulated_savings,0), ledger_savings.total_accumulated_savings, 0) AS total_accumulated_savings
+     FROM ranked
+     CROSS JOIN ledger_savings
+     LEFT JOIN ledger_through_month ON ledger_through_month.cycle_month_id = ranked.cycle_month_id
+     ORDER BY
+       CASE WHEN ranked.has_values THEN ranked.priority ELSE 90 + ranked.priority END,
+       ranked.month_number DESC
+     LIMIT 1`,
+    [cycleId, cycleMonthId]
+  );
+  return result.rows[0] || null;
+}
+
 reportsRouter.get("/dashboard", requireRole("ADMIN", "AUDITOR"), async (req, res, next) => {
   try {
     const cycle = await query("SELECT * FROM cycles WHERE status = 'ACTIVE' ORDER BY created_at DESC LIMIT 1");
@@ -135,11 +255,13 @@ reportsRouter.get("/dashboard", requireRole("ADMIN", "AUDITOR"), async (req, res
        WHERE cycle_id = $1`,
       [cycleId, cycleMonth.rows[0]?.id || null]
     );
+    const financialPosition = await getCycleFinancialPosition(cycleId, cycleMonth.rows[0]?.id || null);
     return sendReport(req, res, {
       data: {
         cycle: cycle.rows[0],
         cycleMonth: cycleMonth.rows[0] || null,
         totals: totals.rows[0],
+        financialPosition,
         pendingLoans: pendingLoans.rows[0].count,
         declarationStats: declarationStats.rows[0],
       },
@@ -199,7 +321,8 @@ reportsRouter.get("/member-statement/:cycleMemberId", requireCycleMemberAccessFr
          AND lt.is_reversal = FALSE`,
       transactionParams
     );
-    const data = { member: member.rows[0] || null, totals: totals.rows[0], transactions: transactions.rows, snapshots: snapshots.rows };
+    const financialPosition = await getCycleFinancialPosition(member.rows[0]?.cycle_id || null, req.query.cycleMonthId || null);
+    const data = { member: member.rows[0] || null, totals: totals.rows[0], financialPosition, transactions: transactions.rows, snapshots: snapshots.rows };
     return sendReport(req, res, { data }, { filename: "member-statement", rows: transactions.rows });
   } catch (error) {
     next(error);
@@ -277,7 +400,8 @@ reportsRouter.get("/member-statement", async (req, res, next) => {
          AND lt.is_reversal = FALSE`,
       transactionParams
     );
-    const data = { member: member.rows[0] || null, totals: totals.rows[0], transactions: transactions.rows, snapshots: snapshots.rows };
+    const financialPosition = await getCycleFinancialPosition(member.rows[0]?.cycle_id || null, req.query.cycleMonthId || null);
+    const data = { member: member.rows[0] || null, totals: totals.rows[0], financialPosition, transactions: transactions.rows, snapshots: snapshots.rows };
     return sendReport(req, res, { data }, { filename: "member-statement", rows: transactions.rows });
   } catch (error) {
     next(error);

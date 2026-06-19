@@ -393,11 +393,19 @@ describe("QA-001 end-to-end admin workflow", () => {
       .mockResolvedValueOnce(okRows([month]))
       .mockResolvedValueOnce(okRows([{ savings: "15000", loans: "5000", common_interest: "0", penalties: "100" }]))
       .mockResolvedValueOnce(okRows([{ count: 0 }]))
-      .mockResolvedValueOnce(okRows([{ total: 1, approved: 1, awaiting_review: 0, missed: 0, cancelled: 0, current_month_approved: 1, current_month_missed: 0 }]));
+      .mockResolvedValueOnce(okRows([{ total: 1, approved: 1, awaiting_review: 0, missed: 0, cancelled: 0, current_month_approved: 1, current_month_missed: 0 }]))
+      .mockResolvedValueOnce(okRows([{
+        pool_contributions: "15000",
+        loans_issued: "5000",
+        unborrowed_money: "10000",
+        common_interest_pool: "1500",
+        total_accumulated_savings: "17250",
+      }]));
     const dashboard = await inject({ url: "/api/reports/dashboard" });
     expect(dashboard.status).toBe(200);
     expect(dashboard.body.data.totals.savings).toBe("15000");
     expect(dashboard.body.data.declarationStats.approved).toBe(1);
+    expect(dashboard.body.data.financialPosition.unborrowed_money).toBe("10000");
 
     mocks.query
       .mockResolvedValueOnce(okRows([{ cycle_member_id: ids.cycleMember, first_name: "Mary", last_name: "Phiri" }]))

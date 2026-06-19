@@ -45,6 +45,14 @@
   margin-bottom: 0;
 }
 
+.dashboard-financial-position {
+  margin-bottom: 18px;
+}
+
+.dashboard-pool-metrics {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
 .panel-head {
   display: flex;
   align-items: center;
@@ -120,6 +128,10 @@
     grid-template-columns: 1fr;
   }
 
+  .dashboard-pool-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .dashboard-step {
     grid-template-columns: 28px 1fr 22px;
   }
@@ -133,6 +145,10 @@
   .dashboard-card,
   .dashboard-card .metric {
     width: 100%;
+  }
+
+  .dashboard-pool-metrics {
+    grid-template-columns: 1fr;
   }
 
   .panel-head {

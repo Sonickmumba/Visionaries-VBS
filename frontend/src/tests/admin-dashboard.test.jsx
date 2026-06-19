@@ -12,6 +12,14 @@ const dashboardData = {
     common_interest: "500",
     penalties: "100",
   },
+  financialPosition: {
+    month_number: 2,
+    pool_contributions: "25000",
+    loans_issued: "10000",
+    unborrowed_money: "15000",
+    common_interest_pool: "2250",
+    total_accumulated_savings: "17250",
+  },
   pendingLoans: 2,
   declarationStats: {
     approved: 8,
@@ -28,6 +36,10 @@ describe("admin dashboard", () => {
     expect(view.cycleName).toBe("2026 Main Cycle");
     expect(view.monthLabel).toBe("Month 3");
     expect(view.cards.map((card) => card.title)).toContain("Loans Outstanding");
+    expect(view.financialPositionScope).toBe("up to Month 2");
+    expect(view.poolCards.map((card) => card.title)).toContain("Pool Contributions");
+    expect(view.poolCards.find((card) => card.title === "Loans Issued").value).toBe("K10,000");
+    expect(view.poolCards.find((card) => card.title === "CI Pool").value).toBe("K2,250");
     expect(view.priorities.find((item) => item.label === "Approve Loans")).toMatchObject({
       detail: "2 pending loan requests",
       urgent: true,
@@ -46,6 +58,11 @@ describe("admin dashboard", () => {
     expect(html).toContain("2026 Main Cycle");
     expect(html).toContain("Priority Queue");
     expect(html).toContain("Monthly Closing Progress");
+    expect(html).toContain("Cycle Financial Position up to Month 2");
+    expect(html).toContain("Pool Contributions");
+    expect(html).toContain("Unborrowed Money");
+    expect(html).toContain("Total Accumulated Savings");
+    expect(html).toContain("Calculated up to Month 2");
   });
 
   it("renders empty state when no active cycle exists", () => {

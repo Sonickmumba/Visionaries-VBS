@@ -61,6 +61,9 @@ describe("password recovery screens", () => {
     const reset = renderToStaticMarkup(<PasswordRecoveryPage onBackToLogin={() => {}} initialMode="reset" />);
 
     expect(forgot).toContain("Reset access");
+    expect(forgot).toContain("Account recovery");
+    expect(forgot).toContain("We only send reset instructions to registered account emails.");
+    expect(forgot).toContain("auth-mobile-summary");
     expect(forgot).toContain("Send Reset Link");
     expect(reset).toContain("Set new password");
     expect(reset).toContain("Reset token");

@@ -83,8 +83,19 @@ export function AuthLayout({ children }) {
   return (
     <main className="auth-shell">
       <section className="auth-brand">
-        <h1>Visionaries Village Banking</h1>
-        <p>Cycle-based savings, lending, declarations, penalties, common interest, and monthly closing.</p>
+        <div className="auth-brand-mark">
+          <Coins size={28} aria-hidden="true" />
+        </div>
+        <div className="auth-brand-copy">
+          <span>Save Together. Grow Together.</span>
+          <h1>Visionaries Village Banking</h1>
+          <p>Cycle-based savings, lending, declarations, penalties, common interest, and monthly closing.</p>
+        </div>
+        <div className="auth-brand-stats" aria-label="Platform highlights">
+          <div><strong>15%</strong><span>Monthly rules</span></div>
+          <div><strong>Audit</strong><span>Ledger-first</span></div>
+          <div><strong>Mobile</strong><span>Member ready</span></div>
+        </div>
         <div className="auth-note">Built as a financial operations system with auditability at the center.</div>
       </section>
       {children}

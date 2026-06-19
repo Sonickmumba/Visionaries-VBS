@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { KeyRound } from "lucide-react";
+import { KeyRound, ShieldCheck } from "lucide-react";
 import { api } from "../../api/client.js";
 import { Alert, Button, Field } from "../../components/ui/index.jsx";
 import { AuthLayout } from "../../layouts/AppLayouts.jsx";
+import "../../styles/auth.css";
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -123,9 +124,15 @@ export function PasswordRecoveryPage({
         <div className="auth-form-head">
           <span className="auth-icon"><KeyRound size={20} aria-hidden="true" /></span>
           <div>
+            <span className="auth-eyebrow">Account recovery</span>
             <h2>{mode === "forgot" ? "Reset access" : "Set new password"}</h2>
             <p>{mode === "forgot" ? "Request a reset link for your account email." : "Enter your reset token and new password."}</p>
           </div>
+        </div>
+
+        <div className="auth-mobile-summary" aria-label="Recovery security note">
+          <ShieldCheck size={18} aria-hidden="true" />
+          <span>{mode === "forgot" ? "We only send reset instructions to registered account emails." : "Choose a password with at least 10 characters."}</span>
         </div>
 
         {mode === "forgot" ? (

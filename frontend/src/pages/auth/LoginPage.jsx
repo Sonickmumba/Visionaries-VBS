@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Lock, Mail } from "lucide-react";
+import { Lock, Mail, ShieldCheck } from "lucide-react";
 import { api } from "../../api/client.js";
 import { Alert, Button, Field } from "../../components/ui/index.jsx";
 import { AuthLayout } from "../../layouts/AppLayouts.jsx";
@@ -56,6 +56,8 @@ export function LoginPage({
   onLogin,
   onNavigateSignup,
   onNavigateForgot,
+  onSignup,
+  onForgotPassword,
   authApi = api,
   initialEmail = "admin@example.com",
 }) {
@@ -65,6 +67,8 @@ export function LoginPage({
   const [errors, setErrors] = useState({});
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigateSignup = onNavigateSignup || onSignup;
+  const navigateForgot = onNavigateForgot || onForgotPassword;
 
   async function submit(event) {
     event.preventDefault();
@@ -91,9 +95,15 @@ export function LoginPage({
         <div className="auth-form-head">
           <span className="auth-icon"><Lock size={20} aria-hidden="true" /></span>
           <div>
+            <span className="auth-eyebrow">Welcome back</span>
             <h2>Log in</h2>
             <p>Use your account to access the correct portal.</p>
           </div>
+        </div>
+
+        <div className="auth-mobile-summary" aria-label="Secure portal">
+          <ShieldCheck size={18} aria-hidden="true" />
+          <span>Protected member and admin access</span>
         </div>
 
         <Field
@@ -127,14 +137,14 @@ export function LoginPage({
             <input type="checkbox" checked={rememberMe} onChange={(event) => setRememberMe(event.target.checked)} />
             Remember me
           </label>
-          <button type="button" className="link-button" onClick={onNavigateForgot}>Forgot password?</button>
+          <button type="button" className="link-button" onClick={navigateForgot}>Forgot password?</button>
         </div>
 
         {error ? <Alert tone="danger" title="Unable to log in">{error}</Alert> : null}
 
         <div className="button-row auth-actions">
           <Button loading={loading} disabled={loading}>Log In</Button>
-          <Button type="button" variant="secondary" disabled={loading} onClick={onNavigateSignup}>Create Account</Button>
+          <Button type="button" variant="secondary" disabled={loading} onClick={navigateSignup}>Create Account</Button>
         </div>
       </form>
     </AuthLayout>

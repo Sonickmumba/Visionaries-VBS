@@ -1,4 +1,6 @@
 import React from "react";
+import fs from "node:fs";
+import path from "node:path";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import {
@@ -71,5 +73,16 @@ describe("login screen", () => {
     expect(html).toContain("Forgot password?");
     expect(html).toContain("Create Account");
     expect(html).toContain("auth-shell");
+    expect(html).toContain("Welcome back");
+    expect(html).toContain("Protected member and admin access");
+    expect(html).toContain("auth-mobile-summary");
+    expect(html).toContain("Platform highlights");
+  });
+
+  it("supports current and legacy navigation callback names", () => {
+    const source = fs.readFileSync(path.join(process.cwd(), "src/pages/auth/LoginPage.jsx"), "utf8");
+
+    expect(source).toContain("const navigateSignup = onNavigateSignup || onSignup");
+    expect(source).toContain("const navigateForgot = onNavigateForgot || onForgotPassword");
   });
 });

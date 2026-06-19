@@ -63,6 +63,9 @@ describe("signup screen", () => {
     const form = renderToStaticMarkup(<SignupPage onBackToLogin={() => {}} />);
 
     expect(form).toContain("Create account");
+    expect(form).toContain("Member access");
+    expect(form).toContain("Use the same details your administrators have on record.");
+    expect(form).toContain("auth-mobile-summary");
     expect(form).toContain("First name");
     expect(form).toContain("Confirm password");
     expect(form).toContain("Back to Login");

@@ -21,6 +21,7 @@ const SavingsContributionPage = lazyNamed(() => import("./pages/admin/SavingsCon
 const SettingsPage = lazyNamed(() => import("./pages/admin/SettingsPage.jsx"), "SettingsPage");
 const MemberDashboardPage = lazyNamed(() => import("./pages/member/MemberDashboardPage.jsx"), "MemberDashboardPage");
 const MemberDeclarationPage = lazyNamed(() => import("./pages/member/MemberDeclarationPage.jsx"), "MemberDeclarationPage");
+const MemberLoansPage = lazyNamed(() => import("./pages/member/MemberLoansPage.jsx"), "MemberLoansPage");
 const MemberStatementScreen = lazyNamed(() => import("./pages/member/MemberStatementPage.jsx"), "MemberStatementPage");
 
 function LoadingPage() {
@@ -74,9 +75,10 @@ function screenForRoute(page, setPage, pageTitle) {
       return <MemberDeclarationPage setPage={setPage} />;
     case "my-statement":
     case "my-savings":
-    case "my-loans":
     case "my-penalties":
       return <MemberStatementScreen setPage={setPage} />;
+    case "my-loans":
+      return <MemberLoansPage setPage={setPage} />;
     default:
       return <UnknownPage title={pageTitle} />;
   }

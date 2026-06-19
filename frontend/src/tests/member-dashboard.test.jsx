@@ -121,6 +121,12 @@ describe("member dashboard", () => {
     expect(html).toContain("My Dashboard");
     expect(html).toContain("Submit Declaration");
     expect(html).toContain("View Statement");
+    expect(html).toContain("member-mobile-dashboard");
+    expect(html).toContain("Quick Actions");
+    expect(html).toContain("Declare");
+    expect(html).toContain("aria-label=\"Member financial summary\"");
+    expect(html).toContain("aria-label=\"Primary mobile navigation\"");
+    expect(html).toContain("aria-current=\"page\"");
     expect(html).toContain("My Accumulated Savings");
     expect(html).toContain("My Loan Balance");
     expect(html).toContain("K17,250");

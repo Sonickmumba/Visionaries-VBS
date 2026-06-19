@@ -217,11 +217,11 @@ export function AppLayout({ user, page, setPage, onLogout, children }) {
   );
 }
 
-export function Page({ title, actions, children }) {
+export function Page({ title, actions, children, className = "" }) {
   const titleId = useMemo(() => `page-title-${String(title || "page").toLowerCase().replace(/[^a-z0-9]+/g, "-")}`, [title]);
   const renderedActions = useMemo(() => actions, [actions]);
   return (
-    <section aria-labelledby={titleId}>
+    <section className={className || undefined} aria-labelledby={titleId}>
       <div className="page-head">
         <h1 id={titleId}>{title}</h1>
         {renderedActions ? <div className="button-row" aria-label={`${title} actions`}>{renderedActions}</div> : null}

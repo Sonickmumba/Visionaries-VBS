@@ -555,6 +555,12 @@ caption {
   color: #7c3aed;
 }
 
+.mobile-metric-card.red .mobile-icon-disc,
+.mobile-action-tile.red .mobile-icon-disc {
+  background: #fee2e2;
+  color: #b42318;
+}
+
 .mobile-metric-card span {
   display: block;
   color: #65758b;

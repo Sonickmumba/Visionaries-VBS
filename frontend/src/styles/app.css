@@ -24,6 +24,111 @@ body {
   background: #f6f8fb;
 }
 
+.splash-screen {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(circle at 22% 18%, rgba(250, 204, 21, 0.18), transparent 22%),
+    linear-gradient(145deg, #007a43 0%, #006b3d 52%, #0f766e 100%);
+  color: white;
+}
+
+.splash-phone {
+  width: min(100%, 390px);
+  min-height: min(760px, calc(100svh - 48px));
+  border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.04)),
+    rgba(0, 0, 0, 0.08);
+  box-shadow: 0 28px 90px rgba(16, 42, 67, 0.36);
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 28px;
+  padding: 36px 28px;
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.splash-phone::before {
+  content: "";
+  position: absolute;
+  inset: 18px;
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  pointer-events: none;
+}
+
+.splash-mark {
+  width: 118px;
+  height: 118px;
+  border-radius: 34px;
+  background: rgba(255, 255, 255, 0.16);
+  color: #facc15;
+  display: grid;
+  place-items: center;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.18),
+    0 18px 48px rgba(16, 42, 67, 0.24);
+}
+
+.splash-copy {
+  display: grid;
+  gap: 10px;
+}
+
+.splash-copy h1 {
+  margin: 0;
+  font-size: clamp(32px, 8vw, 44px);
+  line-height: 1.02;
+  letter-spacing: 0;
+}
+
+.splash-copy p {
+  margin: 0;
+  color: #d9f99d;
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.splash-progress {
+  width: min(180px, 54vw);
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.32);
+  overflow: hidden;
+}
+
+.splash-progress span {
+  display: block;
+  width: 44%;
+  height: 100%;
+  border-radius: inherit;
+  background: #facc15;
+  animation: splash-progress 1200ms ease-in-out infinite alternate;
+}
+
+@keyframes splash-progress {
+  from {
+    transform: translateX(-20%);
+  }
+
+  to {
+    transform: translateX(150%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash-progress span {
+    animation: none;
+    transform: none;
+  }
+}
+
 button,
 input,
 select,

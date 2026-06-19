@@ -161,22 +161,27 @@
   }
 
   .auth-brand {
-    min-height: 260px;
-    padding: 24px 20px 44px;
+    min-height: 230px;
+    padding: 20px 18px 40px;
     border-radius: 0 0 30px 30px;
     background: linear-gradient(145deg, #007a43, #0f766e);
     justify-content: start;
-    gap: 18px;
+    gap: 14px;
+  }
+
+  .auth-brand-mark {
+    width: 54px;
+    height: 54px;
+    border-radius: 18px;
   }
 
   .auth-brand h1 {
-    font-size: 32px;
+    font-size: 30px;
     line-height: 1.05;
   }
 
   .auth-brand p {
-    font-size: 15px;
-    margin: 0;
+    display: none;
   }
 
   .auth-brand-stats {

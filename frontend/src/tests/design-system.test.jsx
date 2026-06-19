@@ -9,6 +9,16 @@ import {
   CurrencyInput,
   DataTable,
   IconButton,
+  MobileActionTile,
+  MobileBottomNav,
+  MobileHeader,
+  MobileHeroCard,
+  MobileListCard,
+  MobileMetricCard,
+  MobileScreenShell,
+  MobileStepper,
+  MobileStickyActionBar,
+  MobileUploadCard,
   Modal,
   Pagination,
   Skeleton,
@@ -83,5 +93,51 @@ describe("design system components", () => {
     expect(confirm).toContain("aria-labelledby=");
     expect(table).toContain("aria-label=\"Members\"");
     expect(table).toContain("<caption>Members</caption>");
+  });
+
+  it("renders mobile shell, header, and active bottom navigation", () => {
+    const nav = <MobileBottomNav active="home" items={[{ id: "home", label: "Home" }, { id: "declare", label: "Declare" }]} />;
+    const html = renderToStaticMarkup(
+      <MobileScreenShell bottomNav={nav}>
+        <MobileHeader eyebrow="Good morning" title="Visionaries Village Banking" subtitle="Cycle 12" avatar={{ label: "Sonic Mumba", initials: "SM" }} />
+      </MobileScreenShell>,
+    );
+
+    expect(html).toContain("mobile-shell has-bottom-nav");
+    expect(html).toContain("Good morning");
+    expect(html).toContain("Visionaries Village Banking");
+    expect(html).toContain("aria-label=\"Primary mobile navigation\"");
+    expect(html).toContain("aria-current=\"page\"");
+    expect(html).toContain("Declare");
+  });
+
+  it("renders mobile finance cards and action tiles", () => {
+    const hero = renderToStaticMarkup(<MobileHeroCard label="Total Accumulated Savings" value="K45,250" note="Up to Month 3" actionLabel="View" />);
+    const metric = renderToStaticMarkup(<MobileMetricCard label="My Loan Balance" value="K10,000" note="After repayments" tone="blue" />);
+    const action = renderToStaticMarkup(<MobileActionTile label="New Declaration" />);
+
+    expect(hero).toContain("Total Accumulated Savings: K45,250. Up to Month 3");
+    expect(hero).toContain("View");
+    expect(metric).toContain("My Loan Balance: K10,000. After repayments");
+    expect(metric).toContain("blue");
+    expect(action).toContain("New Declaration");
+    expect(action).toContain("mobile-action-tile");
+  });
+
+  it("renders mobile list rows, stepper, upload card, and sticky actions", () => {
+    const list = renderToStaticMarkup(<MobileListCard title="Mary Phiri" subtitle="Savings declaration" value="K15,000" status={{ label: "Approved", tone: "green" }} />);
+    const steps = renderToStaticMarkup(<MobileStepper active={1} steps={["Declare", "Review", "Approve"]} />);
+    const upload = renderToStaticMarkup(<MobileUploadCard label="Savings proof" fileName="receipt.pdf" status="Uploaded" />);
+    const actions = renderToStaticMarkup(<MobileStickyActionBar primaryLabel="Submit" secondaryLabel="Save draft" />);
+
+    expect(list).toContain("Mary Phiri");
+    expect(list).toContain("Approved");
+    expect(steps).toContain("aria-label=\"Progress\"");
+    expect(steps).toContain("class=\"active\"");
+    expect(upload).toContain("Savings proof. Uploaded");
+    expect(upload).toContain("receipt.pdf");
+    expect(actions).toContain("mobile-sticky-actions");
+    expect(actions).toContain("Submit");
+    expect(actions).toContain("Save draft");
   });
 });

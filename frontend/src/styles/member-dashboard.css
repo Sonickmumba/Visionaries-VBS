@@ -1,0 +1,36 @@
+.member-dashboard-metrics {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.member-cycle-panel {
+  margin-bottom: 18px;
+}
+
+.member-dashboard-detail-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.member-dashboard-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  gap: 18px;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .member-dashboard-metrics,
+  .member-dashboard-detail-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .member-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 767px) {
+  .member-dashboard-metrics,
+  .member-dashboard-detail-grid {
+    grid-template-columns: 1fr;
+  }
+}

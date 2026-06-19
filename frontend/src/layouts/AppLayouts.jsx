@@ -83,7 +83,7 @@ export function AuthLayout({ children }) {
   return (
     <main className="auth-shell">
       <section className="auth-brand">
-        <h1>Village Bank</h1>
+        <h1>Visionaries Village Banking</h1>
         <p>Cycle-based savings, lending, declarations, penalties, common interest, and monthly closing.</p>
         <div className="auth-note">Built as a financial operations system with auditability at the center.</div>
       </section>
@@ -94,11 +94,16 @@ export function AuthLayout({ children }) {
 
 function Sidebar({ nav, page, setPage, open, setOpen, user }) {
   return (
-    <aside className={`sidebar ${open ? "open" : ""}`} aria-label={`${user.role === "MEMBER" ? "Member" : "Admin"} navigation`}>
-      <div className="brand"><Coins size={22} aria-hidden="true" /> Village Bank</div>
+    <aside className={`sidebar ${open ? "open" : ""}`} aria-label={`${user.role === "MEMBER" ? "Member" : "Admin"} navigation`} aria-hidden={!open && undefined}>
+      <div className="brand"><Coins size={22} aria-hidden="true" /> Visionaries Village Banking</div>
       <nav>
         {nav.map(([id, label, Icon]) => (
-          <button key={id} className={page === id ? "active" : ""} onClick={() => { setPage(id); setOpen(false); }}>
+          <button
+            key={id}
+            className={page === id ? "active" : ""}
+            aria-current={page === id ? "page" : undefined}
+            onClick={() => { setPage(id); setOpen(false); }}
+          >
             <Icon size={17} aria-hidden="true" /> {label}
           </button>
         ))}
@@ -145,7 +150,7 @@ function Topbar({ user, page, onLogout }) {
     <header className="topbar">
       <IconButton className="mobile-only" label="Open navigation" icon={Menu} onClick={() => window.dispatchEvent(new CustomEvent("open-mobile-nav"))} />
       <div className="top-context">
-        <nav className="breadcrumbs" aria-label="Breadcrumbs">
+        <nav className="breadcrumbs" aria-label="Breadcrumb">
           {breadcrumbs.map((crumb, index) => (
             <span key={crumb}>{index > 0 ? "/ " : ""}{crumb}</span>
           ))}
@@ -201,25 +206,27 @@ export function AppLayout({ user, page, setPage, onLogout, children }) {
 
   return (
     <div className={`app-shell ${user.role === "MEMBER" ? "member-shell" : "admin-shell"}`}>
+      <a className="skip-link" href="#main-content">Skip to main content</a>
       <Sidebar nav={nav} page={page} setPage={setPage} open={open} setOpen={setOpen} user={user} />
       <div className="main">
         <Topbar user={user} page={page} onLogout={onLogout} />
-        {open && <button className="overlay" aria-label="Close navigation" onClick={() => setOpen(false)}><X /></button>}
-        <main className="content">{children}</main>
+        {open && <button className="overlay" aria-label="Close navigation" onClick={() => setOpen(false)}><X aria-hidden="true" /></button>}
+        <main id="main-content" className="content" tabIndex="-1">{children}</main>
       </div>
     </div>
   );
 }
 
 export function Page({ title, actions, children }) {
+  const titleId = useMemo(() => `page-title-${String(title || "page").toLowerCase().replace(/[^a-z0-9]+/g, "-")}`, [title]);
   const renderedActions = useMemo(() => actions, [actions]);
   return (
-    <>
+    <section aria-labelledby={titleId}>
       <div className="page-head">
-        <h1>{title}</h1>
-        {renderedActions ? <div className="button-row">{renderedActions}</div> : null}
+        <h1 id={titleId}>{title}</h1>
+        {renderedActions ? <div className="button-row" aria-label={`${title} actions`}>{renderedActions}</div> : null}
       </div>
       {children}
-    </>
+    </section>
   );
 }

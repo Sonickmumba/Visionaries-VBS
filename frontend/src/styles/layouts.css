@@ -2,6 +2,7 @@
   min-width: 0;
   display: grid;
   gap: 4px;
+  flex: 1;
 }
 
 .breadcrumbs {
@@ -19,6 +20,7 @@
   grid-template-columns: minmax(170px, 230px) minmax(150px, 230px) minmax(180px, 1fr);
   align-items: end;
   gap: 10px;
+  min-width: 0;
 }
 
 .top-selectors .field {
@@ -66,9 +68,20 @@
   }
 }
 
+@media (max-width: 900px) {
+  .top-selectors {
+    grid-template-columns: minmax(140px, 1fr);
+  }
+
+  .top-selectors .field:nth-child(2) {
+    display: none;
+  }
+}
+
 @media (max-width: 767px) {
   .top-context {
     flex: 1;
+    overflow: hidden;
   }
 
   .breadcrumbs {
@@ -85,6 +98,12 @@
   }
 
   .top-actions .badge {
+    display: none;
+  }
+}
+
+@media (max-width: 420px) {
+  .top-cycle-summary span {
     display: none;
   }
 }

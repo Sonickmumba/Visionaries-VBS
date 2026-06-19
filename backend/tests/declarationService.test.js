@@ -6,6 +6,9 @@ import {
   assertDraftCanBeSaved,
   assertMissedDeclarationCanBeMarked,
   hasDeclarationActivity,
+  hasLoanRequestActivity,
+  hasWindowBoundDeclarationActivity,
+  isLoanOnlyDeclaration,
   loanIntentAmount,
   loanIntentOriginType,
   resolveDeclarationStatus,
@@ -19,6 +22,16 @@ describe("declaration service", () => {
   it("marks submitted declarations by declaration window", () => {
     expect(resolveDeclarationStatus({ isWithinWindow: true, input: { savingsAmount: 100 } })).toBe("SUBMITTED");
     expect(resolveDeclarationStatus({ isWithinWindow: false, input: { savingsAmount: 100 } })).toBe("LATE");
+  });
+
+  it("allows loan-only declarations on any day in the month", () => {
+    expect(hasLoanRequestActivity({ loanRequestAmount: 5000 })).toBe(true);
+    expect(hasWindowBoundDeclarationActivity({ loanRequestAmount: 5000 })).toBe(false);
+    expect(isLoanOnlyDeclaration({ loanRequestAmount: 5000, notes: "Needed today" })).toBe(true);
+    expect(resolveDeclarationStatus({ isWithinWindow: false, input: { loanRequestAmount: 5000 } })).toBe("SUBMITTED");
+    expect(resolveDeclarationStatus({ isWithinWindow: false, input: { loanTopUpAmount: 2000 } })).toBe("SUBMITTED");
+    expect(resolveDeclarationStatus({ isWithinWindow: false, input: { loanRequestAmount: 5000, savingsAmount: 100 } })).toBe("LATE");
+    expect(resolveDeclarationStatus({ isWithinWindow: false, input: { loanRequestAmount: 5000, principalRepaymentAmount: 100 } })).toBe("LATE");
   });
 
   it("treats notes as declaration activity", () => {

@@ -4,12 +4,14 @@ import { describe, expect, it } from "vitest";
 import {
   Badge,
   Button,
+  Alert,
   ConfirmDialog,
   CurrencyInput,
   DataTable,
   IconButton,
   Modal,
   Pagination,
+  Skeleton,
   Tabs,
 } from "../components/ui/index.jsx";
 
@@ -29,12 +31,16 @@ describe("design system components", () => {
     expect(html).toContain("title=\"Close panel\"");
   });
 
-  it("renders Kwacha currency inputs", () => {
-    const html = renderToStaticMarkup(<CurrencyInput label="Savings" value="15000" />);
+  it("renders described fields and Kwacha currency inputs", () => {
+    const field = renderToStaticMarkup(<CurrencyInput label="Savings" value="15000" error="Too much" />);
+    const input = renderToStaticMarkup(<CurrencyInput label="Savings" value="15000" hint="Principal only" />);
 
-    expect(html).toContain(">K<");
-    expect(html).toContain("value=\"15000\"");
-    expect(html).toContain("aria-label=\"Savings\"");
+    expect(field).toContain(">K<");
+    expect(field).toContain("value=\"15000\"");
+    expect(field).toContain("aria-label=\"Savings\"");
+    expect(field).toContain("aria-invalid=\"true\"");
+    expect(field).toContain("aria-describedby=");
+    expect(input).toContain("Principal only");
   });
 
   it("renders responsive table labels and empty state", () => {
@@ -55,9 +61,27 @@ describe("design system components", () => {
 
     expect(tabs).toContain("role=\"tablist\"");
     expect(tabs).toContain("aria-selected=\"true\"");
+    expect(tabs).toContain("tabindex=\"0\"");
     expect(badge).toContain("APPROVED");
+    expect(badge).toContain("aria-label=\"APPROVED\"");
     expect(pager).toContain("Page 1 of 3");
     expect(modal).toContain("role=\"dialog\"");
+    expect(modal).toContain("aria-modal=\"true\"");
+    expect(modal).toContain("Close dialog");
     expect(confirm).toContain("Enter the audit reason");
+  });
+
+  it("renders live alerts and loading status semantics", () => {
+    const danger = renderToStaticMarkup(<Alert tone="danger" title="Failed">Try again</Alert>);
+    const skeleton = renderToStaticMarkup(<Skeleton lines={2} />);
+    const confirm = renderToStaticMarkup(<ConfirmDialog open reason="Because" title="Confirm reversal" />);
+    const table = renderToStaticMarkup(<DataTable caption="Members" columns={["Name"]} rows={[]} />);
+
+    expect(danger).toContain("role=\"alert\"");
+    expect(danger).toContain("aria-live=\"assertive\"");
+    expect(skeleton).toContain("role=\"status\"");
+    expect(confirm).toContain("aria-labelledby=");
+    expect(table).toContain("aria-label=\"Members\"");
+    expect(table).toContain("<caption>Members</caption>");
   });
 });

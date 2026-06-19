@@ -8,9 +8,24 @@ const declarationAmountFields = [
   "otherObligationAmount",
 ];
 
+const loanRequestFields = ["loanRequestAmount", "loanTopUpAmount"];
+const windowBoundAmountFields = declarationAmountFields.filter((field) => !loanRequestFields.includes(field));
+
 export function hasDeclarationActivity(input = {}) {
   return declarationAmountFields.some((field) => Number(input[field] || 0) > 0)
     || Boolean(String(input.notes || "").trim());
+}
+
+export function hasLoanRequestActivity(input = {}) {
+  return loanRequestFields.some((field) => Number(input[field] || 0) > 0);
+}
+
+export function hasWindowBoundDeclarationActivity(input = {}) {
+  return windowBoundAmountFields.some((field) => Number(input[field] || 0) > 0);
+}
+
+export function isLoanOnlyDeclaration(input = {}) {
+  return hasLoanRequestActivity(input) && !hasWindowBoundDeclarationActivity(input);
 }
 
 export function resolveDeclarationStatus({ saveAsDraft = false, isWithinWindow = true, input = {} }) {
@@ -20,6 +35,7 @@ export function resolveDeclarationStatus({ saveAsDraft = false, isWithinWindow =
     error.status = 400;
     throw error;
   }
+  if (!isWithinWindow && isLoanOnlyDeclaration(input)) return "SUBMITTED";
   return isWithinWindow ? "SUBMITTED" : "LATE";
 }
 

@@ -362,13 +362,15 @@ export function MonthlyClosingPage({
                 <Badge text={`${members.length} members`} tone="blue" />
               </div>
               <DataTable
-                columns={["Member", "Declaration", "Savings Deposit", "Savings Interest", "Loan Interest", "Borrowing Status", "Penalty"]}
+                columns={["Member", "Declaration", "Loan B/F", "New Loan", "Loan Interest", "Repayments", "Loan C/F", "Borrowing Status", "Penalty"]}
                 rows={members.map((member) => [
                   memberName(member),
                   <Badge text={statusLabel(member.declarationStatus)} tone={statusTone(member.declarationStatus)} />,
-                  money(member.savingsDeposit),
-                  money(member.savingsInterest),
+                  money(member.loanBroughtForward),
+                  money(Number(member.newLoanAmount || 0) + Number(member.topUpAmount || 0) + Number(member.convertedPenaltyLoanAmount || 0)),
                   money(member.loanInterest),
+                  money(Number(member.principalRepaid || 0) + Number(member.interestRepaid || 0)),
+                  money(member.loanCarriedForward),
                   <Badge text={statusLabel(member.borrowingStatus)} tone={statusTone(member.borrowingStatus)} />,
                   money(member.penaltyAmount),
                 ])}

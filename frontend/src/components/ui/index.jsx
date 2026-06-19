@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useId } from "react";
 import {
   AlertCircle,
   CheckCircle2,
@@ -60,26 +60,34 @@ export function IconButton({
   );
 }
 
-function FieldShell({ label, hint, error, required, children, className = "" }) {
+function FieldShell({ label, hint, error, required, children, className = "", describedBy }) {
+  const id = useId();
+  const hintId = hint && !error ? `${id}-hint` : "";
+  const errorId = error ? `${id}-error` : "";
+  const descriptionIds = [describedBy, hintId, errorId].filter(Boolean).join(" ") || undefined;
   return (
     <label className={`field ${error ? "has-error" : ""} ${className}`.trim()}>
       <span>{label}{required ? " *" : ""}</span>
-      {children}
-      {hint && !error ? <small className="field-hint">{hint}</small> : null}
-      {error ? <small className="field-error">{error}</small> : null}
+      {typeof children === "function" ? children({ describedBy: descriptionIds }) : children}
+      {hint && !error ? <small id={hintId} className="field-hint">{hint}</small> : null}
+      {error ? <small id={errorId} className="field-error">{error}</small> : null}
     </label>
   );
 }
 
 export function Input({ label, value, onChange, error, hint, required, className, icon: _Icon, ...props }) {
   return (
-    <FieldShell label={label} error={error} hint={hint} required={required} className={className}>
-      <input
-        value={value ?? ""}
-        aria-invalid={error ? "true" : undefined}
-        onChange={(event) => onChange?.(event.target.value, event)}
-        {...props}
-      />
+    <FieldShell label={label} error={error} hint={hint} required={required} className={className} describedBy={props["aria-describedby"]}>
+      {({ describedBy }) => (
+        <input
+          value={value ?? ""}
+          aria-invalid={error ? "true" : undefined}
+          aria-describedby={describedBy}
+          required={required || undefined}
+          onChange={(event) => onChange?.(event.target.value, event)}
+          {...props}
+        />
+      )}
     </FieldShell>
   );
 }
@@ -88,19 +96,23 @@ export const Field = Input;
 
 export function Select({ label, value, onChange, options = [], placeholder, error, hint, required, className, ...props }) {
   return (
-    <FieldShell label={label} error={error} hint={hint} required={required} className={className}>
-      <select
-        value={value ?? ""}
-        aria-invalid={error ? "true" : undefined}
-        onChange={(event) => onChange?.(event.target.value, event)}
-        {...props}
-      >
-        {placeholder ? <option value="">{placeholder}</option> : null}
-        {options.map((option) => {
-          const item = typeof option === "string" ? { value: option, label: option } : option;
-          return <option key={item.value} value={item.value}>{item.label}</option>;
-        })}
-      </select>
+    <FieldShell label={label} error={error} hint={hint} required={required} className={className} describedBy={props["aria-describedby"]}>
+      {({ describedBy }) => (
+        <select
+          value={value ?? ""}
+          aria-invalid={error ? "true" : undefined}
+          aria-describedby={describedBy}
+          required={required || undefined}
+          onChange={(event) => onChange?.(event.target.value, event)}
+          {...props}
+        >
+          {placeholder ? <option value="">{placeholder}</option> : null}
+          {options.map((option) => {
+            const item = typeof option === "string" ? { value: option, label: option } : option;
+            return <option key={item.value} value={item.value}>{item.label}</option>;
+          })}
+        </select>
+      )}
     </FieldShell>
   );
 }
@@ -109,46 +121,55 @@ export function DateInput(props) {
   return <Input type="date" {...props} />;
 }
 
-export function CurrencyInput({ value, onChange, currency = "K", min = "0", step = "0.01", ...props }) {
+export function CurrencyInput({ value, onChange, currency = "K", min = "0", step = "0.01", label, hint, error, required, className, ...props }) {
   return (
-    <FieldShell {...props}>
-      <div className="currency-input">
-        <span aria-hidden="true">{currency}</span>
-        <input
-          type="number"
-          min={min}
-          step={step}
-          value={value ?? ""}
-          aria-label={props.label}
-          aria-invalid={props.error ? "true" : undefined}
-          onChange={(event) => onChange?.(event.target.value, event)}
-        />
-      </div>
+    <FieldShell label={label} hint={hint} error={error} required={required} className={className} describedBy={props["aria-describedby"]}>
+      {({ describedBy }) => (
+        <div className="currency-input">
+          <span aria-hidden="true">{currency}</span>
+          <input
+            type="number"
+            min={min}
+            step={step}
+            value={value ?? ""}
+            aria-label={label}
+            aria-invalid={error ? "true" : undefined}
+            aria-describedby={describedBy}
+            required={required || undefined}
+            onChange={(event) => onChange?.(event.target.value, event)}
+            {...props}
+          />
+        </div>
+      )}
     </FieldShell>
   );
 }
 
 export function Textarea({ label, value, onChange, error, hint, required, rows = 4, className, ...props }) {
   return (
-    <FieldShell label={label} error={error} hint={hint} required={required} className={className}>
-      <textarea
-        rows={rows}
-        value={value ?? ""}
-        aria-invalid={error ? "true" : undefined}
-        onChange={(event) => onChange?.(event.target.value, event)}
-        {...props}
-      />
+    <FieldShell label={label} error={error} hint={hint} required={required} className={className} describedBy={props["aria-describedby"]}>
+      {({ describedBy }) => (
+        <textarea
+          rows={rows}
+          value={value ?? ""}
+          aria-invalid={error ? "true" : undefined}
+          aria-describedby={describedBy}
+          required={required || undefined}
+          onChange={(event) => onChange?.(event.target.value, event)}
+          {...props}
+        />
+      )}
     </FieldShell>
   );
 }
 
 export function Badge({ text, children, tone = "blue" }) {
-  return <span className={`badge ${tone}`.trim()}>{children ?? text}</span>;
+  return <span className={`badge ${tone}`.trim()} aria-label={typeof (children ?? text) === "string" ? children ?? text : undefined}>{children ?? text}</span>;
 }
 
 export function Card({ title, value, note, tone = "green", icon: Icon = CheckCircle2, children }) {
   return (
-    <section className={`metric ${tone}`}>
+    <section className={`metric ${tone}`} aria-label={`${title}: ${value}${note ? `. ${note}` : ""}`}>
       {Icon ? <Icon size={20} aria-hidden="true" /> : null}
       <span>{title}</span>
       <strong>{value}</strong>
@@ -191,8 +212,23 @@ export function Tabs({ tabs, active, onChange, label = "Tabs" }) {
             type="button"
             role="tab"
             aria-selected={active === item.id}
+            tabIndex={active === item.id ? 0 : -1}
             className={active === item.id ? "active" : ""}
             onClick={() => onChange?.(item.id)}
+            onKeyDown={(event) => {
+              if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+              event.preventDefault();
+              const currentIndex = tabs.findIndex((candidate) => (typeof candidate === "string" ? candidate : candidate.id) === item.id);
+              const nextIndex = event.key === "Home"
+                ? 0
+                : event.key === "End"
+                  ? tabs.length - 1
+                  : event.key === "ArrowRight"
+                    ? (currentIndex + 1) % tabs.length
+                    : (currentIndex - 1 + tabs.length) % tabs.length;
+              const next = tabs[nextIndex];
+              onChange?.(typeof next === "string" ? next : next.id);
+            }}
           >
             {item.label}
           </button>
@@ -203,13 +239,14 @@ export function Tabs({ tabs, active, onChange, label = "Tabs" }) {
 }
 
 export function Modal({ open, title, children, footer, onClose, size = "md" }) {
+  const titleId = useId();
   if (!open) return null;
   return (
     <div className="ui-overlay" role="presentation">
-      <section className={`ui-modal ${size}`} role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <section className={`ui-modal ${size}`} role="dialog" aria-modal="true" aria-labelledby={titleId}>
         <header>
-          <h2 id="modal-title">{title}</h2>
-          <IconButton label="Close" icon={X} onClick={onClose} />
+          <h2 id={titleId}>{title}</h2>
+          <IconButton label="Close dialog" icon={X} onClick={onClose} />
         </header>
         <div className="ui-modal-body">{children}</div>
         {footer ? <footer>{footer}</footer> : null}
@@ -219,13 +256,14 @@ export function Modal({ open, title, children, footer, onClose, size = "md" }) {
 }
 
 export function Drawer({ open, title, children, footer, onClose, side = "right" }) {
+  const titleId = useId();
   if (!open) return null;
   return (
     <div className="ui-overlay" role="presentation">
-      <aside className={`ui-drawer ${side}`} role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+      <aside className={`ui-drawer ${side}`} role="dialog" aria-modal="true" aria-labelledby={titleId}>
         <header>
-          <h2 id="drawer-title">{title}</h2>
-          <IconButton label="Close" icon={X} onClick={onClose} />
+          <h2 id={titleId}>{title}</h2>
+          <IconButton label="Close drawer" icon={X} onClick={onClose} />
         </header>
         <div className="ui-drawer-body">{children}</div>
         {footer ? <footer>{footer}</footer> : null}
@@ -236,7 +274,7 @@ export function Drawer({ open, title, children, footer, onClose, side = "right" 
 
 export function Alert({ tone = "info", title, children }) {
   return (
-    <div className={`ui-alert ${tone}`} role={tone === "danger" ? "alert" : "status"}>
+    <div className={`ui-alert ${tone}`} role={tone === "danger" ? "alert" : "status"} aria-live={tone === "danger" ? "assertive" : "polite"}>
       <AlertCircle size={18} aria-hidden="true" />
       <div>
         {title ? <strong>{title}</strong> : null}
@@ -284,7 +322,7 @@ export function Pagination({ page = 1, totalPages = 1, onPageChange, disabled = 
 
 export function EmptyState({ title = "No records found", message = "There is nothing to show yet.", action }) {
   return (
-    <section className="ui-empty">
+    <section className="ui-empty" aria-live="polite">
       <Search size={24} aria-hidden="true" />
       <h2>{title}</h2>
       <p>{message}</p>
@@ -295,7 +333,7 @@ export function EmptyState({ title = "No records found", message = "There is not
 
 export function Skeleton({ lines = 3 }) {
   return (
-    <div className="ui-skeleton" aria-busy="true" aria-label="Loading">
+    <div className="ui-skeleton" role="status" aria-busy="true" aria-label="Loading">
       {Array.from({ length: lines }, (_, index) => <span key={index} />)}
     </div>
   );

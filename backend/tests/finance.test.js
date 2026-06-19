@@ -47,13 +47,14 @@ describe("finance calculations", () => {
       interestRepaid: 50,
       rate: 0.15,
     })).toEqual({
-      interest: 300,
-      beforeNewLoan: 1950,
-      carriedForward: 2450,
+      interestBase: 2500,
+      interest: 375,
+      beforeNewLoan: 2025,
+      carriedForward: 2525,
     });
   });
 
-  it("does not charge loan interest on current-month new loans", () => {
+  it("charges loan interest on current-month new loans", () => {
     expect(calculateLoanInterest({
       broughtForward: 0,
       newLoan: 5000,
@@ -61,9 +62,10 @@ describe("finance calculations", () => {
       interestRepaid: 0,
       rate: 0.15,
     })).toEqual({
-      interest: 0,
-      beforeNewLoan: 0,
-      carriedForward: 5000,
+      interestBase: 5000,
+      interest: 750,
+      beforeNewLoan: 750,
+      carriedForward: 5750,
     });
   });
 
@@ -76,6 +78,7 @@ describe("finance calculations", () => {
       rate: 0.1555,
       roundingPolicy: { scale: 2, mode: "DOWN" },
     })).toEqual({
+      interestBase: 10,
       interest: 1.55,
       beforeNewLoan: 11.55,
       carriedForward: 11.55,
@@ -89,6 +92,7 @@ describe("finance calculations", () => {
       rate: 0.1555,
       roundingPolicy: { scale: 2, mode: "UP" },
     })).toEqual({
+      interestBase: 10,
       interest: 1.56,
       beforeNewLoan: 11.56,
       carriedForward: 11.56,

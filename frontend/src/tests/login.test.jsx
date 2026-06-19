@@ -22,7 +22,6 @@ describe("login screen", () => {
 
   it("normalizes login submit payload and returns the session", async () => {
     const authApi = vi.fn().mockResolvedValue({
-      token: "token",
       user: { role: "ADMIN" },
     });
 

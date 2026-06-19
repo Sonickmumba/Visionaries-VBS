@@ -89,7 +89,7 @@ async function getReportMembers(req, cycleId) {
   );
 }
 
-reportsRouter.get("/dashboard", async (req, res, next) => {
+reportsRouter.get("/dashboard", requireRole("ADMIN", "AUDITOR"), async (req, res, next) => {
   try {
     const cycle = await query("SELECT * FROM cycles WHERE status = 'ACTIVE' ORDER BY created_at DESC LIMIT 1");
     if (!cycle.rows[0]) return res.json({ data: null });

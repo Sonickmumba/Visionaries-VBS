@@ -171,7 +171,6 @@ loansRouter.post("/disbursements", requireRole("ADMIN"), validate(z.object({
   try {
     const result = await withTransaction(async (client) => {
       const idem = await runIdempotent(client, req, "POST /api/loans/disbursements", async () => {
-        await assertPayoutWindow(client, req.body.cycleMonthId);
         if (req.body.loanRequestId) {
           const loanRequest = (await client.query("SELECT * FROM loan_requests WHERE id = $1", [req.body.loanRequestId])).rows[0];
           if (!loanRequest) throw notFound("Loan request not found");
@@ -187,6 +186,8 @@ loansRouter.post("/disbursements", requireRole("ADMIN"), validate(z.object({
           if (Number(req.body.amount) !== Number(loanRequest.approved_amount)) {
             throw badRequest("Disbursement amount must match the approved amount");
           }
+        } else {
+          await assertPayoutWindow(client, req.body.cycleMonthId);
         }
         const txType = req.body.originType === "TOP_UP" ? "LOAN_TOP_UP" : req.body.originType === "CONVERTED_PENALTY" ? "CONVERTED_PENALTY_LOAN" : "LOAN_DISBURSEMENT";
         const ledger = await postLedger(client, {

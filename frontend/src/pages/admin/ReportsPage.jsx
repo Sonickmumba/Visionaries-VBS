@@ -357,7 +357,7 @@ export function ReportsPage({
     const totals = reportTotals({ rows, totals: data?.totals || {} });
     openPrintableReport({
       title: definition.label,
-      subtitle: `${data?.cycle?.name || "Village Bank"}${data?.cycleMonth ? ` - Month ${data.cycleMonth.month_number}` : ""}`,
+      subtitle: `${data?.cycle?.name || "Visionaries Village Banking"}${data?.cycleMonth ? ` - Month ${data.cycleMonth.month_number}` : ""}`,
       metrics: [
         { label: "Rows", value: rows.length },
         { label: "Savings", value: money(totals.savings) },

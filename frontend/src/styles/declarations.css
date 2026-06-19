@@ -23,6 +23,17 @@
   min-height: 86px;
 }
 
+.declaration-proof-review {
+  border-top: 1px solid var(--line);
+  margin-top: 16px;
+  padding-top: 16px;
+}
+
+.declaration-proof-review h3 {
+  font-size: 16px;
+  margin: 0 0 10px;
+}
+
 @media (max-width: 1024px) {
   .declaration-metrics,
   .declaration-detail-grid {

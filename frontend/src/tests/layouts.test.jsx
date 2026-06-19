@@ -1,4 +1,6 @@
 import React from "react";
+import fs from "node:fs";
+import path from "node:path";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { AppLayout, AuthLayout, Page, ProtectedRoute, adminNav, memberNav, routeLabel } from "../layouts/AppLayouts.jsx";
@@ -16,7 +18,7 @@ describe("app layouts", () => {
   it("renders public auth layout", () => {
     const html = renderToStaticMarkup(<AuthLayout><section className="auth-card">Login</section></AuthLayout>);
 
-    expect(html).toContain("Village Bank");
+    expect(html).toContain("Visionaries Village Banking");
     expect(html).toContain("auth-card");
   });
 
@@ -38,6 +40,9 @@ describe("app layouts", () => {
     expect(html).toContain("Dashboard");
     expect(html).toContain("Cycle");
     expect(html).toContain("Month");
+    expect(html).toContain("Skip to main content");
+    expect(html).toContain("id=\"main-content\"");
+    expect(html).toContain("aria-current=\"page\"");
     expect(html).toContain("aria-label=\"Admin navigation\"");
   });
 
@@ -51,5 +56,20 @@ describe("app layouts", () => {
     expect(html).toContain("Member Portal");
     expect(html).toContain("My Statement");
     expect(html).toContain("aria-label=\"Member navigation\"");
+  });
+
+  it("keeps responsive shell, action, and table safeguards in CSS", () => {
+    const appCss = fs.readFileSync(path.join(process.cwd(), "src/styles/app.css"), "utf8");
+    const layoutCss = fs.readFileSync(path.join(process.cwd(), "src/styles/layouts.css"), "utf8");
+
+    expect(appCss).toContain("@media (max-width: 767px)");
+    expect(appCss).toContain(".sidebar.open");
+    expect(appCss).toContain("*:focus-visible");
+    expect(appCss).toContain(".skip-link:focus");
+    expect(appCss).toContain(".button-row .btn");
+    expect(appCss).toContain("overflow-wrap: anywhere");
+    expect(appCss).toContain("-webkit-overflow-scrolling: touch");
+    expect(layoutCss).toContain("@media (max-width: 900px)");
+    expect(layoutCss).toContain(".top-selectors .field:nth-child(2)");
   });
 });

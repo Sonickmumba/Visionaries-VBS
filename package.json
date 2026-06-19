@@ -1,13 +1,22 @@
 {
-  "name": "village-banking-app",
+  "name": "visionaries-village-banking-app",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "install:all": "npm install --prefix backend && npm install --prefix frontend",
+    "setup:local": "npm run install:all && npm run db:up && npm run db:wait && npm run migrate && npm run seed && npm run db:smoke",
     "dev": "concurrently \"npm run dev --prefix backend\" \"npm run dev --prefix frontend\"",
     "dev:backend": "npm run dev --prefix backend",
     "dev:frontend": "npm run dev --prefix frontend",
-    "test": "npm test --prefix backend && npm test --prefix frontend"
+    "db:up": "docker compose up -d postgres",
+    "db:down": "docker compose down",
+    "db:logs": "docker compose logs -f postgres",
+    "db:wait": "npm run db:wait --prefix backend",
+    "migrate": "npm run migrate --prefix backend",
+    "seed": "npm run seed --prefix backend",
+    "db:smoke": "npm run db:smoke --prefix backend",
+    "test": "npm test --prefix backend && npm test --prefix frontend",
+    "test:regression": "npm run test:regression --prefix backend && npm run test:regression --prefix frontend"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"

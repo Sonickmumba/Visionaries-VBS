@@ -1,5 +1,5 @@
 {
-  "name": "village-banking-frontend",
+  "name": "visionaries-village-banking-frontend",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -7,7 +7,8 @@
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:regression": "vitest run src/tests/regression.test.jsx"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.3.4",

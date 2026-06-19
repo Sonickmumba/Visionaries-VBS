@@ -37,7 +37,7 @@ describe("signup screen", () => {
   });
 
   it("submits valid signup requests", async () => {
-    const authApi = vi.fn().mockResolvedValue({ token: "token", user: { role: "MEMBER" } });
+    const authApi = vi.fn().mockResolvedValue({ user: { role: "MEMBER" } });
 
     const session = await performSignup({ form: validForm, authApi });
 

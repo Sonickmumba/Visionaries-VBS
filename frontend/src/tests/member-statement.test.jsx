@@ -113,6 +113,13 @@ describe("member statement screens", () => {
 
     expect(html).toContain("My Statement");
     expect(html).toContain("Export CSV");
+    expect(html).toContain("member-statement-mobile");
+    expect(html).toContain("Member Statement");
+    expect(html).toContain("Statement financial summary");
+    expect(html).toContain("Statement Period");
+    expect(html).toContain("aria-label=\"Statement actions\"");
+    expect(html).toContain("aria-label=\"Primary mobile navigation\"");
+    expect(html).toContain("member-statement-snapshot-card");
     expect(html).toContain("Accumulated Savings");
     expect(html).toContain("K17,250");
     expect(html).toContain("Statement Context");

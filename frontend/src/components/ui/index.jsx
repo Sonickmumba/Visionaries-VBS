@@ -527,10 +527,18 @@ export function MobileUploadCard({ label, fileName, status = "Required", onChoos
   );
 }
 
-export function MobileStickyActionBar({ primaryLabel, secondaryLabel, onPrimary, onSecondary, primaryDisabled = false, loading = false }) {
+export function MobileStickyActionBar({
+  primaryLabel,
+  secondaryLabel,
+  onPrimary,
+  onSecondary,
+  primaryDisabled = false,
+  secondaryDisabled = false,
+  loading = false,
+}) {
   return (
     <div className="mobile-sticky-actions">
-      {secondaryLabel ? <Button type="button" variant="secondary" onClick={onSecondary}>{secondaryLabel}</Button> : null}
+      {secondaryLabel ? <Button type="button" variant="secondary" onClick={onSecondary} disabled={secondaryDisabled || loading}>{secondaryLabel}</Button> : null}
       <Button type="button" onClick={onPrimary} disabled={primaryDisabled} loading={loading}>{primaryLabel}</Button>
     </div>
   );

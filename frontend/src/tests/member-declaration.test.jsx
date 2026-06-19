@@ -154,6 +154,12 @@ describe("member declaration screen", () => {
     expect(html).toContain("My Declaration");
     expect(html).toContain("Submit Declaration");
     expect(html).toContain("Save Draft");
+    expect(html).toContain("member-declaration-mobile");
+    expect(html).toContain("Monthly Declaration");
+    expect(html).toContain("Declaration amount summary");
+    expect(html).toContain("Declaration progress");
+    expect(html).toContain("mobile-sticky-actions");
+    expect(html).toContain("aria-label=\"Primary mobile navigation\"");
     expect(html).toContain("Declaration Window");
     expect(html).toContain("Loan requests are always open");
     expect(html).toContain("Savings, repayments, loan-interest payments");

@@ -1,7 +1,25 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { ClipboardCheck, FileText, RefreshCw, RotateCcw, Send, UploadCloud } from "lucide-react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { Banknote, ClipboardCheck, ClipboardList, FileText, Gauge, PiggyBank, Receipt, RefreshCw, RotateCcw, Scale, Send, UploadCloud } from "lucide-react";
 import { api } from "../../api/client.js";
-import { Alert, Badge, Button, CurrencyInput, DataTable, EmptyState, Select, Skeleton, Textarea } from "../../components/ui/index.jsx";
+import {
+  Alert,
+  Badge,
+  Button,
+  CurrencyInput,
+  DataTable,
+  EmptyState,
+  MobileBottomNav,
+  MobileHeader,
+  MobileHeroCard,
+  MobileMetricCard,
+  MobileScreenShell,
+  MobileStepper,
+  MobileStickyActionBar,
+  MobileUploadCard,
+  Select,
+  Skeleton,
+  Textarea,
+} from "../../components/ui/index.jsx";
 import { Page } from "../../layouts/AppLayouts.jsx";
 import { chooseActiveMembership } from "./MemberDashboardPage.jsx";
 import "../../styles/member-declaration.css";
@@ -205,6 +223,65 @@ function FieldSummary({ label, value }) {
   return <div><strong>{label}</strong><span>{value}</span></div>;
 }
 
+function monthLabel(month) {
+  return month ? `Month ${month.month_number} - ${titleCase(month.status)}` : "No month selected";
+}
+
+function ProofUploadField({ type, existing, proofFiles, setProofFiles, errors, setErrors, closedDeclaration }) {
+  return (
+    <label className={`proof-upload ${errors[type] ? "has-error" : ""}`}>
+      <span><UploadCloud size={17} aria-hidden="true" /> {proofTypeLabels[type]}</span>
+      <input
+        type="file"
+        accept="image/jpeg,image/png,image/webp,application/pdf"
+        disabled={closedDeclaration}
+        onChange={(event) => {
+          const file = event.target.files?.[0] || null;
+          setProofFiles((current) => ({ ...current, [type]: file }));
+          if (errors[type]) setErrors((current) => ({ ...current, [type]: "" }));
+        }}
+      />
+      <small>{proofFiles[type]?.name || existing?.original_filename || "JPG, PNG, WEBP, or PDF up to 5 MB"}</small>
+      {existing ? <Badge text="Uploaded" tone="green" /> : null}
+      {errors[type] ? <small className="field-error">{errors[type]}</small> : null}
+    </label>
+  );
+}
+
+function MobileProofUploadField({ type, existing, proofFiles, setProofFiles, errors, setErrors, closedDeclaration }) {
+  const inputRef = useRef(null);
+  const status = errors[type]
+    || proofFiles[type]?.name
+    || existing?.original_filename
+    || "JPG, PNG, WEBP, or PDF up to 5 MB";
+
+  return (
+    <div className={errors[type] ? "mobile-proof has-error" : "mobile-proof"}>
+      <MobileUploadCard
+        label={proofTypeLabels[type]}
+        fileName={proofFiles[type]?.name || existing?.original_filename}
+        status={status}
+        disabled={closedDeclaration}
+        onChooseFile={() => inputRef.current?.click()}
+      />
+      <input
+        ref={inputRef}
+        className="mobile-proof-input"
+        type="file"
+        accept="image/jpeg,image/png,image/webp,application/pdf"
+        disabled={closedDeclaration}
+        onChange={(event) => {
+          const file = event.target.files?.[0] || null;
+          setProofFiles((current) => ({ ...current, [type]: file }));
+          if (errors[type]) setErrors((current) => ({ ...current, [type]: "" }));
+        }}
+      />
+      {existing ? <Badge text="Uploaded" tone="green" /> : null}
+      {errors[type] ? <small className="field-error">{errors[type]}</small> : null}
+    </div>
+  );
+}
+
 export function MemberDeclarationPage({
   setPage,
   memberApi = api,
@@ -349,9 +426,25 @@ export function MemberDeclarationPage({
   const closedDeclaration = ["APPROVED", "CANCELLED", "MISSED"].includes(currentDeclaration?.status);
   const declarationStatus = currentDeclaration?.status || "NEW";
   const visibleProofTypes = requiredProofTypes(form);
+  const enteredSavings = Number(form.savingsAmount || 0);
+  const enteredLoans = Number(form.loanRequestAmount || 0) + Number(form.loanTopUpAmount || 0);
+  const enteredRepayments = Number(form.principalRepaymentAmount || 0) + Number(form.loanInterestRepaymentAmount || 0);
+  const bottomNav = (
+    <MobileBottomNav
+      active="my-declaration"
+      items={[
+        { id: "member-dashboard", label: "Home", icon: Gauge },
+        { id: "my-declaration", label: "Declare", icon: ClipboardList },
+        { id: "my-statement", label: "Statement", icon: Receipt },
+        { id: "my-loans", label: "Loans", icon: Banknote },
+      ]}
+      onChange={setPage}
+    />
+  );
 
   return (
     <Page
+      className="member-declaration-page"
       title="My Declaration"
       actions={(
         <>
@@ -370,6 +463,133 @@ export function MemberDeclarationPage({
         <EmptyState title="No active cycle membership" message="Ask an administrator to enroll you into an active cycle before submitting declarations." />
       ) : (
         <>
+          <div className="member-declaration-mobile">
+            <MobileScreenShell bottomNav={bottomNav}>
+              <MobileHeader
+                eyebrow="Monthly Declaration"
+                title={monthLabel(selectedMonth)}
+                subtitle={activeMembership.cycle_name || "Active cycle"}
+              />
+
+              <MobileHeroCard
+                label="Declaration Status"
+                value={titleCase(declarationStatus)}
+                note={selectedMonth ? `${dateOnly(selectedMonth.declaration_window_start)} to ${dateOnly(selectedMonth.declaration_window_end)}` : "Select a month"}
+                actionLabel="Refresh"
+                onAction={load}
+              />
+
+              <MobileStepper
+                active={closedDeclaration ? 2 : currentDeclaration ? 1 : 0}
+                steps={["Prepare", "Review", "Admin"]}
+                label="Declaration progress"
+              />
+
+              <Alert tone="info" title="Loan requests are always open">
+                Loan requests and top-ups may be submitted on any day in the selected month. Other payments still follow the declaration window.
+              </Alert>
+
+              {closedDeclaration ? <Alert tone="info" title="Declaration is closed">Approved, missed, or cancelled declarations cannot be replaced from the member portal.</Alert> : null}
+
+              <section className="member-mobile-section">
+                <div className="member-mobile-section-head">
+                  <h2>Month Context</h2>
+                  <Badge text={titleCase(declarationStatus)} tone={statusTone(declarationStatus)} />
+                </div>
+                <div className="member-mobile-position">
+                  <Select
+                    label="Cycle month"
+                    value={selectedMonthId}
+                    onChange={setSelectedMonthId}
+                    options={months.map((month) => ({ value: month.id, label: monthLabel(month) }))}
+                    placeholder="Select month"
+                    error={errors.selectedMonth}
+                  />
+                  <FieldSummary label="Savings Cap" value={money(activeMembership.savings_cap)} />
+                  <FieldSummary label="Minimum Borrowing" value={money(activeMembership.minimum_borrowing_amount)} />
+                </div>
+              </section>
+
+              <section className="member-mobile-section">
+                <div className="member-mobile-section-head">
+                  <h2>Amounts</h2>
+                  <Badge text={currentDeclaration ? "Existing Record" : "New Record"} tone={currentDeclaration ? "amber" : "blue"} />
+                </div>
+                <div className="member-declaration-mobile-summary" aria-label="Declaration amount summary">
+                  <MobileMetricCard label="Savings" value={money(enteredSavings)} note="Requires proof when submitted" icon={PiggyBank} />
+                  <MobileMetricCard label="Loans" value={money(enteredLoans)} note="Request or top-up" icon={Banknote} tone="blue" />
+                  <MobileMetricCard label="Repayments" value={money(enteredRepayments)} note="Principal plus interest" icon={Receipt} tone="amber" />
+                  <MobileMetricCard label="Common Interest" value={money(form.commonInterestPaymentAmount)} note="Payment declaration" icon={Scale} tone="purple" />
+                </div>
+                <div className="member-declaration-mobile-form">
+                  <CurrencyInput label="Savings amount" value={form.savingsAmount} onChange={updateForm("savingsAmount")} error={errors.savingsAmount} disabled={closedDeclaration} />
+                  <CurrencyInput label="Loan request" value={form.loanRequestAmount} onChange={updateForm("loanRequestAmount")} error={errors.loanRequestAmount} disabled={closedDeclaration} />
+                  <CurrencyInput label="Loan top-up" value={form.loanTopUpAmount} onChange={updateForm("loanTopUpAmount")} error={errors.loanTopUpAmount} disabled={closedDeclaration} />
+                  <CurrencyInput label="Principal repayment" value={form.principalRepaymentAmount} onChange={updateForm("principalRepaymentAmount")} error={errors.principalRepaymentAmount} disabled={closedDeclaration} />
+                  <CurrencyInput label="Loan interest repayment" value={form.loanInterestRepaymentAmount} onChange={updateForm("loanInterestRepaymentAmount")} error={errors.loanInterestRepaymentAmount} disabled={closedDeclaration} />
+                  <CurrencyInput label="Common-interest payment" value={form.commonInterestPaymentAmount} onChange={updateForm("commonInterestPaymentAmount")} error={errors.commonInterestPaymentAmount} disabled={closedDeclaration} />
+                  <CurrencyInput label="Other obligation" value={form.otherObligationAmount} onChange={updateForm("otherObligationAmount")} error={errors.otherObligationAmount} disabled={closedDeclaration} />
+                  <Textarea label="Notes" value={form.notes} onChange={updateForm("notes")} rows={3} placeholder="Optional declaration note" disabled={closedDeclaration} />
+                </div>
+              </section>
+
+              {visibleProofTypes.length ? (
+                <section className="member-mobile-section">
+                  <div className="member-mobile-section-head">
+                    <h2>Proof of Payment</h2>
+                    <Badge text={proofLoading ? "Loading proofs" : `${proofAttachments.length} uploaded`} tone="blue" />
+                  </div>
+                  <div className="member-mobile-list">
+                    {visibleProofTypes.map((type) => (
+                      <MobileProofUploadField
+                        key={type}
+                        type={type}
+                        existing={proofAttachments.find((attachment) => attachment.attachment_type === type)}
+                        proofFiles={proofFiles}
+                        setProofFiles={setProofFiles}
+                        errors={errors}
+                        setErrors={setErrors}
+                        closedDeclaration={closedDeclaration}
+                      />
+                    ))}
+                  </div>
+                </section>
+              ) : null}
+
+              <section className="member-mobile-section">
+                <div className="member-mobile-section-head">
+                  <h2>History</h2>
+                  <Badge text={`${declarations.length} records`} tone="blue" />
+                </div>
+                <div className="member-mobile-list">
+                  {declarations.slice(0, 5).length ? declarations.slice(0, 5).map((declaration) => (
+                    <article key={declaration.id} className="member-mobile-history-card">
+                      <div>
+                        <strong>{declaration.month_number ? `Month ${declaration.month_number}` : dateOnly(declaration.submitted_at)}</strong>
+                        <span>{dateOnly(declaration.submitted_at)}</span>
+                      </div>
+                      <div>
+                        <strong>{money(Number(declaration.savings_amount || 0) + Number(declaration.loan_request_amount || 0) + Number(declaration.loan_top_up_amount || 0))}</strong>
+                        <Badge text={titleCase(declaration.status)} tone={statusTone(declaration.status)} />
+                      </div>
+                    </article>
+                  )) : <p className="muted">No declarations found.</p>}
+                </div>
+              </section>
+
+              <MobileStickyActionBar
+                primaryLabel="Submit Declaration"
+                secondaryLabel="Save Draft"
+                onPrimary={() => save(false)}
+                onSecondary={() => save(true)}
+                primaryDisabled={loading || !activeMembership || closedDeclaration}
+                secondaryDisabled={loading || !activeMembership || closedDeclaration}
+                loading={saving === "submit"}
+              />
+            </MobileScreenShell>
+          </div>
+
+          <div className="member-declaration-desktop">
           <section className="panel member-declaration-context">
             <div className="panel-head">
               <h2>Declaration Window</h2>
@@ -382,7 +602,7 @@ export function MemberDeclarationPage({
                 onChange={setSelectedMonthId}
                 options={months.map((month) => ({
                   value: month.id,
-                  label: `Month ${month.month_number} - ${titleCase(month.status)}`,
+                  label: monthLabel(month),
                 }))}
                 placeholder="Select month"
                 error={errors.selectedMonth}
@@ -426,22 +646,16 @@ export function MemberDeclarationPage({
                 {visibleProofTypes.map((type) => {
                   const existing = proofAttachments.find((attachment) => attachment.attachment_type === type);
                   return (
-                    <label key={type} className={`proof-upload ${errors[type] ? "has-error" : ""}`}>
-                      <span><UploadCloud size={17} aria-hidden="true" /> {proofTypeLabels[type]}</span>
-                      <input
-                        type="file"
-                        accept="image/jpeg,image/png,image/webp,application/pdf"
-                        disabled={closedDeclaration}
-                        onChange={(event) => {
-                          const file = event.target.files?.[0] || null;
-                          setProofFiles((current) => ({ ...current, [type]: file }));
-                          if (errors[type]) setErrors((current) => ({ ...current, [type]: "" }));
-                        }}
-                      />
-                      <small>{proofFiles[type]?.name || existing?.original_filename || "JPG, PNG, WEBP, or PDF up to 5 MB"}</small>
-                      {existing ? <Badge text="Uploaded" tone="green" /> : null}
-                      {errors[type] ? <small className="field-error">{errors[type]}</small> : null}
-                    </label>
+                    <ProofUploadField
+                      key={type}
+                      type={type}
+                      existing={existing}
+                      proofFiles={proofFiles}
+                      setProofFiles={setProofFiles}
+                      errors={errors}
+                      setErrors={setErrors}
+                      closedDeclaration={closedDeclaration}
+                    />
                   );
                 })}
               </div>
@@ -470,6 +684,7 @@ export function MemberDeclarationPage({
 
           <div className="button-row">
             <Button type="button" variant="secondary" icon={ClipboardCheck} onClick={() => setPage?.("member-dashboard")}>Back to Dashboard</Button>
+          </div>
           </div>
         </>
       )}

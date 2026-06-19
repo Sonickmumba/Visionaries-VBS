@@ -6,3 +6,5 @@ backend/.env
 frontend/.env
 .DS_Store
 npm-debug.log*
+output/
+work/

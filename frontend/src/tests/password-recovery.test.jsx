@@ -57,10 +57,12 @@ describe("password recovery screens", () => {
   });
 
   it("renders forgot and reset states", () => {
-    const forgot = renderToStaticMarkup(<PasswordRecoveryPage onBackToLogin={() => {}} />);
-    const reset = renderToStaticMarkup(<PasswordRecoveryPage onBackToLogin={() => {}} initialMode="reset" />);
+    const forgot = renderToStaticMarkup(<PasswordRecoveryPage onBackToLogin={() => {}} onBackToWelcome={() => {}} />);
+    const reset = renderToStaticMarkup(<PasswordRecoveryPage onBackToLogin={() => {}} onBackToWelcome={() => {}} initialMode="reset" />);
+    const resetFromLink = renderToStaticMarkup(<PasswordRecoveryPage onBackToLogin={() => {}} onBackToWelcome={() => {}} initialToken="token-1" />);
 
     expect(forgot).toContain("Reset access");
+    expect(forgot).toContain("Back to welcome");
     expect(forgot).toContain("Account recovery");
     expect(forgot).toContain("We only send reset instructions to registered account emails.");
     expect(forgot).toContain("auth-mobile-summary");
@@ -68,5 +70,6 @@ describe("password recovery screens", () => {
     expect(reset).toContain("Set new password");
     expect(reset).toContain("Reset token");
     expect(reset).toContain("Confirm new password");
+    expect(resetFromLink).not.toContain("Back to welcome");
   });
 });

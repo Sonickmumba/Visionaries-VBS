@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ShieldCheck, UserPlus } from "lucide-react";
+import { ArrowLeft, ShieldCheck, UserPlus } from "lucide-react";
 import { api } from "../../api/client.js";
 import { Alert, Button, Field } from "../../components/ui/index.jsx";
 import { AuthLayout } from "../../layouts/AppLayouts.jsx";
@@ -53,7 +53,7 @@ export async function performSignup({ form, authApi = api }) {
   });
 }
 
-export function SignupPage({ onSignup, onBackToLogin, authApi = api }) {
+export function SignupPage({ onSignup, onBackToLogin, onBackToWelcome, authApi = api }) {
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
@@ -116,6 +116,11 @@ export function SignupPage({ onSignup, onBackToLogin, authApi = api }) {
   return (
     <AuthLayout>
       <form className="auth-card login-card" onSubmit={submit} noValidate>
+        {onBackToWelcome ? (
+          <button type="button" className="auth-back-button" onClick={onBackToWelcome} aria-label="Back to welcome">
+            <ArrowLeft size={18} aria-hidden="true" />
+          </button>
+        ) : null}
         <div className="auth-form-head">
           <span className="auth-icon"><UserPlus size={20} aria-hidden="true" /></span>
           <div>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Lock, Mail, ShieldCheck } from "lucide-react";
+import { ArrowLeft, Lock, Mail, ShieldCheck } from "lucide-react";
 import { api } from "../../api/client.js";
 import { Alert, Button, Field } from "../../components/ui/index.jsx";
 import { AuthLayout } from "../../layouts/AppLayouts.jsx";
@@ -58,6 +58,7 @@ export function LoginPage({
   onNavigateForgot,
   onSignup,
   onForgotPassword,
+  onBackToWelcome,
   authApi = api,
   initialEmail = "admin@example.com",
 }) {
@@ -92,6 +93,11 @@ export function LoginPage({
   return (
     <AuthLayout>
       <form className="auth-card login-card" onSubmit={submit} noValidate>
+        {onBackToWelcome ? (
+          <button type="button" className="auth-back-button" onClick={onBackToWelcome} aria-label="Back to welcome">
+            <ArrowLeft size={18} aria-hidden="true" />
+          </button>
+        ) : null}
         <div className="auth-form-head">
           <span className="auth-icon"><Lock size={20} aria-hidden="true" /></span>
           <div>

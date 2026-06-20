@@ -60,9 +60,10 @@ describe("signup screen", () => {
   });
 
   it("renders signup and success states", () => {
-    const form = renderToStaticMarkup(<SignupPage onBackToLogin={() => {}} />);
+    const form = renderToStaticMarkup(<SignupPage onBackToLogin={() => {}} onBackToWelcome={() => {}} />);
 
     expect(form).toContain("Create account");
+    expect(form).toContain("Back to welcome");
     expect(form).toContain("Member access");
     expect(form).toContain("Use the same details your administrators have on record.");
     expect(form).toContain("auth-mobile-summary");

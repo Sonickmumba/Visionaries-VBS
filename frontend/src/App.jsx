@@ -48,6 +48,10 @@ export function App() {
     new URLSearchParams(window.location.search).has("resetToken") ? "forgot" : "login"
   ));
   const resetToken = useMemo(() => new URLSearchParams(window.location.search).get("resetToken") || "", []);
+  const backToWelcome = resetToken ? undefined : () => {
+    setShowWelcomeSplash(true);
+    setAuthMode("login");
+  };
 
   useEffect(() => {
     let active = true;
@@ -81,11 +85,12 @@ export function App() {
       setUser(nextUser);
       setShowWelcomeSplash(false);
       setPage(nextUser.role === "MEMBER" ? "member-dashboard" : "dashboard");
-    }} onBackToLogin={() => setAuthMode("login")} />
+    }} onBackToLogin={() => setAuthMode("login")} onBackToWelcome={backToWelcome} />
   ) : authMode === "forgot" ? (
     <PasswordRecoveryPage
       initialToken={resetToken}
       onBackToLogin={() => setAuthMode("login")}
+      onBackToWelcome={backToWelcome}
     />
   ) : (
     <LoginPage
@@ -96,6 +101,7 @@ export function App() {
       }}
       onSignup={() => setAuthMode("signup")}
       onForgotPassword={() => setAuthMode("forgot")}
+      onBackToWelcome={backToWelcome}
     />
   );
 

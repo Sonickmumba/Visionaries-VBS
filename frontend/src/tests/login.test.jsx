@@ -64,9 +64,10 @@ describe("login screen", () => {
   });
 
   it("renders the complete login form", () => {
-    const html = renderToStaticMarkup(<LoginPage onLogin={() => {}} />);
+    const html = renderToStaticMarkup(<LoginPage onLogin={() => {}} onBackToWelcome={() => {}} />);
 
     expect(html).toContain("Log in");
+    expect(html).toContain("Back to welcome");
     expect(html).toContain("Email");
     expect(html).toContain("Password");
     expect(html).toContain("Remember me");

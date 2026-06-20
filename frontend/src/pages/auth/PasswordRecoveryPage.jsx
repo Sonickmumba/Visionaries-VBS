@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { KeyRound, ShieldCheck } from "lucide-react";
+import { ArrowLeft, KeyRound, ShieldCheck } from "lucide-react";
 import { api } from "../../api/client.js";
 import { Alert, Button, Field } from "../../components/ui/index.jsx";
 import { AuthLayout } from "../../layouts/AppLayouts.jsx";
@@ -65,6 +65,7 @@ export async function resetPassword({ token, password, confirmPassword, authApi 
 
 export function PasswordRecoveryPage({
   onBackToLogin,
+  onBackToWelcome,
   authApi = api,
   initialMode = "forgot",
   initialToken = "",
@@ -121,6 +122,11 @@ export function PasswordRecoveryPage({
   return (
     <AuthLayout>
       <form className="auth-card login-card" onSubmit={mode === "forgot" ? submitForgot : submitReset} noValidate>
+        {onBackToWelcome && !initialToken ? (
+          <button type="button" className="auth-back-button" onClick={onBackToWelcome} aria-label="Back to welcome">
+            <ArrowLeft size={18} aria-hidden="true" />
+          </button>
+        ) : null}
         <div className="auth-form-head">
           <span className="auth-icon"><KeyRound size={20} aria-hidden="true" /></span>
           <div>

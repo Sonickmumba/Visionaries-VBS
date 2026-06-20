@@ -1,5 +1,6 @@
 import React, { Suspense, lazy, useMemo } from "react";
-import { EmptyState, Skeleton } from "./components/ui/index.jsx";
+import { SplashScreen } from "./components/SplashScreen.jsx";
+import { EmptyState } from "./components/ui/index.jsx";
 import { AppLayout, routeLabel } from "./layouts/AppLayouts.jsx";
 
 function lazyNamed(loader, exportName) {
@@ -25,14 +26,6 @@ const MemberLoansPage = lazyNamed(() => import("./pages/member/MemberLoansPage.j
 const MemberPenaltiesPage = lazyNamed(() => import("./pages/member/MemberPenaltiesPage.jsx"), "MemberPenaltiesPage");
 const MemberSavingsPage = lazyNamed(() => import("./pages/member/MemberSavingsPage.jsx"), "MemberSavingsPage");
 const MemberStatementScreen = lazyNamed(() => import("./pages/member/MemberStatementPage.jsx"), "MemberStatementPage");
-
-function LoadingPage() {
-  return (
-    <section className="panel" aria-label="Loading page">
-      <Skeleton lines={8} />
-    </section>
-  );
-}
 
 function UnknownPage({ title }) {
   return (
@@ -93,7 +86,7 @@ export function PortalApp({ user, page, setPage, onLogout }) {
 
   return (
     <AppLayout user={user} page={page} setPage={setPage} onLogout={onLogout}>
-      <Suspense fallback={<LoadingPage />}>
+      <Suspense fallback={<SplashScreen />}>
         {screenForRoute(page, setPage, pageTitle)}
       </Suspense>
     </AppLayout>

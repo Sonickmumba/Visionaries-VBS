@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
-import { SplashScreen } from "../App.jsx";
+import { SplashScreen } from "../components/SplashScreen.jsx";
 
 describe("app shell", () => {
   it("renders the branded splash screen while checking the session", () => {
@@ -23,5 +23,13 @@ describe("app shell", () => {
     expect(css).toContain("100svh");
     expect(css).toContain("@media (prefers-reduced-motion: reduce)");
     expect(css).toContain("@keyframes splash-progress");
+  });
+
+  it("uses matching branded boot markup before React mounts", () => {
+    const html = fs.readFileSync(path.join(process.cwd(), "index.html"), "utf8");
+
+    expect(html).toContain("boot-phone");
+    expect(html).toContain("Save Together. Grow Together.");
+    expect(html).not.toContain("Preparing the Visionaries financial operations workspace.");
   });
 });

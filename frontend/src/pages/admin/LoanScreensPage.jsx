@@ -48,6 +48,15 @@ function memberName(item) {
   return `${item?.first_name || ""} ${item?.last_name || ""}`.trim() || "Member";
 }
 
+function initials(item) {
+  return memberName(item)
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase())
+    .join("") || "M";
+}
+
 function statusTone(status, isDisbursed = false) {
   if (isDisbursed) return "green";
   if (status === "APPROVED") return "blue";
@@ -163,12 +172,64 @@ function DetailValue({ label, value }) {
   return <div><strong>{label}</strong><span>{value}</span></div>;
 }
 
+function LoanHero({ context, metrics }) {
+  const requestedTotal = metrics.find((metric) => metric.title === "Requested Total")?.value || money(0);
+  return (
+    <section className="loan-hero">
+      <div>
+        <span>Loan Desk</span>
+        <h2>{context?.cycle?.name || "Active Cycle"}</h2>
+        <p>Review requests, approve payouts, disburse funds, and record repayments.</p>
+      </div>
+      <div className="loan-hero-stat">
+        <span>Requested</span>
+        <strong>{requestedTotal}</strong>
+        <small>{context?.cycleMonth ? `Month ${context.cycleMonth.month_number}` : "Current month"}</small>
+      </div>
+    </section>
+  );
+}
+
+function LoanRequestCards({ requests, selected, busy, onChoose, onLedger }) {
+  if (!requests.length) return null;
+  return (
+    <div className="loan-mobile-cards" aria-label="Mobile loan request cards">
+      {requests.map((request) => (
+        <article key={request.id} className={`loan-request-card ${selected?.id === request.id ? "selected" : ""}`}>
+          <div className="loan-card-head">
+            <div className="loan-avatar">{initials(request)}</div>
+            <div>
+              <strong>{memberName(request)}</strong>
+              <span>{request.member_code || "No member code"}</span>
+            </div>
+            <Badge text={request.is_disbursed ? "DISBURSED" : request.status} tone={statusTone(request.status, request.is_disbursed)} />
+          </div>
+          <div className="loan-card-values">
+            <div><span>Requested</span><strong>{money(request.requested_amount)}</strong></div>
+            <div><span>Approved</span><strong>{money(request.approved_amount)}</strong></div>
+            <div><span>Borrowed</span><strong>{money(request.cumulative_borrowed)}</strong></div>
+            <div><span>Type</span><strong>{String(request.origin_type || "-").replaceAll("_", " ")}</strong></div>
+          </div>
+          <div className="loan-card-actions">
+            <Button type="button" variant={selected?.id === request.id ? "primary" : "secondary"} size="sm" onClick={() => onChoose(request)}>Review</Button>
+            <Button type="button" variant="secondary" size="sm" onClick={() => onLedger(request.cycle_member_id)} loading={busy === `ledger-${request.cycle_member_id}`}>Ledger</Button>
+          </div>
+        </article>
+      ))}
+    </div>
+  );
+}
+
 function LoanLedger({ ledger }) {
   const summary = ledger?.summary || {};
   return (
     <section className="panel loan-ledger">
-      <div className="panel-head">
-        <h2>Member Loan Ledger</h2>
+      <div className="loan-ledger-hero">
+        <div>
+          <span>Ledger Detail</span>
+          <h2>Member Loan Ledger</h2>
+          <p>Disbursements, interest, repayments, and outstanding balance.</p>
+        </div>
         <Badge text={`Outstanding ${money(summary.outstanding_balance)}`} tone={Number(summary.outstanding_balance || 0) > 0 ? "amber" : "green"} />
       </div>
       <div className="detail-grid loan-detail-grid">
@@ -447,6 +508,7 @@ export function LoanScreensPage({
   return (
     <Page
       title="Loans"
+      className="loans-page"
       actions={(
         <>
           <Button type="button" icon={RefreshCw} onClick={loadRequests} loading={loading}>Refresh Queue</Button>
@@ -455,6 +517,8 @@ export function LoanScreensPage({
         </>
       )}
     >
+      <LoanHero context={context} metrics={metrics} />
+
       {message ? <Alert tone="success" title="Loan action complete">{message}</Alert> : null}
       {error ? <Alert tone="danger" title="Loan action failed">{error}</Alert> : null}
       {errors.context ? <Alert tone="danger" title="Loan context unavailable">{errors.context}</Alert> : null}
@@ -465,9 +529,19 @@ export function LoanScreensPage({
 
       {selected ? (
         <section className="panel loan-detail-panel">
-          <div className="panel-head">
-            <h2>Loan Request Detail: {memberName(selected)}</h2>
+          <div className="loan-detail-hero">
+            <div className="loan-avatar">{initials(selected)}</div>
+            <div>
+              <span>Loan Request Detail</span>
+              <h2>{memberName(selected)}</h2>
+              <p>{selected.member_code || "No member code"} · {String(selected.origin_type || "-").replaceAll("_", " ")}</p>
+            </div>
             <Badge text={selected.is_disbursed ? "DISBURSED" : selected.status} tone={statusTone(selected.status, selected.is_disbursed)} />
+          </div>
+          <div className="loan-detail-strip">
+            <DetailValue label="Requested" value={money(selected.requested_amount)} />
+            <DetailValue label="Approved" value={money(selected.approved_amount)} />
+            <DetailValue label="Borrowed" value={money(selected.cumulative_borrowed)} />
           </div>
           <div className="detail-grid loan-detail-grid">
             <DetailValue label="Type" value={String(selected.origin_type || "-").replaceAll("_", " ")} />
@@ -508,18 +582,23 @@ export function LoanScreensPage({
             <Button type="button" size="sm" icon={Banknote} onClick={openNewRequest}>New Loan Request</Button>
           </div>
           {loading ? <Skeleton lines={7} /> : requests.length ? (
-            <DataTable
-              columns={["Member", "Type", "Requested", "Approved", "Borrowed", "Status", "Action"]}
-              rows={requests.map((request) => [
-                memberName(request),
-                String(request.origin_type || "-").replaceAll("_", " "),
-                money(request.requested_amount),
-                money(request.approved_amount),
-                money(request.cumulative_borrowed),
-                <Badge text={request.is_disbursed ? "DISBURSED" : request.status} tone={statusTone(request.status, request.is_disbursed)} />,
-                <Button type="button" variant={selected?.id === request.id ? "primary" : "secondary"} size="sm" onClick={() => chooseRequest(request)}>Review</Button>,
-              ])}
-            />
+            <>
+              <LoanRequestCards requests={requests} selected={selected} busy={busy} onChoose={chooseRequest} onLedger={loadMemberLedger} />
+              <div className="loan-desktop-table">
+                <DataTable
+                  columns={["Member", "Type", "Requested", "Approved", "Borrowed", "Status", "Action"]}
+                  rows={requests.map((request) => [
+                    memberName(request),
+                    String(request.origin_type || "-").replaceAll("_", " "),
+                    money(request.requested_amount),
+                    money(request.approved_amount),
+                    money(request.cumulative_borrowed),
+                    <Badge text={request.is_disbursed ? "DISBURSED" : request.status} tone={statusTone(request.status, request.is_disbursed)} />,
+                    <Button type="button" variant={selected?.id === request.id ? "primary" : "secondary"} size="sm" onClick={() => chooseRequest(request)}>Review</Button>,
+                  ])}
+                />
+              </div>
+            </>
           ) : (
             <EmptyState title="No loan requests" message="Create requests from declarations or from this screen, then approve and disburse approved requests when funds are available." />
           )}

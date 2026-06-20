@@ -1,4 +1,6 @@
 import React from "react";
+import fs from "fs";
+import path from "path";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import {
@@ -122,6 +124,7 @@ describe("loan screens", () => {
     const html = renderToStaticMarkup(<LoanScreensPage initialRequests={[request]} initialContext={context} />);
 
     expect(html).toContain("Loans");
+    expect(html).toContain("Loan Desk");
     expect(html).toContain("Refresh Queue");
     expect(html).toContain("New Loan Request");
     expect(html).toContain("Record Repayment");
@@ -154,6 +157,17 @@ describe("loan screens", () => {
     );
 
     expect(html).toContain("Member Ledger");
+    expect(html).toContain("Ledger Detail");
     expect(html).toContain("Outstanding");
+  });
+
+  it("keeps the loan mobile responsive contract", () => {
+    const css = fs.readFileSync(path.join(process.cwd(), "src/styles/loans.css"), "utf8");
+
+    expect(css).toContain(".loan-hero");
+    expect(css).toContain(".loan-mobile-cards");
+    expect(css).toContain(".loan-request-card");
+    expect(css).toContain(".loan-desktop-table");
+    expect(css).toContain("@media (max-width: 767px)");
   });
 });

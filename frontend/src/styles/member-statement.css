@@ -65,6 +65,97 @@
     margin: -10px;
   }
 
+  .member-statement-hero {
+    border-radius: 0 0 26px 26px;
+    background:
+      radial-gradient(circle at 86% 12%, rgba(250, 204, 21, 0.24), transparent 22%),
+      linear-gradient(145deg, #007a43 0%, #006b3d 58%, #0f766e 100%);
+    color: white;
+    padding: 18px;
+    display: grid;
+    gap: 14px;
+    box-shadow: 0 18px 46px rgba(16, 42, 67, 0.14);
+  }
+
+  .member-statement-hero-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .member-statement-hero-head span,
+  .member-statement-hero-main span,
+  .member-statement-hero-strip strong {
+    color: #d9f99d;
+    font-size: 12px;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+
+  .member-statement-hero h2 {
+    margin: 4px 0 0;
+    color: white;
+    font-size: 27px;
+    line-height: 1.05;
+  }
+
+  .member-statement-hero-main strong {
+    display: block;
+    margin-top: 5px;
+    color: white;
+    font-size: 34px;
+    line-height: 1.02;
+    overflow-wrap: anywhere;
+  }
+
+  .member-statement-hero-main small {
+    display: block;
+    margin-top: 5px;
+    color: #dcfce7;
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  .member-statement-hero-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .member-statement-hero-actions .btn {
+    width: 100%;
+    min-height: 40px;
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .member-statement-hero-actions .btn.secondary {
+    background: rgba(255, 255, 255, 0.12);
+    color: white;
+  }
+
+  .member-statement-hero-strip {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .member-statement-hero-strip div {
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.12);
+    padding: 12px;
+    display: grid;
+    gap: 4px;
+  }
+
+  .member-statement-hero-strip span {
+    color: white;
+    font-size: 17px;
+    font-weight: 900;
+    overflow-wrap: anywhere;
+  }
+
   .member-statement-mobile-metrics,
   .member-statement-mobile-actions {
     display: grid;
@@ -157,6 +248,8 @@
 @media (max-width: 380px) {
   .member-statement-mobile-metrics,
   .member-statement-mobile-actions,
+  .member-statement-hero-actions,
+  .member-statement-hero-strip,
   .member-statement-mobile-totals,
   .member-statement-snapshot-card > div {
     grid-template-columns: 1fr;

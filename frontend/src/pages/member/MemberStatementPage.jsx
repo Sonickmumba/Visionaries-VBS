@@ -11,7 +11,6 @@ import {
   MobileActionTile,
   MobileBottomNav,
   MobileHeader,
-  MobileHeroCard,
   MobileListCard,
   MobileMetricCard,
   MobileScreenShell,
@@ -90,6 +89,33 @@ export async function loadMemberStatementData({ memberApi = api, cycleMonthId = 
 
 function DetailValue({ label, value }) {
   return <div><strong>{label}</strong><span>{value}</span></div>;
+}
+
+function MemberStatementMobileHero({ cycleTotals, selectedMonth, activeMembership, exportStatement, setPage }) {
+  return (
+    <section className="member-statement-hero" aria-label="Statement summary">
+      <div className="member-statement-hero-head">
+        <div>
+          <span>{selectedMonth ? `Month ${selectedMonth.month_number}` : "Full Cycle"}</span>
+          <h2>Statement</h2>
+        </div>
+        <Badge text={selectedMonth ? titleCase(selectedMonth.status) : titleCase(activeMembership?.cycle_status)} tone="blue" />
+      </div>
+      <div className="member-statement-hero-main">
+        <span>Accumulated Savings</span>
+        <strong>{money(cycleTotals.accumulatedSavings)}</strong>
+        <small>{activeMembership?.cycle_name || "Active cycle"}</small>
+      </div>
+      <div className="member-statement-hero-actions">
+        <Button type="button" size="sm" onClick={exportStatement}>Export CSV</Button>
+        <Button type="button" size="sm" variant="secondary" onClick={() => setPage?.("member-dashboard")}>Dashboard</Button>
+      </div>
+      <div className="member-statement-hero-strip">
+        <DetailValue label="Loan Balance" value={money(cycleTotals.outstandingLoan)} />
+        <DetailValue label="Penalty Due" value={money(cycleTotals.penaltyDue)} />
+      </div>
+    </section>
+  );
 }
 
 function TransactionDetail({ transaction }) {
@@ -227,12 +253,12 @@ export function MemberStatementPage({
                 subtitle={selectedMonth ? `Month ${selectedMonth.month_number} statement` : activeMembership.cycle_name || "Full cycle"}
               />
 
-              <MobileHeroCard
-                label="Accumulated Savings"
-                value={money(cycleTotals.accumulatedSavings)}
-                note="Cycle principal + interest"
-                actionLabel="Export"
-                onAction={exportStatement}
+              <MemberStatementMobileHero
+                cycleTotals={cycleTotals}
+                selectedMonth={selectedMonth}
+                activeMembership={activeMembership}
+                exportStatement={exportStatement}
+                setPage={setPage}
               />
 
               <div className="member-statement-mobile-metrics" aria-label="Statement financial summary">

@@ -1,4 +1,6 @@
 import React from "react";
+import fs from "fs";
+import path from "path";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import {
@@ -114,6 +116,7 @@ describe("member statement screens", () => {
     expect(html).toContain("My Statement");
     expect(html).toContain("Export CSV");
     expect(html).toContain("member-statement-mobile");
+    expect(html).toContain("Statement summary");
     expect(html).toContain("Member Statement");
     expect(html).toContain("Statement financial summary");
     expect(html).toContain("Statement Period");
@@ -135,5 +138,15 @@ describe("member statement screens", () => {
     );
 
     expect(html).toContain("No active cycle membership");
+  });
+
+  it("keeps the member statement mobile responsive contract", () => {
+    const css = fs.readFileSync(path.join(process.cwd(), "src/styles/member-statement.css"), "utf8");
+
+    expect(css).toContain(".member-statement-hero");
+    expect(css).toContain(".member-statement-hero-actions");
+    expect(css).toContain(".member-statement-hero-strip");
+    expect(css).toContain(".member-statement-mobile");
+    expect(css).toContain("@media (max-width: 767px)");
   });
 });

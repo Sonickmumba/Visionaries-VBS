@@ -1,3 +1,67 @@
+.common-interest-page {
+  display: grid;
+  gap: 0;
+}
+
+.common-interest-hero {
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 88% 14%, rgba(250, 204, 21, 0.24), transparent 22%),
+    linear-gradient(145deg, #007a43 0%, #006b3d 58%, #0f766e 100%);
+  color: white;
+  padding: 18px;
+  margin-bottom: 16px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  box-shadow: 0 18px 46px rgba(16, 42, 67, 0.14);
+}
+
+.common-interest-hero span,
+.common-interest-hero-stat span,
+.common-interest-detail-hero span,
+.common-interest-run-hero span {
+  color: #d9f99d;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.common-interest-hero h2 {
+  margin: 4px 0;
+  color: white;
+  font-size: 25px;
+  line-height: 1.08;
+}
+
+.common-interest-hero p {
+  margin: 0;
+  color: #dcfce7;
+  font-weight: 800;
+}
+
+.common-interest-hero-stat {
+  min-width: 160px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.12);
+  padding: 12px;
+  display: grid;
+  align-content: center;
+  gap: 4px;
+}
+
+.common-interest-hero-stat strong {
+  color: white;
+  font-size: 22px;
+  overflow-wrap: anywhere;
+}
+
+.common-interest-hero-stat small {
+  color: #dcfce7;
+  font-weight: 800;
+}
+
 .common-interest-metrics {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
@@ -7,21 +71,202 @@
   margin-bottom: 18px;
 }
 
+.common-interest-detail-hero,
+.common-interest-run-hero {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.common-interest-run-hero {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.common-interest-detail-hero span,
+.common-interest-run-hero span {
+  color: #007a43;
+}
+
+.common-interest-detail-hero h2,
+.common-interest-run-hero h2 {
+  margin: 2px 0;
+}
+
+.common-interest-detail-hero p,
+.common-interest-run-hero p {
+  margin: 0;
+  font-weight: 800;
+}
+
+.common-interest-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 16px;
+  background: #dcfce7;
+  color: #007a43;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  flex: 0 0 auto;
+}
+
+.common-interest-detail-strip,
+.common-interest-card-values {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.common-interest-detail-strip {
+  margin-bottom: 14px;
+}
+
+.common-interest-detail-strip > div,
+.common-interest-card-values > div {
+  border: 1px solid #e5edf5;
+  border-radius: 14px;
+  background: #f8fbf9;
+  padding: 11px;
+  display: grid;
+  gap: 4px;
+}
+
+.common-interest-detail-strip strong,
+.common-interest-card-values span {
+  color: #65758b;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.common-interest-detail-strip span,
+.common-interest-card-values strong {
+  color: #102a43;
+  font-size: 16px;
+  font-weight: 900;
+  overflow-wrap: anywhere;
+}
+
 .common-interest-detail-grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
+.common-interest-mobile-cards {
+  display: none;
+}
+
+.common-interest-card {
+  border: 1px solid #d8e1eb;
+  border-radius: 16px;
+  background: white;
+  padding: 13px;
+  display: grid;
+  gap: 12px;
+  box-shadow: 0 12px 30px rgba(16, 42, 67, 0.06);
+}
+
+.common-interest-card.selected {
+  border-color: #007a43;
+  box-shadow: 0 16px 38px rgba(16, 42, 67, 0.12);
+}
+
+.common-interest-card-head {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.common-interest-card-head strong,
+.common-interest-card-head span {
+  display: block;
+  overflow-wrap: anywhere;
+}
+
+.common-interest-card-head span {
+  color: #65758b;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.common-interest-card-values {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.common-interest-card .btn {
+  width: 100%;
+  min-height: 40px;
+}
+
 @media (max-width: 1024px) {
   .common-interest-metrics,
-  .common-interest-detail-grid {
+  .common-interest-detail-grid,
+  .common-interest-detail-strip {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 767px) {
+  .common-interest-page .page-head {
+    margin-bottom: 12px;
+  }
+
+  .common-interest-hero {
+    border-radius: 0 0 24px 24px;
+    margin: -10px -10px 14px;
+    grid-template-columns: 1fr;
+  }
+
+  .common-interest-hero h2 {
+    font-size: 23px;
+  }
+
+  .common-interest-hero-stat {
+    width: 100%;
+    min-width: 0;
+  }
+
   .common-interest-metrics,
   .common-interest-detail-grid,
+  .common-interest-detail-strip,
+  .common-interest-card-values,
   .common-interest-filters .form-grid.three {
     grid-template-columns: 1fr;
+  }
+
+  .common-interest-detail-hero,
+  .common-interest-run-hero {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .common-interest-detail-hero .badge,
+  .common-interest-run-hero .badge {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+
+  .common-interest-desktop-table {
+    display: none;
+  }
+
+  .common-interest-mobile-cards {
+    display: grid;
+    gap: 12px;
+  }
+
+  .common-interest-card-head {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .common-interest-card-head .badge {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+
+  .common-interest-detail .button-row .btn {
+    width: 100%;
+    min-height: 44px;
   }
 }

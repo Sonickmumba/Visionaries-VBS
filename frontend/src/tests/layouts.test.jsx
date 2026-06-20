@@ -76,6 +76,9 @@ describe("app layouts", () => {
     expect(layoutCss).toContain("@media (max-width: 900px)");
     expect(layoutCss).toContain(".top-selectors .field:nth-child(2)");
     expect(layoutCss).toContain(".mobile-bottom-nav");
+    expect(layoutCss).toContain("left: 50%");
+    expect(layoutCss).toContain("transform: translateX(-50%)");
+    expect(layoutCss).toContain("width: min(452px, calc(100vw - 20px))");
     expect(layoutCss).toContain(".sidebar-profile");
     expect(layoutCss).toContain("backdrop-filter");
   });

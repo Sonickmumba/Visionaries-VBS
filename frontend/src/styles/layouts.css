@@ -186,10 +186,12 @@
 
   .mobile-bottom-nav {
     position: fixed;
-    left: 10px;
-    right: 10px;
-    bottom: 10px;
+    left: 50%;
+    right: auto;
+    bottom: max(10px, env(safe-area-inset-bottom));
     z-index: 9;
+    transform: translateX(-50%);
+    width: min(452px, calc(100vw - 20px));
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 4px;
@@ -235,8 +237,7 @@
   }
 
   .mobile-bottom-nav {
-    left: 8px;
-    right: 8px;
-    bottom: 8px;
+    bottom: max(8px, env(safe-area-inset-bottom));
+    width: min(452px, calc(100vw - 16px));
   }
 }

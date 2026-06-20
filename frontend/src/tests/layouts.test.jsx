@@ -44,6 +44,9 @@ describe("app layouts", () => {
     expect(html).toContain("id=\"main-content\"");
     expect(html).toContain("aria-current=\"page\"");
     expect(html).toContain("aria-label=\"Admin navigation\"");
+    expect(html).toContain("sidebar-profile");
+    expect(html).toContain("Admin quick navigation");
+    expect(html).toContain("Close navigation");
   });
 
   it("renders member shell with member navigation", () => {
@@ -56,6 +59,7 @@ describe("app layouts", () => {
     expect(html).toContain("Member Portal");
     expect(html).toContain("My Statement");
     expect(html).toContain("aria-label=\"Member navigation\"");
+    expect(html).toContain("Member quick navigation");
   });
 
   it("keeps responsive shell, action, and table safeguards in CSS", () => {
@@ -71,5 +75,8 @@ describe("app layouts", () => {
     expect(appCss).toContain("-webkit-overflow-scrolling: touch");
     expect(layoutCss).toContain("@media (max-width: 900px)");
     expect(layoutCss).toContain(".top-selectors .field:nth-child(2)");
+    expect(layoutCss).toContain(".mobile-bottom-nav");
+    expect(layoutCss).toContain(".sidebar-profile");
+    expect(layoutCss).toContain("backdrop-filter");
   });
 });

@@ -808,7 +808,7 @@ th {
     display: grid;
     position: fixed;
     inset: 0;
-    background: rgba(15, 23, 42, 0.35);
+    background: rgba(15, 23, 42, 0.46);
     border: 0;
     z-index: 10;
     place-items: start end;
@@ -823,12 +823,13 @@ th {
   .topbar {
     min-height: 64px;
     height: auto;
-    padding: 0 12px;
+    padding: 8px 12px;
     gap: 10px;
+    box-shadow: 0 10px 30px rgba(16, 42, 67, 0.08);
   }
 
   .content {
-    padding: 14px;
+    padding: 14px 14px 94px;
   }
 
   .page-head {
@@ -861,6 +862,16 @@ th {
   .button-cloud {
     width: 100%;
   }
+
+  .page-head > .button-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .page-head > .button-row .btn {
+    width: 100%;
+    min-height: 44px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -870,7 +881,7 @@ th {
   }
 
   .content {
-    padding: 10px;
+    padding: 10px 10px 94px;
   }
 
   .panel {
@@ -888,5 +899,9 @@ th {
   .button-row .btn,
   .button-cloud .btn {
     flex-basis: 100%;
+  }
+
+  .page-head > .button-row {
+    grid-template-columns: 1fr;
   }
 }

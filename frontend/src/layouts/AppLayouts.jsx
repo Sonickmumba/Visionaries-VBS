@@ -106,7 +106,15 @@ export function AuthLayout({ children }) {
 function Sidebar({ nav, page, setPage, open, setOpen, user }) {
   return (
     <aside className={`sidebar ${open ? "open" : ""}`} aria-label={`${user.role === "MEMBER" ? "Member" : "Admin"} navigation`} aria-hidden={!open && undefined}>
-      <div className="brand"><Coins size={22} aria-hidden="true" /> Visionaries Village Banking</div>
+      <div className="sidebar-head">
+        <div className="brand"><Coins size={22} aria-hidden="true" /> Visionaries Village Banking</div>
+        <IconButton className="sidebar-close" label="Close navigation" icon={X} variant="ghost" onClick={() => setOpen(false)} />
+      </div>
+      <div className="sidebar-profile">
+        <span>{user.role === "MEMBER" ? "Member Portal" : "Admin Portal"}</span>
+        <strong>{user.email || "Visionaries user"}</strong>
+        <Badge tone={roleTone(user.role)} text={user.role} />
+      </div>
       <nav>
         {nav.map(([id, label, Icon]) => (
           <button
@@ -120,6 +128,32 @@ function Sidebar({ nav, page, setPage, open, setOpen, user }) {
         ))}
       </nav>
     </aside>
+  );
+}
+
+function MobileBottomNav({ nav, page, setPage, user }) {
+  const priorityIds = user.role === "MEMBER"
+    ? ["member-dashboard", "my-declaration", "my-statement", "my-savings", "my-loans"]
+    : ["dashboard", "declarations", "loans", "closing", "reports"];
+  const items = priorityIds
+    .map((id) => nav.find(([navId]) => navId === id))
+    .filter(Boolean);
+
+  return (
+    <nav className="mobile-bottom-nav" aria-label={`${user.role === "MEMBER" ? "Member" : "Admin"} quick navigation`}>
+      {items.map(([id, label, Icon]) => (
+        <button
+          key={id}
+          type="button"
+          className={page === id ? "active" : ""}
+          aria-current={page === id ? "page" : undefined}
+          onClick={() => setPage(id)}
+        >
+          <Icon size={18} aria-hidden="true" />
+          <span>{label.replace("My ", "").replace("Monthly ", "")}</span>
+        </button>
+      ))}
+    </nav>
   );
 }
 
@@ -223,6 +257,7 @@ export function AppLayout({ user, page, setPage, onLogout, children }) {
         <Topbar user={user} page={page} onLogout={onLogout} />
         {open && <button className="overlay" aria-label="Close navigation" onClick={() => setOpen(false)}><X aria-hidden="true" /></button>}
         <main id="main-content" className="content" tabIndex="-1">{children}</main>
+        <MobileBottomNav nav={nav} page={page} setPage={setPage} user={user} />
       </div>
     </div>
   );

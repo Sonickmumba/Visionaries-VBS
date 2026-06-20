@@ -11,7 +11,6 @@ import {
   MobileActionTile,
   MobileBottomNav,
   MobileHeader,
-  MobileHeroCard,
   MobileListCard,
   MobileMetricCard,
   MobileScreenShell,
@@ -118,6 +117,34 @@ function DetailValue({ label, value }) {
   return <div><strong>{label}</strong><span>{value}</span></div>;
 }
 
+function MemberMobileHero({ portal, totals, activeMembership, setPage }) {
+  const name = memberName(portal?.me?.member);
+  return (
+    <section className="member-mobile-hero" aria-label="Member dashboard summary">
+      <div className="member-mobile-hero-head">
+        <div>
+          <span>Good Morning</span>
+          <h2>{name}</h2>
+        </div>
+        <Badge text={titleCase(activeMembership?.cycle_status)} tone={statusTone(totals.borrowingStatus)} />
+      </div>
+      <div className="member-mobile-hero-main">
+        <span>My Accumulated Savings</span>
+        <strong>{money(totals.accumulatedSavings)}</strong>
+        <small>{money(totals.savingsPrincipal)} savings principal</small>
+      </div>
+      <div className="member-mobile-hero-actions">
+        <Button type="button" size="sm" onClick={() => setPage?.("my-statement")}>View Statement</Button>
+        <Button type="button" size="sm" variant="secondary" onClick={() => setPage?.("my-declaration")}>Declare</Button>
+      </div>
+      <div className="member-mobile-hero-strip">
+        <DetailValue label="Loan Balance" value={money(totals.outstandingLoan)} />
+        <DetailValue label="Cap Remaining" value={money(totals.savingsCapRemaining)} />
+      </div>
+    </section>
+  );
+}
+
 function MemberDashboardMobile({ portal, totals, transactions, penalties, activeMembership, setPage, loading, load }) {
   const bottomNav = (
     <MobileBottomNav
@@ -142,13 +169,7 @@ function MemberDashboardMobile({ portal, totals, transactions, penalties, active
           avatar={{ label: memberName(portal?.me?.member), initials: memberName(portal?.me?.member).slice(0, 2).toUpperCase() }}
         />
 
-        <MobileHeroCard
-          label="My Accumulated Savings"
-          value={money(totals.accumulatedSavings)}
-          note={`${money(totals.savingsPrincipal)} savings principal`}
-          actionLabel="Statement"
-          onAction={() => setPage?.("my-statement")}
-        />
+        <MemberMobileHero portal={portal} totals={totals} activeMembership={activeMembership} setPage={setPage} />
 
         <div className="member-mobile-metrics" aria-label="Member financial summary">
           <MobileMetricCard label="My Loan Balance" value={money(totals.outstandingLoan)} note={`${money(totals.borrowingShortfall)} shortfall`} icon={Banknote} tone="blue" />

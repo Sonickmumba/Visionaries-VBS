@@ -121,6 +121,8 @@ describe("design system components", () => {
     expect(css).toContain(".member-mobile-list");
     expect(css).toContain(".mobile-bottom-nav button:focus-visible");
     expect(css).toContain("touch-action: manipulation");
+    expect(css).toContain(".mobile-shell.has-bottom-nav .mobile-sticky-actions");
+    expect(css).toContain("bottom: 84px");
   });
 
   it("renders mobile finance cards and action tiles", () => {

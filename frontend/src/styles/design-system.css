@@ -761,6 +761,12 @@ caption {
   gap: 8px;
 }
 
+.mobile-shell.has-bottom-nav .mobile-sticky-actions {
+  bottom: 84px;
+  margin-bottom: 0;
+  padding-bottom: 12px;
+}
+
 .mobile-sticky-actions .btn {
   min-height: 48px;
 }

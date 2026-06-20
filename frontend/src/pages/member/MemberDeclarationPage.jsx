@@ -10,7 +10,6 @@ import {
   EmptyState,
   MobileBottomNav,
   MobileHeader,
-  MobileHeroCard,
   MobileMetricCard,
   MobileScreenShell,
   MobileStepper,
@@ -221,6 +220,36 @@ function formFromDeclaration(declaration) {
 
 function FieldSummary({ label, value }) {
   return <div><strong>{label}</strong><span>{value}</span></div>;
+}
+
+function MemberDeclarationMobileHero({
+  selectedMonth,
+  declarationStatus,
+  enteredSavings,
+  enteredLoans,
+  enteredRepayments,
+  form,
+  load,
+}) {
+  return (
+    <section className="member-declaration-hero" aria-label="Declaration status summary">
+      <div className="member-declaration-hero-head">
+        <div>
+          <span>Declaration Status</span>
+          <h2>{titleCase(declarationStatus)}</h2>
+        </div>
+        <Badge text={selectedMonth ? `Month ${selectedMonth.month_number}` : "No month"} tone={statusTone(declarationStatus)} />
+      </div>
+      <p>{selectedMonth ? `${dateOnly(selectedMonth.declaration_window_start)} to ${dateOnly(selectedMonth.declaration_window_end)}` : "Select a month"}</p>
+      <div className="member-declaration-hero-values">
+        <FieldSummary label="Savings" value={money(enteredSavings)} />
+        <FieldSummary label="Loans" value={money(enteredLoans)} />
+        <FieldSummary label="Repayments" value={money(enteredRepayments)} />
+        <FieldSummary label="Common Interest" value={money(form.commonInterestPaymentAmount)} />
+      </div>
+      <Button type="button" size="sm" variant="secondary" icon={RefreshCw} onClick={load}>Refresh</Button>
+    </section>
+  );
 }
 
 function monthLabel(month) {
@@ -471,12 +500,14 @@ export function MemberDeclarationPage({
                 subtitle={activeMembership.cycle_name || "Active cycle"}
               />
 
-              <MobileHeroCard
-                label="Declaration Status"
-                value={titleCase(declarationStatus)}
-                note={selectedMonth ? `${dateOnly(selectedMonth.declaration_window_start)} to ${dateOnly(selectedMonth.declaration_window_end)}` : "Select a month"}
-                actionLabel="Refresh"
-                onAction={load}
+              <MemberDeclarationMobileHero
+                selectedMonth={selectedMonth}
+                declarationStatus={declarationStatus}
+                enteredSavings={enteredSavings}
+                enteredLoans={enteredLoans}
+                enteredRepayments={enteredRepayments}
+                form={form}
+                load={load}
               />
 
               <MobileStepper

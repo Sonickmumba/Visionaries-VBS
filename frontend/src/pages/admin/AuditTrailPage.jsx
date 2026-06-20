@@ -71,12 +71,82 @@ function DetailValue({ label, value }) {
   return <div><strong>{label}</strong><span>{value}</span></div>;
 }
 
+function AuditHero({ metrics, section }) {
+  return (
+    <section className="ledger-audit-hero">
+      <div>
+        <span>Audit Trail</span>
+        <h2>{section === "overrides" ? "Override Review" : section === "reversals" ? "Reversal Review" : "Administrative Events"}</h2>
+        <p>Trace who acted, what changed, when it happened, and why it was approved.</p>
+      </div>
+      <div className="ledger-audit-hero-stat">
+        <span>Audit Logs</span>
+        <strong>{metrics.logs}</strong>
+        <small>{metrics.overrides} overrides · {metrics.reversals} reversals</small>
+      </div>
+    </section>
+  );
+}
+
+function AuditCards({ section, rows, onSelect }) {
+  if (!rows.length) return null;
+  return (
+    <div className="ledger-audit-mobile-cards" aria-label="Mobile audit cards">
+      {rows.map((row) => {
+        const action = row.action || row.transaction_type || row.field_name || row.target_table;
+        const title = section === "overrides"
+          ? titleCase(row.field_name)
+          : section === "reversals"
+            ? memberName(row)
+            : row.actor_email || "System";
+        const subtitle = section === "overrides"
+          ? `${row.target_table || "-"}:${String(row.target_id || "").slice(0, 8)}`
+          : section === "reversals"
+            ? titleCase(row.transaction_type)
+            : `${row.entity_table || "-"}${row.entity_id ? `:${String(row.entity_id).slice(0, 8)}` : ""}`;
+        return (
+          <article key={row.id || `${title}-${row.created_at || row.posted_at}`} className="ledger-audit-card">
+            <div className="ledger-audit-card-head">
+              <div className="ledger-audit-avatar">{String(title || "A").slice(0, 2).toUpperCase()}</div>
+              <div>
+                <strong>{title}</strong>
+                <span>{subtitle}</span>
+              </div>
+              <Badge text={titleCase(action)} tone={actionTone(row.action || row.transaction_type)} />
+            </div>
+            <div className="ledger-audit-card-values">
+              <div><span>Date</span><strong>{dateOnly(row.created_at || row.posted_at)}</strong></div>
+              <div><span>Reason</span><strong>{row.reason || row.reversal_reason || "-"}</strong></div>
+              {section === "overrides" ? (
+                <>
+                  <div><span>Original</span><strong>{formatValue(row.original_value)}</strong></div>
+                  <div><span>Override</span><strong>{formatValue(row.overridden_value)}</strong></div>
+                </>
+              ) : section === "reversals" ? (
+                <div><span>Amount</span><strong>{money(row.amount)}</strong></div>
+              ) : (
+                <div><span>IP</span><strong>{row.ip_address || "-"}</strong></div>
+              )}
+            </div>
+            <Button type="button" variant="secondary" size="sm" onClick={() => onSelect(row)}>View Audit Detail</Button>
+          </article>
+        );
+      })}
+    </div>
+  );
+}
+
 function AuditDetail({ row, onClose }) {
   if (!row) return null;
   return (
     <section className="panel audit-detail">
-      <div className="panel-head">
-        <h2>Audit Detail</h2>
+      <div className="ledger-audit-detail-hero">
+        <div className="ledger-audit-avatar">{String(row.actor_email || row.target_table || row.transaction_type || "A").slice(0, 2).toUpperCase()}</div>
+        <div>
+          <span>Audit Detail</span>
+          <h2>{row.actor_email || titleCase(row.target_table || row.transaction_type)}</h2>
+          <p>{row.reason || row.reversal_reason || "Traceable administrative activity"}</p>
+        </div>
         <Badge text={titleCase(row.action || row.transaction_type || row.target_table)} tone={actionTone(row.action)} />
       </div>
       <div className="detail-grid audit-detail-grid">
@@ -218,6 +288,7 @@ export function AuditTrailPage({
   return (
     <Page
       title="Audit Trail"
+      className="ledger-audit-page"
       actions={(
         <>
           <Button type="button" icon={RefreshCw} onClick={() => loadAudit(filters, 1)} loading={loading}>Filter</Button>
@@ -227,6 +298,8 @@ export function AuditTrailPage({
       )}
     >
       {error ? <Alert tone="danger" title="Audit load failed">{error}</Alert> : null}
+
+      <AuditHero metrics={metrics} section={section} />
 
       <section className="panel audit-filters">
         <div className="form-grid three">
@@ -270,7 +343,16 @@ export function AuditTrailPage({
           <h2>{section === "overrides" ? "Overrides" : section === "reversals" ? "Reversal Transactions" : "Audit Logs"}</h2>
           <Badge text={`${rows.length} rows`} tone="blue" />
         </div>
-        <AuditTable section={section} rows={rows} loading={loading} onSelect={setSelected} />
+        {loading ? <Skeleton lines={8} /> : rows.length ? (
+          <>
+            <AuditCards section={section} rows={rows} onSelect={setSelected} />
+            <div className="ledger-audit-desktop-table">
+              <AuditTable section={section} rows={rows} loading={false} onSelect={setSelected} />
+            </div>
+          </>
+        ) : (
+          <EmptyState title="No audit records" message="Adjust filters or wait for administrative activity to create audit records." />
+        )}
         {section === "logs" && rows.length ? (
           <Pagination
             page={auditData.pagination?.page || 1}

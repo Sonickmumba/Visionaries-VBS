@@ -1,4 +1,6 @@
 import React from "react";
+import fs from "fs";
+import path from "path";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import {
@@ -83,6 +85,7 @@ describe("audit trail screens", () => {
     );
 
     expect(html).toContain("Audit Trail");
+    expect(html).toContain("Administrative Events");
     expect(html).toContain("Actor email");
     expect(html).toContain("Export CSV");
     expect(html).toContain("Audit Logs");
@@ -91,5 +94,15 @@ describe("audit trail screens", () => {
     expect(html).toContain("admin@example.com");
     expect(html).toContain("Correction approved");
     expect(html).toContain("View Audit Detail");
+  });
+
+  it("keeps the audit mobile responsive contract", () => {
+    const css = fs.readFileSync(path.join(process.cwd(), "src/styles/ledger-audit.css"), "utf8");
+
+    expect(css).toContain(".ledger-audit-hero");
+    expect(css).toContain(".ledger-audit-mobile-cards");
+    expect(css).toContain(".ledger-audit-card");
+    expect(css).toContain(".ledger-audit-desktop-table");
+    expect(css).toContain("@media (max-width: 767px)");
   });
 });

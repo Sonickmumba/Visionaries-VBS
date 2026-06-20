@@ -46,6 +46,15 @@ function memberName(item) {
   return `${item?.first_name || ""} ${item?.last_name || ""}`.trim() || "Group";
 }
 
+function initials(item) {
+  return memberName(item)
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase())
+    .join("") || "G";
+}
+
 function ledgerTone(transaction) {
   if (transaction?.is_reversal) return "red";
   if (String(transaction?.transaction_type || "").includes("INTEREST")) return "amber";
@@ -104,6 +113,52 @@ function DetailValue({ label, value }) {
   return <div><strong>{label}</strong><span>{value}</span></div>;
 }
 
+function LedgerHero({ metrics }) {
+  return (
+    <section className="ledger-audit-hero">
+      <div>
+        <span>Ledger Explorer</span>
+        <h2>Transaction Trail</h2>
+        <p>Review postings, inspect entries, export rows, and reverse errors with reasons.</p>
+      </div>
+      <div className="ledger-audit-hero-stat">
+        <span>Total Amount</span>
+        <strong>{money(metrics.amount)}</strong>
+        <small>{metrics.count} visible transactions</small>
+      </div>
+    </section>
+  );
+}
+
+function LedgerCards({ transactions, selected, onOpen }) {
+  if (!transactions.length) return null;
+  return (
+    <div className="ledger-audit-mobile-cards" aria-label="Mobile ledger transaction cards">
+      {transactions.map((tx) => (
+        <article key={tx.id} className={`ledger-audit-card ${selected?.id === tx.id ? "selected" : ""}`}>
+          <div className="ledger-audit-card-head">
+            <div className="ledger-audit-avatar">{initials(tx)}</div>
+            <div>
+              <strong>{memberName(tx)}</strong>
+              <span>{tx.member_code || "Group transaction"}</span>
+            </div>
+            <Badge text={titleCase(tx.transaction_type)} tone={ledgerTone(tx)} />
+          </div>
+          <div className="ledger-audit-card-values">
+            <div><span>Amount</span><strong>{money(tx.amount)}</strong></div>
+            <div><span>Date</span><strong>{dateOnly(tx.transaction_date)}</strong></div>
+            <div><span>Month</span><strong>{tx.month_number ? `Month ${tx.month_number}` : "-"}</strong></div>
+            <div><span>Source</span><strong>{[tx.source_table, tx.source_id?.slice?.(0, 8)].filter(Boolean).join(" - ") || "-"}</strong></div>
+          </div>
+          <Button type="button" variant={selected?.id === tx.id ? "primary" : "secondary"} size="sm" onClick={() => onOpen(tx.id)}>
+            View Transaction
+          </Button>
+        </article>
+      ))}
+    </div>
+  );
+}
+
 function LedgerDetail({
   selected,
   entries,
@@ -124,9 +179,19 @@ function LedgerDetail({
 
   return (
     <section className="panel ledger-detail">
-      <div className="panel-head">
-        <h2>Transaction Detail</h2>
+      <div className="ledger-audit-detail-hero">
+        <div className="ledger-audit-avatar">{initials(selected)}</div>
+        <div>
+          <span>Transaction Detail</span>
+          <h2>{memberName(selected)}</h2>
+          <p>{selected.description || titleCase(selected.transaction_type)}</p>
+        </div>
         <Badge text={titleCase(selected.transaction_type)} tone={ledgerTone(selected)} />
+      </div>
+      <div className="ledger-audit-detail-strip">
+        <DetailValue label="Amount" value={money(selected.amount)} />
+        <DetailValue label="Transaction Date" value={dateOnly(selected.transaction_date)} />
+        <DetailValue label="Reversal" value={selected.is_reversal ? "Reversal record" : reversed ? "Already reversed" : "Not reversed"} />
       </div>
       <div className="detail-grid ledger-detail-grid">
         <DetailValue label="Member" value={`${memberName(selected)} ${selected.member_code ? `(${selected.member_code})` : ""}`} />
@@ -140,16 +205,18 @@ function LedgerDetail({
       </div>
       {selected.description ? <p className="muted ledger-note">{selected.description}</p> : null}
       {detailLoading ? <Skeleton lines={5} /> : (
-        <DataTable
-          columns={["Account", "Debit", "Credit", "Memo"]}
-          rows={entries.map((entry) => [
-            titleCase(entry.account_type),
-            money(entry.debit),
-            money(entry.credit),
-            entry.memo || "-",
-          ])}
-          empty="No ledger entries found for this transaction."
-        />
+        <div className="ledger-audit-desktop-table">
+          <DataTable
+            columns={["Account", "Debit", "Credit", "Memo"]}
+            rows={entries.map((entry) => [
+              titleCase(entry.account_type),
+              money(entry.debit),
+              money(entry.credit),
+              entry.memo || "-",
+            ])}
+            empty="No ledger entries found for this transaction."
+          />
+        </div>
       )}
       <div className="detail-grid ledger-balance-grid">
         <DetailValue label="Total Debits" value={money(totalDebits)} />
@@ -282,6 +349,7 @@ export function LedgerPage({
   return (
     <Page
       title="Ledger Explorer"
+      className="ledger-audit-page"
       actions={(
         <>
           <Button type="button" icon={RefreshCw} onClick={() => loadLedger(filters, 1)} loading={loading}>Filter</Button>
@@ -292,6 +360,8 @@ export function LedgerPage({
     >
       {message ? <Alert tone="success" title="Ledger action complete">{message}</Alert> : null}
       {error ? <Alert tone="danger" title="Ledger action failed">{error}</Alert> : null}
+
+      <LedgerHero metrics={metrics} />
 
       <section className="panel ledger-filters">
         <div className="form-grid three">
@@ -333,21 +403,24 @@ export function LedgerPage({
         </div>
         {loading ? <Skeleton lines={8} /> : transactions.length ? (
           <>
-            <DataTable
-              columns={["Date", "Member", "Type", "Amount", "Cycle Month", "Source", "Action"]}
-              rows={transactions.map((tx) => [
-                dateOnly(tx.transaction_date),
-                <><strong>{memberName(tx)}</strong><br /><span className="muted">{tx.member_code || "Group transaction"}</span></>,
-                <Badge text={titleCase(tx.transaction_type)} tone={ledgerTone(tx)} />,
-                money(tx.amount),
-                tx.month_number ? `Month ${tx.month_number} - ${titleCase(tx.cycle_month_status)}` : "-",
-                [tx.source_table, tx.source_id?.slice?.(0, 8)].filter(Boolean).join(" - ") || "-",
-                <Button type="button" variant="secondary" size="sm" onClick={() => openTransaction(tx.id)}>
-                  View Transaction
-                </Button>,
-              ])}
-              empty="No ledger transactions found."
-            />
+            <LedgerCards transactions={transactions} selected={selected} onOpen={openTransaction} />
+            <div className="ledger-audit-desktop-table">
+              <DataTable
+                columns={["Date", "Member", "Type", "Amount", "Cycle Month", "Source", "Action"]}
+                rows={transactions.map((tx) => [
+                  dateOnly(tx.transaction_date),
+                  <><strong>{memberName(tx)}</strong><br /><span className="muted">{tx.member_code || "Group transaction"}</span></>,
+                  <Badge text={titleCase(tx.transaction_type)} tone={ledgerTone(tx)} />,
+                  money(tx.amount),
+                  tx.month_number ? `Month ${tx.month_number} - ${titleCase(tx.cycle_month_status)}` : "-",
+                  [tx.source_table, tx.source_id?.slice?.(0, 8)].filter(Boolean).join(" - ") || "-",
+                  <Button type="button" variant="secondary" size="sm" onClick={() => openTransaction(tx.id)}>
+                    View Transaction
+                  </Button>,
+                ])}
+                empty="No ledger transactions found."
+              />
+            </div>
             <Pagination
               page={pagination.page || 1}
               totalPages={pagination.totalPages || 1}

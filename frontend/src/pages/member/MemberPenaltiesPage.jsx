@@ -11,7 +11,6 @@ import {
   MobileActionTile,
   MobileBottomNav,
   MobileHeader,
-  MobileHeroCard,
   MobileListCard,
   MobileMetricCard,
   MobileScreenShell,
@@ -38,6 +37,38 @@ function statusTone(status) {
 
 function DetailValue({ label, value }) {
   return <div><strong>{label}</strong><span>{value}</span></div>;
+}
+
+function MemberPenaltiesMobileHero({ summary, activeMembership, setPage }) {
+  const heroTone = summary.outstanding > 0 ? "amber" : "green";
+
+  return (
+    <section className="member-penalties-hero" aria-label="Penalty account summary">
+      <div className="member-penalties-hero-head">
+        <div>
+          <span>{activeMembership?.cycle_name || "Active cycle"}</span>
+          <h2>My Penalties</h2>
+        </div>
+        <Badge text={summary.outstanding > 0 ? "Outstanding" : "Clear"} tone={heroTone} />
+      </div>
+
+      <div className="member-penalties-hero-main">
+        <span>Penalty Due</span>
+        <strong>{money(summary.outstanding)}</strong>
+        <small>{summary.count} penalty records</small>
+      </div>
+
+      <div className="member-penalties-hero-actions">
+        <Button type="button" size="sm" onClick={() => setPage?.("my-statement")}>Statement</Button>
+        <Button type="button" size="sm" variant="secondary" onClick={() => setPage?.("my-declaration")}>Declare</Button>
+      </div>
+
+      <div className="member-penalties-hero-strip">
+        <DetailValue label="Paid" value={money(summary.paid)} />
+        <DetailValue label="Converted" value={money(summary.converted)} />
+      </div>
+    </section>
+  );
 }
 
 export async function loadMemberPenaltyData({ memberApi = api } = {}) {
@@ -157,13 +188,10 @@ export function MemberPenaltiesPage({
                 subtitle={activeMembership.cycle_name || "Active cycle"}
               />
 
-              <MobileHeroCard
-                label="Penalty Due"
-                value={money(summary.outstanding)}
-                note={`${summary.count} penalty records`}
-                tone={summary.outstanding > 0 ? "amber" : "green"}
-                actionLabel="Statement"
-                onAction={() => setPage?.("my-statement")}
+              <MemberPenaltiesMobileHero
+                summary={summary}
+                activeMembership={activeMembership}
+                setPage={setPage}
               />
 
               <div className="member-penalties-mobile-metrics" aria-label="Member penalty summary">

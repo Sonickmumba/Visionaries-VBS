@@ -89,6 +89,7 @@ describe("member penalties screen", () => {
     expect(html).toContain("My Penalties");
     expect(html).toContain("Member Penalties");
     expect(html).toContain("Penalty Due");
+    expect(html).toContain("Penalty account summary");
     expect(html).toContain("Member penalty summary");
     expect(html).toContain("Penalty Breakdown");
     expect(html).toContain("Penalty Register");
@@ -103,6 +104,16 @@ describe("member penalties screen", () => {
     expect(appSource).toContain("MemberPenaltiesPage");
     expect(appSource).toContain("case \"my-penalties\"");
     expect(appSource).toContain("return <MemberPenaltiesPage setPage={setPage} />");
+  });
+
+  it("keeps the member penalties mobile responsive contract", () => {
+    const css = fs.readFileSync(path.join(process.cwd(), "src/styles/member-penalties.css"), "utf8");
+
+    expect(css).toContain(".member-penalties-hero");
+    expect(css).toContain(".member-penalties-hero-actions");
+    expect(css).toContain(".member-penalties-hero-strip");
+    expect(css).toContain(".member-penalties-mobile");
+    expect(css).toContain("@media (max-width: 767px)");
   });
 
   it("renders an empty state without active membership", () => {

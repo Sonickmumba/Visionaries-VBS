@@ -1,4 +1,6 @@
 import React from "react";
+import fs from "fs";
+import path from "path";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import {
@@ -98,6 +100,7 @@ describe("reports screens", () => {
     );
 
     expect(html).toContain("Reports Center");
+    expect(html).toContain("Month 1");
     expect(html).toContain("Run Report");
     expect(html).toContain("Download PDF");
     expect(html).toContain("Export CSV");
@@ -107,5 +110,15 @@ describe("reports screens", () => {
     expect(html).toContain("Cycle Closing");
     expect(html).toContain("Report Rows");
     expect(html).toContain("K15,000");
+  });
+
+  it("keeps the reports mobile responsive contract", () => {
+    const css = fs.readFileSync(path.join(process.cwd(), "src/styles/reports.css"), "utf8");
+
+    expect(css).toContain(".reports-hero");
+    expect(css).toContain(".reports-mobile-cards");
+    expect(css).toContain(".reports-card");
+    expect(css).toContain(".reports-desktop-table");
+    expect(css).toContain("@media (max-width: 767px)");
   });
 });

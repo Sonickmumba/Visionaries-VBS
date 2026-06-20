@@ -41,6 +41,16 @@ function normalizeCode(value) {
   return String(value || "").trim().toUpperCase().replaceAll(" ", "_");
 }
 
+function initials(value) {
+  return String(value || "U")
+    .split("@")[0]
+    .split(/[._\-\s]+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase())
+    .join("") || "U";
+}
+
 export function validateInviteUser(form) {
   const errors = {};
   if (!String(form.email || "").includes("@")) errors.email = "Enter a valid email.";
@@ -164,6 +174,78 @@ function cycleToRoundingForm(cycle) {
 
 function DetailValue({ label, value }) {
   return <div><strong>{label}</strong><span>{value}</span></div>;
+}
+
+function SettingsHero({ selectedCycle, metrics }) {
+  return (
+    <section className="settings-hero">
+      <div>
+        <span>Admin Settings</span>
+        <h2>{selectedCycle?.name || "System Configuration"}</h2>
+        <p>Manage users, cycle rules, penalty types, notifications, and default operating policy.</p>
+      </div>
+      <div className="settings-hero-stat">
+        <span>Active Users</span>
+        <strong>{metrics.activeUsers}</strong>
+        <small>{metrics.users} total accounts</small>
+      </div>
+    </section>
+  );
+}
+
+function UserCards({ users, busy, onUpdate }) {
+  if (!users.length) return null;
+  return (
+    <div className="settings-mobile-cards" aria-label="Mobile user settings cards">
+      {users.map((user) => (
+        <article key={user.id} className="settings-card">
+          <div className="settings-card-head">
+            <div className="settings-avatar">{initials(user.email)}</div>
+            <div>
+              <strong>{user.email}</strong>
+              <span>{titleCase(user.role)}</span>
+            </div>
+            <Badge text={user.is_active ? "Active" : "Disabled"} tone={user.is_active ? "green" : "red"} />
+          </div>
+          <div className="settings-card-values">
+            <div><span>Created</span><strong>{dateOnly(user.created_at)}</strong></div>
+            <div><span>Role</span><strong>{titleCase(user.role)}</strong></div>
+          </div>
+          <Button type="button" size="sm" variant="secondary" loading={busy === user.id} onClick={() => onUpdate(user, { isActive: !user.is_active })}>
+            {user.is_active ? "Disable User" : "Enable User"}
+          </Button>
+        </article>
+      ))}
+    </div>
+  );
+}
+
+function PenaltyTypeCards({ penaltyTypes, busy, onPatch }) {
+  if (!penaltyTypes.length) return null;
+  return (
+    <div className="settings-mobile-cards" aria-label="Mobile penalty type settings cards">
+      {penaltyTypes.map((penaltyType) => (
+        <article key={penaltyType.id} className="settings-card">
+          <div className="settings-card-head">
+            <div className="settings-avatar">{String(penaltyType.code || "P").slice(0, 2).toUpperCase()}</div>
+            <div>
+              <strong>{penaltyType.name}</strong>
+              <span>{penaltyType.code}</span>
+            </div>
+            <Badge text={penaltyType.is_active ? "Active" : "Disabled"} tone={penaltyType.is_active ? "green" : "red"} />
+          </div>
+          <div className="settings-card-values">
+            <div><span>Amount</span><strong>{money(penaltyType.amount)}</strong></div>
+            <div><span>Convertible</span><strong>{penaltyType.is_convertible_to_loan ? "Yes" : "No"}</strong></div>
+          </div>
+          <div className="settings-card-actions">
+            <Button type="button" size="sm" variant="secondary" loading={busy === penaltyType.id} onClick={() => onPatch(penaltyType, { isActive: !penaltyType.is_active })}>{penaltyType.is_active ? "Disable" : "Enable"}</Button>
+            <Button type="button" size="sm" variant="secondary" loading={busy === penaltyType.id} onClick={() => onPatch(penaltyType, { isConvertibleToLoan: !penaltyType.is_convertible_to_loan })}>{penaltyType.is_convertible_to_loan ? "Block Conversion" : "Allow Conversion"}</Button>
+          </div>
+        </article>
+      ))}
+    </div>
+  );
 }
 
 export function SettingsPage({
@@ -389,6 +471,7 @@ export function SettingsPage({
   return (
     <Page
       title="Settings"
+      className="settings-page"
       actions={(
         <>
           <Button type="button" icon={RefreshCw} onClick={() => loadSettings()} loading={loading}>Refresh</Button>
@@ -399,6 +482,8 @@ export function SettingsPage({
     >
       {message ? <Alert tone="success" title="Settings updated">{message}</Alert> : null}
       {error ? <Alert tone="danger" title="Settings action failed">{error}</Alert> : null}
+
+      <SettingsHero selectedCycle={selectedCycle} metrics={metrics} />
 
       <div className="metrics settings-metrics">
         <Card title="Users" value={metrics.users} note="System accounts" icon={Users} />
@@ -439,23 +524,26 @@ export function SettingsPage({
               <section className="panel">
                 <div className="panel-head"><h2>Users</h2></div>
                 <Textarea label="User change reason" value={userReason} onChange={setUserReason} rows={2} />
-                <DataTable
-                  columns={["Email", "Role", "Status", "Created", "Actions"]}
-                  rows={(context.users || []).map((user) => [
-                    user.email,
-                    <Select
-                      label="Role"
-                      className="inline-field"
-                      value={user.role}
-                      onChange={(role) => updateUser(user, { role })}
-                      options={["MEMBER", "ADMIN", "AUDITOR"].map((role) => ({ value: role, label: titleCase(role) }))}
-                    />,
-                    <Badge text={user.is_active ? "Active" : "Disabled"} tone={user.is_active ? "green" : "red"} />,
-                    dateOnly(user.created_at),
-                    <Button type="button" size="sm" variant="secondary" loading={busy === user.id} onClick={() => updateUser(user, { isActive: !user.is_active })}>{user.is_active ? "Disable User" : "Enable User"}</Button>,
-                  ])}
-                  empty="No users found."
-                />
+                <UserCards users={context.users || []} busy={busy} onUpdate={updateUser} />
+                <div className="settings-desktop-table">
+                  <DataTable
+                    columns={["Email", "Role", "Status", "Created", "Actions"]}
+                    rows={(context.users || []).map((user) => [
+                      user.email,
+                      <Select
+                        label="Role"
+                        className="inline-field"
+                        value={user.role}
+                        onChange={(role) => updateUser(user, { role })}
+                        options={["MEMBER", "ADMIN", "AUDITOR"].map((role) => ({ value: role, label: titleCase(role) }))}
+                      />,
+                      <Badge text={user.is_active ? "Active" : "Disabled"} tone={user.is_active ? "green" : "red"} />,
+                      dateOnly(user.created_at),
+                      <Button type="button" size="sm" variant="secondary" loading={busy === user.id} onClick={() => updateUser(user, { isActive: !user.is_active })}>{user.is_active ? "Disable User" : "Enable User"}</Button>,
+                    ])}
+                    empty="No users found."
+                  />
+                </div>
               </section>
             </>
           ) : null}
@@ -528,21 +616,24 @@ export function SettingsPage({
 
               <section className="panel">
                 <div className="panel-head"><h2>Penalty Types</h2><Badge text={selectedCycle?.name || "Selected cycle"} tone="blue" /></div>
-                <DataTable
-                  columns={["Code", "Name", "Amount", "Convertible", "Status", "Actions"]}
-                  rows={(context.penaltyTypes || []).map((penaltyType) => [
-                    penaltyType.code,
-                    penaltyType.name,
-                    money(penaltyType.amount),
-                    penaltyType.is_convertible_to_loan ? "Yes" : "No",
-                    <Badge text={penaltyType.is_active ? "Active" : "Disabled"} tone={penaltyType.is_active ? "green" : "red"} />,
-                    <div className="button-row compact">
-                      <Button type="button" size="sm" variant="secondary" loading={busy === penaltyType.id} onClick={() => patchPenaltyType(penaltyType, { isActive: !penaltyType.is_active })}>{penaltyType.is_active ? "Disable" : "Enable"}</Button>
-                      <Button type="button" size="sm" variant="secondary" loading={busy === penaltyType.id} onClick={() => patchPenaltyType(penaltyType, { isConvertibleToLoan: !penaltyType.is_convertible_to_loan })}>{penaltyType.is_convertible_to_loan ? "Block Conversion" : "Allow Conversion"}</Button>
-                    </div>,
-                  ])}
-                  empty="No penalty types configured for this cycle."
-                />
+                <PenaltyTypeCards penaltyTypes={context.penaltyTypes || []} busy={busy} onPatch={patchPenaltyType} />
+                <div className="settings-desktop-table">
+                  <DataTable
+                    columns={["Code", "Name", "Amount", "Convertible", "Status", "Actions"]}
+                    rows={(context.penaltyTypes || []).map((penaltyType) => [
+                      penaltyType.code,
+                      penaltyType.name,
+                      money(penaltyType.amount),
+                      penaltyType.is_convertible_to_loan ? "Yes" : "No",
+                      <Badge text={penaltyType.is_active ? "Active" : "Disabled"} tone={penaltyType.is_active ? "green" : "red"} />,
+                      <div className="button-row compact">
+                        <Button type="button" size="sm" variant="secondary" loading={busy === penaltyType.id} onClick={() => patchPenaltyType(penaltyType, { isActive: !penaltyType.is_active })}>{penaltyType.is_active ? "Disable" : "Enable"}</Button>
+                        <Button type="button" size="sm" variant="secondary" loading={busy === penaltyType.id} onClick={() => patchPenaltyType(penaltyType, { isConvertibleToLoan: !penaltyType.is_convertible_to_loan })}>{penaltyType.is_convertible_to_loan ? "Block Conversion" : "Allow Conversion"}</Button>
+                      </div>,
+                    ])}
+                    empty="No penalty types configured for this cycle."
+                  />
+                </div>
               </section>
             </>
           ) : null}

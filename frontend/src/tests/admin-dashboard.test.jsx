@@ -35,6 +35,9 @@ describe("admin dashboard", () => {
 
     expect(view.cycleName).toBe("2026 Main Cycle");
     expect(view.monthLabel).toBe("Month 3");
+    expect(view.monthStatus).toBe("DECLARATION PERIOD");
+    expect(view.heroStats.map((item) => item.label)).toEqual(["Savings", "Loans", "Pending"]);
+    expect(view.quickActions.map((item) => item.label)).toEqual(["Declarations", "Loans", "Closing", "Reports"]);
     expect(view.cards.map((card) => card.title)).toContain("Loans Outstanding");
     expect(view.financialPositionScope).toBe("up to Month 2");
     expect(view.poolCards.map((card) => card.title)).toContain("Pool Contributions");
@@ -51,6 +54,9 @@ describe("admin dashboard", () => {
     const html = renderToStaticMarkup(<AdminDashboardPage initialData={dashboardData} setPage={() => {}} />);
 
     expect(html).toContain("Admin Dashboard");
+    expect(html).toContain("Visionaries Operations");
+    expect(html).toContain("Good day");
+    expect(html).toContain("Quick actions");
     expect(html).toContain("Review Declarations");
     expect(html).toContain("Approve Loans");
     expect(html).toContain("Run Monthly Closing");

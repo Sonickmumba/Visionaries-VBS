@@ -1,4 +1,6 @@
 import React from "react";
+import fs from "node:fs";
+import path from "node:path";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import {
@@ -145,6 +147,8 @@ describe("declaration screens", () => {
     );
 
     expect(html).toContain("Declarations");
+    expect(html).toContain("Declaration Queue");
+    expect(html).toContain("Submitted declaration cards");
     expect(html).toContain("Refresh Queue");
     expect(html).toContain("New Declaration");
     expect(html).toContain("Submitted");
@@ -153,5 +157,15 @@ describe("declaration screens", () => {
     expect(html).toContain("Mary Phiri");
     expect(html).toContain("View Details");
     expect(html).toContain("K15,000");
+  });
+
+  it("keeps declaration workflow mobile card styles responsive", () => {
+    const css = fs.readFileSync(path.join(process.cwd(), "src/styles/declarations.css"), "utf8");
+
+    expect(css).toContain(".declaration-hero");
+    expect(css).toContain(".declaration-mobile-cards");
+    expect(css).toContain(".declaration-queue-card");
+    expect(css).toContain(".declaration-proof-card");
+    expect(css).toContain("@media (max-width: 767px)");
   });
 });

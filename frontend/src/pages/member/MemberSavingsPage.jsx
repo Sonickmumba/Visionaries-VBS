@@ -11,7 +11,6 @@ import {
   MobileActionTile,
   MobileBottomNav,
   MobileHeader,
-  MobileHeroCard,
   MobileListCard,
   MobileMetricCard,
   MobileScreenShell,
@@ -40,6 +39,36 @@ function transactionTone(type) {
 
 function DetailValue({ label, value }) {
   return <div><strong>{label}</strong><span>{value}</span></div>;
+}
+
+function MemberSavingsMobileHero({ summary, activeMembership, setPage }) {
+  return (
+    <section className="member-savings-hero" aria-label="Savings account summary">
+      <div className="member-savings-hero-head">
+        <div>
+          <span>{activeMembership?.cycle_name || "Active cycle"}</span>
+          <h2>My Savings</h2>
+        </div>
+        <Badge text={titleCase(activeMembership?.cycle_status)} tone="green" />
+      </div>
+
+      <div className="member-savings-hero-main">
+        <span>Accumulated Savings</span>
+        <strong>{money(summary.accumulatedSavings)}</strong>
+        <small>{money(summary.savingsPrincipal)} principal saved</small>
+      </div>
+
+      <div className="member-savings-hero-actions">
+        <Button type="button" size="sm" onClick={() => setPage?.("my-declaration")}>Declare Savings</Button>
+        <Button type="button" size="sm" variant="secondary" onClick={() => setPage?.("my-statement")}>Statement</Button>
+      </div>
+
+      <div className="member-savings-hero-strip">
+        <DetailValue label="Interest Earned" value={money(summary.savingsInterest)} />
+        <DetailValue label="Cap Remaining" value={money(summary.savingsCapRemaining)} />
+      </div>
+    </section>
+  );
 }
 
 export async function loadMemberSavingsData({ memberApi = api } = {}) {
@@ -165,12 +194,10 @@ export function MemberSavingsPage({
                 subtitle={activeMembership.cycle_name || "Active cycle"}
               />
 
-              <MobileHeroCard
-                label="My Accumulated Savings"
-                value={money(summary.accumulatedSavings)}
-                note={`${money(summary.savingsPrincipal)} savings principal`}
-                actionLabel="Declare"
-                onAction={() => setPage?.("my-declaration")}
+              <MemberSavingsMobileHero
+                summary={summary}
+                activeMembership={activeMembership}
+                setPage={setPage}
               />
 
               <div className="member-savings-mobile-metrics" aria-label="Member savings summary">

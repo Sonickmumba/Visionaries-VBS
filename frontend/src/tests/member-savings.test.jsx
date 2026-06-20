@@ -109,6 +109,7 @@ describe("member savings screen", () => {
     expect(html).toContain("My Savings");
     expect(html).toContain("Member Savings");
     expect(html).toContain("My Accumulated Savings");
+    expect(html).toContain("Savings account summary");
     expect(html).toContain("Member savings summary");
     expect(html).toContain("Savings Breakdown");
     expect(html).toContain("Savings Ledger");
@@ -124,6 +125,16 @@ describe("member savings screen", () => {
     expect(appSource).toContain("MemberSavingsPage");
     expect(appSource).toContain("case \"my-savings\"");
     expect(appSource).toContain("return <MemberSavingsPage setPage={setPage} />");
+  });
+
+  it("keeps the member savings mobile responsive contract", () => {
+    const css = fs.readFileSync(path.join(process.cwd(), "src/styles/member-savings.css"), "utf8");
+
+    expect(css).toContain(".member-savings-hero");
+    expect(css).toContain(".member-savings-hero-actions");
+    expect(css).toContain(".member-savings-hero-strip");
+    expect(css).toContain(".member-savings-mobile");
+    expect(css).toContain("@media (max-width: 767px)");
   });
 
   it("renders an empty state without active membership", () => {

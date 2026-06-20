@@ -1,4 +1,6 @@
 import React from "react";
+import fs from "fs";
+import path from "path";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import {
@@ -138,6 +140,7 @@ describe("penalty screens", () => {
     );
 
     expect(html).toContain("Penalties");
+    expect(html).toContain("Penalty Desk");
     expect(html).toContain("Refresh");
     expect(html).toContain("Assess Penalty");
     expect(html).toContain("Penalty Register");
@@ -146,5 +149,15 @@ describe("penalty screens", () => {
     expect(html).toContain("Failure to declare");
     expect(html).toContain("K100");
     expect(html).toContain("View Details");
+  });
+
+  it("keeps the penalty mobile responsive contract", () => {
+    const css = fs.readFileSync(path.join(process.cwd(), "src/styles/penalties.css"), "utf8");
+
+    expect(css).toContain(".penalty-hero");
+    expect(css).toContain(".penalty-mobile-cards");
+    expect(css).toContain(".penalty-card");
+    expect(css).toContain(".penalty-desktop-table");
+    expect(css).toContain("@media (max-width: 767px)");
   });
 });

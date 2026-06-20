@@ -42,6 +42,15 @@ function memberName(item) {
   return `${item?.first_name || ""} ${item?.last_name || ""}`.trim() || "Member";
 }
 
+function initials(item) {
+  return memberName(item)
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase())
+    .join("") || "M";
+}
+
 function outstanding(penalty) {
   return Math.max(0, Number(penalty?.amount_assessed || 0) - Number(penalty?.amount_paid || 0));
 }
@@ -137,6 +146,74 @@ function DetailValue({ label, value }) {
   return <div><strong>{label}</strong><span>{value}</span></div>;
 }
 
+function PenaltyHero({ context, totals, count }) {
+  return (
+    <section className="penalty-hero">
+      <div>
+        <span>Penalty Desk</span>
+        <h2>{context?.cycle?.name || "Active Cycle"}</h2>
+        <p>{context?.cycleMonth ? `Month ${context.cycleMonth.month_number} assessments and recoveries` : "Assess, collect, waive, reverse, or convert unpaid penalties."}</p>
+      </div>
+      <div className="penalty-hero-stat">
+        <span>Outstanding</span>
+        <strong>{money(totals.outstanding)}</strong>
+        <small>{count} penalties tracked</small>
+      </div>
+    </section>
+  );
+}
+
+function PenaltyRegisterCards({ penalties, selected, onSelect }) {
+  if (!penalties.length) return null;
+  return (
+    <div className="penalty-mobile-cards" aria-label="Mobile penalty register cards">
+      {penalties.map((penalty) => (
+        <article key={penalty.id} className={`penalty-card ${selected?.id === penalty.id ? "selected" : ""}`}>
+          <div className="penalty-card-head">
+            <div className="penalty-avatar">{initials(penalty)}</div>
+            <div>
+              <strong>{memberName(penalty)}</strong>
+              <span>{penalty.penalty_name || "Penalty"}</span>
+            </div>
+            <Badge text={penalty.status} tone={statusTone(penalty.status)} />
+          </div>
+          <div className="penalty-card-values">
+            <div><span>Assessed</span><strong>{money(penalty.amount_assessed)}</strong></div>
+            <div><span>Paid</span><strong>{money(penalty.amount_paid)}</strong></div>
+            <div><span>Outstanding</span><strong>{money(outstanding(penalty))}</strong></div>
+            <div><span>Date</span><strong>{dateOnly(penalty.assessed_at)}</strong></div>
+          </div>
+          <Button type="button" size="sm" variant={selected?.id === penalty.id ? "primary" : "secondary"} onClick={() => onSelect(penalty)}>View Details</Button>
+        </article>
+      ))}
+    </div>
+  );
+}
+
+function PenaltyTypeCards({ penaltyTypes }) {
+  if (!penaltyTypes.length) return null;
+  return (
+    <div className="penalty-mobile-cards" aria-label="Mobile penalty type cards">
+      {penaltyTypes.map((type) => (
+        <article key={type.id || type.code} className="penalty-card">
+          <div className="penalty-card-head">
+            <div className="penalty-avatar">{String(type.code || type.name || "P").slice(0, 2).toUpperCase()}</div>
+            <div>
+              <strong>{type.name}</strong>
+              <span>{type.code}</span>
+            </div>
+            <Badge text={type.is_active === false ? "Inactive" : "Active"} tone={type.is_active === false ? "gray" : "green"} />
+          </div>
+          <div className="penalty-card-values">
+            <div><span>Amount</span><strong>{money(type.amount)}</strong></div>
+            <div><span>Convertible</span><strong>{type.is_convertible_to_loan ? "Yes" : "No"}</strong></div>
+          </div>
+        </article>
+      ))}
+    </div>
+  );
+}
+
 function PenaltyDetail({
   selected,
   paymentAmount,
@@ -157,9 +234,19 @@ function PenaltyDetail({
 }) {
   return (
     <section className="panel penalty-detail">
-      <div className="panel-head">
-        <h2>Penalty Detail: {memberName(selected)}</h2>
+      <div className="penalty-detail-hero">
+        <div className="penalty-avatar">{initials(selected)}</div>
+        <div>
+          <span>Penalty Detail</span>
+          <h2>{memberName(selected)}</h2>
+          <p>{selected.penalty_name || "Penalty"} · {dateOnly(selected.assessed_at)}</p>
+        </div>
         <Badge text={selected.status} tone={statusTone(selected.status)} />
+      </div>
+      <div className="penalty-detail-strip">
+        <DetailValue label="Assessed" value={money(selected.amount_assessed)} />
+        <DetailValue label="Paid" value={money(selected.amount_paid)} />
+        <DetailValue label="Outstanding" value={money(outstanding(selected))} />
       </div>
       <div className="detail-grid penalty-detail-grid">
         <DetailValue label="Type" value={selected.penalty_name || "-"} />
@@ -367,6 +454,7 @@ export function PenaltyScreensPage({
   return (
     <Page
       title="Penalties"
+      className="penalties-page"
       actions={(
         <>
           <Button type="button" icon={RefreshCw} onClick={() => loadPenalties(pagination.page)} loading={loading}>Refresh</Button>
@@ -377,6 +465,8 @@ export function PenaltyScreensPage({
       {message ? <Alert tone="success" title="Penalty action complete">{message}</Alert> : null}
       {error ? <Alert tone="danger" title="Penalty action failed">{error}</Alert> : null}
       {errors.context ? <Alert tone="danger" title="Penalty context unavailable">{errors.context}</Alert> : null}
+
+      <PenaltyHero context={context} totals={totals} count={penalties.length} />
 
       <div className="metrics penalty-metrics">
         <Card title="Assessed" value={money(totals.assessed)} note={`${penalties.length} penalties`} tone="amber" icon={AlertTriangle} />
@@ -434,18 +524,21 @@ export function PenaltyScreensPage({
           </div>
           {loading ? <Skeleton lines={7} /> : penalties.length ? (
             <>
-              <DataTable
-                columns={["Member", "Type", "Assessed", "Paid", "Outstanding", "Status", "Action"]}
-                rows={penalties.map((penalty) => [
-                  memberName(penalty),
-                  penalty.penalty_name,
-                  money(penalty.amount_assessed),
-                  money(penalty.amount_paid),
-                  money(outstanding(penalty)),
-                  <Badge text={penalty.status} tone={statusTone(penalty.status)} />,
-                  <Button type="button" size="sm" variant={selected?.id === penalty.id ? "primary" : "secondary"} onClick={() => choosePenalty(penalty)}>View Details</Button>,
-                ])}
-              />
+              <PenaltyRegisterCards penalties={penalties} selected={selected} onSelect={choosePenalty} />
+              <div className="penalty-desktop-table">
+                <DataTable
+                  columns={["Member", "Type", "Assessed", "Paid", "Outstanding", "Status", "Action"]}
+                  rows={penalties.map((penalty) => [
+                    memberName(penalty),
+                    penalty.penalty_name,
+                    money(penalty.amount_assessed),
+                    money(penalty.amount_paid),
+                    money(outstanding(penalty)),
+                    <Badge text={penalty.status} tone={statusTone(penalty.status)} />,
+                    <Button type="button" size="sm" variant={selected?.id === penalty.id ? "primary" : "secondary"} onClick={() => choosePenalty(penalty)}>View Details</Button>,
+                  ])}
+                />
+              </div>
               <Pagination
                 page={pagination.page || 1}
                 totalPages={pagination.totalPages || 1}
@@ -464,17 +557,20 @@ export function PenaltyScreensPage({
           <div className="panel-head">
             <h2>Penalty Types</h2>
           </div>
-          <DataTable
-            columns={["Code", "Name", "Amount", "Convertible", "Status"]}
-            rows={(penaltyTypes || []).map((type) => [
-              type.code,
-              type.name,
-              money(type.amount),
-              type.is_convertible_to_loan ? "Yes" : "No",
-              <Badge text={type.is_active === false ? "Inactive" : "Active"} tone={type.is_active === false ? "gray" : "green"} />,
-            ])}
-            empty="No penalty types found for the active cycle."
-          />
+          <PenaltyTypeCards penaltyTypes={penaltyTypes || []} />
+          <div className="penalty-desktop-table">
+            <DataTable
+              columns={["Code", "Name", "Amount", "Convertible", "Status"]}
+              rows={(penaltyTypes || []).map((type) => [
+                type.code,
+                type.name,
+                money(type.amount),
+                type.is_convertible_to_loan ? "Yes" : "No",
+                <Badge text={type.is_active === false ? "Inactive" : "Active"} tone={type.is_active === false ? "gray" : "green"} />,
+              ])}
+              empty="No penalty types found for the active cycle."
+            />
+          </div>
         </section>
       ) : null}
 

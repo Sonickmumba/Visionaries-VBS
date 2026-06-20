@@ -257,7 +257,7 @@ export function AppLayout({ user, page, setPage, onLogout, children }) {
         <Topbar user={user} page={page} onLogout={onLogout} />
         {open && <button className="overlay" aria-label="Close navigation" onClick={() => setOpen(false)}><X aria-hidden="true" /></button>}
         <main id="main-content" className="content" tabIndex="-1">{children}</main>
-        <MobileBottomNav nav={nav} page={page} setPage={setPage} user={user} />
+        {user.role !== "MEMBER" ? <MobileBottomNav nav={nav} page={page} setPage={setPage} user={user} /> : null}
       </div>
     </div>
   );

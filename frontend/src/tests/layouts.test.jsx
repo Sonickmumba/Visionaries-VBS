@@ -59,7 +59,7 @@ describe("app layouts", () => {
     expect(html).toContain("Member Portal");
     expect(html).toContain("My Statement");
     expect(html).toContain("aria-label=\"Member navigation\"");
-    expect(html).toContain("Member quick navigation");
+    expect(html).not.toContain("Member quick navigation");
   });
 
   it("keeps responsive shell, action, and table safeguards in CSS", () => {

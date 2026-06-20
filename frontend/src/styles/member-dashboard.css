@@ -163,24 +163,6 @@
     gap: 10px;
   }
 
-  .member-mobile-section {
-    display: grid;
-    gap: 10px;
-  }
-
-  .member-mobile-section-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-  }
-
-  .member-mobile-section-head h2 {
-    margin: 0;
-    font-size: 16px;
-    line-height: 1.2;
-  }
-
   .member-mobile-position {
     border: 1px solid #e5edf5;
     border-radius: 16px;
@@ -209,11 +191,6 @@
     font-size: 14px;
     font-weight: 900;
     overflow-wrap: anywhere;
-  }
-
-  .member-mobile-list {
-    display: grid;
-    gap: 8px;
   }
 
   .member-dashboard-metrics,

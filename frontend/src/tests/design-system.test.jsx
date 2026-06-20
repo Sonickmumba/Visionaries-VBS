@@ -1,4 +1,6 @@
 import React from "react";
+import fs from "node:fs";
+import path from "node:path";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import {
@@ -109,6 +111,16 @@ describe("design system components", () => {
     expect(html).toContain("aria-label=\"Primary mobile navigation\"");
     expect(html).toContain("aria-current=\"page\"");
     expect(html).toContain("Declare");
+  });
+
+  it("keeps shared mobile member layout rules in the design system", () => {
+    const css = fs.readFileSync(path.join(process.cwd(), "src/styles/design-system.css"), "utf8");
+
+    expect(css).toContain(".member-mobile-section");
+    expect(css).toContain(".member-mobile-section-head");
+    expect(css).toContain(".member-mobile-list");
+    expect(css).toContain(".mobile-bottom-nav button:focus-visible");
+    expect(css).toContain("touch-action: manipulation");
   });
 
   it("renders mobile finance cards and action tiles", () => {

@@ -337,7 +337,7 @@ caption {
 .mobile-shell-inner {
   width: min(100%, 480px);
   margin: 0 auto;
-  padding: 14px 14px 22px;
+  padding: 14px 14px 24px;
   display: grid;
   gap: 14px;
 }
@@ -446,16 +446,56 @@ caption {
   border-radius: 16px;
   background: transparent;
   color: #65758b;
+  cursor: pointer;
   display: grid;
   place-items: center;
   gap: 2px;
   font-size: 11px;
   font-weight: 800;
+  touch-action: manipulation;
 }
 
 .mobile-bottom-nav button.active {
   background: #dcfce7;
   color: #007a43;
+}
+
+.mobile-bottom-nav button:focus-visible {
+  outline: 3px solid rgba(0, 122, 67, 0.24);
+  outline-offset: 2px;
+}
+
+.mobile-bottom-nav svg {
+  flex: 0 0 auto;
+}
+
+.member-mobile-section {
+  display: grid;
+  gap: 10px;
+}
+
+.member-mobile-section-head {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  min-width: 0;
+}
+
+.member-mobile-section-head h2 {
+  color: #172033;
+  font-size: 16px;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.member-mobile-section-head .badge {
+  flex: 0 0 auto;
+}
+
+.member-mobile-list {
+  display: grid;
+  gap: 8px;
 }
 
 .mobile-hero-card,

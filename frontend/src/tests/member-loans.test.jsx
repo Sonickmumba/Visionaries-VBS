@@ -100,6 +100,7 @@ describe("member loans screen", () => {
     expect(html).toContain("My Loans");
     expect(html).toContain("Member Loans");
     expect(html).toContain("My Loan Balance");
+    expect(html).toContain("Loan account summary");
     expect(html).toContain("Member loan summary");
     expect(html).toContain("Loan Breakdown");
     expect(html).toContain("Loan Ledger");
@@ -114,6 +115,16 @@ describe("member loans screen", () => {
     expect(appSource).toContain("MemberLoansPage");
     expect(appSource).toContain("case \"my-loans\"");
     expect(appSource).toContain("return <MemberLoansPage setPage={setPage} />");
+  });
+
+  it("keeps the member loans mobile responsive contract", () => {
+    const css = fs.readFileSync(path.join(process.cwd(), "src/styles/member-loans.css"), "utf8");
+
+    expect(css).toContain(".member-loans-hero");
+    expect(css).toContain(".member-loans-hero-actions");
+    expect(css).toContain(".member-loans-hero-strip");
+    expect(css).toContain(".member-loans-mobile");
+    expect(css).toContain("@media (max-width: 767px)");
   });
 
   it("renders an empty state without active membership", () => {

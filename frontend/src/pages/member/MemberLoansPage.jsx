@@ -11,7 +11,6 @@ import {
   MobileActionTile,
   MobileBottomNav,
   MobileHeader,
-  MobileHeroCard,
   MobileListCard,
   MobileMetricCard,
   MobileScreenShell,
@@ -40,6 +39,38 @@ function transactionTone(type) {
 
 function DetailValue({ label, value }) {
   return <div><strong>{label}</strong><span>{value}</span></div>;
+}
+
+function MemberLoansMobileHero({ summary, activeMembership, setPage }) {
+  const statusTone = summary.borrowingShortfall > 0 ? "amber" : "green";
+
+  return (
+    <section className="member-loans-hero" aria-label="Loan account summary">
+      <div className="member-loans-hero-head">
+        <div>
+          <span>{activeMembership?.cycle_name || "Active cycle"}</span>
+          <h2>My Loans</h2>
+        </div>
+        <Badge text={titleCase(summary.borrowingStatus)} tone={statusTone} />
+      </div>
+
+      <div className="member-loans-hero-main">
+        <span>Loan Balance</span>
+        <strong>{money(summary.outstandingBalance)}</strong>
+        <small>{money(summary.cumulativeBorrowed)} cumulative borrowed</small>
+      </div>
+
+      <div className="member-loans-hero-actions">
+        <Button type="button" size="sm" onClick={() => setPage?.("my-declaration")}>Request Loan</Button>
+        <Button type="button" size="sm" variant="secondary" onClick={() => setPage?.("my-statement")}>Statement</Button>
+      </div>
+
+      <div className="member-loans-hero-strip">
+        <DetailValue label="Interest Due" value={money(Math.max(0, summary.interestAssessed - summary.interestRepaid))} />
+        <DetailValue label="Shortfall" value={money(summary.borrowingShortfall)} />
+      </div>
+    </section>
+  );
 }
 
 export async function loadMemberLoanData({ memberApi = api } = {}) {
@@ -162,12 +193,10 @@ export function MemberLoansPage({
                 subtitle={activeMembership.cycle_name || "Active cycle"}
               />
 
-              <MobileHeroCard
-                label="My Loan Balance"
-                value={money(summary.outstandingBalance)}
-                note={`${money(summary.cumulativeBorrowed)} cumulative borrowed`}
-                actionLabel="Declare"
-                onAction={() => setPage?.("my-declaration")}
+              <MemberLoansMobileHero
+                summary={summary}
+                activeMembership={activeMembership}
+                setPage={setPage}
               />
 
               <div className="member-loans-mobile-metrics" aria-label="Member loan summary">

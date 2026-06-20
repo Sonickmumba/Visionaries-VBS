@@ -1,7 +1,9 @@
 import React from "react";
 import { Coins } from "lucide-react";
 
-export function SplashScreen() {
+export function SplashScreen({ onContinue, loadingLabel = "Checking secure session" }) {
+  const isWelcome = typeof onContinue === "function";
+
   return (
     <main className="splash-screen" aria-label="Visionaries Village Banking splash screen">
       <section className="splash-phone">
@@ -12,9 +14,15 @@ export function SplashScreen() {
           <h1>Visionaries Village Banking</h1>
           <p>Save Together. Grow Together.</p>
         </div>
-        <div className="splash-progress" role="status" aria-live="polite" aria-label="Checking secure session">
-          <span />
-        </div>
+        {isWelcome ? (
+          <button className="splash-continue" type="button" onClick={onContinue}>
+            Continue
+          </button>
+        ) : (
+          <div className="splash-progress" role="status" aria-live="polite" aria-label={loadingLabel}>
+            <span />
+          </div>
+        )}
       </section>
     </main>
   );

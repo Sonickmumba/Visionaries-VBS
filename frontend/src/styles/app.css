@@ -112,6 +112,28 @@ body {
   animation: splash-progress 1200ms ease-in-out infinite alternate;
 }
 
+.splash-continue {
+  width: min(240px, 72vw);
+  min-height: 52px;
+  border: 0;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #007a43;
+  box-shadow: 0 18px 42px rgba(16, 42, 67, 0.22);
+  font-size: 16px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.splash-continue:hover {
+  background: #f8fafc;
+}
+
+.splash-continue:focus-visible {
+  outline: 3px solid #facc15;
+  outline-offset: 4px;
+}
+
 @keyframes splash-progress {
   from {
     transform: translateX(-20%);

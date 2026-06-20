@@ -6,9 +6,13 @@ function lazyNamed(loader, exportName) {
   return lazy(() => loader().then((module) => ({ default: module[exportName] })));
 }
 
-const LoginPage = lazyNamed(() => import("./pages/auth/LoginPage.jsx"), "LoginPage");
-const PasswordRecoveryPage = lazyNamed(() => import("./pages/auth/PasswordRecoveryPage.jsx"), "PasswordRecoveryPage");
-const SignupPage = lazyNamed(() => import("./pages/auth/SignupPage.jsx"), "SignupPage");
+const preloadLoginPage = () => import("./pages/auth/LoginPage.jsx");
+const preloadPasswordRecoveryPage = () => import("./pages/auth/PasswordRecoveryPage.jsx");
+const preloadSignupPage = () => import("./pages/auth/SignupPage.jsx");
+
+const LoginPage = lazyNamed(preloadLoginPage, "LoginPage");
+const PasswordRecoveryPage = lazyNamed(preloadPasswordRecoveryPage, "PasswordRecoveryPage");
+const SignupPage = lazyNamed(preloadSignupPage, "SignupPage");
 const PortalApp = lazyNamed(() => import("./PortalApp.jsx"), "PortalApp");
 
 function LoadingFallback() {
@@ -37,6 +41,9 @@ export function App() {
   const [user, setUser] = useState(null);
   const [checkingSession, setCheckingSession] = useState(true);
   const [page, setPage] = useState("dashboard");
+  const [showWelcomeSplash, setShowWelcomeSplash] = useState(() => (
+    !new URLSearchParams(window.location.search).has("resetToken")
+  ));
   const [authMode, setAuthMode] = useState(() => (
     new URLSearchParams(window.location.search).has("resetToken") ? "forgot" : "login"
   ));
@@ -44,6 +51,7 @@ export function App() {
 
   useEffect(() => {
     let active = true;
+    preloadLoginPage();
     api("/auth/me")
       .then((response) => {
         if (!active) return;
@@ -62,9 +70,16 @@ export function App() {
     };
   }, []);
 
+  useEffect(() => {
+    if (user) return;
+    if (authMode === "signup") preloadSignupPage();
+    if (authMode === "forgot") preloadPasswordRecoveryPage();
+  }, [authMode, user]);
+
   const authFallback = authMode === "signup" ? (
     <SignupPage onSignup={(nextUser) => {
       setUser(nextUser);
+      setShowWelcomeSplash(false);
       setPage(nextUser.role === "MEMBER" ? "member-dashboard" : "dashboard");
     }} onBackToLogin={() => setAuthMode("login")} />
   ) : authMode === "forgot" ? (
@@ -76,6 +91,7 @@ export function App() {
     <LoginPage
       onLogin={(nextUser) => {
         setUser(nextUser);
+        setShowWelcomeSplash(false);
         setPage(nextUser.role === "MEMBER" ? "member-dashboard" : "dashboard");
       }}
       onSignup={() => setAuthMode("signup")}
@@ -86,6 +102,7 @@ export function App() {
   async function logout() {
     await api("/auth/logout", { method: "POST" }).catch(() => null);
     setUser(null);
+    setShowWelcomeSplash(true);
     setAuthMode("login");
   }
 
@@ -94,7 +111,11 @@ export function App() {
   }
 
   if (!user) {
-    return <Suspense fallback={<LoadingFallback />}>{authFallback}</Suspense>;
+    if (showWelcomeSplash) {
+      return <SplashScreen onContinue={() => setShowWelcomeSplash(false)} />;
+    }
+
+    return <Suspense fallback={null}>{authFallback}</Suspense>;
   }
 
   if (user.is_active === false) {

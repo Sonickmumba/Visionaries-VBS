@@ -16,10 +16,19 @@ describe("app shell", () => {
     expect(html).toContain("splash-progress");
   });
 
+  it("renders the guest welcome splash with a continue action", () => {
+    const html = renderToStaticMarkup(<SplashScreen onContinue={() => {}} />);
+
+    expect(html).toContain("Continue");
+    expect(html).toContain("splash-continue");
+    expect(html).not.toContain("splash-progress");
+  });
+
   it("keeps splash styles mobile-first and motion-safe", () => {
     const css = fs.readFileSync(path.join(process.cwd(), "src/styles/app.css"), "utf8");
 
     expect(css).toContain(".splash-screen");
+    expect(css).toContain(".splash-continue");
     expect(css).toContain("100svh");
     expect(css).toContain("@media (prefers-reduced-motion: reduce)");
     expect(css).toContain("@keyframes splash-progress");

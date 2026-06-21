@@ -196,7 +196,7 @@ function DeclarationDetail({ detail, onEdit, onApprove, onLoanRequest, onCancel,
     + Number(detail.loan_interest_repayment_amount || 0)
     + Number(detail.common_interest_payment_amount || 0);
   return (
-    <section className="panel declaration-detail">
+    <section className="declaration-detail">
       <div className="declaration-detail-hero">
         <div className="declaration-avatar" aria-hidden="true">{initials(detail)}</div>
         <div>
@@ -657,18 +657,27 @@ export function DeclarationScreensPage({
 
       {loading ? <section className="panel"><Skeleton lines={8} /></section> : null}
 
-      {detail ? (
-        <DeclarationDetail
-          detail={detail}
-          onEdit={startEditDeclaration}
-          onApprove={approveInputs}
-          onLoanRequest={createLoanRequest}
-          onCancel={() => setCancelOpen(true)}
-          onClose={() => { setDetail(null); setSelectedId(""); }}
-          onViewAttachment={viewAttachment}
-          loading={busy}
-        />
-      ) : null}
+      <Modal
+        open={Boolean(detail)}
+        title="Declaration Details"
+        size="lg"
+        onClose={() => { setDetail(null); setSelectedId(""); }}
+      >
+        {detail ? (
+          <div className="declaration-detail-modal">
+            <DeclarationDetail
+              detail={detail}
+              onEdit={startEditDeclaration}
+              onApprove={approveInputs}
+              onLoanRequest={createLoanRequest}
+              onCancel={() => setCancelOpen(true)}
+              onClose={() => { setDetail(null); setSelectedId(""); }}
+              onViewAttachment={viewAttachment}
+              loading={busy}
+            />
+          </div>
+        ) : null}
+      </Modal>
 
       <Tabs
         active={activeTab}

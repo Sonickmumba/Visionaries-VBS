@@ -64,8 +64,14 @@
 }
 
 .declaration-detail {
-  margin-bottom: 18px;
-  border-radius: 16px;
+  display: grid;
+  gap: 14px;
+}
+
+.declaration-detail-modal {
+  max-height: min(72vh, 720px);
+  overflow: auto;
+  padding-right: 2px;
 }
 
 .declaration-detail-hero {
@@ -311,6 +317,11 @@
   .declaration-detail-actions .btn {
     width: 100%;
     min-height: 44px;
+  }
+
+  .declaration-detail-modal {
+    max-height: calc(100svh - 124px);
+    padding-bottom: 8px;
   }
 
   .declaration-proof-card {

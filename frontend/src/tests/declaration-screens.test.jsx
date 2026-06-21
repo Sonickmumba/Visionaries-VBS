@@ -159,12 +159,22 @@ describe("declaration screens", () => {
     expect(html).toContain("K15,000");
   });
 
+  it("opens declaration detail in a modal instead of an inline queue panel", () => {
+    const source = fs.readFileSync(path.join(process.cwd(), "src/pages/admin/DeclarationScreensPage.jsx"), "utf8");
+
+    expect(source).toContain('title="Declaration Details"');
+    expect(source).toContain("declaration-detail-modal");
+    expect(source).toContain("open={Boolean(detail)}");
+  });
+
   it("keeps declaration workflow mobile card styles responsive", () => {
     const css = fs.readFileSync(path.join(process.cwd(), "src/styles/declarations.css"), "utf8");
 
     expect(css).toContain(".declaration-hero");
     expect(css).toContain(".declaration-mobile-cards");
     expect(css).toContain(".declaration-queue-card");
+    expect(css).toContain(".declaration-detail-modal");
+    expect(css).toContain("max-height: calc(100svh - 124px)");
     expect(css).toContain(".declaration-proof-card");
     expect(css).toContain("@media (max-width: 767px)");
   });

@@ -255,6 +255,10 @@
     display: grid;
   }
 
+  .member-list-head-action {
+    display: none;
+  }
+
   .member-metrics,
   .member-profile,
   .member-form .form-grid.two,
@@ -275,9 +279,12 @@
     gap: 12px;
   }
 
-  .member-card-values,
-  .member-card-actions {
+  .member-card-values {
     grid-template-columns: 1fr;
+  }
+
+  .member-card-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

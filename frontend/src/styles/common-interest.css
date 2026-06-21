@@ -66,9 +66,19 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
-.common-interest-filters,
-.common-interest-detail {
+.common-interest-filters {
   margin-bottom: 18px;
+}
+
+.common-interest-detail {
+  display: grid;
+  gap: 14px;
+}
+
+.common-interest-detail-modal {
+  max-height: min(72vh, 720px);
+  overflow: auto;
+  padding-right: 2px;
 }
 
 .common-interest-detail-hero,
@@ -245,6 +255,11 @@
   .common-interest-run-hero .badge {
     grid-column: 1 / -1;
     justify-self: start;
+  }
+
+  .common-interest-detail-modal {
+    max-height: calc(100svh - 124px);
+    padding-bottom: 8px;
   }
 
   .common-interest-desktop-table {

@@ -115,12 +115,22 @@ describe("common-interest screens", () => {
     expect(html).toContain("Posted Run");
   });
 
+  it("opens allocation detail in a modal instead of an inline preview panel", () => {
+    const source = fs.readFileSync(path.join(process.cwd(), "src/pages/admin/CommonInterestPage.jsx"), "utf8");
+
+    expect(source).toContain('title="Allocation Details"');
+    expect(source).toContain("common-interest-detail-modal");
+    expect(source).toContain("open={Boolean(selectedAllocation)}");
+  });
+
   it("keeps the common-interest mobile responsive contract", () => {
     const css = fs.readFileSync(path.join(process.cwd(), "src/styles/common-interest.css"), "utf8");
 
     expect(css).toContain(".common-interest-hero");
     expect(css).toContain(".common-interest-mobile-cards");
     expect(css).toContain(".common-interest-card");
+    expect(css).toContain(".common-interest-detail-modal");
+    expect(css).toContain("max-height: calc(100svh - 124px)");
     expect(css).toContain(".common-interest-desktop-table");
     expect(css).toContain("@media (max-width: 767px)");
   });

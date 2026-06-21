@@ -8,6 +8,7 @@ import {
   Card,
   DataTable,
   EmptyState,
+  Modal,
   Select,
   Skeleton,
   Tabs,
@@ -184,7 +185,7 @@ function PostedRunCards({ allocations }) {
 function AllocationDetail({ allocation, onClose }) {
   if (!allocation) return null;
   return (
-    <section className="panel common-interest-detail">
+    <section className="common-interest-detail">
       <div className="common-interest-detail-hero">
         <div className="common-interest-avatar">{initials(allocation)}</div>
         <div>
@@ -442,7 +443,18 @@ export function CommonInterestPage({
             ]}
           />
 
-          <AllocationDetail allocation={selectedAllocation} onClose={() => setSelectedAllocation(null)} />
+          <Modal
+            open={Boolean(selectedAllocation)}
+            title="Allocation Details"
+            size="lg"
+            onClose={() => setSelectedAllocation(null)}
+          >
+            {selectedAllocation ? (
+              <div className="common-interest-detail-modal">
+                <AllocationDetail allocation={selectedAllocation} onClose={() => setSelectedAllocation(null)} />
+              </div>
+            ) : null}
+          </Modal>
 
           {activeTab === "preview" ? (
             <section className="panel">

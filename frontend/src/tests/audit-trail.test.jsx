@@ -111,7 +111,7 @@ describe("audit trail screens", () => {
     expect(css).toContain(".ledger-audit-mobile-cards");
     expect(css).toContain(".ledger-audit-card");
     expect(css).toContain(".audit-detail-modal");
-    expect(css).toContain("max-height: calc(100svh - 124px)");
+    expect(css).toContain("max-height: none");
     expect(css).toContain(".ledger-audit-desktop-table");
     expect(css).toContain("@media (max-width: 767px)");
   });

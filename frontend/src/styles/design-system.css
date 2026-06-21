@@ -809,13 +809,28 @@ caption {
   }
 
   .ui-overlay {
-    align-items: end;
-    padding: 0;
+    align-items: start;
+    justify-items: center;
+    overflow-y: auto;
+    padding: max(10px, env(safe-area-inset-top)) 10px max(10px, env(safe-area-inset-bottom));
   }
 
   .ui-modal {
-    width: 100%;
-    border-radius: 8px 8px 0 0;
+    display: flex;
+    flex-direction: column;
+    width: min(100%, 480px);
+    max-height: calc(100svh - 20px);
+    border-radius: 8px;
+  }
+
+  .ui-modal header,
+  .ui-modal footer {
+    flex: 0 0 auto;
+  }
+
+  .ui-modal-body {
+    min-height: 0;
+    overflow: auto;
   }
 
   .mobile-shell-inner {

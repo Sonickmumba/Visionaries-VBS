@@ -125,6 +125,17 @@ describe("design system components", () => {
     expect(css).toContain("bottom: 84px");
   });
 
+  it("anchors mobile modals near the top with internal scrolling", () => {
+    const css = fs.readFileSync(path.join(process.cwd(), "src/styles/design-system.css"), "utf8");
+
+    expect(css).toContain(".ui-overlay");
+    expect(css).toContain("align-items: start");
+    expect(css).toContain("overflow-y: auto");
+    expect(css).toContain("max-height: calc(100svh - 20px)");
+    expect(css).toContain(".ui-modal-body");
+    expect(css).toContain("overflow: auto");
+  });
+
   it("renders mobile finance cards and action tiles", () => {
     const hero = renderToStaticMarkup(<MobileHeroCard label="Total Accumulated Savings" value="K45,250" note="Up to Month 3" actionLabel="View" />);
     const metric = renderToStaticMarkup(<MobileMetricCard label="My Loan Balance" value="K10,000" note="After repayments" tone="blue" />);

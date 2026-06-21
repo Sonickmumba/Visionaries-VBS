@@ -166,7 +166,7 @@ describe("penalty screens", () => {
     expect(css).toContain(".penalty-mobile-cards");
     expect(css).toContain(".penalty-card");
     expect(css).toContain(".penalty-detail-modal");
-    expect(css).toContain("max-height: calc(100svh - 124px)");
+    expect(css).toContain("max-height: none");
     expect(css).toContain(".penalty-desktop-table");
     expect(css).toContain("@media (max-width: 767px)");
   });

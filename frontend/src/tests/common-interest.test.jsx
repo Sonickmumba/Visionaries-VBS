@@ -130,7 +130,7 @@ describe("common-interest screens", () => {
     expect(css).toContain(".common-interest-mobile-cards");
     expect(css).toContain(".common-interest-card");
     expect(css).toContain(".common-interest-detail-modal");
-    expect(css).toContain("max-height: calc(100svh - 124px)");
+    expect(css).toContain("max-height: none");
     expect(css).toContain(".common-interest-desktop-table");
     expect(css).toContain("@media (max-width: 767px)");
   });

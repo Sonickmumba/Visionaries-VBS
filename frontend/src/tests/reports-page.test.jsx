@@ -127,7 +127,7 @@ describe("reports screens", () => {
     expect(css).toContain(".reports-mobile-cards");
     expect(css).toContain(".reports-card");
     expect(css).toContain(".reports-detail-modal");
-    expect(css).toContain("max-height: calc(100svh - 124px)");
+    expect(css).toContain("max-height: none");
     expect(css).toContain(".reports-desktop-table");
     expect(css).toContain("@media (max-width: 767px)");
   });

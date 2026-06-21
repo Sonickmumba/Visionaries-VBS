@@ -227,7 +227,7 @@
   }
 
   .reports-detail-modal {
-    max-height: calc(100svh - 124px);
+    max-height: none;
     padding-bottom: 8px;
   }
 

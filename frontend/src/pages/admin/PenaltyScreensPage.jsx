@@ -233,7 +233,7 @@ function PenaltyDetail({
   busy,
 }) {
   return (
-    <section className="panel penalty-detail">
+    <section className="penalty-detail">
       <div className="penalty-detail-hero">
         <div className="penalty-avatar">{initials(selected)}</div>
         <div>
@@ -475,26 +475,35 @@ export function PenaltyScreensPage({
         <Card title="Converted" value={totals.converted} note="Penalty loans" tone="blue" icon={Banknote} />
       </div>
 
-      {selected ? (
-        <PenaltyDetail
-          selected={selected}
-          paymentAmount={paymentAmount}
-          setPaymentAmount={setPaymentAmount}
-          conversionReason={conversionReason}
-          setConversionReason={setConversionReason}
-          waiveReason={waiveReason}
-          setWaiveReason={setWaiveReason}
-          reverseReason={reverseReason}
-          setReverseReason={setReverseReason}
-          errors={errors}
-          busy={busy}
-          onPay={() => runAction("pay", () => payPenalty({ penalty: selected, amount: paymentAmount, penaltiesApi }))}
-          onConvert={() => runAction("convert", () => convertPenaltyToLoan({ penalty: selected, reason: conversionReason, penaltiesApi }))}
-          onWaive={() => runAction("waive", () => waivePenaltyById({ penalty: selected, reason: waiveReason, penaltiesApi }))}
-          onReverse={() => runAction("reverse", () => reversePenaltyById({ penalty: selected, reason: reverseReason, penaltiesApi }))}
-          onClose={() => setSelected(null)}
-        />
-      ) : null}
+      <Modal
+        open={Boolean(selected)}
+        title="Penalty Details"
+        size="lg"
+        onClose={() => setSelected(null)}
+      >
+        {selected ? (
+          <div className="penalty-detail-modal">
+            <PenaltyDetail
+              selected={selected}
+              paymentAmount={paymentAmount}
+              setPaymentAmount={setPaymentAmount}
+              conversionReason={conversionReason}
+              setConversionReason={setConversionReason}
+              waiveReason={waiveReason}
+              setWaiveReason={setWaiveReason}
+              reverseReason={reverseReason}
+              setReverseReason={setReverseReason}
+              errors={errors}
+              busy={busy}
+              onPay={() => runAction("pay", () => payPenalty({ penalty: selected, amount: paymentAmount, penaltiesApi }))}
+              onConvert={() => runAction("convert", () => convertPenaltyToLoan({ penalty: selected, reason: conversionReason, penaltiesApi }))}
+              onWaive={() => runAction("waive", () => waivePenaltyById({ penalty: selected, reason: waiveReason, penaltiesApi }))}
+              onReverse={() => runAction("reverse", () => reversePenaltyById({ penalty: selected, reason: reverseReason, penaltiesApi }))}
+              onClose={() => setSelected(null)}
+            />
+          </div>
+        ) : null}
+      </Modal>
 
       <Tabs
         active={activeTab}

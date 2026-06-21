@@ -151,12 +151,22 @@ describe("penalty screens", () => {
     expect(html).toContain("View Details");
   });
 
+  it("opens penalty detail in a modal instead of an inline register panel", () => {
+    const source = fs.readFileSync(path.join(process.cwd(), "src/pages/admin/PenaltyScreensPage.jsx"), "utf8");
+
+    expect(source).toContain('title="Penalty Details"');
+    expect(source).toContain("penalty-detail-modal");
+    expect(source).toContain("open={Boolean(selected)}");
+  });
+
   it("keeps the penalty mobile responsive contract", () => {
     const css = fs.readFileSync(path.join(process.cwd(), "src/styles/penalties.css"), "utf8");
 
     expect(css).toContain(".penalty-hero");
     expect(css).toContain(".penalty-mobile-cards");
     expect(css).toContain(".penalty-card");
+    expect(css).toContain(".penalty-detail-modal");
+    expect(css).toContain("max-height: calc(100svh - 124px)");
     expect(css).toContain(".penalty-desktop-table");
     expect(css).toContain("@media (max-width: 767px)");
   });

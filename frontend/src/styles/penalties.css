@@ -66,7 +66,14 @@
 }
 
 .penalty-detail {
-  margin-bottom: 18px;
+  display: grid;
+  gap: 14px;
+}
+
+.penalty-detail-modal {
+  max-height: min(72vh, 720px);
+  overflow: auto;
+  padding-right: 2px;
 }
 
 .penalty-detail-hero {
@@ -239,6 +246,11 @@
   .penalty-detail-hero .badge {
     grid-column: 1 / -1;
     justify-self: start;
+  }
+
+  .penalty-detail-modal {
+    max-height: calc(100svh - 124px);
+    padding-bottom: 8px;
   }
 
   .penalty-desktop-table {

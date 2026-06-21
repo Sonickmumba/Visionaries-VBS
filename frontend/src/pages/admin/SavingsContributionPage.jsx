@@ -327,6 +327,11 @@ export function SavingsContributionPage({
 
       <SavingsHero context={context} metrics={metrics} />
 
+      <div className="admin-mobile-action-row savings-mobile-actions mobile-only" aria-label="Savings quick actions">
+        <Button type="button" icon={RefreshCw} onClick={loadContext} loading={loading}>Refresh</Button>
+        <Button type="button" variant="secondary" icon={ClipboardList} onClick={() => setActiveTab("ledger")}>Ledger</Button>
+      </div>
+
       <div className="metrics savings-metrics">
         {metrics.map((metric) => <Card key={metric.title} {...metric} />)}
       </div>

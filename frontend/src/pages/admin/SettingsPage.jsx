@@ -485,6 +485,12 @@ export function SettingsPage({
 
       <SettingsHero selectedCycle={selectedCycle} metrics={metrics} />
 
+      <div className="admin-mobile-action-row settings-mobile-actions-row mobile-only" aria-label="Settings quick actions">
+        <Button type="button" icon={RefreshCw} onClick={() => loadSettings()} loading={loading}>Refresh</Button>
+        <Button type="submit" form="invite-user-form" icon={UserPlus} loading={busy === "invite"} disabled={activeTab !== "users"}>Invite</Button>
+        <Button type="submit" form="penalty-type-form" variant="secondary" icon={Save} loading={busy === "penalty"} disabled={activeTab !== "penalties"}>Penalty</Button>
+      </div>
+
       <div className="metrics settings-metrics">
         <Card title="Users" value={metrics.users} note="System accounts" icon={Users} />
         <Card title="Active Users" value={metrics.activeUsers} note="Can sign in" tone="blue" icon={Lock} />

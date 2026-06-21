@@ -378,6 +378,13 @@ export function MonthlyClosingPage({
 
       <ClosingHero preview={preview} totals={totals} exceptions={exceptions} />
 
+      <div className="admin-mobile-action-row closing-mobile-actions-row mobile-only" aria-label="Monthly closing quick actions">
+        <Button type="button" icon={RefreshCw} onClick={loadPreview} loading={loading}>Refresh</Button>
+        <Button type="button" variant="danger" icon={FileCheck2} onClick={runClosing} loading={busy === "run"} disabled={preview?.cycleMonth?.status === "LOCKED"}>
+          Run
+        </Button>
+      </div>
+
       <section className="panel closing-context">
         <div className="form-grid three">
           <Select

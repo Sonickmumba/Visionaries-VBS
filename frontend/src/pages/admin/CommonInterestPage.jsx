@@ -387,6 +387,11 @@ export function CommonInterestPage({
 
       <CommonInterestHero preview={preview} totals={totals} />
 
+      <div className="admin-mobile-action-row common-interest-mobile-actions-row mobile-only" aria-label="Common interest quick actions">
+        <Button type="button" icon={RefreshCw} onClick={() => loadPreview()} loading={loading}>Preview</Button>
+        <Button type="button" variant="danger" icon={Calculator} onClick={postAllocation} loading={busy === "post"} disabled={Boolean(preview?.existingRun)}>Post</Button>
+      </div>
+
       <section className="panel common-interest-filters">
         <div className="form-grid three">
           <Select

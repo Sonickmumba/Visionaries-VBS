@@ -385,6 +385,19 @@ textarea {
   display: none;
 }
 
+.admin-mobile-action-row {
+  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(92px, 1fr));
+  gap: 8px;
+  margin: 0 0 14px;
+}
+
+.admin-mobile-action-row .btn {
+  width: 100%;
+  min-height: 44px;
+  padding-inline: 10px;
+}
+
 .metrics {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -818,6 +831,22 @@ th {
 
   .mobile-only {
     display: inline-grid;
+  }
+
+  .declarations-page > .page-head .button-row,
+  .savings-page > .page-head .button-row,
+  .loans-page > .page-head .button-row,
+  .common-interest-page > .page-head .button-row,
+  .penalties-page > .page-head .button-row,
+  .monthly-closing-page > .page-head .button-row,
+  .ledger-audit-page > .page-head .button-row,
+  .reports-page > .page-head .button-row,
+  .settings-page > .page-head .button-row {
+    display: none;
+  }
+
+  .admin-mobile-action-row {
+    display: grid;
   }
 
   .topbar {

@@ -263,6 +263,10 @@
     display: none;
   }
 
+  .loan-queue-head-action {
+    display: none;
+  }
+
   .loan-mobile-cards {
     display: grid;
     gap: 12px;
@@ -278,7 +282,7 @@
   }
 
   .loan-card-actions {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .loan-detail-panel .button-row .btn {

@@ -523,6 +523,12 @@ export function LoanScreensPage({
       {error ? <Alert tone="danger" title="Loan action failed">{error}</Alert> : null}
       {errors.context ? <Alert tone="danger" title="Loan context unavailable">{errors.context}</Alert> : null}
 
+      <div className="admin-mobile-action-row loan-mobile-actions mobile-only" aria-label="Loan quick actions">
+        <Button type="button" icon={RefreshCw} onClick={loadRequests} loading={loading}>Refresh</Button>
+        <Button type="button" variant="secondary" icon={Banknote} onClick={openNewRequest}>New Request</Button>
+        <Button type="button" variant="secondary" icon={Send} onClick={openRepayment}>Payment</Button>
+      </div>
+
       <div className="metrics loan-metrics">
         {metrics.map((metric) => <Card key={metric.title} {...metric} />)}
       </div>
@@ -579,7 +585,7 @@ export function LoanScreensPage({
         <section className="panel">
           <div className="panel-head">
             <h2>Loan Approval Queue</h2>
-            <Button type="button" size="sm" icon={Banknote} onClick={openNewRequest}>New Loan Request</Button>
+            <Button type="button" className="loan-queue-head-action" size="sm" icon={Banknote} onClick={openNewRequest}>New Loan Request</Button>
           </div>
           {loading ? <Skeleton lines={7} /> : requests.length ? (
             <>

@@ -589,6 +589,12 @@ export function ReportsPage({
 
       <ReportsHero definition={definition} data={data} totals={totals} rows={rows} />
 
+      <div className="admin-mobile-action-row reports-mobile-actions-row mobile-only" aria-label="Reports quick actions">
+        <Button type="button" icon={RefreshCw} onClick={() => loadReport()} loading={loading}>Run</Button>
+        <Button type="button" variant="secondary" icon={Printer} onClick={downloadPdf}>PDF</Button>
+        <Button type="button" variant="secondary" icon={Download} onClick={exportCsv}>CSV</Button>
+      </div>
+
       <Tabs
         active={report}
         onChange={changeReport}

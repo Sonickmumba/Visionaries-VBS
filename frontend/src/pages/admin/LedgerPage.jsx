@@ -363,6 +363,12 @@ export function LedgerPage({
 
       <LedgerHero metrics={metrics} />
 
+      <div className="admin-mobile-action-row ledger-mobile-actions-row mobile-only" aria-label="Ledger quick actions">
+        <Button type="button" icon={RefreshCw} onClick={() => loadLedger(filters, 1)} loading={loading}>Filter</Button>
+        <Button type="button" variant="secondary" onClick={clearFilters}>Clear</Button>
+        <Button type="button" variant="secondary" icon={Download} onClick={downloadCsv}>Export</Button>
+      </div>
+
       <section className="panel ledger-filters">
         <div className="form-grid three">
           <Select

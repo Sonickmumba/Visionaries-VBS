@@ -657,6 +657,11 @@ export function DeclarationScreensPage({
 
       {loading ? <section className="panel"><Skeleton lines={8} /></section> : null}
 
+      <div className="admin-mobile-action-row declaration-mobile-actions mobile-only" aria-label="Declaration quick actions">
+        <Button type="button" icon={RefreshCw} onClick={() => loadQueue()} loading={loading}>Refresh</Button>
+        <Button type="button" variant="secondary" icon={Plus} onClick={startNewDeclaration}>New</Button>
+      </div>
+
       <Modal
         open={Boolean(detail)}
         title="Declaration Details"
@@ -694,7 +699,7 @@ export function DeclarationScreensPage({
         <section className="panel">
           <div className="panel-head">
             <h2>Submitted Declarations</h2>
-            <Button type="button" size="sm" icon={Plus} onClick={startNewDeclaration}>New Declaration</Button>
+            <Button type="button" className="declaration-list-head-action" size="sm" icon={Plus} onClick={startNewDeclaration}>New Declaration</Button>
           </div>
           <SubmittedDeclarationCards declarations={queue.declarations || []} selectedId={selectedId} busy={busy} onOpen={openDeclaration} />
           <div className="declaration-desktop-table">

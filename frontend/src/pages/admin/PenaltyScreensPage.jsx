@@ -468,6 +468,11 @@ export function PenaltyScreensPage({
 
       <PenaltyHero context={context} totals={totals} count={penalties.length} />
 
+      <div className="admin-mobile-action-row penalty-mobile-actions-row mobile-only" aria-label="Penalty quick actions">
+        <Button type="button" icon={RefreshCw} onClick={() => loadPenalties(pagination.page)} loading={loading}>Refresh</Button>
+        <Button type="button" variant="secondary" icon={AlertTriangle} onClick={openAssessment}>Assess</Button>
+      </div>
+
       <div className="metrics penalty-metrics">
         <Card title="Assessed" value={money(totals.assessed)} note={`${penalties.length} penalties`} tone="amber" icon={AlertTriangle} />
         <Card title="Paid" value={money(totals.paid)} note="Collected penalties" icon={Receipt} />

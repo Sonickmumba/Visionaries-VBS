@@ -112,12 +112,22 @@ describe("reports screens", () => {
     expect(html).toContain("K15,000");
   });
 
+  it("opens report row detail in a modal instead of an inline report panel", () => {
+    const source = fs.readFileSync(path.join(process.cwd(), "src/pages/admin/ReportsPage.jsx"), "utf8");
+
+    expect(source).toContain('title="Report Details"');
+    expect(source).toContain("reports-detail-modal");
+    expect(source).toContain("open={Boolean(selectedRow)}");
+  });
+
   it("keeps the reports mobile responsive contract", () => {
     const css = fs.readFileSync(path.join(process.cwd(), "src/styles/reports.css"), "utf8");
 
     expect(css).toContain(".reports-hero");
     expect(css).toContain(".reports-mobile-cards");
     expect(css).toContain(".reports-card");
+    expect(css).toContain(".reports-detail-modal");
+    expect(css).toContain("max-height: calc(100svh - 124px)");
     expect(css).toContain(".reports-desktop-table");
     expect(css).toContain("@media (max-width: 767px)");
   });

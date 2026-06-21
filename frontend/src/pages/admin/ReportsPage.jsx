@@ -8,6 +8,7 @@ import {
   Card,
   DataTable,
   EmptyState,
+  Modal,
   Select,
   Skeleton,
   Tabs,
@@ -341,6 +342,32 @@ function ReportCards({ rows, report, definition, onSelect }) {
   );
 }
 
+function ReportDetail({ selectedRow, definition, onClose }) {
+  if (!selectedRow) return null;
+  return (
+    <section className="reports-detail">
+      <div className="reports-detail-hero">
+        <div className="reports-avatar">{initials(selectedRow)}</div>
+        <div>
+          <span>Report Detail</span>
+          <h2>{memberName(selectedRow)}</h2>
+          <p>{definition.label}</p>
+        </div>
+        <Badge text={definition.label} tone="blue" />
+      </div>
+      <div className="detail-grid reports-detail-grid">
+        {Object.entries(selectedRow)
+          .filter(([key]) => !["id", "cycle_id", "cycle_month_id", "cycle_member_id", "member_id"].includes(key))
+          .slice(0, 16)
+          .map(([key, value]) => <DetailValue key={key} label={titleCase(key)} value={formatReportValue(key, value)} />)}
+      </div>
+      <div className="button-row">
+        <Button type="button" variant="secondary" onClick={onClose}>Close Detail</Button>
+      </div>
+    </section>
+  );
+}
+
 function dataLabel(row) {
   return row.closing_status || row.transaction_type || row.penalty_type || "Report row";
 }
@@ -604,28 +631,18 @@ export function ReportsPage({
         <Card title="Charges" value={money(totals.charges)} note="Common interest + penalties" tone="amber" icon={Scale} />
       </div>
 
-      {selectedRow ? (
-        <section className="panel reports-detail">
-          <div className="reports-detail-hero">
-            <div className="reports-avatar">{initials(selectedRow)}</div>
-            <div>
-              <span>Report Detail</span>
-              <h2>{memberName(selectedRow)}</h2>
-              <p>{definition.label}</p>
-            </div>
-            <Badge text={definition.label} tone="blue" />
+      <Modal
+        open={Boolean(selectedRow)}
+        title="Report Details"
+        size="lg"
+        onClose={() => setSelectedRow(null)}
+      >
+        {selectedRow ? (
+          <div className="reports-detail-modal">
+            <ReportDetail selectedRow={selectedRow} definition={definition} onClose={() => setSelectedRow(null)} />
           </div>
-          <div className="detail-grid reports-detail-grid">
-            {Object.entries(selectedRow)
-              .filter(([key]) => !["id", "cycle_id", "cycle_month_id", "cycle_member_id", "member_id"].includes(key))
-              .slice(0, 16)
-              .map(([key, value]) => <DetailValue key={key} label={titleCase(key)} value={formatReportValue(key, value)} />)}
-          </div>
-          <div className="button-row">
-            <Button type="button" variant="secondary" onClick={() => setSelectedRow(null)}>Close Detail</Button>
-          </div>
-        </section>
-      ) : null}
+        ) : null}
+      </Modal>
 
       <section className="panel">
         <div className="panel-head">

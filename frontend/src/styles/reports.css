@@ -60,9 +60,19 @@
   font-weight: 800;
 }
 
-.reports-filters,
-.reports-detail {
+.reports-filters {
   margin-bottom: 18px;
+}
+
+.reports-detail {
+  display: grid;
+  gap: 14px;
+}
+
+.reports-detail-modal {
+  max-height: min(72vh, 720px);
+  overflow: auto;
+  padding-right: 2px;
 }
 
 .reports-metrics {
@@ -214,6 +224,11 @@
   .reports-detail-hero .badge {
     grid-column: 1 / -1;
     justify-self: start;
+  }
+
+  .reports-detail-modal {
+    max-height: calc(100svh - 124px);
+    padding-bottom: 8px;
   }
 
   .reports-desktop-table {

@@ -9,6 +9,7 @@ import {
   DataTable,
   EmptyState,
   Field,
+  Modal,
   Pagination,
   Select,
   Skeleton,
@@ -178,7 +179,7 @@ function LedgerDetail({
   const canReverse = !selected.is_reversal && !reversed;
 
   return (
-    <section className="panel ledger-detail">
+    <section className="ledger-detail">
       <div className="ledger-audit-detail-hero">
         <div className="ledger-audit-avatar">{initials(selected)}</div>
         <div>
@@ -205,7 +206,7 @@ function LedgerDetail({
       </div>
       {selected.description ? <p className="muted ledger-note">{selected.description}</p> : null}
       {detailLoading ? <Skeleton lines={5} /> : (
-        <div className="ledger-audit-desktop-table">
+        <div className="ledger-detail-entries">
           <DataTable
             columns={["Account", "Debit", "Credit", "Memo"]}
             rows={entries.map((entry) => [
@@ -389,18 +390,29 @@ export function LedgerPage({
         <Card title="Reversals" value={metrics.reversals} note="Corrections in current page" tone="amber" icon={Activity} />
       </div>
 
-      <LedgerDetail
-        selected={selected}
-        entries={entries}
-        reversal={linkedReversal}
-        detailLoading={detailLoading}
-        reversalReason={reversalReason}
-        onReasonChange={setReversalReason}
-        onReverse={reverseSelected}
+      <Modal
+        open={Boolean(selected)}
+        title="Transaction Details"
+        size="lg"
         onClose={() => { setSelected(null); setEntries([]); setLinkedReversal(null); setReversalReason(""); setErrors({}); }}
-        reversing={reversing}
-        errors={errors}
-      />
+      >
+        {selected ? (
+          <div className="ledger-detail-modal">
+            <LedgerDetail
+              selected={selected}
+              entries={entries}
+              reversal={linkedReversal}
+              detailLoading={detailLoading}
+              reversalReason={reversalReason}
+              onReasonChange={setReversalReason}
+              onReverse={reverseSelected}
+              onClose={() => { setSelected(null); setEntries([]); setLinkedReversal(null); setReversalReason(""); setErrors({}); }}
+              reversing={reversing}
+              errors={errors}
+            />
+          </div>
+        ) : null}
+      </Modal>
 
       <section className="panel">
         <div className="panel-head">

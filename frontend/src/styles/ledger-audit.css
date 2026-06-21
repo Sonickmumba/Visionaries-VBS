@@ -62,10 +62,21 @@
 }
 
 .ledger-filters,
-.audit-filters,
+.audit-filters {
+  margin-bottom: 18px;
+}
+
 .ledger-detail,
 .audit-detail {
-  margin-bottom: 18px;
+  display: grid;
+  gap: 14px;
+}
+
+.ledger-detail-modal,
+.audit-detail-modal {
+  max-height: min(72vh, 720px);
+  overflow: auto;
+  padding-right: 2px;
 }
 
 .ledger-audit-metrics {
@@ -155,6 +166,10 @@
 
 .ledger-note {
   margin-top: 0;
+}
+
+.ledger-detail-entries {
+  min-width: 0;
 }
 
 .audit-json-grid {
@@ -269,6 +284,12 @@
   .ledger-audit-detail-hero .badge {
     grid-column: 1 / -1;
     justify-self: start;
+  }
+
+  .ledger-detail-modal,
+  .audit-detail-modal {
+    max-height: calc(100svh - 124px);
+    padding-bottom: 8px;
   }
 
   .ledger-audit-desktop-table {

@@ -92,12 +92,23 @@ describe("ledger screens", () => {
     expect(html).toContain("View Transaction");
   });
 
+  it("opens ledger transaction detail in a modal without hiding entries on mobile", () => {
+    const source = fs.readFileSync(path.join(process.cwd(), "src/pages/admin/LedgerPage.jsx"), "utf8");
+
+    expect(source).toContain('title="Transaction Details"');
+    expect(source).toContain("ledger-detail-modal");
+    expect(source).toContain("open={Boolean(selected)}");
+    expect(source).toContain("ledger-detail-entries");
+  });
+
   it("keeps the ledger mobile responsive contract", () => {
     const css = fs.readFileSync(path.join(process.cwd(), "src/styles/ledger-audit.css"), "utf8");
 
     expect(css).toContain(".ledger-audit-hero");
     expect(css).toContain(".ledger-audit-mobile-cards");
     expect(css).toContain(".ledger-audit-card");
+    expect(css).toContain(".ledger-detail-modal");
+    expect(css).toContain("max-height: calc(100svh - 124px)");
     expect(css).toContain(".ledger-audit-desktop-table");
     expect(css).toContain("@media (max-width: 767px)");
   });

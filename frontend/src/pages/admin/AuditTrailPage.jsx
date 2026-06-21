@@ -9,6 +9,7 @@ import {
   DataTable,
   EmptyState,
   Field,
+  Modal,
   Pagination,
   Select,
   Skeleton,
@@ -139,7 +140,7 @@ function AuditCards({ section, rows, onSelect }) {
 function AuditDetail({ row, onClose }) {
   if (!row) return null;
   return (
-    <section className="panel audit-detail">
+    <section className="audit-detail">
       <div className="ledger-audit-detail-hero">
         <div className="ledger-audit-avatar">{String(row.actor_email || row.target_table || row.transaction_type || "A").slice(0, 2).toUpperCase()}</div>
         <div>
@@ -342,7 +343,18 @@ export function AuditTrailPage({
         ]}
       />
 
-      <AuditDetail row={selected} onClose={() => setSelected(null)} />
+      <Modal
+        open={Boolean(selected)}
+        title="Audit Details"
+        size="lg"
+        onClose={() => setSelected(null)}
+      >
+        {selected ? (
+          <div className="audit-detail-modal">
+            <AuditDetail row={selected} onClose={() => setSelected(null)} />
+          </div>
+        ) : null}
+      </Modal>
 
       <section className="panel">
         <div className="panel-head">

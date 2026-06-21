@@ -95,5 +95,8 @@ describe("login screen", () => {
     expect(css).toContain("display: none");
     expect(css).toContain("margin-top: -48px");
     expect(css).toContain(".login-card");
+    expect(css).toContain(".auth-back-button svg");
+    expect(css).toContain("overflow: visible");
+    expect(css).toContain("stroke-width: 2.25");
   });
 });

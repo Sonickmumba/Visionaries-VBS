@@ -611,6 +611,11 @@ export function MemberManagementPage({
           <h2>Member List</h2>
           <Button type="button" size="sm" icon={Plus} onClick={openCreate}>New Member</Button>
         </div>
+        <div className="member-list-mobile-actions mobile-only" aria-label="Member list quick actions">
+          <Button type="button" icon={Plus} onClick={openCreate}>New Member</Button>
+          <Button type="button" variant="secondary" icon={UserPlus} onClick={() => openEnroll()}>Enroll</Button>
+          <Button type="button" variant="secondary" icon={RefreshCw} onClick={() => loadMembers(pagination.page)} loading={loading}>Refresh</Button>
+        </div>
         {loading ? <Skeleton lines={6} /> : members.length ? (
           <>
             <MemberCards members={members} busy={busy} onView={loadDetail} onEdit={openEdit} onEnroll={openEnroll} onToggle={toggleStatus} />

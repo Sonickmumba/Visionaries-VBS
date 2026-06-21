@@ -122,6 +122,7 @@ describe("member management", () => {
     expect(html).toContain("Member cards");
     expect(html).toContain("New Member");
     expect(html).toContain("Enroll Member");
+    expect(html).toContain("Member list quick actions");
     expect(html).toContain("Search members");
     expect(html).toContain("Mary Phiri");
     expect(html).toContain("Details");
@@ -163,6 +164,8 @@ describe("member management", () => {
     expect(css).toContain(".member-card");
     expect(css).toContain(".member-detail-hero");
     expect(css).toContain(".member-detail-mobile-actions");
+    expect(css).toContain(".member-list-mobile-actions");
+    expect(css).toContain(".members-page > .page-head .button-row");
     expect(css).toContain(".member-desktop-table");
     expect(css).toContain("@media (max-width: 767px)");
   });

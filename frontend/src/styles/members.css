@@ -93,7 +93,20 @@
   margin: 0 0 14px;
 }
 
+.member-list-mobile-actions {
+  width: 100%;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0 0 14px;
+}
+
 .member-detail-mobile-actions .btn {
+  width: 100%;
+  min-height: 44px;
+  padding-inline: 10px;
+}
+
+.member-list-mobile-actions .btn {
   width: 100%;
   min-height: 44px;
   padding-inline: 10px;
@@ -214,6 +227,11 @@
     margin-bottom: 12px;
   }
 
+  .members-page > .page-head .button-row,
+  .member-detail-page > .page-head .button-row {
+    display: none;
+  }
+
   .member-detail-hero {
     border-radius: 0 0 24px 24px;
     margin: -10px -10px 14px;
@@ -230,6 +248,10 @@
   }
 
   .member-detail-mobile-actions {
+    display: grid;
+  }
+
+  .member-list-mobile-actions {
     display: grid;
   }
 
@@ -260,7 +282,8 @@
 }
 
 @media (max-width: 390px) {
-  .member-detail-mobile-actions {
+  .member-detail-mobile-actions,
+  .member-list-mobile-actions {
     grid-template-columns: 1fr;
   }
 }

@@ -221,6 +221,7 @@
     background: linear-gradient(145deg, #007a43, #0f766e);
     justify-content: start;
     gap: 14px;
+    margin-bottom: 23px;
   }
 
   .auth-brand-mark {

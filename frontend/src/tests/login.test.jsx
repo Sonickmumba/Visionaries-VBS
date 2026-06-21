@@ -86,4 +86,14 @@ describe("login screen", () => {
     expect(source).toContain("const navigateSignup = onNavigateSignup || onSignup");
     expect(source).toContain("const navigateForgot = onNavigateForgot || onForgotPassword");
   });
+
+  it("keeps phone auth screens compact enough for primary actions", () => {
+    const css = fs.readFileSync(path.join(process.cwd(), "src/styles/auth.css"), "utf8");
+
+    expect(css).toContain("@media (max-width: 480px)");
+    expect(css).toContain(".auth-brand-stats");
+    expect(css).toContain("display: none");
+    expect(css).toContain("margin-top: -48px");
+    expect(css).toContain(".login-card");
+  });
 });

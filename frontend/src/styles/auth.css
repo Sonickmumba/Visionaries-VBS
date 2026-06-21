@@ -163,7 +163,7 @@
 
 @media (max-width: 480px) {
   .auth-card {
-    padding: 22px;
+    padding: 18px;
   }
 
   .auth-form-head {
@@ -173,6 +173,28 @@
   .login-options {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .login-card {
+    gap: 12px;
+  }
+
+  .auth-brand {
+    min-height: 192px;
+    padding: 18px 18px 42px;
+    gap: 10px;
+  }
+
+  .auth-brand-stats {
+    display: none;
+  }
+
+  .auth-card {
+    margin-top: -48px;
+  }
+
+  .auth-mobile-summary {
+    padding: 9px 10px;
   }
 }
 

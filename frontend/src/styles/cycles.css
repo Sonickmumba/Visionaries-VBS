@@ -40,6 +40,19 @@
   padding: 12px;
 }
 
+.cycle-list-mobile-actions {
+  width: 100%;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0 0 14px;
+}
+
+.cycle-list-mobile-actions .btn {
+  width: 100%;
+  min-height: 44px;
+  padding-inline: 10px;
+}
+
 .cycle-tab-panel {
   margin-bottom: 0;
 }
@@ -67,22 +80,50 @@
 }
 
 @media (max-width: 767px) {
+  .cycles-page > .page-head .button-row {
+    display: none;
+  }
+
   .cycle-metrics,
   .cycle-detail-grid {
     grid-template-columns: 1fr;
+  }
+
+  .cycle-list-mobile-actions {
+    display: grid;
+  }
+
+  .cycle-list-head-action,
+  .cycle-detail-generate-action,
+  .cycle-months-head-action {
+    display: none;
   }
 
   .cycle-detail-head {
     display: grid;
   }
 
+  .cycle-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
   .cycle-actions .btn {
     width: 100%;
+    min-height: 44px;
   }
 
   .cycle-form .form-grid.two,
   .cycle-form .form-grid.three,
   .cycle-form .form-grid.four {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 390px) {
+  .cycle-list-mobile-actions,
+  .cycle-actions {
     grid-template-columns: 1fr;
   }
 }

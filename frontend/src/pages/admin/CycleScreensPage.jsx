@@ -275,7 +275,7 @@ function MonthsTab({ months, onGenerate, loading }) {
     <section className="panel cycle-tab-panel">
       <div className="panel-head">
         <h2>Cycle Months</h2>
-        <Button type="button" variant="secondary" size="sm" icon={CalendarDays} onClick={onGenerate} loading={loading}>Generate Months</Button>
+        <Button type="button" className="cycle-months-head-action" variant="secondary" size="sm" icon={CalendarDays} onClick={onGenerate} loading={loading}>Generate Months</Button>
       </div>
       <DataTable
         columns={["Month", "Period", "Declaration Window", "Payout Window", "Status"]}
@@ -559,6 +559,7 @@ export function CycleScreensPage({
   return (
     <Page
       title="Cycles"
+      className="cycles-page"
       actions={(
         <>
           <Button type="button" icon={Plus} onClick={openCreate}>New Cycle</Button>
@@ -577,7 +578,12 @@ export function CycleScreensPage({
       <section className="panel">
         <div className="panel-head">
           <h2>Cycle List</h2>
-          <Button type="button" size="sm" icon={Plus} onClick={openCreate}>New Cycle</Button>
+          <Button type="button" className="cycle-list-head-action" size="sm" icon={Plus} onClick={openCreate}>New Cycle</Button>
+        </div>
+        <div className="cycle-list-mobile-actions mobile-only" aria-label="Cycle list quick actions">
+          <Button type="button" icon={Plus} onClick={openCreate}>New Cycle</Button>
+          <Button type="button" variant="secondary" icon={RefreshCw} onClick={loadCycles} loading={loading}>Refresh</Button>
+          <Button type="button" variant="secondary" icon={CalendarDays} onClick={handleGenerateMonths} disabled={!selectedCycle} loading={busy === "months"}>Generate</Button>
         </div>
         {loading ? <Skeleton lines={5} /> : (
           <DataTable
@@ -609,7 +615,7 @@ export function CycleScreensPage({
 
           <div className="button-row cycle-actions">
             <Button type="button" icon={CheckCircle2} onClick={activateCycle} disabled={selectedCycle.status === "ACTIVE"} loading={busy === "activate"}>Activate Cycle</Button>
-            <Button type="button" variant="secondary" icon={CalendarDays} onClick={handleGenerateMonths} loading={busy === "months"}>Generate Months</Button>
+            <Button type="button" className="cycle-detail-generate-action" variant="secondary" icon={CalendarDays} onClick={handleGenerateMonths} loading={busy === "months"}>Generate Months</Button>
             <Button type="button" variant="secondary" icon={UserPlus} onClick={openEnrollMembers} loading={busy === "load-members"}>Enroll Members</Button>
             <Button type="button" variant="secondary" icon={Edit3} onClick={openEdit}>Edit Rules</Button>
             <Button type="button" variant="secondary" icon={Lock} onClick={() => setCycleStatus("CLOSED")} disabled={selectedCycle.status === "CLOSED"} loading={busy === "CLOSED"}>Close Cycle</Button>

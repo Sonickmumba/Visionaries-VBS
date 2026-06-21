@@ -161,12 +161,22 @@ describe("loan screens", () => {
     expect(html).toContain("Outstanding");
   });
 
+  it("opens loan request review in a modal instead of an inline queue panel", () => {
+    const source = fs.readFileSync(path.join(process.cwd(), "src/pages/admin/LoanScreensPage.jsx"), "utf8");
+
+    expect(source).toContain('title="Loan Request Details"');
+    expect(source).toContain("loan-detail-modal");
+    expect(source).toContain("open={Boolean(selected)}");
+  });
+
   it("keeps the loan mobile responsive contract", () => {
     const css = fs.readFileSync(path.join(process.cwd(), "src/styles/loans.css"), "utf8");
 
     expect(css).toContain(".loan-hero");
     expect(css).toContain(".loan-mobile-cards");
     expect(css).toContain(".loan-request-card");
+    expect(css).toContain(".loan-detail-modal");
+    expect(css).toContain("max-height: calc(100svh - 124px)");
     expect(css).toContain(".loan-desktop-table");
     expect(css).toContain("@media (max-width: 767px)");
   });

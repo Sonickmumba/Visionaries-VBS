@@ -533,43 +533,52 @@ export function LoanScreensPage({
         {metrics.map((metric) => <Card key={metric.title} {...metric} />)}
       </div>
 
-      {selected ? (
-        <section className="panel loan-detail-panel">
-          <div className="loan-detail-hero">
-            <div className="loan-avatar">{initials(selected)}</div>
-            <div>
-              <span>Loan Request Detail</span>
-              <h2>{memberName(selected)}</h2>
-              <p>{selected.member_code || "No member code"} · {String(selected.origin_type || "-").replaceAll("_", " ")}</p>
-            </div>
-            <Badge text={selected.is_disbursed ? "DISBURSED" : selected.status} tone={statusTone(selected.status, selected.is_disbursed)} />
+      <Modal
+        open={Boolean(selected)}
+        title="Loan Request Details"
+        size="lg"
+        onClose={() => setSelected(null)}
+      >
+        {selected ? (
+          <div className="loan-detail-modal">
+            <section className="loan-detail-panel">
+              <div className="loan-detail-hero">
+                <div className="loan-avatar">{initials(selected)}</div>
+                <div>
+                  <span>Loan Request Detail</span>
+                  <h2>{memberName(selected)}</h2>
+                  <p>{selected.member_code || "No member code"} · {String(selected.origin_type || "-").replaceAll("_", " ")}</p>
+                </div>
+                <Badge text={selected.is_disbursed ? "DISBURSED" : selected.status} tone={statusTone(selected.status, selected.is_disbursed)} />
+              </div>
+              <div className="loan-detail-strip">
+                <DetailValue label="Requested" value={money(selected.requested_amount)} />
+                <DetailValue label="Approved" value={money(selected.approved_amount)} />
+                <DetailValue label="Borrowed" value={money(selected.cumulative_borrowed)} />
+              </div>
+              <div className="detail-grid loan-detail-grid">
+                <DetailValue label="Type" value={String(selected.origin_type || "-").replaceAll("_", " ")} />
+                <DetailValue label="Requested" value={money(selected.requested_amount)} />
+                <DetailValue label="Approved" value={money(selected.approved_amount)} />
+                <DetailValue label="Cumulative Borrowed" value={money(selected.cumulative_borrowed)} />
+                <DetailValue label="Requested Date" value={dateOnly(selected.requested_at)} />
+                <DetailValue label="Member Code" value={selected.member_code || "-"} />
+              </div>
+              <div className="form-grid two">
+                <CurrencyInput label="Approved amount" value={approvedAmount} onChange={setApprovedAmount} error={errors.approvedAmount} />
+                <Field label="Rejection reason" value={rejectionReason} onChange={setRejectionReason} error={errors.rejectionReason} placeholder="Required when rejecting" />
+              </div>
+              <div className="button-row">
+                <Button type="button" icon={CheckCircle2} onClick={approveRequest} disabled={selected.status === "REJECTED" || selected.is_disbursed} loading={busy === "approve"}>Approve</Button>
+                <Button type="button" variant="danger" icon={XCircle} onClick={rejectRequest} disabled={selected.status !== "PENDING" || selected.is_disbursed} loading={busy === "reject"}>Reject</Button>
+                <Button type="button" icon={Banknote} onClick={disburseRequest} disabled={selected.status !== "APPROVED" || selected.is_disbursed} loading={busy === "disburse"}>Disburse Loan</Button>
+                <Button type="button" variant="secondary" onClick={() => loadMemberLedger(selected.cycle_member_id)} loading={busy === `ledger-${selected.cycle_member_id}`}>View Member Ledger</Button>
+                <Button type="button" variant="secondary" onClick={() => setSelected(null)}>Close Detail</Button>
+              </div>
+            </section>
           </div>
-          <div className="loan-detail-strip">
-            <DetailValue label="Requested" value={money(selected.requested_amount)} />
-            <DetailValue label="Approved" value={money(selected.approved_amount)} />
-            <DetailValue label="Borrowed" value={money(selected.cumulative_borrowed)} />
-          </div>
-          <div className="detail-grid loan-detail-grid">
-            <DetailValue label="Type" value={String(selected.origin_type || "-").replaceAll("_", " ")} />
-            <DetailValue label="Requested" value={money(selected.requested_amount)} />
-            <DetailValue label="Approved" value={money(selected.approved_amount)} />
-            <DetailValue label="Cumulative Borrowed" value={money(selected.cumulative_borrowed)} />
-            <DetailValue label="Requested Date" value={dateOnly(selected.requested_at)} />
-            <DetailValue label="Member Code" value={selected.member_code || "-"} />
-          </div>
-          <div className="form-grid two">
-            <CurrencyInput label="Approved amount" value={approvedAmount} onChange={setApprovedAmount} error={errors.approvedAmount} />
-            <Field label="Rejection reason" value={rejectionReason} onChange={setRejectionReason} error={errors.rejectionReason} placeholder="Required when rejecting" />
-          </div>
-          <div className="button-row">
-            <Button type="button" icon={CheckCircle2} onClick={approveRequest} disabled={selected.status === "REJECTED" || selected.is_disbursed} loading={busy === "approve"}>Approve</Button>
-            <Button type="button" variant="danger" icon={XCircle} onClick={rejectRequest} disabled={selected.status !== "PENDING" || selected.is_disbursed} loading={busy === "reject"}>Reject</Button>
-            <Button type="button" icon={Banknote} onClick={disburseRequest} disabled={selected.status !== "APPROVED" || selected.is_disbursed} loading={busy === "disburse"}>Disburse Loan</Button>
-            <Button type="button" variant="secondary" onClick={() => loadMemberLedger(selected.cycle_member_id)} loading={busy === `ledger-${selected.cycle_member_id}`}>View Member Ledger</Button>
-            <Button type="button" variant="secondary" onClick={() => setSelected(null)}>Close Detail</Button>
-          </div>
-        </section>
-      ) : null}
+        ) : null}
+      </Modal>
 
       <Tabs
         active={activeTab}

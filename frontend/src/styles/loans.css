@@ -71,6 +71,16 @@
   margin-bottom: 18px;
 }
 
+.loan-detail-modal {
+  max-height: min(72vh, 720px);
+  overflow: auto;
+  padding-right: 2px;
+}
+
+.loan-detail-modal .loan-detail-panel {
+  margin-bottom: 0;
+}
+
 .loan-detail-hero,
 .loan-ledger-hero {
   display: grid;
@@ -283,6 +293,11 @@
 
   .loan-card-actions {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .loan-detail-modal {
+    max-height: calc(100svh - 124px);
+    padding-bottom: 8px;
   }
 
   .loan-detail-panel .button-row .btn {

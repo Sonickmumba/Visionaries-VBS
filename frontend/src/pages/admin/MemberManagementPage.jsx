@@ -213,6 +213,14 @@ function MemberDetail({ detail, tab, setTab, onBack, onEdit, onToggle }) {
         <Badge text={member?.is_active ? "ACTIVE" : "INACTIVE"} tone={member?.is_active ? "green" : "red"} />
       </section>
 
+      <div className="member-detail-mobile-actions mobile-only" aria-label="Member detail quick actions">
+        <Button type="button" variant="secondary" onClick={onBack}>Back</Button>
+        <Button type="button" variant="secondary" icon={Edit3} onClick={() => onEdit(member)}>Edit</Button>
+        <Button type="button" variant={member?.is_active ? "danger" : "secondary"} onClick={() => onToggle(member)}>
+          {member?.is_active ? "Deactivate" : "Activate"}
+        </Button>
+      </div>
+
       <section className="member-profile">
         <div>
           <BadgeCheck size={18} aria-hidden="true" />

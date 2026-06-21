@@ -147,6 +147,7 @@ describe("member management", () => {
     expect(html).toContain("Mary Phiri");
     expect(html).toContain("Member Profile");
     expect(html).toContain("Member profile summary");
+    expect(html).toContain("Member detail quick actions");
     expect(html).toContain("Overview");
     expect(html).toContain("Cycles");
     expect(html).toContain("Declarations");
@@ -161,6 +162,7 @@ describe("member management", () => {
     expect(css).toContain(".member-mobile-cards");
     expect(css).toContain(".member-card");
     expect(css).toContain(".member-detail-hero");
+    expect(css).toContain(".member-detail-mobile-actions");
     expect(css).toContain(".member-desktop-table");
     expect(css).toContain("@media (max-width: 767px)");
   });

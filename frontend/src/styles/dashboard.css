@@ -336,13 +336,7 @@
   }
 
   .admin-dashboard-page .page-head .button-row {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .admin-dashboard-page .page-head .btn {
-    width: 100%;
-    min-height: 42px;
+    display: none;
   }
 
   .admin-dashboard-hero {
@@ -379,16 +373,17 @@
   .admin-quick-actions {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
+    margin-bottom: 14px;
   }
 
   .admin-quick-actions button {
-    min-height: 104px;
-    grid-template-columns: 1fr auto;
+    min-height: 112px;
+    grid-template-columns: auto 1fr auto;
     grid-template-areas:
-      "icon arrow"
-      "title title"
-      "detail detail";
-    align-content: start;
+      "icon title arrow"
+      "icon detail arrow";
+    align-content: center;
+    border-radius: 14px;
   }
 
   .dashboard-card,
@@ -407,7 +402,6 @@
 }
 
 @media (max-width: 420px) {
-  .admin-dashboard-page .page-head .button-row,
   .admin-quick-actions {
     grid-template-columns: 1fr;
   }

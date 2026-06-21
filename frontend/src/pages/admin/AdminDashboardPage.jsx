@@ -46,10 +46,10 @@ export function dashboardViewModel(data) {
       { label: "Pending", value: awaitingReview + pendingLoans, icon: ClipboardList },
     ],
     quickActions: [
-      { label: "Declarations", detail: `${awaitingReview} awaiting`, page: "declarations", icon: ClipboardList, tone: "green" },
-      { label: "Loans", detail: `${pendingLoans} pending`, page: "loans", icon: Banknote, tone: "amber" },
-      { label: "Closing", detail: viewMonthStatus(data?.cycleMonth?.status), page: "closing", icon: CalendarDays, tone: "blue" },
-      { label: "Reports", detail: "Cycle insights", page: "reports", icon: FileBarChart, tone: "teal" },
+      { label: "Review Declarations", detail: `${awaitingReview} awaiting`, page: "declarations", icon: ClipboardList, tone: "green" },
+      { label: "Approve Loans", detail: `${pendingLoans} pending`, page: "loans", icon: Banknote, tone: "amber" },
+      { label: "Run Monthly Closing", detail: viewMonthStatus(data?.cycleMonth?.status), page: "closing", icon: CalendarDays, tone: "blue" },
+      { label: "View Reports", detail: "Cycle insights", page: "reports", icon: FileBarChart, tone: "teal" },
     ],
     poolCards: [
       {

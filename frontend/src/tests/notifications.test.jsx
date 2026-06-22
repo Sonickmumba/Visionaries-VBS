@@ -74,6 +74,14 @@ describe("notifications", () => {
     expect(html).toContain("Open Reports");
   });
 
+  it("renders member notifications as a bottom-nav destination", () => {
+    const html = renderToStaticMarkup(<NotificationsPage initialEvents={events} setPage={() => {}} role="MEMBER" />);
+
+    expect(html).toContain("Primary mobile navigation");
+    expect(html).toContain("Alerts");
+    expect(html).toContain("aria-current=\"page\"");
+  });
+
   it("renders a notification card with report action", () => {
     const html = renderToStaticMarkup(<NotificationCard event={events[0]} onOpenTarget={() => {}} />);
 
@@ -92,6 +100,8 @@ describe("notifications", () => {
     expect(source).toContain("actionTarget");
     expect(source).toContain("target.adminPage");
     expect(source).toContain("target.memberPage");
+    expect(source).toContain("memberMobileNavItems");
+    expect(source).toContain("my-notifications");
     expect(css).toContain(".notifications-hero");
     expect(css).toContain(".notification-card");
     expect(css).toContain("@media (max-width: 767px)");

@@ -32,6 +32,7 @@ describe("QA-004 frontend regression suite", () => {
       "my-savings",
       "my-loans",
       "my-penalties",
+      "my-reports",
     ];
 
     expect(adminNav.map(([id]) => id)).toEqual(adminRoutes);

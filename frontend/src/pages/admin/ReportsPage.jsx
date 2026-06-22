@@ -288,13 +288,14 @@ function DetailValue({ label, value }) {
   return <div><strong>{label}</strong><span>{value}</span></div>;
 }
 
-function ReportsHero({ definition, data, totals, rows }) {
+function ReportsHero({ definition, data, totals, rows, eyebrow = "Reports Center", note = "" }) {
   return (
     <section className="reports-hero">
       <div>
-        <span>Reports Center</span>
+        <span>{eyebrow}</span>
         <h2>{definition.label}</h2>
         <p>{data?.cycle?.name || "Visionaries Village Banking"}{data?.cycleMonth ? ` · Month ${data.cycleMonth.month_number}` : " · cycle-wide view"}</p>
+        {note ? <p className="reports-hero-note">{note}</p> : null}
       </div>
       <div className="reports-hero-stat">
         <span>Rows</span>
@@ -469,6 +470,9 @@ export function ReportsPage({
   initialData = null,
   initialCycles = undefined,
   initialCycleDetail = null,
+  title = "Reports Center",
+  heroEyebrow = "Reports Center",
+  readOnlyNote = "",
 }) {
   const [report, setReport] = useState(initialData?.report || "cycle-summary");
   const [cycles, setCycles] = useState(initialCycles || []);
@@ -575,7 +579,7 @@ export function ReportsPage({
 
   return (
     <Page
-      title="Reports Center"
+      title={title}
       className="reports-page"
       actions={(
         <>
@@ -587,7 +591,7 @@ export function ReportsPage({
     >
       {error ? <Alert tone="danger" title="Report failed">{error}</Alert> : null}
 
-      <ReportsHero definition={definition} data={data} totals={totals} rows={rows} />
+      <ReportsHero definition={definition} data={data} totals={totals} rows={rows} eyebrow={heroEyebrow} note={readOnlyNote} />
 
       <div className="admin-mobile-action-row reports-mobile-actions-row mobile-only" aria-label="Reports quick actions">
         <Button type="button" icon={RefreshCw} onClick={() => loadReport()} loading={loading}>Run</Button>

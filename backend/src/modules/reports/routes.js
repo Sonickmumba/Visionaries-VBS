@@ -526,10 +526,6 @@ reportsRouter.get("/common-interest", async (req, res, next) => {
       params.push(req.query.cycleMemberId);
       where += ` AND cia.cycle_member_id = $${params.length}`;
     }
-    if (!isPrivileged(req.user)) {
-      params.push(req.user.id);
-      where += ` AND m.user_id = $${params.length}`;
-    }
     const rows = await query(
       `SELECT cia.*, m.member_code, m.first_name, m.last_name, cmn.month_number
        FROM common_interest_allocations cia
@@ -664,10 +660,6 @@ reportsRouter.get("/converted-penalties", async (req, res, next) => {
       params.push(req.query.cycleMemberId);
       where += ` AND p.cycle_member_id = $${params.length}`;
     }
-    if (!isPrivileged(req.user)) {
-      params.push(req.user.id);
-      where += ` AND m.user_id = $${params.length}`;
-    }
     const rows = await query(
       `SELECT p.*, pt.name AS penalty_type, m.member_code, m.first_name, m.last_name, cmn.month_number,
         ld.amount AS converted_loan_amount, ld.ledger_transaction_id AS converted_loan_ledger_transaction_id
@@ -691,7 +683,7 @@ reportsRouter.get("/converted-penalties", async (req, res, next) => {
   }
 });
 
-reportsRouter.get("/cycle-closing", requireRole("ADMIN", "AUDITOR"), async (req, res, next) => {
+reportsRouter.get("/cycle-closing", async (req, res, next) => {
   try {
     const { cycle, cycleMonth } = await resolveReportContext(req);
     if (!cycle) return res.json({ data: { cycle: null, cycleMonth: null, rows: [], totals: {} } });
@@ -733,7 +725,7 @@ reportsRouter.get("/cycle-closing", requireRole("ADMIN", "AUDITOR"), async (req,
   }
 });
 
-reportsRouter.get("/center", requireRole("ADMIN", "AUDITOR"), async (req, res, next) => {
+reportsRouter.get("/center", async (req, res, next) => {
   try {
     const report = req.query.report || "cycle-summary";
     const cycleResult = req.query.cycleId

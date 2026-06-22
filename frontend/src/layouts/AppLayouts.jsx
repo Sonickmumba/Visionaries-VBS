@@ -47,6 +47,7 @@ export const memberNav = [
   ["my-savings", "My Savings", PiggyBank],
   ["my-loans", "My Loans", Banknote],
   ["my-penalties", "My Penalties", AlertTriangle],
+  ["my-reports", "Reports", FileBarChart],
 ];
 
 export function routeLabel(page) {
@@ -133,7 +134,7 @@ function Sidebar({ nav, page, setPage, open, setOpen, user }) {
 
 function MobileBottomNav({ nav, page, setPage, user }) {
   const priorityIds = user.role === "MEMBER"
-    ? ["member-dashboard", "my-declaration", "my-statement", "my-savings", "my-loans"]
+    ? ["member-dashboard", "my-declaration", "my-statement", "my-reports", "my-loans"]
     : ["dashboard", "declarations", "loans", "closing", "reports"];
   const items = priorityIds
     .map((id) => nav.find(([navId]) => navId === id))

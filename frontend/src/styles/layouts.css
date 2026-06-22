@@ -229,6 +229,7 @@
     place-items: center;
     min-width: 22px;
     min-height: 22px;
+    overflow: visible;
   }
 
   .mobile-nav-badge {
@@ -250,7 +251,7 @@
     box-shadow: 0 8px 18px rgba(239, 68, 68, 0.28);
   }
 
-  .mobile-bottom-nav span {
+  .mobile-bottom-nav .mobile-nav-label {
     max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;

@@ -114,6 +114,15 @@ describe("design system components", () => {
     expect(html).toContain("4 unread notifications");
   });
 
+  it("keeps mobile notification badges visible above nav icons", () => {
+    const css = fs.readFileSync(path.join(process.cwd(), "src/styles/layouts.css"), "utf8");
+
+    expect(css).toContain(".mobile-nav-icon-wrap");
+    expect(css).toContain("overflow: visible");
+    expect(css).toContain(".mobile-bottom-nav .mobile-nav-label");
+    expect(css).not.toContain(".mobile-bottom-nav span {\n    max-width: 100%;\n    overflow: hidden;");
+  });
+
   it("keeps shared mobile member layout rules in the design system", () => {
     const css = fs.readFileSync(path.join(process.cwd(), "src/styles/design-system.css"), "utf8");
 

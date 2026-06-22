@@ -440,7 +440,7 @@ export function MobileBottomNav({ items = [], active, onChange, label = "Primary
               <Icon size={19} aria-hidden="true" />
               {badge > 0 ? <span className="mobile-nav-badge" aria-label={`${badge} unread notifications`}>{badge > 99 ? "99+" : badge}</span> : null}
             </span>
-            <span>{item.label}</span>
+            <span className="mobile-nav-label">{item.label}</span>
           </button>
         );
       })}

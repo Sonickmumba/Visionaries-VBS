@@ -161,7 +161,7 @@ function MobileBottomNav({ nav, page, setPage, user }) {
               <span className="mobile-nav-badge" aria-label={`${unreadCount} unread notifications`}>{unreadCount > 99 ? "99+" : unreadCount}</span>
             ) : null}
           </span>
-          <span>{label.replace("My ", "").replace("Monthly ", "")}</span>
+          <span className="mobile-nav-label">{label.replace("My ", "").replace("Monthly ", "")}</span>
         </button>
       ))}
     </nav>

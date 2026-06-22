@@ -30,7 +30,7 @@ function money(value) {
 }
 
 function memberLabel(context = {}) {
-  return [context.first_name, context.last_name].filter(Boolean).join(" ") || context.member_code || "A member";
+  return context.memberName || [context.first_name, context.last_name].filter(Boolean).join(" ") || context.member_code || "A member";
 }
 
 function monthLabel(context = {}) {
@@ -166,8 +166,9 @@ function messageFor(input, context = {}) {
 }
 
 async function contextFor(db, input = {}) {
-  if (!db?.query || (!input.cycleMemberId && !input.cycleMonthId && !input.cycleId)) return {};
-  const { rows } = await db.query(
+  const runQuery = typeof db === "function" ? db : db?.query;
+  if (!runQuery || (!input.cycleMemberId && !input.cycleMonthId && !input.cycleId)) return {};
+  const { rows } = await runQuery(
     `SELECT m.first_name, m.last_name, m.member_code, cmn.month_number, c.name AS cycle_name
      FROM (SELECT $1::uuid AS cycle_member_id, $2::uuid AS cycle_month_id, $3::uuid AS cycle_id) input
      LEFT JOIN cycle_members cycle_member ON cycle_member.id = input.cycle_member_id

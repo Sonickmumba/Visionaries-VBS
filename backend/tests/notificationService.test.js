@@ -61,4 +61,25 @@ describe("notification service", () => {
     expect(event.actionTarget).toEqual({ adminPage: "declarations", memberPage: "my-reports", report: "declarations" });
     expect(event.metadata).toMatchObject({ memberName: "Mary Phiri", monthNumber: 2 });
   });
+
+  it("enriches approved declarations when routes pass the query function directly", async () => {
+    const dbQuery = async () => ({
+      rows: [{ first_name: "Mary", last_name: "Phiri", member_code: "M001", month_number: 2 }],
+    });
+
+    await publishActivityNotification(dbQuery, {
+      type: "DECLARATION_APPROVED",
+      cycleId: "cycle-1",
+      cycleMonthId: "month-2",
+      cycleMemberId: "cm-1",
+      sourceTable: "declarations",
+      sourceId: "dec-1",
+      metadata: { savingsAmount: 30000, loanRequestAmount: 10000 },
+    });
+
+    const [event] = recentNotifications();
+    expect(event.title).toBe("Mary Phiri declaration approved");
+    expect(event.message).toBe("Mary Phiri's declaration for Month 2 was approved: declared K30,000 savings and requested a K10,000 loan.");
+    expect(event.metadata).toMatchObject({ memberName: "Mary Phiri", monthNumber: 2 });
+  });
 });

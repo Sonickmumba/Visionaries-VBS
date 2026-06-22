@@ -28,10 +28,12 @@ export function NotificationUnreadProvider({ user, page, children, notifications
   }, [page]);
 
   const markAllRead = useCallback((items = []) => {
-    const notificationIds = items.map((event) => event?.id).filter(Boolean);
+    const notificationIds = items
+      .filter((event) => event?.id && !event.readAt)
+      .map((event) => event.id);
     if (!notificationIds.length) return;
     setEvents((current) => current.map((event) => (
-      notificationIds.includes(event.id) ? { ...event, readAt: event.readAt || new Date().toISOString() } : event
+      notificationIds.includes(event.id) && !event.readAt ? { ...event, readAt: new Date().toISOString() } : event
     )));
     setUnreadCount(0);
     notificationsApi("/notifications/read", {

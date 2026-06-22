@@ -104,10 +104,6 @@ export function NotificationsPage({ notificationsApi = api, initialEvents = null
     if (initialEvents === null && !useSharedTracker) refresh();
   }, [initialEvents, useSharedTracker]);
 
-  useEffect(() => {
-    if (useSharedTracker && events.length) markAllRead(events);
-  }, [events, markAllRead, useSharedTracker]);
-
   const view = useMemo(() => notificationsViewModel(events), [events]);
   const openReports = () => setPage?.(role === "MEMBER" ? "my-reports" : "reports");
   const openTarget = (event) => {

@@ -100,7 +100,9 @@ describe("notifications", () => {
     expect(contextSource).toContain("withCredentials: true");
     expect(contextSource).toContain("unreadCount");
     expect(contextSource).toContain("/notifications/read");
+    expect(contextSource).toContain("!event.readAt");
     expect(contextSource).not.toContain("localStorage");
+    expect(source).not.toContain("useSharedTracker && events.length");
     expect(source).toContain("actionTarget");
     expect(source).toContain("target.adminPage");
     expect(source).toContain("target.memberPage");

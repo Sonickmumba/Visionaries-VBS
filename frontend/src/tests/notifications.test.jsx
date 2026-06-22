@@ -92,11 +92,14 @@ describe("notifications", () => {
 
   it("keeps real-time stream wiring and responsive styles", () => {
     const source = fs.readFileSync(path.join(process.cwd(), "src/pages/NotificationsPage.jsx"), "utf8");
+    const contextSource = fs.readFileSync(path.join(process.cwd(), "src/contexts/NotificationUnreadContext.jsx"), "utf8");
     const css = fs.readFileSync(path.join(process.cwd(), "src/styles/notifications.css"), "utf8");
 
-    expect(source).toContain("new EventSource");
-    expect(source).toContain("/notifications/stream");
-    expect(source).toContain("withCredentials: true");
+    expect(contextSource).toContain("new EventSource");
+    expect(contextSource).toContain("/notifications/stream");
+    expect(contextSource).toContain("withCredentials: true");
+    expect(contextSource).toContain("localStorage");
+    expect(contextSource).toContain("unreadCount");
     expect(source).toContain("actionTarget");
     expect(source).toContain("target.adminPage");
     expect(source).toContain("target.memberPage");

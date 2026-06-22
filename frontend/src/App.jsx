@@ -1,6 +1,7 @@
 import React, { Suspense, lazy, useEffect, useMemo, useState } from "react";
 import { api } from "./api/client.js";
 import { SplashScreen } from "./components/SplashScreen.jsx";
+import { NotificationUnreadProvider } from "./contexts/NotificationUnreadContext.jsx";
 
 function lazyNamed(loader, exportName) {
   return lazy(() => loader().then((module) => ({ default: module[exportName] })));
@@ -136,7 +137,9 @@ export function App() {
 
   return (
     <Suspense fallback={<LoadingFallback />}>
-      <PortalApp user={user} page={page} setPage={navigate} navigationIntent={navigationIntent} onLogout={logout} />
+      <NotificationUnreadProvider user={user} page={page}>
+        <PortalApp user={user} page={page} setPage={navigate} navigationIntent={navigationIntent} onLogout={logout} />
+      </NotificationUnreadProvider>
     </Suspense>
   );
 }

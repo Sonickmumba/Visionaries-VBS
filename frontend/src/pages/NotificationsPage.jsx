@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Bell, FileBarChart, RefreshCw, Wifi, WifiOff } from "lucide-react";
-import { API_URL, api } from "../api/client.js";
+import { api } from "../api/client.js";
 import { Alert, Badge, Button, Card, EmptyState, MobileBottomNav, Skeleton } from "../components/ui/index.jsx";
+import { useNotificationUnread } from "../contexts/NotificationUnreadContext.jsx";
 import { Page } from "../layouts/AppLayouts.jsx";
 import { memberMobileNavItems } from "./member/memberMobileNav.js";
 import "../styles/notifications.css";
@@ -71,42 +72,41 @@ export function NotificationCard({ event, onOpenTarget }) {
 }
 
 export function NotificationsPage({ notificationsApi = api, initialEvents = null, setPage, role = "ADMIN" }) {
-  const [events, setEvents] = useState(initialEvents || []);
-  const [loading, setLoading] = useState(initialEvents === null);
-  const [error, setError] = useState("");
-  const [connected, setConnected] = useState(false);
+  const shared = useNotificationUnread();
+  const useSharedTracker = initialEvents === null && notificationsApi === api;
+  const [localEvents, setLocalEvents] = useState(initialEvents || []);
+  const [localLoading, setLocalLoading] = useState(initialEvents === null && !useSharedTracker);
+  const [localError, setLocalError] = useState("");
+  const { markAllRead } = shared;
+  const events = useSharedTracker ? shared.events : localEvents;
+  const loading = useSharedTracker ? shared.loading : localLoading;
+  const error = useSharedTracker ? shared.error : localError;
+  const connected = useSharedTracker ? shared.connected : false;
 
   async function refresh() {
-    setLoading(true);
-    setError("");
+    if (useSharedTracker) {
+      const nextEvents = await shared.refresh();
+      markAllRead(nextEvents);
+      return;
+    }
+    setLocalLoading(true);
+    setLocalError("");
     try {
-      setEvents(await loadNotifications({ notificationsApi }));
+      setLocalEvents(await loadNotifications({ notificationsApi }));
     } catch (err) {
-      setError(err.message || "Notifications could not load.");
+      setLocalError(err.message || "Notifications could not load.");
     } finally {
-      setLoading(false);
+      setLocalLoading(false);
     }
   }
 
   useEffect(() => {
-    if (initialEvents === null) refresh();
-  }, []);
+    if (initialEvents === null && !useSharedTracker) refresh();
+  }, [initialEvents, useSharedTracker]);
 
   useEffect(() => {
-    if (typeof EventSource === "undefined") return undefined;
-    const stream = new EventSource(`${API_URL}/notifications/stream`, { withCredentials: true });
-    stream.addEventListener("ready", () => setConnected(true));
-    stream.addEventListener("heartbeat", () => setConnected(true));
-    stream.addEventListener("notification", (message) => {
-      const event = JSON.parse(message.data);
-      setEvents((current) => [event, ...current.filter((item) => item.id !== event.id)].slice(0, 75));
-    });
-    stream.onerror = () => setConnected(false);
-    return () => {
-      setConnected(false);
-      stream.close();
-    };
-  }, []);
+    if (useSharedTracker && events.length) markAllRead(events);
+  }, [events, markAllRead, useSharedTracker]);
 
   const view = useMemo(() => notificationsViewModel(events), [events]);
   const openReports = () => setPage?.(role === "MEMBER" ? "my-reports" : "reports");

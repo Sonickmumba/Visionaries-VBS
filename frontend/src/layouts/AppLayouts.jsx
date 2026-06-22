@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import { api } from "../api/client.js";
 import { Badge, IconButton, Select } from "../components/ui/index.jsx";
+import { useNotificationUnread } from "../contexts/NotificationUnreadContext.jsx";
 import "../styles/layouts.css";
 
 export const adminNav = [
@@ -136,6 +137,7 @@ function Sidebar({ nav, page, setPage, open, setOpen, user }) {
 }
 
 function MobileBottomNav({ nav, page, setPage, user }) {
+  const { unreadCount } = useNotificationUnread();
   const priorityIds = user.role === "MEMBER"
     ? ["member-dashboard", "my-declaration", "my-statement", "my-reports", "my-loans"]
     : ["dashboard", "declarations", "loans", "notifications", "reports"];
@@ -153,7 +155,12 @@ function MobileBottomNav({ nav, page, setPage, user }) {
           aria-current={page === id ? "page" : undefined}
           onClick={() => setPage(id)}
         >
-          <Icon size={18} aria-hidden="true" />
+          <span className="mobile-nav-icon-wrap">
+            <Icon size={18} aria-hidden="true" />
+            {id === "notifications" && unreadCount > 0 ? (
+              <span className="mobile-nav-badge" aria-label={`${unreadCount} unread notifications`}>{unreadCount > 99 ? "99+" : unreadCount}</span>
+            ) : null}
+          </span>
           <span>{label.replace("My ", "").replace("Monthly ", "")}</span>
         </button>
       ))}

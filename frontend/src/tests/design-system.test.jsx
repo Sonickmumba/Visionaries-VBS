@@ -98,7 +98,7 @@ describe("design system components", () => {
   });
 
   it("renders mobile shell, header, and active bottom navigation", () => {
-    const nav = <MobileBottomNav active="home" items={[{ id: "home", label: "Home" }, { id: "declare", label: "Declare" }]} />;
+    const nav = <MobileBottomNav active="home" items={[{ id: "home", label: "Home" }, { id: "my-notifications", label: "Alerts", badge: 4 }]} />;
     const html = renderToStaticMarkup(
       <MobileScreenShell bottomNav={nav}>
         <MobileHeader eyebrow="Good morning" title="Visionaries Village Banking" subtitle="Cycle 12" avatar={{ label: "Sonic Mumba", initials: "SM" }} />
@@ -110,7 +110,8 @@ describe("design system components", () => {
     expect(html).toContain("Visionaries Village Banking");
     expect(html).toContain("aria-label=\"Primary mobile navigation\"");
     expect(html).toContain("aria-current=\"page\"");
-    expect(html).toContain("Declare");
+    expect(html).toContain("Alerts");
+    expect(html).toContain("4 unread notifications");
   });
 
   it("keeps shared mobile member layout rules in the design system", () => {

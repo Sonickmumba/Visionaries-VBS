@@ -1,6 +1,9 @@
 import { describe, expect, it, beforeEach } from "vitest";
 import {
   clearNotificationsForTests,
+  listNotifications,
+  markNotificationsRead,
+  publishPersistentNotification,
   publishActivityNotification,
   publishNotification,
   recentNotifications,
@@ -36,6 +39,80 @@ describe("notification service", () => {
     publishNotification({ type: "SECOND", title: "Second" });
 
     expect(recentNotifications({ limit: 1 }).map((event) => event.type)).toEqual(["SECOND"]);
+  });
+
+  it("persists notification events before broadcasting them", async () => {
+    const db = {
+      query: async () => ({
+        rows: [{
+          id: "11111111-1111-4111-8111-111111111111",
+          type: "COMMON_INTEREST_POSTED",
+          title: "Common interest posted",
+          message: "Common interest for Month 3 has been posted.",
+          audience: "ALL",
+          severity: "INFO",
+          cycle_id: null,
+          cycle_month_id: null,
+          cycle_member_id: null,
+          source_table: null,
+          source_id: null,
+          action_url: null,
+          action_target: { adminPage: "common-interest" },
+          metadata: { monthNumber: 3 },
+          created_at: "2026-06-22T10:00:00.000Z",
+        }],
+      }),
+    };
+
+    const event = await publishPersistentNotification(db, {
+      type: "COMMON_INTEREST_POSTED",
+      title: "Common interest posted",
+      message: "Common interest for Month 3 has been posted.",
+      actionTarget: { adminPage: "common-interest" },
+      metadata: { monthNumber: 3 },
+    });
+
+    expect(event.id).toBe("11111111-1111-4111-8111-111111111111");
+    expect(recentNotifications()[0]).toMatchObject({ id: event.id, type: "COMMON_INTEREST_POSTED" });
+  });
+
+  it("lists persisted notifications with unread state and writes read receipts", async () => {
+    const calls = [];
+    const db = {
+      query: async (sql, params) => {
+        calls.push({ sql, params });
+        if (sql.includes("SELECT n.*, r.read_at")) {
+          return {
+            rows: [{
+              id: "11111111-1111-4111-8111-111111111111",
+              type: "DECLARATION_SUBMITTED",
+              title: "Mary submitted a declaration",
+              message: "Mary declared K15,000 savings for Month 2.",
+              audience: "ALL",
+              severity: "INFO",
+              metadata: { savingsAmount: 15000 },
+              created_at: "2026-06-22T10:00:00.000Z",
+              read_at: null,
+            }],
+          };
+        }
+        return { rows: [], rowCount: 1 };
+      },
+    };
+
+    const listed = await listNotifications(db, {
+      user: { id: "00000000-0000-0000-0000-000000000001", role: "MEMBER" },
+      limit: 10,
+    });
+    const marked = await markNotificationsRead(db, {
+      userId: "00000000-0000-0000-0000-000000000001",
+      notificationIds: ["11111111-1111-4111-8111-111111111111"],
+    });
+
+    expect(listed.unreadCount).toBe(1);
+    expect(listed.data[0]).toMatchObject({ id: "11111111-1111-4111-8111-111111111111", readAt: null });
+    expect(marked.read).toBe(1);
+    expect(calls.at(-1).sql).toContain("notification_read_receipts");
   });
 
   it("enriches declaration notifications with member, amount, month, and routing target", async () => {

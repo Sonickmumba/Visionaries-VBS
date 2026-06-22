@@ -36,7 +36,7 @@ vi.mock("../src/middleware/auth.js", () => ({
 }));
 
 const { app } = await import("../src/app.js");
-const { clearNotificationsForTests, publishNotification } = await import("../src/services/notificationService.js");
+const { clearNotificationsForTests } = await import("../src/services/notificationService.js");
 
 function inject({ method = "GET", url, headers = {}, body = null }) {
   return new Promise((resolve, reject) => {
@@ -152,12 +152,20 @@ describe("API integration smoke tests", () => {
   });
 
   it("returns recent notifications for authenticated users", async () => {
-    publishNotification({
-      type: "DECLARATION_SUBMITTED",
-      title: "Declaration submitted",
-      message: "A member submitted a declaration for group review.",
-      actionUrl: "reports:declarations",
-      metadata: { savingsAmount: 15000 },
+    mocks.query.mockResolvedValueOnce({
+      rows: [{
+        id: "11111111-1111-4111-8111-111111111111",
+        type: "DECLARATION_SUBMITTED",
+        title: "Declaration submitted",
+        message: "A member submitted a declaration for group review.",
+        audience: "ALL",
+        severity: "INFO",
+        action_url: "reports:declarations",
+        action_target: { adminPage: "declarations", memberPage: "my-reports", report: "declarations" },
+        metadata: { savingsAmount: 15000 },
+        created_at: "2026-06-22T10:00:00.000Z",
+        read_at: null,
+      }],
     });
 
     const response = await inject({
@@ -167,11 +175,30 @@ describe("API integration smoke tests", () => {
 
     expect(response.status).toBe(200);
     expect(response.body.data).toHaveLength(1);
+    expect(response.body.unreadCount).toBe(1);
     expect(response.body.data[0]).toMatchObject({
+      id: "11111111-1111-4111-8111-111111111111",
       type: "DECLARATION_SUBMITTED",
       title: "Declaration submitted",
       actionUrl: "reports:declarations",
     });
+  });
+
+  it("marks notifications as read for the authenticated user", async () => {
+    mocks.query
+      .mockResolvedValueOnce({ rows: [], rowCount: 1 })
+      .mockResolvedValueOnce({ rows: [{ unread_count: 0 }] });
+
+    const response = await inject({
+      method: "POST",
+      url: "/api/notifications/read",
+      headers: { "x-test-role": "MEMBER" },
+      body: { notificationIds: ["11111111-1111-4111-8111-111111111111"] },
+    });
+
+    expect(response.status).toBe(200);
+    expect(response.body).toMatchObject({ read: 1, unreadCount: 0 });
+    expect(mocks.query.mock.calls[0][0]).toContain("notification_read_receipts");
   });
 
   it("invites users through settings with an audit trail", async () => {

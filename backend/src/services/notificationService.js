@@ -3,8 +3,29 @@ const clients = new Map();
 let events = [];
 let nextId = 1;
 
+function toCamelEvent(row = {}) {
+  return {
+    id: String(row.id),
+    type: row.type,
+    title: row.title,
+    message: row.message,
+    audience: row.audience,
+    severity: row.severity,
+    cycleId: row.cycle_id || null,
+    cycleMonthId: row.cycle_month_id || null,
+    cycleMemberId: row.cycle_member_id || null,
+    sourceTable: row.source_table || null,
+    sourceId: row.source_id || null,
+    actionUrl: row.action_url || null,
+    actionTarget: row.action_target || null,
+    metadata: row.metadata || {},
+    createdAt: row.created_at instanceof Date ? row.created_at.toISOString() : row.created_at,
+    readAt: row.read_at || null,
+  };
+}
+
 function normalizeEvent(input = {}) {
-  const id = String(nextId++);
+  const id = input.id ? String(input.id) : String(nextId++);
   return {
     id,
     type: input.type || "SYSTEM_EVENT",
@@ -20,7 +41,7 @@ function normalizeEvent(input = {}) {
     actionUrl: input.actionUrl || null,
     actionTarget: input.actionTarget || null,
     metadata: input.metadata || {},
-    createdAt: new Date().toISOString(),
+    createdAt: input.createdAt || new Date().toISOString(),
   };
 }
 
@@ -186,17 +207,66 @@ function writeEvent(res, eventName, data) {
   res.write(`data: ${JSON.stringify(data)}\n\n`);
 }
 
-export function publishNotification(input) {
-  const event = normalizeEvent(input);
-  events = [event, ...events].slice(0, MAX_EVENTS);
-  for (const [clientId, res] of clients.entries()) {
+function audienceMatches(event, user = {}) {
+  return !event.audience || event.audience === "ALL" || event.audience === user.role;
+}
+
+async function persistNotification(db, event) {
+  const runQuery = typeof db === "function" ? db : db?.query;
+  if (!runQuery) return event;
+  const { rows } = await runQuery(
+    `INSERT INTO notifications
+      (type, title, message, audience, severity, cycle_id, cycle_month_id, cycle_member_id,
+       source_table, source_id, action_url, action_target, metadata)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
+     RETURNING *`,
+    [
+      event.type,
+      event.title,
+      event.message,
+      event.audience,
+      event.severity,
+      event.cycleId,
+      event.cycleMonthId,
+      event.cycleMemberId,
+      event.sourceTable,
+      event.sourceId,
+      event.actionUrl,
+      event.actionTarget ? JSON.stringify(event.actionTarget) : null,
+      JSON.stringify(event.metadata || {}),
+    ]
+  );
+  return rows[0]?.id ? toCamelEvent(rows[0]) : event;
+}
+
+function broadcastNotification(event) {
+  for (const [clientId, client] of clients.entries()) {
     try {
-      writeEvent(res, "notification", event);
+      if (!audienceMatches(event, client.user)) continue;
+      writeEvent(client.res, "notification", event);
     } catch {
       clients.delete(clientId);
     }
   }
+}
+
+export function publishNotification(input) {
+  const event = normalizeEvent(input);
+  events = [event, ...events].slice(0, MAX_EVENTS);
+  broadcastNotification(event);
   return event;
+}
+
+export async function publishPersistentNotification(db, input) {
+  const fallback = normalizeEvent(input);
+  try {
+    const event = await persistNotification(db, fallback);
+    events = [event, ...events.filter((item) => item.id !== event.id)].slice(0, MAX_EVENTS);
+    broadcastNotification(event);
+    return event;
+  } catch {
+    return publishNotification(fallback);
+  }
 }
 
 export async function publishActivityNotification(db, input) {
@@ -214,9 +284,9 @@ export async function publishActivityNotification(db, input) {
       },
     };
     const text = messageFor(copy, context);
-    return publishNotification({ ...copy, ...text });
+    return publishPersistentNotification(db, { ...copy, ...text });
   } catch {
-    return publishNotification({ ...input, actionTarget: input.actionTarget || targetFor(input.type) });
+    return publishPersistentNotification(db, { ...input, actionTarget: input.actionTarget || targetFor(input.type) });
   }
 }
 
@@ -230,16 +300,72 @@ export function recentNotifications({ limit = 50 } = {}) {
   return events.slice(0, Math.max(1, Math.min(Number(limit) || 50, MAX_EVENTS)));
 }
 
-export function streamNotifications(req, res) {
+export async function listNotifications(db, { user, limit = 50 } = {}) {
+  const runQuery = typeof db === "function" ? db : db?.query;
+  const bounded = Math.max(1, Math.min(Number(limit) || 50, MAX_EVENTS));
+  if (!runQuery) {
+    const data = recentNotifications({ limit: bounded }).filter((event) => audienceMatches(event, user));
+    return { data, unreadCount: data.length };
+  }
+  const { rows } = await runQuery(
+    `SELECT n.*, r.read_at
+     FROM notifications n
+     LEFT JOIN notification_read_receipts r
+       ON r.notification_id = n.id AND r.user_id = $1
+     WHERE n.audience = 'ALL' OR n.audience = $2
+     ORDER BY n.created_at DESC
+     LIMIT $3`,
+    [user.id, user.role, bounded]
+  );
+  const data = rows.map(toCamelEvent);
+  const unreadCount = data.filter((event) => !event.readAt).length;
+  return { data, unreadCount };
+}
+
+export async function countUnreadNotifications(db, { user } = {}) {
+  const runQuery = typeof db === "function" ? db : db?.query;
+  if (!runQuery || !user?.id) return 0;
+  const { rows } = await runQuery(
+    `SELECT COUNT(*)::int AS unread_count
+     FROM notifications n
+     WHERE (n.audience = 'ALL' OR n.audience = $2)
+       AND NOT EXISTS (
+         SELECT 1
+         FROM notification_read_receipts r
+         WHERE r.notification_id = n.id AND r.user_id = $1
+       )`,
+    [user.id, user.role]
+  );
+  return Number(rows[0]?.unread_count || 0);
+}
+
+export async function markNotificationsRead(db, { userId, notificationIds = [] } = {}) {
+  const runQuery = typeof db === "function" ? db : db?.query;
+  if (!runQuery || !userId || !notificationIds.length) return { read: 0 };
+  const { rowCount } = await runQuery(
+    `INSERT INTO notification_read_receipts (notification_id, user_id)
+     SELECT id, $1
+     FROM notifications
+     WHERE id = ANY($2::uuid[])
+     ON CONFLICT (notification_id, user_id) DO NOTHING`,
+    [userId, notificationIds]
+  );
+  return { read: rowCount || 0 };
+}
+
+export async function streamNotifications(req, res, db) {
   const clientId = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
   res.setHeader("Content-Type", "text/event-stream");
   res.setHeader("Cache-Control", "no-cache, no-transform");
   res.setHeader("Connection", "keep-alive");
   res.flushHeaders?.();
 
-  clients.set(clientId, res);
+  clients.set(clientId, { res, user: req.user });
   writeEvent(res, "ready", { clientId, connectedAt: new Date().toISOString() });
-  for (const event of recentNotifications({ limit: 25 }).reverse()) {
+  const { data } = await listNotifications(db, { user: req.user, limit: 25 }).catch(() => ({
+    data: recentNotifications({ limit: 25 }).filter((event) => audienceMatches(event, req.user)),
+  }));
+  for (const event of data.reverse()) {
     writeEvent(res, "notification", event);
   }
 

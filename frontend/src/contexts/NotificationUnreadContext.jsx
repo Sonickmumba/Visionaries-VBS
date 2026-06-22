@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { API_URL, api } from "../api/client.js";
 
 const NotificationUnreadContext = createContext({
@@ -11,52 +11,36 @@ const NotificationUnreadContext = createContext({
   markAllRead: () => {},
 });
 
-function storageKey(user) {
-  const id = user?.id || user?.email || user?.role || "anonymous";
-  return `visionaries.notifications.read.${id}`;
-}
-
-function readStoredIds(user) {
-  if (typeof window === "undefined") return new Set();
-  try {
-    return new Set(JSON.parse(window.localStorage.getItem(storageKey(user)) || "[]"));
-  } catch {
-    return new Set();
-  }
-}
-
-function storeReadIds(user, ids) {
-  if (typeof window === "undefined") return;
-  const bounded = Array.from(ids).slice(-300);
-  window.localStorage.setItem(storageKey(user), JSON.stringify(bounded));
-}
-
 function mergeEvents(current, nextEvent) {
   return [nextEvent, ...current.filter((item) => item.id !== nextEvent.id)].slice(0, 75);
 }
 
 export function NotificationUnreadProvider({ user, page, children, notificationsApi = api }) {
   const [events, setEvents] = useState([]);
-  const [readIds, setReadIds] = useState(() => readStoredIds(user));
+  const [unreadCount, setUnreadCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [connected, setConnected] = useState(false);
+  const pageRef = useRef(page);
+
+  useEffect(() => {
+    pageRef.current = page;
+  }, [page]);
 
   const markAllRead = useCallback((items = []) => {
-    setReadIds((current) => {
-      const next = new Set(current);
-      let changed = false;
-      for (const event of items) {
-        if (event?.id && !next.has(String(event.id))) {
-          next.add(String(event.id));
-          changed = true;
-        }
-      }
-      if (!changed) return current;
-      storeReadIds(user, next);
-      return next;
-    });
-  }, [user]);
+    const notificationIds = items.map((event) => event?.id).filter(Boolean);
+    if (!notificationIds.length) return;
+    setEvents((current) => current.map((event) => (
+      notificationIds.includes(event.id) ? { ...event, readAt: event.readAt || new Date().toISOString() } : event
+    )));
+    setUnreadCount(0);
+    notificationsApi("/notifications/read", {
+      method: "POST",
+      body: { notificationIds },
+    })
+      .then((response) => setUnreadCount(Number(response.unreadCount || 0)))
+      .catch(() => null);
+  }, [notificationsApi]);
 
   const refresh = useCallback(async () => {
     setLoading(true);
@@ -65,6 +49,7 @@ export function NotificationUnreadProvider({ user, page, children, notifications
       const response = await notificationsApi("/notifications?limit=75");
       const nextEvents = response.data || [];
       setEvents(nextEvents);
+      setUnreadCount(Number(response.unreadCount || 0));
       return nextEvents;
     } catch (err) {
       setError(err.message || "Notifications could not load.");
@@ -75,8 +60,8 @@ export function NotificationUnreadProvider({ user, page, children, notifications
   }, [notificationsApi]);
 
   useEffect(() => {
-    setReadIds(readStoredIds(user));
     setEvents([]);
+    setUnreadCount(0);
     setConnected(false);
   }, [user?.id, user?.email, user?.role]);
 
@@ -98,7 +83,14 @@ export function NotificationUnreadProvider({ user, page, children, notifications
     stream.addEventListener("heartbeat", () => setConnected(true));
     stream.addEventListener("notification", (message) => {
       const event = JSON.parse(message.data);
-      setEvents((current) => mergeEvents(current, event));
+      let isNew = false;
+      setEvents((current) => {
+        isNew = !current.some((item) => item.id === event.id);
+        return mergeEvents(current, event);
+      });
+      if (isNew) {
+        setUnreadCount((current) => ["notifications", "my-notifications"].includes(pageRef.current) ? current : current + 1);
+      }
     });
     stream.onerror = () => setConnected(false);
     return () => {
@@ -115,13 +107,13 @@ export function NotificationUnreadProvider({ user, page, children, notifications
 
   const value = useMemo(() => ({
     events,
-    unreadCount: events.filter((event) => event?.id && !readIds.has(String(event.id))).length,
+    unreadCount,
     connected,
     loading,
     error,
     refresh,
     markAllRead,
-  }), [connected, error, events, loading, markAllRead, readIds, refresh]);
+  }), [connected, error, events, loading, markAllRead, refresh, unreadCount]);
 
   return (
     <NotificationUnreadContext.Provider value={value}>

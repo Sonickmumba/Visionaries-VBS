@@ -98,8 +98,9 @@ describe("notifications", () => {
     expect(contextSource).toContain("new EventSource");
     expect(contextSource).toContain("/notifications/stream");
     expect(contextSource).toContain("withCredentials: true");
-    expect(contextSource).toContain("localStorage");
     expect(contextSource).toContain("unreadCount");
+    expect(contextSource).toContain("/notifications/read");
+    expect(contextSource).not.toContain("localStorage");
     expect(source).toContain("actionTarget");
     expect(source).toContain("target.adminPage");
     expect(source).toContain("target.memberPage");

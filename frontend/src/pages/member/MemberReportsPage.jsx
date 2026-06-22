@@ -11,7 +11,7 @@ const memberReportNav = [
   { id: "my-loans", label: "Loans", icon: Banknote },
 ];
 
-export function MemberReportsPage({ setPage, reportsApi, initialData, initialCycles, initialCycleDetail }) {
+export function MemberReportsPage({ setPage, reportsApi, initialData, initialCycles, initialCycleDetail, requestedReport }) {
   return (
     <>
       <ReportsPage
@@ -19,6 +19,7 @@ export function MemberReportsPage({ setPage, reportsApi, initialData, initialCyc
         initialData={initialData}
         initialCycles={initialCycles}
         initialCycleDetail={initialCycleDetail}
+        requestedReport={requestedReport}
         title="Member Reports"
         heroEyebrow="Transparency Reports"
         readOnlyNote="Read-only group reports for statements, declarations, pool, savings, loans, common interest, penalties, and cycle closing."

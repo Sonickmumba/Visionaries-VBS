@@ -5,7 +5,7 @@ import { requireAuth, requireRole } from "../../middleware/auth.js";
 import { requireConsistentCycleReferences, requireCycleMemberAccessFromBody, requireUnlockedMonthForDeclarationParam, requireUnlockedMonthFromBody } from "../../middleware/domainGuards.js";
 import { validate } from "../../middleware/validate.js";
 import { audit } from "../../services/auditService.js";
-import { publishNotification } from "../../services/notificationService.js";
+import { queueActivityNotification } from "../../services/notificationService.js";
 import { postLedger } from "../../services/ledgerService.js";
 import {
   assertDeclarationCanBeSubmitted,
@@ -319,7 +319,7 @@ declarationsRouter.post("/", validate(declarationSchema), requireConsistentCycle
       });
       return rows[0];
     });
-    publishNotification({
+    queueActivityNotification(query, {
       type: result.status === "DRAFT" ? "DECLARATION_DRAFT_SAVED" : "DECLARATION_SUBMITTED",
       title: result.status === "DRAFT" ? "Declaration draft saved" : "Declaration submitted",
       message: result.status === "DRAFT"
@@ -425,7 +425,7 @@ declarationsRouter.post("/missed", requireRole("ADMIN"), validate(missedDeclarat
 
       return { declaration, penalty };
     });
-    publishNotification({
+    queueActivityNotification(query, {
       type: "DECLARATION_MARKED_MISSED",
       title: "Declaration marked missed",
       message: result.penalty ? "A missed declaration was recorded and a penalty was assessed." : "A missed declaration was recorded.",
@@ -900,7 +900,7 @@ declarationsRouter.post("/:id/approve-inputs", requireRole("ADMIN"), requireUnlo
       });
       return rows[0];
     });
-    publishNotification({
+    queueActivityNotification(query, {
       type: "DECLARATION_APPROVED",
       title: "Declaration approved",
       message: "An administrator approved declaration inputs and posted approved financial amounts.",
@@ -962,7 +962,7 @@ declarationsRouter.post("/:id/create-loan-request", requireRole("ADMIN"), requir
       });
       return rows[0];
     });
-    publishNotification({
+    queueActivityNotification(query, {
       type: "LOAN_REQUEST_CREATED",
       title: "Loan request created",
       message: "A loan request was created from a declaration.",

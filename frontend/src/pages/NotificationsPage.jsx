@@ -44,8 +44,9 @@ export async function loadNotifications({ notificationsApi = api } = {}) {
   return response.data || [];
 }
 
-export function NotificationCard({ event, onOpenReports }) {
+export function NotificationCard({ event, onOpenTarget }) {
   const amount = eventAmount(event);
+  const month = event.metadata?.monthNumber ? `Month ${event.metadata.monthNumber}` : "";
   return (
     <article className="notification-card">
       <div className="notification-icon"><Bell size={18} aria-hidden="true" /></div>
@@ -58,17 +59,17 @@ export function NotificationCard({ event, onOpenReports }) {
         <div className="notification-meta">
           <span>{event.createdAt ? new Date(event.createdAt).toLocaleString() : "Just now"}</span>
           {amount ? <span>{amount}</span> : null}
-          {event.cycleMonthId ? <span>Cycle month linked</span> : null}
+          {month ? <span>{month}</span> : null}
         </div>
       </div>
-      {event.actionUrl ? (
-        <Button type="button" size="sm" variant="secondary" icon={FileBarChart} onClick={() => onOpenReports?.(event.actionUrl)}>View</Button>
+      {event.actionTarget || event.actionUrl ? (
+        <Button type="button" size="sm" variant="secondary" icon={FileBarChart} onClick={() => onOpenTarget?.(event)}>View</Button>
       ) : null}
     </article>
   );
 }
 
-export function NotificationsPage({ notificationsApi = api, initialEvents = null, setPage, reportsPage = "reports" }) {
+export function NotificationsPage({ notificationsApi = api, initialEvents = null, setPage, role = "ADMIN" }) {
   const [events, setEvents] = useState(initialEvents || []);
   const [loading, setLoading] = useState(initialEvents === null);
   const [error, setError] = useState("");
@@ -107,7 +108,13 @@ export function NotificationsPage({ notificationsApi = api, initialEvents = null
   }, []);
 
   const view = useMemo(() => notificationsViewModel(events), [events]);
-  const openReports = () => setPage?.(reportsPage);
+  const openReports = () => setPage?.(role === "MEMBER" ? "my-reports" : "reports");
+  const openTarget = (event) => {
+    const target = event.actionTarget || {};
+    const fallbackPage = role === "MEMBER" ? "my-reports" : "reports";
+    const page = role === "MEMBER" ? target.memberPage : target.adminPage;
+    setPage?.(page || fallbackPage, target.report ? { report: target.report } : null);
+  };
 
   return (
     <Page
@@ -142,7 +149,7 @@ export function NotificationsPage({ notificationsApi = api, initialEvents = null
         </div>
         {loading ? <Skeleton lines={8} /> : events.length ? (
           <div className="notification-list">
-            {events.map((event) => <NotificationCard key={event.id} event={event} onOpenReports={openReports} />)}
+            {events.map((event) => <NotificationCard key={event.id} event={event} onOpenTarget={openTarget} />)}
           </div>
         ) : (
           <EmptyState title="No notifications yet" message="Submitted declarations and financial actions will appear here in real time." />

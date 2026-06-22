@@ -19,7 +19,8 @@ const events = [
     severity: "INFO",
     createdAt: "2026-06-22T10:00:00Z",
     actionUrl: "reports:declarations",
-    metadata: { savingsAmount: "15000" },
+    actionTarget: { adminPage: "declarations", memberPage: "my-reports", report: "declarations" },
+    metadata: { savingsAmount: "15000", monthNumber: 2 },
   },
   {
     id: "2",
@@ -69,11 +70,12 @@ describe("notifications", () => {
     expect(html).toContain("Loan disbursed");
     expect(html).toContain("Penalty assessed");
     expect(html).toContain("K15,000");
+    expect(html).toContain("Month 2");
     expect(html).toContain("Open Reports");
   });
 
   it("renders a notification card with report action", () => {
-    const html = renderToStaticMarkup(<NotificationCard event={events[0]} onOpenReports={() => {}} />);
+    const html = renderToStaticMarkup(<NotificationCard event={events[0]} onOpenTarget={() => {}} />);
 
     expect(html).toContain("Declaration Submitted");
     expect(html).toContain("View");
@@ -87,6 +89,9 @@ describe("notifications", () => {
     expect(source).toContain("new EventSource");
     expect(source).toContain("/notifications/stream");
     expect(source).toContain("withCredentials: true");
+    expect(source).toContain("actionTarget");
+    expect(source).toContain("target.adminPage");
+    expect(source).toContain("target.memberPage");
     expect(css).toContain(".notifications-hero");
     expect(css).toContain(".notification-card");
     expect(css).toContain("@media (max-width: 767px)");

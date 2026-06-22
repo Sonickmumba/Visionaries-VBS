@@ -473,6 +473,7 @@ export function ReportsPage({
   title = "Reports Center",
   heroEyebrow = "Reports Center",
   readOnlyNote = "",
+  requestedReport = "",
 }) {
   const [report, setReport] = useState(initialData?.report || "cycle-summary");
   const [cycles, setCycles] = useState(initialCycles || []);
@@ -570,6 +571,14 @@ export function ReportsPage({
   useEffect(() => {
     if (initialData === null) loadReport();
   }, [cycleId, cycleMonthId, selectedMember]);
+
+  useEffect(() => {
+    if (!requestedReport || !REPORT_DEFINITIONS[requestedReport] || requestedReport === report) return;
+    setReport(requestedReport);
+    if (!REPORT_DEFINITIONS[requestedReport].supportsMember) setSelectedMember("");
+    setSelectedRow(null);
+    loadReport(requestedReport).catch(() => {});
+  }, [requestedReport]);
 
   const rows = data?.rows || [];
   const members = data?.members || [];

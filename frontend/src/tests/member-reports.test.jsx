@@ -33,6 +33,7 @@ describe("member reports", () => {
         initialData={data}
         initialCycles={[cycle]}
         initialCycleDetail={{ months: [month] }}
+        requestedReport="declarations"
       />
     );
 

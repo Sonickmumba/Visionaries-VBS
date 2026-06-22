@@ -7,7 +7,7 @@ import { validate } from "../../middleware/validate.js";
 import { audit } from "../../services/auditService.js";
 import { postCommonInterestRun } from "../../services/commonInterestService.js";
 import { postLedger } from "../../services/ledgerService.js";
-import { publishNotification } from "../../services/notificationService.js";
+import { queueActivityNotification } from "../../services/notificationService.js";
 import {
   calculateMemberMonthlyClosing,
   getClosingLedgerSums,
@@ -461,7 +461,7 @@ closingRouter.post("/run", validate(z.object({
       });
       return { run: approvedRun, summary, snapshots, commonInterest };
     });
-    publishNotification({
+    queueActivityNotification(query, {
       type: "MONTHLY_CLOSING_COMPLETED",
       title: "Monthly closing completed",
       message: req.body.lock ? "Monthly closing was completed and the month was locked." : "Monthly closing was completed.",

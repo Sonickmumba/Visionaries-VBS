@@ -41,6 +41,7 @@ export function App() {
   const [user, setUser] = useState(null);
   const [checkingSession, setCheckingSession] = useState(true);
   const [page, setPage] = useState("dashboard");
+  const [navigationIntent, setNavigationIntent] = useState(null);
   const [showWelcomeSplash, setShowWelcomeSplash] = useState(() => (
     !new URLSearchParams(window.location.search).has("resetToken")
   ));
@@ -53,6 +54,11 @@ export function App() {
     setAuthMode("login");
   };
 
+  function navigate(nextPage, intent = null) {
+    setNavigationIntent(intent);
+    setPage(nextPage);
+  }
+
   useEffect(() => {
     let active = true;
     preloadLoginPage();
@@ -60,7 +66,7 @@ export function App() {
       .then((response) => {
         if (!active) return;
         setUser(response.user);
-        setPage(response.user?.role === "MEMBER" ? "member-dashboard" : "dashboard");
+        navigate(response.user?.role === "MEMBER" ? "member-dashboard" : "dashboard");
       })
       .catch(() => {
         if (!active) return;
@@ -84,7 +90,7 @@ export function App() {
     <SignupPage onSignup={(nextUser) => {
       setUser(nextUser);
       setShowWelcomeSplash(false);
-      setPage(nextUser.role === "MEMBER" ? "member-dashboard" : "dashboard");
+      navigate(nextUser.role === "MEMBER" ? "member-dashboard" : "dashboard");
     }} onBackToLogin={() => setAuthMode("login")} onBackToWelcome={backToWelcome} />
   ) : authMode === "forgot" ? (
     <PasswordRecoveryPage
@@ -97,7 +103,7 @@ export function App() {
       onLogin={(nextUser) => {
         setUser(nextUser);
         setShowWelcomeSplash(false);
-        setPage(nextUser.role === "MEMBER" ? "member-dashboard" : "dashboard");
+        navigate(nextUser.role === "MEMBER" ? "member-dashboard" : "dashboard");
       }}
       onSignup={() => setAuthMode("signup")}
       onForgotPassword={() => setAuthMode("forgot")}
@@ -130,7 +136,7 @@ export function App() {
 
   return (
     <Suspense fallback={<LoadingFallback />}>
-      <PortalApp user={user} page={page} setPage={setPage} onLogout={logout} />
+      <PortalApp user={user} page={page} setPage={navigate} navigationIntent={navigationIntent} onLogout={logout} />
     </Suspense>
   );
 }

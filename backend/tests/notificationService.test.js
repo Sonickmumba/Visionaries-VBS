@@ -1,6 +1,7 @@
 import { describe, expect, it, beforeEach } from "vitest";
 import {
   clearNotificationsForTests,
+  publishActivityNotification,
   publishNotification,
   recentNotifications,
 } from "../src/services/notificationService.js";
@@ -35,5 +36,29 @@ describe("notification service", () => {
     publishNotification({ type: "SECOND", title: "Second" });
 
     expect(recentNotifications({ limit: 1 }).map((event) => event.type)).toEqual(["SECOND"]);
+  });
+
+  it("enriches declaration notifications with member, amount, month, and routing target", async () => {
+    const db = {
+      query: async () => ({
+        rows: [{ first_name: "Mary", last_name: "Phiri", member_code: "M001", month_number: 2 }],
+      }),
+    };
+
+    await publishActivityNotification(db, {
+      type: "DECLARATION_SUBMITTED",
+      cycleId: "cycle-1",
+      cycleMonthId: "month-2",
+      cycleMemberId: "cm-1",
+      sourceTable: "declarations",
+      sourceId: "dec-1",
+      metadata: { savingsAmount: 15000 },
+    });
+
+    const [event] = recentNotifications();
+    expect(event.title).toBe("Mary Phiri submitted a declaration");
+    expect(event.message).toBe("Mary Phiri declared K15,000 savings for Month 2.");
+    expect(event.actionTarget).toEqual({ adminPage: "declarations", memberPage: "my-reports", report: "declarations" });
+    expect(event.metadata).toMatchObject({ memberName: "Mary Phiri", monthNumber: 2 });
   });
 });

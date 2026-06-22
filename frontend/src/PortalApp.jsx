@@ -45,7 +45,7 @@ function UnknownPage({ title }) {
   );
 }
 
-function screenForRoute(page, setPage, pageTitle) {
+function screenForRoute(page, setPage, pageTitle, navigationIntent) {
   switch (page) {
     case "dashboard":
       return <AdminDashboardPage setPage={setPage} />;
@@ -68,13 +68,13 @@ function screenForRoute(page, setPage, pageTitle) {
     case "ledger":
       return <LedgerPage />;
     case "reports":
-      return <ReportsPage />;
+      return <ReportsPage requestedReport={navigationIntent?.report} />;
     case "audit":
       return <AuditTrailPage />;
     case "settings":
       return <SettingsPage />;
     case "notifications":
-      return <NotificationsPage setPage={setPage} reportsPage="reports" />;
+      return <NotificationsPage setPage={setPage} role="ADMIN" />;
     case "member-dashboard":
       return <MemberDashboardPage setPage={setPage} />;
     case "my-declaration":
@@ -84,9 +84,9 @@ function screenForRoute(page, setPage, pageTitle) {
     case "my-penalties":
       return <MemberPenaltiesPage setPage={setPage} />;
     case "my-reports":
-      return <MemberReportsPage setPage={setPage} />;
+      return <MemberReportsPage setPage={setPage} requestedReport={navigationIntent?.report} />;
     case "my-notifications":
-      return <NotificationsPage setPage={setPage} reportsPage="my-reports" />;
+      return <NotificationsPage setPage={setPage} role="MEMBER" />;
     case "my-savings":
       return <MemberSavingsPage setPage={setPage} />;
     case "my-loans":
@@ -96,13 +96,13 @@ function screenForRoute(page, setPage, pageTitle) {
   }
 }
 
-export function PortalApp({ user, page, setPage, onLogout }) {
+export function PortalApp({ user, page, setPage, navigationIntent = null, onLogout }) {
   const pageTitle = useMemo(() => routeLabel(page), [page]);
 
   return (
     <AppLayout user={user} page={page} setPage={setPage} onLogout={onLogout}>
       <Suspense fallback={<PageLoadingFallback />}>
-        {screenForRoute(page, setPage, pageTitle)}
+        {screenForRoute(page, setPage, pageTitle, navigationIntent)}
       </Suspense>
     </AppLayout>
   );

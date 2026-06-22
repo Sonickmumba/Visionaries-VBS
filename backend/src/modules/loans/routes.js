@@ -7,7 +7,7 @@ import { validate } from "../../middleware/validate.js";
 import { audit } from "../../services/auditService.js";
 import { runIdempotent } from "../../services/idempotencyService.js";
 import { postLedger } from "../../services/ledgerService.js";
-import { publishNotification } from "../../services/notificationService.js";
+import { queueActivityNotification } from "../../services/notificationService.js";
 import { badRequest, conflict, notFound } from "../../utils/httpError.js";
 
 export const loansRouter = express.Router();
@@ -91,7 +91,7 @@ loansRouter.post("/requests", validate(z.object({
       });
       return rows[0];
     });
-    publishNotification({
+    queueActivityNotification(query, {
       type: "LOAN_REQUEST_SUBMITTED",
       title: "Loan request submitted",
       message: "A member submitted a loan request.",
@@ -140,7 +140,7 @@ loansRouter.post("/requests/:id/approve", requireRole("ADMIN"), validate(z.objec
       });
       return rows[0];
     });
-    publishNotification({
+    queueActivityNotification(query, {
       type: "LOAN_REQUEST_APPROVED",
       title: "Loan request approved",
       message: "An administrator approved a loan request.",
@@ -186,7 +186,7 @@ loansRouter.post("/requests/:id/reject", requireRole("ADMIN"), validate(z.object
       });
       return rows[0];
     });
-    publishNotification({
+    queueActivityNotification(query, {
       type: "LOAN_REQUEST_REJECTED",
       title: "Loan request rejected",
       message: "An administrator rejected a loan request.",
@@ -274,7 +274,7 @@ loansRouter.post("/disbursements", requireRole("ADMIN"), validate(z.object({
     if (result.replayed) res.set("Idempotency-Replayed", "true");
     if (!result.replayed) {
       const disbursement = result.body?.data;
-      publishNotification({
+      queueActivityNotification(query, {
         type: "LOAN_DISBURSED",
         title: "Loan disbursed",
         message: "An approved loan was disbursed and posted to the ledger.",
@@ -367,7 +367,7 @@ loansRouter.post("/repayments", requireRole("ADMIN"), validate(z.object({
     if (result.replayed) res.set("Idempotency-Replayed", "true");
     if (!result.replayed) {
       const repayment = result.body?.data;
-      publishNotification({
+      queueActivityNotification(query, {
         type: "LOAN_REPAYMENT_POSTED",
         title: "Loan repayment posted",
         message: "A loan repayment was posted to the ledger.",

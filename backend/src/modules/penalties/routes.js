@@ -7,7 +7,7 @@ import { validate } from "../../middleware/validate.js";
 import { audit } from "../../services/auditService.js";
 import { runIdempotent } from "../../services/idempotencyService.js";
 import { postLedger, reverseLedgerTransaction } from "../../services/ledgerService.js";
-import { publishNotification } from "../../services/notificationService.js";
+import { queueActivityNotification } from "../../services/notificationService.js";
 import { badRequest, conflict, notFound } from "../../utils/httpError.js";
 import { getPagination, paginationMeta } from "../../utils/pagination.js";
 
@@ -160,7 +160,7 @@ penaltiesRouter.post("/", requireRole("ADMIN"), validate(z.object({
     if (result.replayed) res.set("Idempotency-Replayed", "true");
     if (!result.replayed) {
       const penalty = result.body?.data;
-      publishNotification({
+      queueActivityNotification(query, {
         type: "PENALTY_ASSESSED",
         title: "Penalty assessed",
         message: "An administrator assessed a member penalty.",
@@ -238,7 +238,7 @@ penaltiesRouter.post("/:id/pay", requireRole("ADMIN"), validate(z.object({
     if (result.replayed) res.set("Idempotency-Replayed", "true");
     if (!result.replayed) {
       const penalty = result.body?.data;
-      publishNotification({
+      queueActivityNotification(query, {
         type: "PENALTY_PAYMENT_POSTED",
         title: "Penalty payment posted",
         message: "A penalty payment was posted.",
@@ -333,7 +333,7 @@ penaltiesRouter.post("/:id/convert-to-loan", requireRole("ADMIN"), validate(z.ob
     if (result.replayed) res.set("Idempotency-Replayed", "true");
     if (!result.replayed) {
       const penalty = result.body?.data;
-      publishNotification({
+      queueActivityNotification(query, {
         type: "PENALTY_CONVERTED_TO_LOAN",
         title: "Penalty converted to loan",
         message: "An unpaid penalty was converted into a loan balance.",

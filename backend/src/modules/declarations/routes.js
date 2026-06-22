@@ -5,6 +5,7 @@ import { requireAuth, requireRole } from "../../middleware/auth.js";
 import { requireConsistentCycleReferences, requireCycleMemberAccessFromBody, requireUnlockedMonthForDeclarationParam, requireUnlockedMonthFromBody } from "../../middleware/domainGuards.js";
 import { validate } from "../../middleware/validate.js";
 import { audit } from "../../services/auditService.js";
+import { publishNotification } from "../../services/notificationService.js";
 import { postLedger } from "../../services/ledgerService.js";
 import {
   assertDeclarationCanBeSubmitted,
@@ -318,6 +319,28 @@ declarationsRouter.post("/", validate(declarationSchema), requireConsistentCycle
       });
       return rows[0];
     });
+    publishNotification({
+      type: result.status === "DRAFT" ? "DECLARATION_DRAFT_SAVED" : "DECLARATION_SUBMITTED",
+      title: result.status === "DRAFT" ? "Declaration draft saved" : "Declaration submitted",
+      message: result.status === "DRAFT"
+        ? "A member saved a declaration draft."
+        : "A member submitted a declaration for group review.",
+      cycleId: result.cycle_id,
+      cycleMonthId: result.cycle_month_id,
+      cycleMemberId: result.cycle_member_id,
+      sourceTable: "declarations",
+      sourceId: result.id,
+      actionUrl: "reports:declarations",
+      metadata: {
+        status: result.status,
+        savingsAmount: result.savings_amount,
+        loanRequestAmount: result.loan_request_amount,
+        loanTopUpAmount: result.loan_top_up_amount,
+        principalRepaymentAmount: result.principal_repayment_amount,
+        loanInterestRepaymentAmount: result.loan_interest_repayment_amount,
+        commonInterestPaymentAmount: result.common_interest_payment_amount,
+      },
+    });
     res.status(201).json({ data: result });
   } catch (error) {
     next(error);
@@ -401,6 +424,21 @@ declarationsRouter.post("/missed", requireRole("ADMIN"), validate(missedDeclarat
       }
 
       return { declaration, penalty };
+    });
+    publishNotification({
+      type: "DECLARATION_MARKED_MISSED",
+      title: "Declaration marked missed",
+      message: result.penalty ? "A missed declaration was recorded and a penalty was assessed." : "A missed declaration was recorded.",
+      cycleId: result.declaration.cycle_id,
+      cycleMonthId: result.declaration.cycle_month_id,
+      cycleMemberId: result.declaration.cycle_member_id,
+      sourceTable: "declarations",
+      sourceId: result.declaration.id,
+      actionUrl: "reports:declarations",
+      metadata: {
+        penaltyId: result.penalty?.id || null,
+        penaltyAmount: result.penalty?.amount_assessed || 0,
+      },
     });
     res.status(201).json({ data: result });
   } catch (error) {
@@ -862,6 +900,25 @@ declarationsRouter.post("/:id/approve-inputs", requireRole("ADMIN"), requireUnlo
       });
       return rows[0];
     });
+    publishNotification({
+      type: "DECLARATION_APPROVED",
+      title: "Declaration approved",
+      message: "An administrator approved declaration inputs and posted approved financial amounts.",
+      cycleId: approved.cycle_id,
+      cycleMonthId: approved.cycle_month_id,
+      cycleMemberId: approved.cycle_member_id,
+      sourceTable: "declarations",
+      sourceId: approved.id,
+      actionUrl: "reports:declarations",
+      metadata: {
+        savingsAmount: approved.savings_amount,
+        principalRepaymentAmount: approved.principal_repayment_amount,
+        loanInterestRepaymentAmount: approved.loan_interest_repayment_amount,
+        commonInterestPaymentAmount: approved.common_interest_payment_amount,
+        loanRequestAmount: approved.loan_request_amount,
+        loanTopUpAmount: approved.loan_top_up_amount,
+      },
+    });
     res.json({ data: approved });
   } catch (error) {
     next(error);
@@ -904,6 +961,22 @@ declarationsRouter.post("/:id/create-loan-request", requireRole("ADMIN"), requir
         req,
       });
       return rows[0];
+    });
+    publishNotification({
+      type: "LOAN_REQUEST_CREATED",
+      title: "Loan request created",
+      message: "A loan request was created from a declaration.",
+      cycleId: loanRequest.cycle_id,
+      cycleMonthId: loanRequest.cycle_month_id,
+      cycleMemberId: loanRequest.cycle_member_id,
+      sourceTable: "loan_requests",
+      sourceId: loanRequest.id,
+      actionUrl: "reports:loans",
+      metadata: {
+        requestedAmount: loanRequest.requested_amount,
+        originType: loanRequest.origin_type,
+        declarationId: loanRequest.declaration_id,
+      },
     });
     res.status(201).json({ data: loanRequest });
   } catch (error) {

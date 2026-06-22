@@ -36,6 +36,7 @@ vi.mock("../src/middleware/auth.js", () => ({
 }));
 
 const { app } = await import("../src/app.js");
+const { clearNotificationsForTests, publishNotification } = await import("../src/services/notificationService.js");
 
 function inject({ method = "GET", url, headers = {}, body = null }) {
   return new Promise((resolve, reject) => {
@@ -111,6 +112,7 @@ describe("API integration smoke tests", () => {
     mocks.withTransaction.mockImplementation(async (work) => work({
       query: mocks.clientQuery,
     }));
+    clearNotificationsForTests();
   });
 
   it("serves health checks without authentication", async () => {
@@ -147,6 +149,29 @@ describe("API integration smoke tests", () => {
     expect(response.body.data.penaltyTypes[0].code).toBe("FAILURE_TO_DECLARE");
     expect(response.body.data.appSettings.notification_preferences.emailEnabled).toBe(false);
     expect(response.body.data.roundingModes).toContain("HALF_UP");
+  });
+
+  it("returns recent notifications for authenticated users", async () => {
+    publishNotification({
+      type: "DECLARATION_SUBMITTED",
+      title: "Declaration submitted",
+      message: "A member submitted a declaration for group review.",
+      actionUrl: "reports:declarations",
+      metadata: { savingsAmount: 15000 },
+    });
+
+    const response = await inject({
+      url: "/api/notifications?limit=10",
+      headers: { "x-test-role": "MEMBER" },
+    });
+
+    expect(response.status).toBe(200);
+    expect(response.body.data).toHaveLength(1);
+    expect(response.body.data[0]).toMatchObject({
+      type: "DECLARATION_SUBMITTED",
+      title: "Declaration submitted",
+      actionUrl: "reports:declarations",
+    });
   });
 
   it("invites users through settings with an audit trail", async () => {

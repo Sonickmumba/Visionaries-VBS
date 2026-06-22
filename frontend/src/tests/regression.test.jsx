@@ -23,6 +23,7 @@ describe("QA-004 frontend regression suite", () => {
       "ledger",
       "reports",
       "audit",
+      "notifications",
       "settings",
     ];
     const memberRoutes = [
@@ -33,6 +34,7 @@ describe("QA-004 frontend regression suite", () => {
       "my-loans",
       "my-penalties",
       "my-reports",
+      "my-notifications",
     ];
 
     expect(adminNav.map(([id]) => id)).toEqual(adminRoutes);
@@ -95,6 +97,7 @@ describe("QA-004 frontend regression suite", () => {
       "src/styles/member-dashboard.css",
       "src/styles/member-declaration.css",
       "src/styles/member-statement.css",
+      "src/styles/notifications.css",
     ].map((file) => fs.readFileSync(path.join(process.cwd(), file), "utf8")).join("\n");
 
     for (const token of [

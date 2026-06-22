@@ -23,6 +23,7 @@ import { ledgerRouter } from "./modules/ledger/routes.js";
 import { auditRouter } from "./modules/audit/routes.js";
 import { overridesRouter } from "./modules/overrides/routes.js";
 import { settingsRouter } from "./modules/settings/routes.js";
+import { notificationsRouter } from "./modules/notifications/routes.js";
 
 export const app = express();
 
@@ -70,6 +71,7 @@ app.use("/api/ledger", ledgerRouter);
 app.use("/api/audit", auditRouter);
 app.use("/api/overrides", overridesRouter);
 app.use("/api/settings", settingsRouter);
+app.use("/api/notifications", notificationsRouter);
 
 app.use(notFoundHandler);
 app.use(errorHandler);

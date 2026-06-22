@@ -7,6 +7,7 @@ import { validate } from "../../middleware/validate.js";
 import { audit } from "../../services/auditService.js";
 import { postCommonInterestRun } from "../../services/commonInterestService.js";
 import { postLedger } from "../../services/ledgerService.js";
+import { publishNotification } from "../../services/notificationService.js";
 import {
   calculateMemberMonthlyClosing,
   getClosingLedgerSums,
@@ -459,6 +460,24 @@ closingRouter.post("/run", validate(z.object({
         req,
       });
       return { run: approvedRun, summary, snapshots, commonInterest };
+    });
+    publishNotification({
+      type: "MONTHLY_CLOSING_COMPLETED",
+      title: "Monthly closing completed",
+      message: req.body.lock ? "Monthly closing was completed and the month was locked." : "Monthly closing was completed.",
+      cycleId: result.run?.cycle_id,
+      cycleMonthId: result.run?.cycle_month_id,
+      sourceTable: "monthly_closing_runs",
+      sourceId: result.run?.id,
+      actionUrl: "reports:cycle-closing",
+      metadata: {
+        locked: Boolean(req.body.lock),
+        snapshots: result.snapshots?.length || 0,
+        totalSavingsDeposits: result.summary?.total_savings_deposits,
+        totalLoansIssued: result.summary?.total_loans_issued,
+        totalCommonInterestCharged: result.summary?.total_common_interest_charged,
+        totalPenaltiesAssessed: result.summary?.total_penalties_assessed,
+      },
     });
     res.status(201).json({ data: result });
   } catch (error) {

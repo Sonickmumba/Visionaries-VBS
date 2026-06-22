@@ -19,6 +19,7 @@ const PenaltyScreensPage = lazyNamed(() => import("./pages/admin/PenaltyScreensP
 const ReportsPage = lazyNamed(() => import("./pages/admin/ReportsPage.jsx"), "ReportsPage");
 const SavingsContributionPage = lazyNamed(() => import("./pages/admin/SavingsContributionPage.jsx"), "SavingsContributionPage");
 const SettingsPage = lazyNamed(() => import("./pages/admin/SettingsPage.jsx"), "SettingsPage");
+const NotificationsPage = lazyNamed(() => import("./pages/NotificationsPage.jsx"), "NotificationsPage");
 const MemberDashboardPage = lazyNamed(() => import("./pages/member/MemberDashboardPage.jsx"), "MemberDashboardPage");
 const MemberDeclarationPage = lazyNamed(() => import("./pages/member/MemberDeclarationPage.jsx"), "MemberDeclarationPage");
 const MemberLoansPage = lazyNamed(() => import("./pages/member/MemberLoansPage.jsx"), "MemberLoansPage");
@@ -72,6 +73,8 @@ function screenForRoute(page, setPage, pageTitle) {
       return <AuditTrailPage />;
     case "settings":
       return <SettingsPage />;
+    case "notifications":
+      return <NotificationsPage setPage={setPage} reportsPage="reports" />;
     case "member-dashboard":
       return <MemberDashboardPage setPage={setPage} />;
     case "my-declaration":
@@ -82,6 +85,8 @@ function screenForRoute(page, setPage, pageTitle) {
       return <MemberPenaltiesPage setPage={setPage} />;
     case "my-reports":
       return <MemberReportsPage setPage={setPage} />;
+    case "my-notifications":
+      return <NotificationsPage setPage={setPage} reportsPage="my-reports" />;
     case "my-savings":
       return <MemberSavingsPage setPage={setPage} />;
     case "my-loans":

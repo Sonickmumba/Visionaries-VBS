@@ -5,6 +5,7 @@ import { requireAuth, requireRole } from "../../middleware/auth.js";
 import { requireConsistentCycleReferences, requireUnlockedMonthFromBody } from "../../middleware/domainGuards.js";
 import { validate } from "../../middleware/validate.js";
 import { buildCommonInterestPreview, postCommonInterestRun } from "../../services/commonInterestService.js";
+import { publishNotification } from "../../services/notificationService.js";
 
 export const commonInterestRouter = express.Router();
 commonInterestRouter.use(requireAuth);
@@ -63,6 +64,22 @@ commonInterestRouter.post("/calculate", requireRole("ADMIN"), validate(z.object(
         userId: req.user.id,
         req,
       });
+    });
+    publishNotification({
+      type: "COMMON_INTEREST_POSTED",
+      title: "Common interest posted",
+      message: "Common interest was calculated and allocated for a cycle month.",
+      cycleId: result.run?.cycle_id,
+      cycleMonthId: result.run?.cycle_month_id,
+      sourceTable: "common_interest_runs",
+      sourceId: result.run?.id,
+      actionUrl: "reports:common-interest",
+      metadata: {
+        allocationMethod: result.run?.allocation_method,
+        unborrowedMoney: result.run?.unborrowed_money,
+        commonInterestPool: result.run?.common_interest_pool,
+        allocations: result.allocations?.length || 0,
+      },
     });
     res.status(201).json({ data: result });
   } catch (error) {

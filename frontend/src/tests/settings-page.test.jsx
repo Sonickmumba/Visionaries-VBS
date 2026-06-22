@@ -1,4 +1,6 @@
 import React from "react";
+import fs from "fs";
+import path from "path";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import {
@@ -151,6 +153,7 @@ describe("settings screens", () => {
     const html = renderToStaticMarkup(<SettingsPage initialContext={context} />);
 
     expect(html).toContain("Settings");
+    expect(html).toContain("Admin Settings");
     expect(html).toContain("Invite User");
     expect(html).toContain("Users");
     expect(html).toContain("Cycle Rules");
@@ -158,5 +161,15 @@ describe("settings screens", () => {
     expect(html).toContain("App Settings");
     expect(html).toContain("admin@example.com");
     expect(html).toContain("User change reason");
+  });
+
+  it("keeps the settings mobile responsive contract", () => {
+    const css = fs.readFileSync(path.join(process.cwd(), "src/styles/settings.css"), "utf8");
+
+    expect(css).toContain(".settings-hero");
+    expect(css).toContain(".settings-mobile-cards");
+    expect(css).toContain(".settings-card");
+    expect(css).toContain(".settings-desktop-table");
+    expect(css).toContain("@media (max-width: 767px)");
   });
 });

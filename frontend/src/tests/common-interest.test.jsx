@@ -1,4 +1,6 @@
 import React from "react";
+import fs from "fs";
+import path from "path";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import {
@@ -77,6 +79,7 @@ describe("common-interest screens", () => {
     );
 
     expect(html).toContain("Common Interest");
+    expect(html).toContain("Month 1 pool snapshot");
     expect(html).toContain("Calculate Preview");
     expect(html).toContain("Post Allocation");
     expect(html).toContain("Pool Contributions");
@@ -110,5 +113,25 @@ describe("common-interest screens", () => {
     );
 
     expect(html).toContain("Posted Run");
+  });
+
+  it("opens allocation detail in a modal instead of an inline preview panel", () => {
+    const source = fs.readFileSync(path.join(process.cwd(), "src/pages/admin/CommonInterestPage.jsx"), "utf8");
+
+    expect(source).toContain('title="Allocation Details"');
+    expect(source).toContain("common-interest-detail-modal");
+    expect(source).toContain("open={Boolean(selectedAllocation)}");
+  });
+
+  it("keeps the common-interest mobile responsive contract", () => {
+    const css = fs.readFileSync(path.join(process.cwd(), "src/styles/common-interest.css"), "utf8");
+
+    expect(css).toContain(".common-interest-hero");
+    expect(css).toContain(".common-interest-mobile-cards");
+    expect(css).toContain(".common-interest-card");
+    expect(css).toContain(".common-interest-detail-modal");
+    expect(css).toContain("max-height: none");
+    expect(css).toContain(".common-interest-desktop-table");
+    expect(css).toContain("@media (max-width: 767px)");
   });
 });

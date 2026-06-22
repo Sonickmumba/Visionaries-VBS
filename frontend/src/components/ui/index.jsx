@@ -1,11 +1,18 @@
 import React, { useId } from "react";
 import {
   AlertCircle,
+  Bell,
   CheckCircle2,
   ChevronLeft,
   ChevronRight,
+  FileText,
+  Home,
   Loader2,
+  Menu,
+  Plus,
   Search,
+  Upload,
+  UserRound,
   X,
 } from "lucide-react";
 import "../../styles/design-system.css";
@@ -367,5 +374,172 @@ export function ConfirmDialog({
       {message ? <p className="muted">{message}</p> : null}
       <Textarea label="Reason" value={reason} onChange={onReasonChange} required placeholder="Enter the audit reason" />
     </Modal>
+  );
+}
+
+export function MobileScreenShell({ children, bottomNav, className = "", labelledBy }) {
+  return (
+    <div className={`mobile-shell ${bottomNav ? "has-bottom-nav" : ""} ${className}`.trim()} aria-labelledby={labelledBy}>
+      <div className="mobile-shell-inner">{children}</div>
+      {bottomNav}
+    </div>
+  );
+}
+
+export function MobileHeader({
+  eyebrow,
+  title,
+  subtitle,
+  avatar,
+  onBack,
+  onMenu,
+  onNotifications,
+  actions,
+}) {
+  return (
+    <header className="mobile-header">
+      <div className="mobile-header-row">
+        <div className="mobile-header-leading">
+          {onBack ? <IconButton label="Go back" icon={ChevronLeft} variant="ghost" onClick={onBack} /> : null}
+          {onMenu ? <IconButton label="Open menu" icon={Menu} variant="ghost" onClick={onMenu} /> : null}
+        </div>
+        <div className="mobile-header-title">
+          {eyebrow ? <span>{eyebrow}</span> : null}
+          <h1>{title}</h1>
+          {subtitle ? <p>{subtitle}</p> : null}
+        </div>
+        <div className="mobile-header-actions">
+          {actions}
+          {onNotifications ? <IconButton label="Notifications" icon={Bell} variant="ghost" onClick={onNotifications} /> : null}
+          {avatar ? <div className="mobile-avatar" aria-label={avatar.label}>{avatar.image ? <img src={avatar.image} alt="" /> : <span>{avatar.initials}</span>}</div> : null}
+        </div>
+      </div>
+    </header>
+  );
+}
+
+export function MobileBottomNav({ items = [], active, onChange, label = "Primary mobile navigation" }) {
+  const defaultIcons = [Home, FileText, Plus, Search, UserRound];
+  return (
+    <nav className="mobile-bottom-nav" aria-label={label}>
+      {items.map((item, index) => {
+        const Icon = item.icon || defaultIcons[index] || Home;
+        const selected = active === item.id;
+        return (
+          <button
+            key={item.id}
+            type="button"
+            className={selected ? "active" : ""}
+            aria-current={selected ? "page" : undefined}
+            onClick={() => onChange?.(item.id)}
+          >
+            <Icon size={19} aria-hidden="true" />
+            <span>{item.label}</span>
+          </button>
+        );
+      })}
+    </nav>
+  );
+}
+
+export function MobileHeroCard({ label, value, note, actionLabel, onAction, tone = "green", children }) {
+  return (
+    <section className={`mobile-hero-card ${tone}`} aria-label={`${label}: ${value}${note ? `. ${note}` : ""}`}>
+      <div>
+        <span>{label}</span>
+        <strong>{value}</strong>
+        {note ? <small>{note}</small> : null}
+      </div>
+      {actionLabel ? (
+        <button type="button" onClick={onAction}>
+          {actionLabel}
+          <ChevronRight size={16} aria-hidden="true" />
+        </button>
+      ) : null}
+      {children}
+    </section>
+  );
+}
+
+export function MobileMetricCard({ label, value, note, icon: Icon = CheckCircle2, tone = "green" }) {
+  return (
+    <section className={`mobile-metric-card ${tone}`} aria-label={`${label}: ${value}${note ? `. ${note}` : ""}`}>
+      {Icon ? <span className="mobile-icon-disc"><Icon size={17} aria-hidden="true" /></span> : null}
+      <div>
+        <span>{label}</span>
+        <strong>{value}</strong>
+        {note ? <small>{note}</small> : null}
+      </div>
+    </section>
+  );
+}
+
+export function MobileActionTile({ label, icon: Icon = Plus, tone = "green", onClick, disabled = false }) {
+  return (
+    <button type="button" className={`mobile-action-tile ${tone}`} onClick={onClick} disabled={disabled}>
+      <span className="mobile-icon-disc"><Icon size={18} aria-hidden="true" /></span>
+      <strong>{label}</strong>
+    </button>
+  );
+}
+
+export function MobileListCard({ title, subtitle, meta, value, status, icon: Icon = UserRound, actionLabel = "View details", onAction }) {
+  return (
+    <article className="mobile-list-card">
+      <span className="mobile-list-icon"><Icon size={18} aria-hidden="true" /></span>
+      <div>
+        <h2>{title}</h2>
+        {subtitle ? <p>{subtitle}</p> : null}
+        {status ? <Badge tone={status.tone || "gray"} text={status.label} /> : null}
+      </div>
+      <div className="mobile-list-side">
+        {value ? <strong>{value}</strong> : null}
+        {meta ? <small>{meta}</small> : null}
+        {onAction ? <button type="button" onClick={onAction}>{actionLabel}</button> : null}
+      </div>
+    </article>
+  );
+}
+
+export function MobileStepper({ steps = [], active = 0, label = "Progress" }) {
+  return (
+    <ol className="mobile-stepper" aria-label={label}>
+      {steps.map((step, index) => (
+        <li key={step} className={index < active ? "done" : index === active ? "active" : ""}>
+          <span>{index + 1}</span>
+          <strong>{step}</strong>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+export function MobileUploadCard({ label, fileName, status = "Required", onChooseFile, disabled = false }) {
+  return (
+    <section className="mobile-upload-card" aria-label={`${label}. ${status}`}>
+      <span className="mobile-icon-disc"><Upload size={18} aria-hidden="true" /></span>
+      <div>
+        <strong>{label}</strong>
+        <small>{fileName || status}</small>
+      </div>
+      <Button type="button" variant="secondary" size="sm" onClick={onChooseFile} disabled={disabled}>Choose</Button>
+    </section>
+  );
+}
+
+export function MobileStickyActionBar({
+  primaryLabel,
+  secondaryLabel,
+  onPrimary,
+  onSecondary,
+  primaryDisabled = false,
+  secondaryDisabled = false,
+  loading = false,
+}) {
+  return (
+    <div className="mobile-sticky-actions">
+      {secondaryLabel ? <Button type="button" variant="secondary" onClick={onSecondary} disabled={secondaryDisabled || loading}>{secondaryLabel}</Button> : null}
+      <Button type="button" onClick={onPrimary} disabled={primaryDisabled} loading={loading}>{primaryLabel}</Button>
+    </div>
   );
 }

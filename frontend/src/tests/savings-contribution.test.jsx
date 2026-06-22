@@ -1,4 +1,6 @@
 import React from "react";
+import fs from "node:fs";
+import path from "node:path";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import {
@@ -100,6 +102,8 @@ describe("savings and contribution screens", () => {
     const html = renderToStaticMarkup(<SavingsContributionPage initialContext={context} />);
 
     expect(html).toContain("Savings");
+    expect(html).toContain("Savings Operations");
+    expect(html).toContain("Selected Member");
     expect(html).toContain("Refresh");
     expect(html).toContain("View Ledger");
     expect(html).toContain("Posting");
@@ -129,6 +133,18 @@ describe("savings and contribution screens", () => {
     );
 
     expect(html).toContain("Ledger");
+    expect(html).toContain("Savings Ledger");
     expect(html).toContain("Savings Principal");
+  });
+
+  it("keeps savings mobile card styles responsive", () => {
+    const css = fs.readFileSync(path.join(process.cwd(), "src/styles/savings.css"), "utf8");
+
+    expect(css).toContain(".savings-hero");
+    expect(css).toContain(".savings-selected-member");
+    expect(css).toContain(".savings-mobile-cards");
+    expect(css).toContain(".savings-member-card");
+    expect(css).toContain(".savings-desktop-table");
+    expect(css).toContain("@media (max-width: 767px)");
   });
 });

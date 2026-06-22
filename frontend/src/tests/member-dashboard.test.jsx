@@ -1,4 +1,6 @@
 import React from "react";
+import fs from "fs";
+import path from "path";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import {
@@ -121,6 +123,13 @@ describe("member dashboard", () => {
     expect(html).toContain("My Dashboard");
     expect(html).toContain("Submit Declaration");
     expect(html).toContain("View Statement");
+    expect(html).toContain("member-mobile-dashboard");
+    expect(html).toContain("Good Morning");
+    expect(html).toContain("Quick Actions");
+    expect(html).toContain("Declare");
+    expect(html).toContain("aria-label=\"Member financial summary\"");
+    expect(html).toContain("aria-label=\"Primary mobile navigation\"");
+    expect(html).toContain("aria-current=\"page\"");
     expect(html).toContain("My Accumulated Savings");
     expect(html).toContain("My Loan Balance");
     expect(html).toContain("K17,250");
@@ -133,6 +142,16 @@ describe("member dashboard", () => {
     expect(html).toContain("Recent Transactions");
     expect(html).toContain("Penalty Snapshot");
     expect(html).toContain("Mary Phiri");
+  });
+
+  it("keeps the member dashboard mobile responsive contract", () => {
+    const css = fs.readFileSync(path.join(process.cwd(), "src/styles/member-dashboard.css"), "utf8");
+
+    expect(css).toContain(".member-mobile-hero");
+    expect(css).toContain(".member-mobile-hero-actions");
+    expect(css).toContain(".member-mobile-hero-strip");
+    expect(css).toContain(".member-mobile-dashboard");
+    expect(css).toContain("@media (max-width: 767px)");
   });
 
   it("renders an empty state when the member is not enrolled in a cycle", () => {

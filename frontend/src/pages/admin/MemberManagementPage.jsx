@@ -3,10 +3,13 @@ import {
   BadgeCheck,
   ClipboardList,
   Edit3,
+  Mail,
   PiggyBank,
   Plus,
   RefreshCw,
   Search,
+  ShieldCheck,
+  Smartphone,
   UserPlus,
   Users,
 } from "lucide-react";
@@ -45,6 +48,15 @@ const DEFAULT_FORM = {
 
 function memberName(member) {
   return `${member?.first_name || ""} ${member?.last_name || ""}`.trim() || "Member";
+}
+
+function initials(member) {
+  return memberName(member)
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join("")
+    .toUpperCase() || "M";
 }
 
 function badgeTone(status) {
@@ -180,6 +192,7 @@ function MemberDetail({ detail, tab, setTab, onBack, onEdit, onToggle }) {
   return (
     <Page
       title={member ? memberName(member) : "Member Detail"}
+      className="member-detail-page"
       actions={(
         <>
           <Button type="button" variant="secondary" onClick={onBack}>Back</Button>
@@ -190,20 +203,42 @@ function MemberDetail({ detail, tab, setTab, onBack, onEdit, onToggle }) {
         </>
       )}
     >
+      <section className="member-detail-hero" aria-label="Member profile summary">
+        <div className="member-avatar large" aria-hidden="true">{initials(member)}</div>
+        <div>
+          <span>Member Profile</span>
+          <h2>{memberName(member)}</h2>
+          <p>{member?.member_code || "No member code"} · {member?.phone || "No phone"}</p>
+        </div>
+        <Badge text={member?.is_active ? "ACTIVE" : "INACTIVE"} tone={member?.is_active ? "green" : "red"} />
+      </section>
+
+      <div className="member-detail-mobile-actions mobile-only" aria-label="Member detail quick actions">
+        <Button type="button" variant="secondary" onClick={onBack}>Back</Button>
+        <Button type="button" variant="secondary" icon={Edit3} onClick={() => onEdit(member)}>Edit</Button>
+        <Button type="button" variant={member?.is_active ? "danger" : "secondary"} onClick={() => onToggle(member)}>
+          {member?.is_active ? "Deactivate" : "Activate"}
+        </Button>
+      </div>
+
       <section className="member-profile">
         <div>
+          <BadgeCheck size={18} aria-hidden="true" />
           <span>Member Code</span>
           <strong>{member?.member_code || "-"}</strong>
         </div>
         <div>
+          <Smartphone size={18} aria-hidden="true" />
           <span>Phone</span>
           <strong>{member?.phone || "-"}</strong>
         </div>
         <div>
+          <Mail size={18} aria-hidden="true" />
           <span>Email</span>
           <strong>{member?.email || "-"}</strong>
         </div>
         <div>
+          <ShieldCheck size={18} aria-hidden="true" />
           <span>Status</span>
           <Badge text={member?.is_active ? "ACTIVE" : "INACTIVE"} tone={member?.is_active ? "green" : "red"} />
         </div>
@@ -284,6 +319,54 @@ function MemberDetail({ detail, tab, setTab, onBack, onEdit, onToggle }) {
         />
       ) : null}
     </Page>
+  );
+}
+
+function MemberCards({ members, busy, onView, onEdit, onEnroll, onToggle }) {
+  if (!members.length) return null;
+  return (
+    <div className="member-mobile-cards" aria-label="Member cards">
+      {members.map((member) => (
+        <article className="member-card" key={member.id}>
+          <div className="member-card-head">
+            <div className="member-avatar" aria-hidden="true">{initials(member)}</div>
+            <div>
+              <strong>{memberName(member)}</strong>
+              <span>{member.member_code || "No code"} · {member.phone || "No phone"}</span>
+            </div>
+            <Badge text={member.is_active ? "ACTIVE" : "INACTIVE"} tone={member.is_active ? "green" : "red"} />
+          </div>
+          <div className="member-card-values">
+            <div>
+              <span>Savings</span>
+              <strong>{money(member.savings_principal)}</strong>
+            </div>
+            <div>
+              <span>Borrowed</span>
+              <strong>{money(member.cumulative_borrowed)}</strong>
+            </div>
+            <div>
+              <span>Declaration</span>
+              <Badge text={member.current_declaration_status || "NONE"} tone={badgeTone(member.current_declaration_status)} />
+            </div>
+          </div>
+          <div className="member-card-actions">
+            <Button type="button" variant="secondary" size="sm" onClick={() => onView(member.id)}>Details</Button>
+            <Button type="button" variant="secondary" size="sm" onClick={() => onEdit(member)}>Edit</Button>
+            <Button type="button" variant="secondary" size="sm" onClick={() => onEnroll(member)}>Enroll</Button>
+            <Button
+              type="button"
+              variant={member.is_active ? "danger" : "secondary"}
+              size="sm"
+              onClick={() => onToggle(member)}
+              loading={busy === `toggle-${member.id}`}
+            >
+              {member.is_active ? "Deactivate" : "Activate"}
+            </Button>
+          </div>
+        </article>
+      ))}
+    </div>
   );
 }
 
@@ -487,6 +570,7 @@ export function MemberManagementPage({
   return (
     <Page
       title="Members"
+      className="members-page"
       actions={(
         <>
           <Button type="button" icon={Plus} onClick={openCreate}>New Member</Button>
@@ -525,37 +609,45 @@ export function MemberManagementPage({
       <section className="panel">
         <div className="panel-head">
           <h2>Member List</h2>
-          <Button type="button" size="sm" icon={Plus} onClick={openCreate}>New Member</Button>
+          <Button type="button" className="member-list-head-action" size="sm" icon={Plus} onClick={openCreate}>New Member</Button>
+        </div>
+        <div className="member-list-mobile-actions mobile-only" aria-label="Member list quick actions">
+          <Button type="button" icon={Plus} onClick={openCreate}>New Member</Button>
+          <Button type="button" variant="secondary" icon={UserPlus} onClick={() => openEnroll()}>Enroll</Button>
+          <Button type="button" variant="secondary" icon={RefreshCw} onClick={() => loadMembers(pagination.page)} loading={loading}>Refresh</Button>
         </div>
         {loading ? <Skeleton lines={6} /> : members.length ? (
           <>
-            <DataTable
-              columns={["Member", "Code", "Phone", "Savings Principal", "Borrowed", "Declaration", "Approved", "Status", "Action"]}
-              rows={members.map((member) => [
-                memberName(member),
-                member.member_code || "-",
-                member.phone || "-",
-                money(member.savings_principal),
-                money(member.cumulative_borrowed),
-                <Badge text={member.current_declaration_status || "NONE"} tone={badgeTone(member.current_declaration_status)} />,
-                member.approved_declarations || 0,
-                <Badge text={member.is_active ? "ACTIVE" : "INACTIVE"} tone={member.is_active ? "green" : "red"} />,
-                <div className="button-row compact">
-                  <Button type="button" variant="secondary" size="sm" onClick={() => loadDetail(member.id)}>View Details</Button>
-                  <Button type="button" variant="secondary" size="sm" onClick={() => openEdit(member)}>Edit</Button>
-                  <Button type="button" variant="secondary" size="sm" onClick={() => openEnroll(member)}>Enroll</Button>
-                  <Button
-                    type="button"
-                    variant={member.is_active ? "danger" : "secondary"}
-                    size="sm"
-                    onClick={() => toggleStatus(member)}
-                    loading={busy === `toggle-${member.id}`}
-                  >
-                    {member.is_active ? "Deactivate" : "Activate"}
-                  </Button>
-                </div>,
-              ])}
-            />
+            <MemberCards members={members} busy={busy} onView={loadDetail} onEdit={openEdit} onEnroll={openEnroll} onToggle={toggleStatus} />
+            <div className="member-desktop-table">
+              <DataTable
+                columns={["Member", "Code", "Phone", "Savings Principal", "Borrowed", "Declaration", "Approved", "Status", "Action"]}
+                rows={members.map((member) => [
+                  memberName(member),
+                  member.member_code || "-",
+                  member.phone || "-",
+                  money(member.savings_principal),
+                  money(member.cumulative_borrowed),
+                  <Badge text={member.current_declaration_status || "NONE"} tone={badgeTone(member.current_declaration_status)} />,
+                  member.approved_declarations || 0,
+                  <Badge text={member.is_active ? "ACTIVE" : "INACTIVE"} tone={member.is_active ? "green" : "red"} />,
+                  <div className="button-row compact">
+                    <Button type="button" variant="secondary" size="sm" onClick={() => loadDetail(member.id)}>View Details</Button>
+                    <Button type="button" variant="secondary" size="sm" onClick={() => openEdit(member)}>Edit</Button>
+                    <Button type="button" variant="secondary" size="sm" onClick={() => openEnroll(member)}>Enroll</Button>
+                    <Button
+                      type="button"
+                      variant={member.is_active ? "danger" : "secondary"}
+                      size="sm"
+                      onClick={() => toggleStatus(member)}
+                      loading={busy === `toggle-${member.id}`}
+                    >
+                      {member.is_active ? "Deactivate" : "Activate"}
+                    </Button>
+                  </div>,
+                ])}
+              />
+            </div>
             <Pagination
               page={pagination.page || 1}
               totalPages={pagination.totalPages || 1}

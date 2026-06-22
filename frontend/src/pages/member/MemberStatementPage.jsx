@@ -1,7 +1,23 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { AlertTriangle, Banknote, Download, Eye, PiggyBank, RefreshCw, Scale } from "lucide-react";
+import { AlertTriangle, Banknote, ClipboardList, Download, Eye, FileText, Gauge, PiggyBank, Receipt, RefreshCw, Scale } from "lucide-react";
 import { api } from "../../api/client.js";
-import { Alert, Badge, Button, Card, DataTable, EmptyState, Modal, Select, Skeleton } from "../../components/ui/index.jsx";
+import {
+  Alert,
+  Badge,
+  Button,
+  Card,
+  DataTable,
+  EmptyState,
+  MobileActionTile,
+  MobileBottomNav,
+  MobileHeader,
+  MobileListCard,
+  MobileMetricCard,
+  MobileScreenShell,
+  Modal,
+  Select,
+  Skeleton,
+} from "../../components/ui/index.jsx";
 import { Page } from "../../layouts/AppLayouts.jsx";
 import { chooseActiveMembership, memberDashboardTotals } from "./MemberDashboardPage.jsx";
 import "../../styles/member-statement.css";
@@ -75,6 +91,33 @@ function DetailValue({ label, value }) {
   return <div><strong>{label}</strong><span>{value}</span></div>;
 }
 
+function MemberStatementMobileHero({ cycleTotals, selectedMonth, activeMembership, exportStatement, setPage }) {
+  return (
+    <section className="member-statement-hero" aria-label="Statement summary">
+      <div className="member-statement-hero-head">
+        <div>
+          <span>{selectedMonth ? `Month ${selectedMonth.month_number}` : "Full Cycle"}</span>
+          <h2>Statement</h2>
+        </div>
+        <Badge text={selectedMonth ? titleCase(selectedMonth.status) : titleCase(activeMembership?.cycle_status)} tone="blue" />
+      </div>
+      <div className="member-statement-hero-main">
+        <span>Accumulated Savings</span>
+        <strong>{money(cycleTotals.accumulatedSavings)}</strong>
+        <small>{activeMembership?.cycle_name || "Active cycle"}</small>
+      </div>
+      <div className="member-statement-hero-actions">
+        <Button type="button" size="sm" onClick={exportStatement}>Export CSV</Button>
+        <Button type="button" size="sm" variant="secondary" onClick={() => setPage?.("member-dashboard")}>Dashboard</Button>
+      </div>
+      <div className="member-statement-hero-strip">
+        <DetailValue label="Loan Balance" value={money(cycleTotals.outstandingLoan)} />
+        <DetailValue label="Penalty Due" value={money(cycleTotals.penaltyDue)} />
+      </div>
+    </section>
+  );
+}
+
 function TransactionDetail({ transaction }) {
   if (!transaction) return null;
   return (
@@ -89,6 +132,10 @@ function TransactionDetail({ transaction }) {
       <DetailValue label="Description" value={transaction.description || "-"} />
     </div>
   );
+}
+
+function monthLabel(month) {
+  return month ? `Month ${month.month_number} - ${titleCase(month.status)}` : "Full cycle";
 }
 
 function downloadCsv(filename, rows) {
@@ -160,6 +207,18 @@ export function MemberStatementPage({
   const transactions = focusedStatement?.transactions || [];
   const snapshots = focusedStatement?.snapshots || [];
   const selectedMonth = (data?.months || []).find((month) => month.id === selectedMonthId);
+  const bottomNav = (
+    <MobileBottomNav
+      active="my-statement"
+      items={[
+        { id: "member-dashboard", label: "Home", icon: Gauge },
+        { id: "my-declaration", label: "Declare", icon: ClipboardList },
+        { id: "my-statement", label: "Statement", icon: Receipt },
+        { id: "my-loans", label: "Loans", icon: Banknote },
+      ]}
+      onChange={setPage}
+    />
+  );
 
   function exportStatement() {
     downloadCsv(
@@ -170,6 +229,7 @@ export function MemberStatementPage({
 
   return (
     <Page
+      className="member-statement-page"
       title="My Statement"
       actions={(
         <>
@@ -185,6 +245,123 @@ export function MemberStatementPage({
         <EmptyState title="No active cycle membership" message="Ask an administrator to enroll you into a cycle before statements can appear." />
       ) : (
         <>
+          <div className="member-statement-mobile">
+            <MobileScreenShell bottomNav={bottomNav}>
+              <MobileHeader
+                eyebrow="Member Statement"
+                title={memberName(statement?.member || data?.me?.member)}
+                subtitle={selectedMonth ? `Month ${selectedMonth.month_number} statement` : activeMembership.cycle_name || "Full cycle"}
+              />
+
+              <MemberStatementMobileHero
+                cycleTotals={cycleTotals}
+                selectedMonth={selectedMonth}
+                activeMembership={activeMembership}
+                exportStatement={exportStatement}
+                setPage={setPage}
+              />
+
+              <div className="member-statement-mobile-metrics" aria-label="Statement financial summary">
+                <MobileMetricCard label="Outstanding Loan" value={money(cycleTotals.outstandingLoan)} note="Loan balance" icon={Banknote} tone="blue" />
+                <MobileMetricCard label="Common Interest Due" value={money(cycleTotals.commonInterestDue)} note="Assessed less paid" icon={Scale} tone="amber" />
+                <MobileMetricCard label="Penalty Due" value={money(cycleTotals.penaltyDue)} note="Outstanding penalties" icon={AlertTriangle} tone={cycleTotals.penaltyDue > 0 ? "red" : "green"} />
+                <MobileMetricCard label="Borrowing Shortfall" value={money(cycleTotals.borrowingShortfall)} note="Minimum borrowing progress" icon={PiggyBank} />
+              </div>
+
+              <section className="member-mobile-section">
+                <div className="member-mobile-section-head">
+                  <h2>Statement Period</h2>
+                  <Badge text={selectedMonth ? `Month ${selectedMonth.month_number}` : "Full Cycle"} tone="blue" />
+                </div>
+                <div className="member-statement-mobile-context">
+                  <Select
+                    label="Statement period"
+                    value={selectedMonthId}
+                    onChange={loadMonth}
+                    placeholder="Full cycle"
+                    options={(data?.months || []).map((month) => ({ value: month.id, label: monthLabel(month) }))}
+                  />
+                  <DetailValue label="Cycle" value={activeMembership.cycle_name || statement?.member?.cycle_name || "-"} />
+                  <DetailValue label="Period Transactions" value={monthLoading ? "Loading..." : transactions.length} />
+                </div>
+              </section>
+
+              <section className="member-mobile-section" aria-label="Statement actions">
+                <div className="member-mobile-section-head">
+                  <h2>Actions</h2>
+                </div>
+                <div className="member-statement-mobile-actions">
+                  <MobileActionTile label="Refresh" icon={RefreshCw} onClick={() => load(selectedMonthId)} disabled={loading} />
+                  <MobileActionTile label="Export CSV" icon={Download} tone="blue" onClick={exportStatement} disabled={!transactions.length} />
+                  <MobileActionTile label="Dashboard" icon={Gauge} tone="amber" onClick={() => setPage?.("member-dashboard")} />
+                </div>
+              </section>
+
+              <section className="member-mobile-section">
+                <div className="member-mobile-section-head">
+                  <h2>{selectedMonth ? "Selected Month Totals" : "Cycle Totals"}</h2>
+                  <Badge text={selectedMonth ? titleCase(selectedMonth.status) : "All months"} tone="gray" />
+                </div>
+                <div className="member-statement-mobile-totals">
+                  <DetailValue label="Savings Principal" value={money(focusedTotals.savingsPrincipal)} />
+                  <DetailValue label="Savings Interest" value={money(focusedTotals.savingsInterest)} />
+                  <DetailValue label="Borrowed" value={money(focusedTotals.borrowed)} />
+                  <DetailValue label="Principal Repaid" value={money(focusedStatement?.totals?.principal_repaid)} />
+                  <DetailValue label="Loan Interest Assessed" value={money(focusedStatement?.totals?.loan_interest_assessed)} />
+                  <DetailValue label="Loan Interest Paid" value={money(focusedStatement?.totals?.loan_interest_repaid)} />
+                  <DetailValue label="Common Interest" value={money(focusedStatement?.totals?.common_interest)} />
+                  <DetailValue label="Penalties" value={money(focusedStatement?.totals?.penalties)} />
+                </div>
+              </section>
+
+              <section className="member-mobile-section">
+                <div className="member-mobile-section-head">
+                  <h2>Transaction Detail</h2>
+                  <Badge text={`${transactions.length} records`} tone="blue" />
+                </div>
+                <div className="member-mobile-list">
+                  {transactions.length ? transactions.map((tx) => (
+                    <MobileListCard
+                      key={tx.id || `${tx.transaction_type}-${tx.posted_at}`}
+                      title={titleCase(tx.transaction_type)}
+                      subtitle={tx.description || tx.source_table || "-"}
+                      meta={dateTime(tx.posted_at || tx.transaction_date)}
+                      value={money(tx.amount)}
+                      status={{ label: tx.source_table || "Ledger", tone: transactionTone(tx.transaction_type) }}
+                      icon={FileText}
+                      actionLabel="View"
+                      onAction={() => setSelectedTransaction(tx)}
+                    />
+                  )) : <p className="muted">{monthLoading ? "Loading statement..." : "No statement transactions found."}</p>}
+                </div>
+              </section>
+
+              <section className="member-mobile-section">
+                <div className="member-mobile-section-head">
+                  <h2>Monthly Snapshots</h2>
+                  <Badge text={`${snapshots.length} records`} tone="blue" />
+                </div>
+                <div className="member-mobile-list">
+                  {snapshots.length ? snapshots.map((snapshot, index) => (
+                    <article key={`${snapshot.month_number || snapshot.created_at}-${index}`} className="member-statement-snapshot-card">
+                      <header>
+                        <strong>{snapshot.month_number ? `Month ${snapshot.month_number}` : dateOnly(snapshot.created_at)}</strong>
+                        <Badge text={titleCase(snapshot.borrowing_compliance_status || snapshot.compliance_status)} tone={transactionTone(snapshot.borrowing_compliance_status)} />
+                      </header>
+                      <div>
+                        <DetailValue label="Savings" value={money(snapshot.accumulated_savings || snapshot.closing_savings_balance)} />
+                        <DetailValue label="Loan" value={money(snapshot.closing_loan_balance || snapshot.outstanding_loan_balance)} />
+                        <DetailValue label="Common Interest" value={money(snapshot.common_interest_due || snapshot.common_interest_balance)} />
+                        <DetailValue label="Penalty" value={money(snapshot.penalty_due || snapshot.penalty_balance)} />
+                      </div>
+                    </article>
+                  )) : <p className="muted">No monthly snapshots found.</p>}
+                </div>
+              </section>
+            </MobileScreenShell>
+          </div>
+
+          <div className="member-statement-desktop">
           <div className="metrics member-statement-metrics">
             <Card title="Accumulated Savings" value={money(cycleTotals.accumulatedSavings)} note="Cycle principal + interest" icon={PiggyBank} />
             <Card title="Outstanding Loan" value={money(cycleTotals.outstandingLoan)} note="Borrowed + interest less repayments" tone="blue" icon={Banknote} />
@@ -205,7 +382,7 @@ export function MemberStatementPage({
                 placeholder="Full cycle"
                 options={(data?.months || []).map((month) => ({
                   value: month.id,
-                  label: `Month ${month.month_number} - ${titleCase(month.status)}`,
+                  label: monthLabel(month),
                 }))}
               />
               <DetailValue label="Member" value={memberName(statement?.member || data?.me?.member)} />
@@ -273,6 +450,7 @@ export function MemberStatementPage({
           >
             <TransactionDetail transaction={selectedTransaction} />
           </Modal>
+          </div>
         </>
       )}
     </Page>

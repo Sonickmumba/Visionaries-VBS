@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { UserPlus } from "lucide-react";
+import { ArrowLeft, ShieldCheck, UserPlus } from "lucide-react";
 import { api } from "../../api/client.js";
 import { Alert, Button, Field } from "../../components/ui/index.jsx";
 import { AuthLayout } from "../../layouts/AppLayouts.jsx";
 import { landingPageForRole } from "./LoginPage.jsx";
+import "../../styles/auth.css";
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -52,7 +53,7 @@ export async function performSignup({ form, authApi = api }) {
   });
 }
 
-export function SignupPage({ onSignup, onBackToLogin, authApi = api }) {
+export function SignupPage({ onSignup, onBackToLogin, onBackToWelcome, authApi = api }) {
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
@@ -97,6 +98,7 @@ export function SignupPage({ onSignup, onBackToLogin, authApi = api }) {
           <div className="auth-form-head">
             <span className="auth-icon"><UserPlus size={20} aria-hidden="true" /></span>
             <div>
+              <span className="auth-eyebrow">Account ready</span>
               <h2>Account created</h2>
               <p>Your member account is ready.</p>
             </div>
@@ -114,12 +116,23 @@ export function SignupPage({ onSignup, onBackToLogin, authApi = api }) {
   return (
     <AuthLayout>
       <form className="auth-card login-card" onSubmit={submit} noValidate>
+        {onBackToWelcome ? (
+          <button type="button" className="auth-back-button" onClick={onBackToWelcome} aria-label="Back to welcome">
+            <ArrowLeft size={18} aria-hidden="true" />
+          </button>
+        ) : null}
         <div className="auth-form-head">
           <span className="auth-icon"><UserPlus size={20} aria-hidden="true" /></span>
           <div>
+            <span className="auth-eyebrow">Member access</span>
             <h2>Create account</h2>
             <p>Register a member account. Admin invitations can also be accepted from here.</p>
           </div>
+        </div>
+
+        <div className="auth-mobile-summary" aria-label="Signup note">
+          <ShieldCheck size={18} aria-hidden="true" />
+          <span>Use the same details your administrators have on record.</span>
         </div>
 
         <div className="form-grid two">

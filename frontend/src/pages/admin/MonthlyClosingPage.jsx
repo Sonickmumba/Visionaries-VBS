@@ -49,6 +49,15 @@ function memberName(item) {
   return `${item?.first_name || ""} ${item?.last_name || ""}`.trim() || "Member";
 }
 
+function initials(item) {
+  return memberName(item)
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase())
+    .join("") || "M";
+}
+
 function statusLabel(value) {
   return String(value || "-").replaceAll("_", " ");
 }
@@ -119,6 +128,94 @@ function DetailValue({ label, value }) {
   return <div><strong>{label}</strong><span>{value}</span></div>;
 }
 
+function ClosingHero({ preview, totals, exceptions }) {
+  return (
+    <section className="closing-hero">
+      <div>
+        <span>Monthly Closing</span>
+        <h2>{preview?.cycle?.name || "Active Cycle"}</h2>
+        <p>{preview?.cycleMonth ? `Month ${preview.cycleMonth.month_number} closing preview` : "Review declarations, interest, penalties, and carry-forward balances."}</p>
+      </div>
+      <div className="closing-hero-stat">
+        <span>Exceptions</span>
+        <strong>{exceptions.length}</strong>
+        <small>{totals.declared || 0} declared · {totals.missed || 0} missed</small>
+      </div>
+    </section>
+  );
+}
+
+function OverviewStrip({ totals }) {
+  return (
+    <div className="closing-overview-strip">
+      <DetailValue label="Savings Deposits" value={money(totals.savingsDeposit)} />
+      <DetailValue label="Savings Interest" value={money(totals.savingsInterest)} />
+      <DetailValue label="Loan Interest" value={money(totals.loanInterest)} />
+      <DetailValue label="Penalties" value={money(totals.penalties)} />
+    </div>
+  );
+}
+
+function MemberSnapshotCards({ members }) {
+  if (!members.length) return null;
+  return (
+    <div className="closing-mobile-cards" aria-label="Mobile member closing snapshots">
+      {members.map((member) => {
+        const newLoan = Number(member.newLoanAmount || 0) + Number(member.topUpAmount || 0) + Number(member.convertedPenaltyLoanAmount || 0);
+        const repayments = Number(member.principalRepaid || 0) + Number(member.interestRepaid || 0);
+        return (
+          <article key={member.cycle_member_id || member.member_code || memberName(member)} className="closing-card">
+            <div className="closing-card-head">
+              <div className="closing-avatar">{initials(member)}</div>
+              <div>
+                <strong>{memberName(member)}</strong>
+                <span>{member.member_code || "Member snapshot"}</span>
+              </div>
+              <Badge text={statusLabel(member.declarationStatus)} tone={statusTone(member.declarationStatus)} />
+            </div>
+            <div className="closing-card-values">
+              <div><span>Loan B/F</span><strong>{money(member.loanBroughtForward)}</strong></div>
+              <div><span>New Loan</span><strong>{money(newLoan)}</strong></div>
+              <div><span>Loan Interest</span><strong>{money(member.loanInterest)}</strong></div>
+              <div><span>Repayments</span><strong>{money(repayments)}</strong></div>
+              <div><span>Loan C/F</span><strong>{money(member.loanCarriedForward)}</strong></div>
+              <div><span>Penalty</span><strong>{money(member.penaltyAmount)}</strong></div>
+            </div>
+            <Badge text={statusLabel(member.borrowingStatus)} tone={statusTone(member.borrowingStatus)} />
+          </article>
+        );
+      })}
+    </div>
+  );
+}
+
+function ExceptionCards({ exceptions }) {
+  if (!exceptions.length) return null;
+  return (
+    <div className="closing-mobile-cards" aria-label="Mobile monthly closing exceptions">
+      {exceptions.map((member) => {
+        const missed = member.declarationStatus === "MISSED";
+        return (
+          <article key={member.cycle_member_id || member.member_code || memberName(member)} className="closing-card">
+            <div className="closing-card-head">
+              <div className="closing-avatar">{initials(member)}</div>
+              <div>
+                <strong>{memberName(member)}</strong>
+                <span>{missed ? "Missed declaration" : statusLabel(member.borrowingStatus)}</span>
+              </div>
+              <Badge text={missed ? "Penalty" : "Compliance"} tone={missed ? "red" : "amber"} />
+            </div>
+            <div className="closing-card-values">
+              <div><span>Action</span><strong>{missed ? "Assess penalty" : "Carry status"}</strong></div>
+              <div><span>Amount</span><strong>{missed ? money(member.penaltyAmount) : money(member.borrowingShortfall)}</strong></div>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  );
+}
+
 function RunResult({ result }) {
   if (!result) return null;
   const summary = result.summary || {};
@@ -127,8 +224,12 @@ function RunResult({ result }) {
 
   return (
     <section className="panel closing-result">
-      <div className="panel-head">
-        <h2>Approved Closing Run</h2>
+      <div className="closing-result-hero">
+        <div>
+          <span>Approved Run</span>
+          <h2>Monthly Closing Posted</h2>
+          <p>{(result.snapshots || []).length} member snapshots created.</p>
+        </div>
         <Badge text={run.status || "APPROVED"} tone="green" />
       </div>
       <div className="detail-grid closing-detail-grid">
@@ -137,16 +238,25 @@ function RunResult({ result }) {
         <DetailValue label="Snapshots" value={(result.snapshots || []).length} />
         <DetailValue label="Common Interest Pool" value={money(commonInterestRun.common_interest_pool || summary.common_interest_pool)} />
       </div>
-      <DataTable
-        columns={["Savings Interest", "Loan Interest", "Common Interest", "Penalties", "Outstanding Loans"]}
-        rows={[[
-          money(summary.total_savings_interest),
-          money(summary.total_loan_interest_assessed),
-          money(summary.total_common_interest_charged),
-          money(summary.total_penalties_assessed),
-          money(summary.total_outstanding_loans),
-        ]]}
-      />
+      <div className="closing-overview-strip">
+        <DetailValue label="Savings Interest" value={money(summary.total_savings_interest)} />
+        <DetailValue label="Loan Interest" value={money(summary.total_loan_interest_assessed)} />
+        <DetailValue label="Common Interest" value={money(summary.total_common_interest_charged)} />
+        <DetailValue label="Penalties" value={money(summary.total_penalties_assessed)} />
+        <DetailValue label="Outstanding Loans" value={money(summary.total_outstanding_loans)} />
+      </div>
+      <div className="closing-desktop-table">
+        <DataTable
+          columns={["Savings Interest", "Loan Interest", "Common Interest", "Penalties", "Outstanding Loans"]}
+          rows={[[
+            money(summary.total_savings_interest),
+            money(summary.total_loan_interest_assessed),
+            money(summary.total_common_interest_charged),
+            money(summary.total_penalties_assessed),
+            money(summary.total_outstanding_loans),
+          ]]}
+        />
+      </div>
     </section>
   );
 }
@@ -252,6 +362,7 @@ export function MonthlyClosingPage({
   return (
     <Page
       title="Monthly Closing"
+      className="monthly-closing-page"
       actions={(
         <>
           <Button type="button" icon={RefreshCw} onClick={loadPreview} loading={loading}>Refresh Preview</Button>
@@ -264,6 +375,15 @@ export function MonthlyClosingPage({
       {message ? <Alert tone="success" title="Monthly closing complete">{message}</Alert> : null}
       {error ? <Alert tone="danger" title="Monthly closing failed">{error}</Alert> : null}
       {errors.locked ? <Alert tone="warning" title="Month locked">{errors.locked}</Alert> : null}
+
+      <ClosingHero preview={preview} totals={totals} exceptions={exceptions} />
+
+      <div className="admin-mobile-action-row closing-mobile-actions-row mobile-only" aria-label="Monthly closing quick actions">
+        <Button type="button" icon={RefreshCw} onClick={loadPreview} loading={loading}>Refresh</Button>
+        <Button type="button" variant="danger" icon={FileCheck2} onClick={runClosing} loading={busy === "run"} disabled={preview?.cycleMonth?.status === "LOCKED"}>
+          Run
+        </Button>
+      </div>
 
       <section className="panel closing-context">
         <div className="form-grid three">
@@ -341,17 +461,20 @@ export function MonthlyClosingPage({
                 <DetailValue label="Month Status" value={statusLabel(preview.cycleMonth?.status)} />
                 <DetailValue label="Allocation Method" value={CLOSING_ALLOCATION_METHODS.find((item) => item.value === allocationMethod)?.label || "-"} />
               </div>
-              <DataTable
-                columns={["Declared", "Missed", "Savings Deposits", "Savings Interest", "Loan Interest", "Penalties"]}
-                rows={[[
-                  totals.declared || 0,
-                  totals.missed || 0,
-                  money(totals.savingsDeposit),
-                  money(totals.savingsInterest),
-                  money(totals.loanInterest),
-                  money(totals.penalties),
-                ]]}
-              />
+              <OverviewStrip totals={totals} />
+              <div className="closing-desktop-table">
+                <DataTable
+                  columns={["Declared", "Missed", "Savings Deposits", "Savings Interest", "Loan Interest", "Penalties"]}
+                  rows={[[
+                    totals.declared || 0,
+                    totals.missed || 0,
+                    money(totals.savingsDeposit),
+                    money(totals.savingsInterest),
+                    money(totals.loanInterest),
+                    money(totals.penalties),
+                  ]]}
+                />
+              </div>
             </section>
           ) : null}
 
@@ -361,21 +484,24 @@ export function MonthlyClosingPage({
                 <h2>Member Snapshots</h2>
                 <Badge text={`${members.length} members`} tone="blue" />
               </div>
-              <DataTable
-                columns={["Member", "Declaration", "Loan B/F", "New Loan", "Loan Interest", "Repayments", "Loan C/F", "Borrowing Status", "Penalty"]}
-                rows={members.map((member) => [
-                  memberName(member),
-                  <Badge text={statusLabel(member.declarationStatus)} tone={statusTone(member.declarationStatus)} />,
-                  money(member.loanBroughtForward),
-                  money(Number(member.newLoanAmount || 0) + Number(member.topUpAmount || 0) + Number(member.convertedPenaltyLoanAmount || 0)),
-                  money(member.loanInterest),
-                  money(Number(member.principalRepaid || 0) + Number(member.interestRepaid || 0)),
-                  money(member.loanCarriedForward),
-                  <Badge text={statusLabel(member.borrowingStatus)} tone={statusTone(member.borrowingStatus)} />,
-                  money(member.penaltyAmount),
-                ])}
-                empty="No active members found for this cycle month."
-              />
+              <MemberSnapshotCards members={members} />
+              <div className="closing-desktop-table">
+                <DataTable
+                  columns={["Member", "Declaration", "Loan B/F", "New Loan", "Loan Interest", "Repayments", "Loan C/F", "Borrowing Status", "Penalty"]}
+                  rows={members.map((member) => [
+                    memberName(member),
+                    <Badge text={statusLabel(member.declarationStatus)} tone={statusTone(member.declarationStatus)} />,
+                    money(member.loanBroughtForward),
+                    money(Number(member.newLoanAmount || 0) + Number(member.topUpAmount || 0) + Number(member.convertedPenaltyLoanAmount || 0)),
+                    money(member.loanInterest),
+                    money(Number(member.principalRepaid || 0) + Number(member.interestRepaid || 0)),
+                    money(member.loanCarriedForward),
+                    <Badge text={statusLabel(member.borrowingStatus)} tone={statusTone(member.borrowingStatus)} />,
+                    money(member.penaltyAmount),
+                  ])}
+                  empty="No active members found for this cycle month."
+                />
+              </div>
             </section>
           ) : null}
 
@@ -385,20 +511,22 @@ export function MonthlyClosingPage({
                 <h2>Exceptions</h2>
                 <Badge text={`${exceptions.length} items`} tone={exceptions.length ? "amber" : "green"} />
               </div>
-              <DataTable
-                columns={["Member", "Issue", "Expected Closing Action", "Amount"]}
-                rows={exceptions.map((member) => {
-                  const missed = member.declarationStatus === "MISSED";
-                  const belowMinimum = member.borrowingStatus !== "AT_OR_ABOVE_MINIMUM";
-                  return [
-                    memberName(member),
-                    missed ? "Missed declaration" : statusLabel(member.borrowingStatus),
-                    missed ? "Assess failure-to-declare penalty" : "Carry borrowing compliance status forward",
-                    missed ? money(member.penaltyAmount) : money(member.borrowingShortfall),
-                  ];
-                })}
-                empty="No declaration or borrowing exceptions found."
-              />
+              <ExceptionCards exceptions={exceptions} />
+              <div className="closing-desktop-table">
+                <DataTable
+                  columns={["Member", "Issue", "Expected Closing Action", "Amount"]}
+                  rows={exceptions.map((member) => {
+                    const missed = member.declarationStatus === "MISSED";
+                    return [
+                      memberName(member),
+                      missed ? "Missed declaration" : statusLabel(member.borrowingStatus),
+                      missed ? "Assess failure-to-declare penalty" : "Carry borrowing compliance status forward",
+                      missed ? money(member.penaltyAmount) : money(member.borrowingShortfall),
+                    ];
+                  })}
+                  empty="No declaration or borrowing exceptions found."
+                />
+              </div>
             </section>
           ) : null}
 

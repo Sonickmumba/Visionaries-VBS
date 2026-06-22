@@ -1,4 +1,6 @@
 import React from "react";
+import fs from "fs";
+import path from "path";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import {
@@ -144,6 +146,7 @@ describe("monthly closing screens", () => {
     );
 
     expect(html).toContain("Monthly Closing");
+    expect(html).toContain("Month 1 closing preview");
     expect(html).toContain("Refresh Preview");
     expect(html).toContain("Run Closing");
     expect(html).toContain("Lock month after approval");
@@ -155,5 +158,15 @@ describe("monthly closing screens", () => {
     expect(html).toContain("Run Result");
     expect(html).toContain("K2,250");
     expect(html).toContain("K100");
+  });
+
+  it("keeps the monthly closing mobile responsive contract", () => {
+    const css = fs.readFileSync(path.join(process.cwd(), "src/styles/monthly-closing.css"), "utf8");
+
+    expect(css).toContain(".closing-hero");
+    expect(css).toContain(".closing-mobile-cards");
+    expect(css).toContain(".closing-card");
+    expect(css).toContain(".closing-desktop-table");
+    expect(css).toContain("@media (max-width: 767px)");
   });
 });

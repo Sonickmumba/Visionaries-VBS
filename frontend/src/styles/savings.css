@@ -1,3 +1,60 @@
+.savings-page {
+  display: grid;
+  gap: 0;
+}
+
+.savings-hero {
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 88% 12%, rgba(250, 204, 21, 0.24), transparent 22%),
+    linear-gradient(145deg, #007a43 0%, #006b3d 58%, #0f766e 100%);
+  color: white;
+  padding: 18px;
+  margin-bottom: 16px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  box-shadow: 0 18px 46px rgba(16, 42, 67, 0.14);
+}
+
+.savings-hero span,
+.savings-hero-stat span {
+  color: #d9f99d;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.savings-hero h2 {
+  margin: 4px 0;
+  color: white;
+  font-size: 25px;
+  line-height: 1.08;
+}
+
+.savings-hero p {
+  margin: 0;
+  color: #dcfce7;
+  font-weight: 800;
+}
+
+.savings-hero-stat {
+  min-width: 160px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.12);
+  padding: 12px;
+  display: grid;
+  align-content: center;
+  gap: 4px;
+}
+
+.savings-hero-stat strong {
+  color: white;
+  font-size: 22px;
+  overflow-wrap: anywhere;
+}
+
 .savings-metrics {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
@@ -6,12 +63,158 @@
   margin-top: 14px;
 }
 
+.savings-selected-member {
+  border: 1px solid #d8e1eb;
+  border-radius: 16px;
+  background: #f8fbf9;
+  padding: 13px;
+  margin-bottom: 14px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+}
+
+.savings-selected-member span {
+  color: #007a43;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.savings-selected-member strong,
+.savings-selected-member small {
+  display: block;
+  overflow-wrap: anywhere;
+}
+
+.savings-selected-member small {
+  color: #65758b;
+  font-weight: 800;
+}
+
+.savings-selected-flags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: flex-end;
+}
+
+.savings-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 16px;
+  background: #dcfce7;
+  color: #007a43;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  flex: 0 0 auto;
+}
+
 .savings-detail {
   margin-bottom: 18px;
+  border-radius: 16px;
+}
+
+.savings-detail-hero {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.savings-detail-hero span {
+  color: #007a43;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.savings-detail-hero h2 {
+  margin: 2px 0;
+}
+
+.savings-detail-hero p {
+  margin: 0;
+  font-weight: 800;
 }
 
 .savings-detail-grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.savings-mobile-cards {
+  display: none;
+}
+
+.savings-member-card {
+  border: 1px solid #d8e1eb;
+  border-radius: 16px;
+  background: white;
+  padding: 13px;
+  display: grid;
+  gap: 12px;
+  box-shadow: 0 12px 30px rgba(16, 42, 67, 0.06);
+}
+
+.savings-card-head {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+}
+
+.savings-card-head strong,
+.savings-card-head span {
+  display: block;
+}
+
+.savings-card-head span {
+  color: #65758b;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.savings-card-values {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.savings-card-values div {
+  border: 1px solid #e5edf5;
+  border-radius: 14px;
+  background: #f8fbf9;
+  padding: 11px;
+  display: grid;
+  gap: 4px;
+}
+
+.savings-card-values span {
+  color: #65758b;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.savings-card-values strong {
+  color: #102a43;
+  font-size: 16px;
+  overflow-wrap: anywhere;
+}
+
+.savings-card-badges,
+.savings-card-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.savings-card-actions .btn {
+  width: 100%;
+  min-height: 40px;
 }
 
 @media (max-width: 1024px) {
@@ -22,8 +225,54 @@
 }
 
 @media (max-width: 767px) {
+  .savings-page .page-head {
+    margin-bottom: 12px;
+  }
+
+  .savings-hero {
+    border-radius: 0 0 24px 24px;
+    margin: -10px -10px 14px;
+    grid-template-columns: 1fr;
+  }
+
+  .savings-hero h2 {
+    font-size: 23px;
+  }
+
+  .savings-hero-stat {
+    width: 100%;
+    min-width: 0;
+  }
+
   .savings-metrics,
   .savings-detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .savings-selected-member,
+  .savings-detail-hero {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .savings-selected-flags,
+  .savings-detail-hero .badge {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+    justify-self: start;
+  }
+
+  .savings-desktop-table {
+    display: none;
+  }
+
+  .savings-mobile-cards {
+    display: grid;
+    gap: 12px;
+  }
+
+  .savings-card-values,
+  .savings-card-badges,
+  .savings-card-actions {
     grid-template-columns: 1fr;
   }
 

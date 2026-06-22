@@ -1,4 +1,6 @@
 import React from "react";
+import fs from "fs";
+import path from "path";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import {
@@ -80,6 +82,7 @@ describe("ledger screens", () => {
     );
 
     expect(html).toContain("Ledger Explorer");
+    expect(html).toContain("Transaction Trail");
     expect(html).toContain("Transaction type");
     expect(html).toContain("Export CSV");
     expect(html).toContain("Transaction Detail");
@@ -87,5 +90,26 @@ describe("ledger screens", () => {
     expect(html).toContain("Approved declaration savings deposit");
     expect(html).toContain("K15,000");
     expect(html).toContain("View Transaction");
+  });
+
+  it("opens ledger transaction detail in a modal without hiding entries on mobile", () => {
+    const source = fs.readFileSync(path.join(process.cwd(), "src/pages/admin/LedgerPage.jsx"), "utf8");
+
+    expect(source).toContain('title="Transaction Details"');
+    expect(source).toContain("ledger-detail-modal");
+    expect(source).toContain("open={Boolean(selected)}");
+    expect(source).toContain("ledger-detail-entries");
+  });
+
+  it("keeps the ledger mobile responsive contract", () => {
+    const css = fs.readFileSync(path.join(process.cwd(), "src/styles/ledger-audit.css"), "utf8");
+
+    expect(css).toContain(".ledger-audit-hero");
+    expect(css).toContain(".ledger-audit-mobile-cards");
+    expect(css).toContain(".ledger-audit-card");
+    expect(css).toContain(".ledger-detail-modal");
+    expect(css).toContain("max-height: none");
+    expect(css).toContain(".ledger-audit-desktop-table");
+    expect(css).toContain("@media (max-width: 767px)");
   });
 });

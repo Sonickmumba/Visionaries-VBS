@@ -1,0 +1,207 @@
+.member-penalties-metrics {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.member-penalties-context {
+  margin-bottom: 18px;
+}
+
+.member-penalties-context .detail-grid > div {
+  min-width: 0;
+}
+
+.member-penalties-context strong {
+  color: var(--muted);
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.member-penalties-context span {
+  color: var(--text);
+  display: block;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.member-penalties-detail-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.member-penalties-mobile {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .member-penalties-metrics,
+  .member-penalties-detail-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .member-penalties-page > .page-head {
+    display: none;
+  }
+
+  .member-penalties-desktop {
+    display: none;
+  }
+
+  .member-penalties-mobile {
+    display: block;
+    margin: -10px;
+  }
+
+  .member-penalties-hero {
+    border-radius: 0 0 26px 26px;
+    background:
+      radial-gradient(circle at 88% 14%, rgba(250, 204, 21, 0.24), transparent 23%),
+      linear-gradient(145deg, #007a43 0%, #006b3d 58%, #0f766e 100%);
+    box-shadow: 0 18px 46px rgba(16, 42, 67, 0.14);
+    color: white;
+    display: grid;
+    gap: 14px;
+    padding: 18px;
+  }
+
+  .member-penalties-hero-head {
+    align-items: flex-start;
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+  }
+
+  .member-penalties-hero-head span,
+  .member-penalties-hero-main span,
+  .member-penalties-hero-strip strong {
+    color: #d9f99d;
+    font-size: 12px;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+
+  .member-penalties-hero h2 {
+    color: white;
+    font-size: 27px;
+    line-height: 1.05;
+    margin: 4px 0 0;
+  }
+
+  .member-penalties-hero-main strong {
+    color: white;
+    display: block;
+    font-size: 34px;
+    line-height: 1.02;
+    margin-top: 5px;
+    overflow-wrap: anywhere;
+  }
+
+  .member-penalties-hero-main small {
+    color: #dcfce7;
+    display: block;
+    font-size: 13px;
+    font-weight: 800;
+    margin-top: 5px;
+  }
+
+  .member-penalties-hero-actions {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .member-penalties-hero-actions .btn {
+    border-color: rgba(255, 255, 255, 0.2);
+    min-height: 40px;
+    width: 100%;
+  }
+
+  .member-penalties-hero-actions .btn.secondary {
+    background: rgba(255, 255, 255, 0.12);
+    color: white;
+  }
+
+  .member-penalties-hero-strip {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .member-penalties-hero-strip div {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 16px;
+    display: grid;
+    gap: 4px;
+    padding: 12px;
+  }
+
+  .member-penalties-hero-strip span {
+    color: white;
+    display: block;
+    font-size: 17px;
+    font-weight: 900;
+    overflow-wrap: anywhere;
+  }
+
+  .member-penalties-mobile-metrics,
+  .member-penalties-mobile-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .member-penalties-mobile-actions {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .member-penalties-mobile-breakdown {
+    border: 1px solid #e5edf5;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 10px 30px rgba(16, 42, 67, 0.08);
+    padding: 12px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .member-penalties-mobile-breakdown div {
+    min-width: 0;
+  }
+
+  .member-penalties-mobile-breakdown strong {
+    color: var(--muted);
+    display: block;
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+
+  .member-penalties-mobile-breakdown span {
+    color: var(--text);
+    display: block;
+    font-size: 14px;
+    font-weight: 900;
+    margin-top: 3px;
+    overflow-wrap: anywhere;
+  }
+
+  .member-penalties-metrics,
+  .member-penalties-detail-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 380px) {
+  .member-penalties-mobile-metrics,
+  .member-penalties-mobile-actions,
+  .member-penalties-hero-actions,
+  .member-penalties-hero-strip,
+  .member-penalties-mobile-breakdown {
+    grid-template-columns: 1fr;
+  }
+}

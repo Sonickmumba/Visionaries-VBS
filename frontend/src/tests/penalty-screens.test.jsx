@@ -1,4 +1,6 @@
 import React from "react";
+import fs from "fs";
+import path from "path";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import {
@@ -138,6 +140,7 @@ describe("penalty screens", () => {
     );
 
     expect(html).toContain("Penalties");
+    expect(html).toContain("Penalty Desk");
     expect(html).toContain("Refresh");
     expect(html).toContain("Assess Penalty");
     expect(html).toContain("Penalty Register");
@@ -146,5 +149,25 @@ describe("penalty screens", () => {
     expect(html).toContain("Failure to declare");
     expect(html).toContain("K100");
     expect(html).toContain("View Details");
+  });
+
+  it("opens penalty detail in a modal instead of an inline register panel", () => {
+    const source = fs.readFileSync(path.join(process.cwd(), "src/pages/admin/PenaltyScreensPage.jsx"), "utf8");
+
+    expect(source).toContain('title="Penalty Details"');
+    expect(source).toContain("penalty-detail-modal");
+    expect(source).toContain("open={Boolean(selected)}");
+  });
+
+  it("keeps the penalty mobile responsive contract", () => {
+    const css = fs.readFileSync(path.join(process.cwd(), "src/styles/penalties.css"), "utf8");
+
+    expect(css).toContain(".penalty-hero");
+    expect(css).toContain(".penalty-mobile-cards");
+    expect(css).toContain(".penalty-card");
+    expect(css).toContain(".penalty-detail-modal");
+    expect(css).toContain("max-height: none");
+    expect(css).toContain(".penalty-desktop-table");
+    expect(css).toContain("@media (max-width: 767px)");
   });
 });

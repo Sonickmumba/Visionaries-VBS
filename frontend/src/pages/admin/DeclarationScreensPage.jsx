@@ -8,6 +8,7 @@ import {
   Eye,
   PiggyBank,
   Plus,
+  Receipt,
   RefreshCw,
   XCircle,
 } from "lucide-react";
@@ -55,6 +56,15 @@ const EMPTY_FORM = {
 
 function memberName(item) {
   return `${item?.first_name || ""} ${item?.last_name || ""}`.trim() || "Member";
+}
+
+function initials(item) {
+  return memberName(item)
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join("")
+    .toUpperCase() || "M";
 }
 
 function statusTone(status) {
@@ -182,11 +192,24 @@ function DetailValue({ label, value }) {
 function DeclarationDetail({ detail, onEdit, onApprove, onLoanRequest, onCancel, onClose, onViewAttachment, loading }) {
   const detailIsClosed = ["CANCELLED", "MISSED"].includes(detail.status);
   const hasLoanIntent = Number(detail.loan_request_amount || 0) > 0 || Number(detail.loan_top_up_amount || 0) > 0;
+  const paymentTotal = Number(detail.principal_repayment_amount || 0)
+    + Number(detail.loan_interest_repayment_amount || 0)
+    + Number(detail.common_interest_payment_amount || 0);
   return (
-    <section className="panel declaration-detail">
-      <div className="panel-head">
-        <h2>Declaration Detail: {memberName(detail)}</h2>
+    <section className="declaration-detail">
+      <div className="declaration-detail-hero">
+        <div className="declaration-avatar" aria-hidden="true">{initials(detail)}</div>
+        <div>
+          <span>Declaration Detail</span>
+          <h2>{memberName(detail)}</h2>
+          <p>{detail.cycle_name || "-"} · {detail.month_number ? `Month ${detail.month_number}` : "-"}</p>
+        </div>
         <Badge text={detail.status} tone={statusTone(detail.status)} />
+      </div>
+      <div className="declaration-detail-strip" aria-label="Declaration financial summary">
+        <DetailValue label="Savings" value={money(detail.savings_amount)} />
+        <DetailValue label="Loan Intent" value={money(Number(detail.loan_request_amount || 0) + Number(detail.loan_top_up_amount || 0))} />
+        <DetailValue label="Payments" value={money(paymentTotal)} />
       </div>
       <div className="detail-grid declaration-detail-grid">
         <DetailValue label="Cycle" value={detail.cycle_name || "-"} />
@@ -206,21 +229,39 @@ function DeclarationDetail({ detail, onEdit, onApprove, onLoanRequest, onCancel,
       <section className="declaration-proof-review" aria-label="Payment proofs">
         <h3>Payment Proofs</h3>
         {detail.attachments?.length ? (
-          <DataTable
-            columns={["Proof", "File", "Uploaded", "Status", "Action"]}
-            rows={detail.attachments.map((attachment) => [
-              proofTypeLabels[attachment.attachment_type] || attachment.attachment_type,
-              attachment.original_filename,
-              dateTime(attachment.uploaded_at),
-              <Badge text={attachment.status} tone={attachment.status === "UPLOADED" ? "green" : "amber"} />,
-              <Button type="button" size="sm" variant="secondary" icon={Eye} onClick={() => onViewAttachment(attachment)}>View</Button>,
-            ])}
-          />
+          <>
+            <div className="declaration-proof-cards">
+              {detail.attachments.map((attachment) => (
+                <article className="declaration-proof-card" key={attachment.id}>
+                  <Receipt size={18} aria-hidden="true" />
+                  <div>
+                    <strong>{proofTypeLabels[attachment.attachment_type] || attachment.attachment_type}</strong>
+                    <span>{attachment.original_filename}</span>
+                    <small>{dateTime(attachment.uploaded_at)}</small>
+                  </div>
+                  <Badge text={attachment.status} tone={attachment.status === "UPLOADED" ? "green" : "amber"} />
+                  <Button type="button" size="sm" variant="secondary" icon={Eye} onClick={() => onViewAttachment(attachment)}>View</Button>
+                </article>
+              ))}
+            </div>
+            <div className="declaration-desktop-table">
+              <DataTable
+                columns={["Proof", "File", "Uploaded", "Status", "Action"]}
+                rows={detail.attachments.map((attachment) => [
+                  proofTypeLabels[attachment.attachment_type] || attachment.attachment_type,
+                  attachment.original_filename,
+                  dateTime(attachment.uploaded_at),
+                  <Badge text={attachment.status} tone={attachment.status === "UPLOADED" ? "green" : "amber"} />,
+                  <Button type="button" size="sm" variant="secondary" icon={Eye} onClick={() => onViewAttachment(attachment)}>View</Button>,
+                ])}
+              />
+            </div>
+          </>
         ) : (
           <p className="muted">No payment proof uploaded for this declaration.</p>
         )}
       </section>
-      <div className="button-row">
+      <div className="button-row declaration-detail-actions">
         <Button type="button" variant="secondary" icon={Edit3} onClick={onEdit} disabled={detailIsClosed}>Edit Declaration</Button>
         <Button type="button" icon={Banknote} onClick={onLoanRequest} disabled={detailIsClosed || detail.has_loan_request || !hasLoanIntent} loading={loading === "loan"}>
           {detail.has_loan_request ? "Loan Request Exists" : "Create Loan Request"}
@@ -232,6 +273,90 @@ function DeclarationDetail({ detail, onEdit, onApprove, onLoanRequest, onCancel,
         <Button type="button" variant="secondary" onClick={onClose}>Close Detail</Button>
       </div>
     </section>
+  );
+}
+
+function DeclarationHero({ queue, totals }) {
+  return (
+    <section className="declaration-hero" aria-label="Declaration queue overview">
+      <div>
+        <span>Declaration Queue</span>
+        <h2>{queue.cycleMonth ? `${queue.cycleMonth.cycle_name} · Month ${queue.cycleMonth.month_number}` : "Select a declaration month"}</h2>
+        <p>{queue.cycleMonth ? String(queue.cycleMonth.status || "OPEN").replaceAll("_", " ") : "Choose an active cycle month to review member submissions."}</p>
+      </div>
+      <div className="declaration-hero-stats">
+        <strong>{totals.submitted}</strong>
+        <span>Submitted</span>
+        <strong>{totals.missed}</strong>
+        <span>Missed</span>
+      </div>
+    </section>
+  );
+}
+
+function SubmittedDeclarationCards({ declarations, selectedId, busy, onOpen }) {
+  return (
+    <div className="declaration-mobile-cards" aria-label="Submitted declaration cards">
+      {!declarations.length ? <EmptyState title="No submitted declarations" message="No submitted declarations for this month." /> : null}
+      {declarations.map((item) => (
+        <article className={`declaration-queue-card ${selectedId === item.id ? "selected" : ""}`} key={item.id}>
+          <div className="declaration-card-head">
+            <div className="declaration-avatar" aria-hidden="true">{initials(item)}</div>
+            <div>
+              <strong>{memberName(item)}</strong>
+              <span>{item.member_code || "Member"} · {dateOnly(item.submitted_at)}</span>
+            </div>
+            <Badge text={item.status} tone={statusTone(item.status)} />
+          </div>
+          <div className="declaration-card-values">
+            <DetailValue label="Savings" value={money(item.savings_amount)} />
+            <DetailValue label="Loan" value={money(Number(item.loan_request_amount || 0) + Number(item.loan_top_up_amount || 0))} />
+            <DetailValue label="Repayments" value={money(Number(item.principal_repayment_amount || 0) + Number(item.loan_interest_repayment_amount || 0))} />
+          </div>
+          <div className="declaration-card-foot">
+            <span>{item.has_loan_request ? "Loan request created" : item.has_loan_intent ? "Loan request needed" : "No loan intent"}</span>
+            <Button type="button" variant={selectedId === item.id ? "primary" : "secondary"} size="sm" onClick={() => onOpen(item.id)} loading={busy === `detail-${item.id}`}>View Details</Button>
+          </div>
+        </article>
+      ))}
+    </div>
+  );
+}
+
+function MissedDeclarationCards({ members, busy, onAssess }) {
+  return (
+    <div className="declaration-mobile-cards" aria-label="Missed declaration cards">
+      {!members.length ? <EmptyState title="No missed declarations" message="No missed declarations for this month." /> : null}
+      {members.map((item) => (
+        <article className="declaration-queue-card missed" key={item.cycle_member_id}>
+          <div className="declaration-card-head">
+            <div className="declaration-avatar" aria-hidden="true">{initials(item)}</div>
+            <div>
+              <strong>{memberName(item)}</strong>
+              <span>{item.member_code || "Member code unavailable"}</span>
+            </div>
+            <Badge text={item.has_failure_penalty ? "PENALTY ASSESSED" : "MISSED"} tone={item.has_failure_penalty ? "green" : "red"} />
+          </div>
+          <div className="declaration-card-values">
+            <DetailValue label="Penalty" value={money(item.failure_penalty_amount)} />
+            <DetailValue label="Status" value={item.has_failure_penalty ? "Assessed" : "Pending"} />
+          </div>
+          <div className="declaration-card-foot">
+            <span>Failure-to-declare review</span>
+            <Button
+              type="button"
+              variant={item.has_failure_penalty ? "secondary" : "danger"}
+              size="sm"
+              disabled={item.has_failure_penalty}
+              onClick={() => onAssess(item)}
+              loading={busy === `missed-${item.cycle_member_id}`}
+            >
+              {item.has_failure_penalty ? "Penalty Assessed" : "Assess Penalty"}
+            </Button>
+          </div>
+        </article>
+      ))}
+    </div>
   );
 }
 
@@ -488,6 +613,7 @@ export function DeclarationScreensPage({
   return (
     <Page
       title="Declarations"
+      className="declarations-page"
       actions={(
         <>
           <Button type="button" icon={RefreshCw} onClick={() => loadQueue()} loading={loading}>Refresh Queue</Button>
@@ -497,6 +623,8 @@ export function DeclarationScreensPage({
     >
       {message ? <Alert tone="success" title="Declaration action complete">{message}</Alert> : null}
       {error ? <Alert tone="danger" title="Declaration action failed">{error}</Alert> : null}
+
+      <DeclarationHero queue={queue} totals={totals} />
 
       <section className="panel declaration-filters">
         <div className="form-grid three">
@@ -529,18 +657,32 @@ export function DeclarationScreensPage({
 
       {loading ? <section className="panel"><Skeleton lines={8} /></section> : null}
 
-      {detail ? (
-        <DeclarationDetail
-          detail={detail}
-          onEdit={startEditDeclaration}
-          onApprove={approveInputs}
-          onLoanRequest={createLoanRequest}
-          onCancel={() => setCancelOpen(true)}
-          onClose={() => { setDetail(null); setSelectedId(""); }}
-          onViewAttachment={viewAttachment}
-          loading={busy}
-        />
-      ) : null}
+      <div className="admin-mobile-action-row declaration-mobile-actions mobile-only" aria-label="Declaration quick actions">
+        <Button type="button" icon={RefreshCw} onClick={() => loadQueue()} loading={loading}>Refresh</Button>
+        <Button type="button" variant="secondary" icon={Plus} onClick={startNewDeclaration}>New</Button>
+      </div>
+
+      <Modal
+        open={Boolean(detail)}
+        title="Declaration Details"
+        size="lg"
+        onClose={() => { setDetail(null); setSelectedId(""); }}
+      >
+        {detail ? (
+          <div className="declaration-detail-modal">
+            <DeclarationDetail
+              detail={detail}
+              onEdit={startEditDeclaration}
+              onApprove={approveInputs}
+              onLoanRequest={createLoanRequest}
+              onCancel={() => setCancelOpen(true)}
+              onClose={() => { setDetail(null); setSelectedId(""); }}
+              onViewAttachment={viewAttachment}
+              loading={busy}
+            />
+          </div>
+        ) : null}
+      </Modal>
 
       <Tabs
         active={activeTab}
@@ -557,22 +699,25 @@ export function DeclarationScreensPage({
         <section className="panel">
           <div className="panel-head">
             <h2>Submitted Declarations</h2>
-            <Button type="button" size="sm" icon={Plus} onClick={startNewDeclaration}>New Declaration</Button>
+            <Button type="button" className="declaration-list-head-action" size="sm" icon={Plus} onClick={startNewDeclaration}>New Declaration</Button>
           </div>
-          <DataTable
-            columns={["Member", "Submitted", "Savings", "Loan", "Repayments", "Status", "Loan Request", "Action"]}
-            rows={(queue.declarations || []).map((item) => [
-              memberName(item),
-              dateOnly(item.submitted_at),
-              money(item.savings_amount),
-              money(Number(item.loan_request_amount || 0) + Number(item.loan_top_up_amount || 0)),
-              money(Number(item.principal_repayment_amount || 0) + Number(item.loan_interest_repayment_amount || 0)),
-              <Badge text={item.status} tone={statusTone(item.status)} />,
-              item.has_loan_request ? "Created" : item.has_loan_intent ? "Needed" : "-",
-              <Button type="button" variant={selectedId === item.id ? "primary" : "secondary"} size="sm" onClick={() => openDeclaration(item.id)} loading={busy === `detail-${item.id}`}>View Details</Button>,
-            ])}
-            empty="No submitted declarations for this month."
-          />
+          <SubmittedDeclarationCards declarations={queue.declarations || []} selectedId={selectedId} busy={busy} onOpen={openDeclaration} />
+          <div className="declaration-desktop-table">
+            <DataTable
+              columns={["Member", "Submitted", "Savings", "Loan", "Repayments", "Status", "Loan Request", "Action"]}
+              rows={(queue.declarations || []).map((item) => [
+                memberName(item),
+                dateOnly(item.submitted_at),
+                money(item.savings_amount),
+                money(Number(item.loan_request_amount || 0) + Number(item.loan_top_up_amount || 0)),
+                money(Number(item.principal_repayment_amount || 0) + Number(item.loan_interest_repayment_amount || 0)),
+                <Badge text={item.status} tone={statusTone(item.status)} />,
+                item.has_loan_request ? "Created" : item.has_loan_intent ? "Needed" : "-",
+                <Button type="button" variant={selectedId === item.id ? "primary" : "secondary"} size="sm" onClick={() => openDeclaration(item.id)} loading={busy === `detail-${item.id}`}>View Details</Button>,
+              ])}
+              empty="No submitted declarations for this month."
+            />
+          </div>
         </section>
       ) : null}
 
@@ -581,26 +726,29 @@ export function DeclarationScreensPage({
           <div className="panel-head">
             <h2>Missed Declarations</h2>
           </div>
-          <DataTable
-            columns={["Member", "Code", "Penalty", "Status", "Action"]}
-            rows={(queue.missed || []).map((item) => [
-              memberName(item),
-              item.member_code || "-",
-              money(item.failure_penalty_amount),
-              <Badge text={item.has_failure_penalty ? "PENALTY ASSESSED" : "MISSED"} tone={item.has_failure_penalty ? "green" : "red"} />,
-              <Button
-                type="button"
-                variant={item.has_failure_penalty ? "secondary" : "danger"}
-                size="sm"
-                disabled={item.has_failure_penalty}
-                onClick={() => assessMissedPenalty(item)}
-                loading={busy === `missed-${item.cycle_member_id}`}
-              >
-                {item.has_failure_penalty ? "Penalty Assessed" : "Assess Penalty"}
-              </Button>,
-            ])}
-            empty="No missed declarations for this month."
-          />
+          <MissedDeclarationCards members={queue.missed || []} busy={busy} onAssess={assessMissedPenalty} />
+          <div className="declaration-desktop-table">
+            <DataTable
+              columns={["Member", "Code", "Penalty", "Status", "Action"]}
+              rows={(queue.missed || []).map((item) => [
+                memberName(item),
+                item.member_code || "-",
+                money(item.failure_penalty_amount),
+                <Badge text={item.has_failure_penalty ? "PENALTY ASSESSED" : "MISSED"} tone={item.has_failure_penalty ? "green" : "red"} />,
+                <Button
+                  type="button"
+                  variant={item.has_failure_penalty ? "secondary" : "danger"}
+                  size="sm"
+                  disabled={item.has_failure_penalty}
+                  onClick={() => assessMissedPenalty(item)}
+                  loading={busy === `missed-${item.cycle_member_id}`}
+                >
+                  {item.has_failure_penalty ? "Penalty Assessed" : "Assess Penalty"}
+                </Button>,
+              ])}
+              empty="No missed declarations for this month."
+            />
+          </div>
         </section>
       ) : null}
 

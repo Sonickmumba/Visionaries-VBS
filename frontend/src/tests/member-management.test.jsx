@@ -1,4 +1,6 @@
 import React from "react";
+import fs from "node:fs";
+import path from "node:path";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import {
@@ -117,11 +119,13 @@ describe("member management", () => {
     );
 
     expect(html).toContain("Members");
+    expect(html).toContain("Member cards");
     expect(html).toContain("New Member");
     expect(html).toContain("Enroll Member");
+    expect(html).toContain("Member list quick actions");
     expect(html).toContain("Search members");
     expect(html).toContain("Mary Phiri");
-    expect(html).toContain("View Details");
+    expect(html).toContain("Details");
     expect(html).toContain("Deactivate");
     expect(html).toContain("K15,000");
   });
@@ -142,11 +146,30 @@ describe("member management", () => {
     );
 
     expect(html).toContain("Mary Phiri");
+    expect(html).toContain("Member Profile");
+    expect(html).toContain("Member profile summary");
+    expect(html).toContain("Member detail quick actions");
     expect(html).toContain("Overview");
     expect(html).toContain("Cycles");
     expect(html).toContain("Declarations");
     expect(html).toContain("Statement");
     expect(html).toContain("Audit");
     expect(html).toContain("Savings Principal");
+  });
+
+  it("keeps member management mobile card styles responsive", () => {
+    const css = fs.readFileSync(path.join(process.cwd(), "src/styles/members.css"), "utf8");
+
+    expect(css).toContain(".member-mobile-cards");
+    expect(css).toContain(".member-card");
+    expect(css).toContain(".member-detail-hero");
+    expect(css).toContain(".member-detail-mobile-actions");
+    expect(css).toContain(".member-list-mobile-actions");
+    expect(css).toContain(".member-list-head-action");
+    expect(css).toContain(".members-page > .page-head .button-row");
+    expect(css).toContain(".member-card-actions");
+    expect(css).toContain("repeat(2, minmax(0, 1fr))");
+    expect(css).toContain(".member-desktop-table");
+    expect(css).toContain("@media (max-width: 767px)");
   });
 });

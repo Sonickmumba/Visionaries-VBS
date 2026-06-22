@@ -1,4 +1,6 @@
 import React from "react";
+import fs from "fs";
+import path from "path";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import {
@@ -154,6 +156,13 @@ describe("member declaration screen", () => {
     expect(html).toContain("My Declaration");
     expect(html).toContain("Submit Declaration");
     expect(html).toContain("Save Draft");
+    expect(html).toContain("member-declaration-mobile");
+    expect(html).toContain("Monthly Declaration");
+    expect(html).toContain("Declaration status summary");
+    expect(html).toContain("Declaration amount summary");
+    expect(html).toContain("Declaration progress");
+    expect(html).toContain("mobile-sticky-actions");
+    expect(html).toContain("aria-label=\"Primary mobile navigation\"");
     expect(html).toContain("Declaration Window");
     expect(html).toContain("Loan requests are always open");
     expect(html).toContain("Savings, repayments, loan-interest payments");
@@ -162,5 +171,15 @@ describe("member declaration screen", () => {
     expect(html).toContain("Common-interest payment");
     expect(html).toContain("My Declaration History");
     expect(html).toContain("K15,000");
+  });
+
+  it("keeps the member declaration mobile responsive contract", () => {
+    const css = fs.readFileSync(path.join(process.cwd(), "src/styles/member-declaration.css"), "utf8");
+
+    expect(css).toContain(".member-declaration-hero");
+    expect(css).toContain(".member-declaration-hero-values");
+    expect(css).toContain(".member-declaration-mobile-summary");
+    expect(css).toContain(".member-declaration-mobile");
+    expect(css).toContain("@media (max-width: 767px)");
   });
 });

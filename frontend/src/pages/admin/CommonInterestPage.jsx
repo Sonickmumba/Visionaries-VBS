@@ -8,6 +8,7 @@ import {
   Card,
   DataTable,
   EmptyState,
+  Modal,
   Select,
   Skeleton,
   Tabs,
@@ -27,6 +28,15 @@ export const ALLOCATION_METHODS = [
 
 function memberName(item) {
   return `${item?.first_name || ""} ${item?.last_name || ""}`.trim() || "Member";
+}
+
+function initials(item) {
+  return memberName(item)
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase())
+    .join("") || "M";
 }
 
 function statusTone(status) {
@@ -78,13 +88,117 @@ function DetailValue({ label, value }) {
   return <div><strong>{label}</strong><span>{value}</span></div>;
 }
 
+function CommonInterestHero({ preview, totals }) {
+  return (
+    <section className="common-interest-hero">
+      <div>
+        <span>Common Interest</span>
+        <h2>{preview?.cycle?.name || "Active Cycle"}</h2>
+        <p>{preview?.cycleMonth ? `Month ${preview.cycleMonth.month_number} pool snapshot` : "Calculate the monthly pool before posting allocations."}</p>
+      </div>
+      <div className="common-interest-hero-stat">
+        <span>CI Pool</span>
+        <strong>{money(totals.poolCharge)}</strong>
+        <small>{money(totals.unborrowed)} unborrowed</small>
+      </div>
+    </section>
+  );
+}
+
+function AllocationCards({ allocations, selectedAllocation, onSelect }) {
+  if (!allocations.length) return null;
+  return (
+    <div className="common-interest-mobile-cards" aria-label="Mobile common-interest allocations">
+      {allocations.map((allocation) => (
+        <article key={allocation.cycle_member_id || `${memberName(allocation)}-${allocation.assignedBase}`} className={`common-interest-card ${selectedAllocation === allocation ? "selected" : ""}`}>
+          <div className="common-interest-card-head">
+            <div className="common-interest-avatar">{initials(allocation)}</div>
+            <div>
+              <strong>{memberName(allocation)}</strong>
+              <span>{allocation.member_code || "Allocation preview"}</span>
+            </div>
+            <Badge text={allocation.status} tone={statusTone(allocation.status)} />
+          </div>
+          <div className="common-interest-card-values">
+            <div><span>Borrowed</span><strong>{money(allocation.cumulativeBorrowed)}</strong></div>
+            <div><span>Shortfall</span><strong>{money(allocation.shortfall)}</strong></div>
+            <div><span>Assigned Base</span><strong>{money(allocation.assignedBase)}</strong></div>
+            <div><span>Charge</span><strong>{money(allocation.charge)}</strong></div>
+          </div>
+          <Button type="button" variant="secondary" size="sm" onClick={() => onSelect(allocation)}>View Details</Button>
+        </article>
+      ))}
+    </div>
+  );
+}
+
+function ComplianceCards({ members }) {
+  if (!members.length) return null;
+  return (
+    <div className="common-interest-mobile-cards" aria-label="Mobile borrowing compliance cards">
+      {members.map((member) => (
+        <article key={member.cycle_member_id || member.member_code || memberName(member)} className="common-interest-card">
+          <div className="common-interest-card-head">
+            <div className="common-interest-avatar">{initials(member)}</div>
+            <div>
+              <strong>{memberName(member)}</strong>
+              <span>{member.member_code || "No member code"}</span>
+            </div>
+            <Badge text={member.status} tone={statusTone(member.status)} />
+          </div>
+          <div className="common-interest-card-values">
+            <div><span>Borrowed</span><strong>{money(member.cumulativeBorrowed)}</strong></div>
+            <div><span>Shortfall</span><strong>{money(member.shortfall)}</strong></div>
+          </div>
+        </article>
+      ))}
+    </div>
+  );
+}
+
+function PostedRunCards({ allocations }) {
+  if (!allocations.length) return null;
+  return (
+    <div className="common-interest-mobile-cards" aria-label="Mobile posted common-interest allocations">
+      {allocations.map((item) => (
+        <article key={item.id || item.cycle_member_id || `${memberName(item)}-${item.final_charge}`} className="common-interest-card">
+          <div className="common-interest-card-head">
+            <div className="common-interest-avatar">{initials(item)}</div>
+            <div>
+              <strong>{memberName(item)}</strong>
+              <span>Posted allocation</span>
+            </div>
+            <Badge text={item.compliance_status} tone={statusTone(item.compliance_status)} />
+          </div>
+          <div className="common-interest-card-values">
+            <div><span>Borrowed</span><strong>{money(item.cumulative_borrowed_amount)}</strong></div>
+            <div><span>Shortfall</span><strong>{money(item.borrowing_shortfall)}</strong></div>
+            <div><span>Assigned Base</span><strong>{money(item.assigned_base)}</strong></div>
+            <div><span>Charge</span><strong>{money(item.final_charge)}</strong></div>
+          </div>
+        </article>
+      ))}
+    </div>
+  );
+}
+
 function AllocationDetail({ allocation, onClose }) {
   if (!allocation) return null;
   return (
-    <section className="panel common-interest-detail">
-      <div className="panel-head">
-        <h2>Allocation Detail: {memberName(allocation)}</h2>
+    <section className="common-interest-detail">
+      <div className="common-interest-detail-hero">
+        <div className="common-interest-avatar">{initials(allocation)}</div>
+        <div>
+          <span>Allocation Detail</span>
+          <h2>{memberName(allocation)}</h2>
+          <p>Shortfall, weight, assigned base, and charge calculation.</p>
+        </div>
         <Badge text={allocation.status || allocation.compliance_status} tone={statusTone(allocation.status || allocation.compliance_status)} />
+      </div>
+      <div className="common-interest-detail-strip">
+        <DetailValue label="Assigned Base" value={money(allocation.assignedBase ?? allocation.assigned_base)} />
+        <DetailValue label="Calculated Charge" value={money(allocation.charge ?? allocation.calculated_charge)} />
+        <DetailValue label="Final Charge" value={money(allocation.final_charge ?? allocation.charge)} />
       </div>
       <div className="detail-grid common-interest-detail-grid">
         <DetailValue label="Borrowed" value={money(allocation.cumulativeBorrowed ?? allocation.cumulative_borrowed_amount)} />
@@ -105,8 +219,12 @@ function RunDetail({ run }) {
   if (!run?.data) return null;
   return (
     <section className="panel">
-      <div className="panel-head">
-        <h2>Posted Run</h2>
+      <div className="common-interest-run-hero">
+        <div>
+          <span>Posted Run</span>
+          <h2>Common-Interest Assessments</h2>
+          <p>Posted to ledger on {dateOnly(run.data.created_at)}.</p>
+        </div>
         <Badge text={run.data.allocation_method?.replaceAll("_", " ")} tone="green" />
       </div>
       <div className="detail-grid common-interest-detail-grid">
@@ -116,18 +234,21 @@ function RunDetail({ run }) {
         <DetailValue label="Unborrowed Money" value={money(run.data.unborrowed_money)} />
         <DetailValue label="Common Interest Pool" value={money(run.data.common_interest_pool)} />
       </div>
-      <DataTable
-        columns={["Member", "Status", "Borrowed", "Shortfall", "Assigned Base", "Charge"]}
-        rows={(run.allocations || []).map((item) => [
-          memberName(item),
-          <Badge text={item.compliance_status} tone={statusTone(item.compliance_status)} />,
-          money(item.cumulative_borrowed_amount),
-          money(item.borrowing_shortfall),
-          money(item.assigned_base),
-          money(item.final_charge),
-        ])}
-        empty="No posted allocations found for this run."
-      />
+      <PostedRunCards allocations={run.allocations || []} />
+      <div className="common-interest-desktop-table">
+        <DataTable
+          columns={["Member", "Status", "Borrowed", "Shortfall", "Assigned Base", "Charge"]}
+          rows={(run.allocations || []).map((item) => [
+            memberName(item),
+            <Badge text={item.compliance_status} tone={statusTone(item.compliance_status)} />,
+            money(item.cumulative_borrowed_amount),
+            money(item.borrowing_shortfall),
+            money(item.assigned_base),
+            money(item.final_charge),
+          ])}
+          empty="No posted allocations found for this run."
+        />
+      </div>
     </section>
   );
 }
@@ -252,6 +373,7 @@ export function CommonInterestPage({
   return (
     <Page
       title="Common Interest"
+      className="common-interest-page"
       actions={(
         <>
           <Button type="button" icon={RefreshCw} onClick={() => loadPreview()} loading={loading}>Calculate Preview</Button>
@@ -262,6 +384,13 @@ export function CommonInterestPage({
       {message ? <Alert tone="success" title="Common-interest action complete">{message}</Alert> : null}
       {error ? <Alert tone="danger" title="Common-interest action failed">{error}</Alert> : null}
       {errors.existingRun ? <Alert tone="warning" title="Already posted">{errors.existingRun}</Alert> : null}
+
+      <CommonInterestHero preview={preview} totals={totals} />
+
+      <div className="admin-mobile-action-row common-interest-mobile-actions-row mobile-only" aria-label="Common interest quick actions">
+        <Button type="button" icon={RefreshCw} onClick={() => loadPreview()} loading={loading}>Preview</Button>
+        <Button type="button" variant="danger" icon={Calculator} onClick={postAllocation} loading={busy === "post"} disabled={Boolean(preview?.existingRun)}>Post</Button>
+      </div>
 
       <section className="panel common-interest-filters">
         <div className="form-grid three">
@@ -319,7 +448,18 @@ export function CommonInterestPage({
             ]}
           />
 
-          <AllocationDetail allocation={selectedAllocation} onClose={() => setSelectedAllocation(null)} />
+          <Modal
+            open={Boolean(selectedAllocation)}
+            title="Allocation Details"
+            size="lg"
+            onClose={() => setSelectedAllocation(null)}
+          >
+            {selectedAllocation ? (
+              <div className="common-interest-detail-modal">
+                <AllocationDetail allocation={selectedAllocation} onClose={() => setSelectedAllocation(null)} />
+              </div>
+            ) : null}
+          </Modal>
 
           {activeTab === "preview" ? (
             <section className="panel">
@@ -327,20 +467,23 @@ export function CommonInterestPage({
                 <h2>Allocation Preview</h2>
                 <Badge text={ALLOCATION_METHODS.find((item) => item.value === allocationMethod)?.label} tone="blue" />
               </div>
-              <DataTable
-                columns={["Member", "Borrowed", "Status", "Shortfall", "Weight", "Assigned Base", "Charge", "Action"]}
-                rows={(preview.allocations || []).map((allocation) => [
-                  memberName(allocation),
-                  money(allocation.cumulativeBorrowed),
-                  <Badge text={allocation.status} tone={statusTone(allocation.status)} />,
-                  money(allocation.shortfall),
-                  Number(allocation.weight || 0).toFixed(4),
-                  money(allocation.assignedBase),
-                  money(allocation.charge),
-                  <Button type="button" variant="secondary" size="sm" onClick={() => setSelectedAllocation(allocation)}>View Details</Button>,
-                ])}
-                empty="No eligible allocations for the selected method."
-              />
+              <AllocationCards allocations={preview.allocations || []} selectedAllocation={selectedAllocation} onSelect={setSelectedAllocation} />
+              <div className="common-interest-desktop-table">
+                <DataTable
+                  columns={["Member", "Borrowed", "Status", "Shortfall", "Weight", "Assigned Base", "Charge", "Action"]}
+                  rows={(preview.allocations || []).map((allocation) => [
+                    memberName(allocation),
+                    money(allocation.cumulativeBorrowed),
+                    <Badge text={allocation.status} tone={statusTone(allocation.status)} />,
+                    money(allocation.shortfall),
+                    Number(allocation.weight || 0).toFixed(4),
+                    money(allocation.assignedBase),
+                    money(allocation.charge),
+                    <Button type="button" variant="secondary" size="sm" onClick={() => setSelectedAllocation(allocation)}>View Details</Button>,
+                  ])}
+                  empty="No eligible allocations for the selected method."
+                />
+              </div>
             </section>
           ) : null}
 
@@ -349,17 +492,20 @@ export function CommonInterestPage({
               <div className="panel-head">
                 <h2>Borrowing Compliance</h2>
               </div>
-              <DataTable
-                columns={["Member", "Code", "Borrowed", "Status", "Shortfall"]}
-                rows={(preview.members || []).map((member) => [
-                  memberName(member),
-                  member.member_code || "-",
-                  money(member.cumulativeBorrowed),
-                  <Badge text={member.status} tone={statusTone(member.status)} />,
-                  money(member.shortfall),
-                ])}
-                empty="No active members found for this cycle."
-              />
+              <ComplianceCards members={preview.members || []} />
+              <div className="common-interest-desktop-table">
+                <DataTable
+                  columns={["Member", "Code", "Borrowed", "Status", "Shortfall"]}
+                  rows={(preview.members || []).map((member) => [
+                    memberName(member),
+                    member.member_code || "-",
+                    money(member.cumulativeBorrowed),
+                    <Badge text={member.status} tone={statusTone(member.status)} />,
+                    money(member.shortfall),
+                  ])}
+                  empty="No active members found for this cycle."
+                />
+              </div>
             </section>
           ) : null}
 

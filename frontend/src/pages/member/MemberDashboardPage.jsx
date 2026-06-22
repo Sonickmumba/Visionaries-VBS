@@ -1,7 +1,21 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { AlertTriangle, Banknote, ClipboardList, PiggyBank, RefreshCw, Scale } from "lucide-react";
+import { AlertTriangle, Banknote, ClipboardList, FileText, Gauge, PiggyBank, Receipt, RefreshCw, Scale } from "lucide-react";
 import { api } from "../../api/client.js";
-import { Alert, Badge, Button, Card, DataTable, EmptyState, Skeleton } from "../../components/ui/index.jsx";
+import {
+  Alert,
+  Badge,
+  Button,
+  Card,
+  DataTable,
+  EmptyState,
+  MobileActionTile,
+  MobileBottomNav,
+  MobileHeader,
+  MobileListCard,
+  MobileMetricCard,
+  MobileScreenShell,
+  Skeleton,
+} from "../../components/ui/index.jsx";
 import { Page } from "../../layouts/AppLayouts.jsx";
 import "../../styles/member-dashboard.css";
 
@@ -103,6 +117,147 @@ function DetailValue({ label, value }) {
   return <div><strong>{label}</strong><span>{value}</span></div>;
 }
 
+function MemberMobileHero({ portal, totals, activeMembership, setPage }) {
+  const name = memberName(portal?.me?.member);
+  return (
+    <section className="member-mobile-hero" aria-label="Member dashboard summary">
+      <div className="member-mobile-hero-head">
+        <div>
+          <span>Good Morning</span>
+          <h2>{name}</h2>
+        </div>
+        <Badge text={titleCase(activeMembership?.cycle_status)} tone={statusTone(totals.borrowingStatus)} />
+      </div>
+      <div className="member-mobile-hero-main">
+        <span>My Accumulated Savings</span>
+        <strong>{money(totals.accumulatedSavings)}</strong>
+        <small>{money(totals.savingsPrincipal)} savings principal</small>
+      </div>
+      <div className="member-mobile-hero-actions">
+        <Button type="button" size="sm" onClick={() => setPage?.("my-statement")}>View Statement</Button>
+        <Button type="button" size="sm" variant="secondary" onClick={() => setPage?.("my-declaration")}>Declare</Button>
+      </div>
+      <div className="member-mobile-hero-strip">
+        <DetailValue label="Loan Balance" value={money(totals.outstandingLoan)} />
+        <DetailValue label="Cap Remaining" value={money(totals.savingsCapRemaining)} />
+      </div>
+    </section>
+  );
+}
+
+function MemberDashboardMobile({ portal, totals, transactions, penalties, activeMembership, setPage, loading, load }) {
+  const bottomNav = (
+    <MobileBottomNav
+      active="member-dashboard"
+      items={[
+        { id: "member-dashboard", label: "Home", icon: Gauge },
+        { id: "my-declaration", label: "Declare", icon: ClipboardList },
+        { id: "my-statement", label: "Statement", icon: Receipt },
+        { id: "my-loans", label: "Loans", icon: Banknote },
+      ]}
+      onChange={setPage}
+    />
+  );
+
+  return (
+    <div className="member-mobile-dashboard">
+      <MobileScreenShell bottomNav={bottomNav}>
+        <MobileHeader
+          eyebrow="Member Portal"
+          title={memberName(portal?.me?.member)}
+          subtitle={activeMembership?.cycle_name || "Active cycle"}
+          avatar={{ label: memberName(portal?.me?.member), initials: memberName(portal?.me?.member).slice(0, 2).toUpperCase() }}
+        />
+
+        <MemberMobileHero portal={portal} totals={totals} activeMembership={activeMembership} setPage={setPage} />
+
+        <div className="member-mobile-metrics" aria-label="Member financial summary">
+          <MobileMetricCard label="My Loan Balance" value={money(totals.outstandingLoan)} note={`${money(totals.borrowingShortfall)} shortfall`} icon={Banknote} tone="blue" />
+          <MobileMetricCard label="Common Interest Due" value={money(totals.commonInterestDue)} note="Assessed less paid" icon={Scale} tone="amber" />
+          <MobileMetricCard label="Penalty Due" value={money(totals.penaltyDue)} note="Outstanding penalties" icon={AlertTriangle} tone={totals.penaltyDue > 0 ? "red" : "green"} />
+          <MobileMetricCard label="Cap Remaining" value={money(totals.savingsCapRemaining)} note={`${money(activeMembership?.savings_cap)} cycle cap`} icon={PiggyBank} />
+        </div>
+
+        <section className="member-mobile-section" aria-label="Quick actions">
+          <div className="member-mobile-section-head">
+            <h2>Quick Actions</h2>
+          </div>
+          <div className="member-mobile-actions">
+            <MobileActionTile label="Declare" icon={ClipboardList} onClick={() => setPage?.("my-declaration")} />
+            <MobileActionTile label="Statement" icon={Receipt} tone="blue" onClick={() => setPage?.("my-statement")} />
+            <MobileActionTile label="Refresh" icon={RefreshCw} tone="amber" onClick={load} disabled={loading} />
+          </div>
+        </section>
+
+        <section className="member-mobile-section" aria-label={`Group Pool Snapshot ${totals.groupPoolScope}`}>
+          <div className="member-mobile-section-head">
+            <h2>Group Pool Snapshot {totals.groupPoolScope}</h2>
+            <Badge text="Latest Calculated" tone="blue" />
+          </div>
+          <div className="member-mobile-pool">
+            <MobileMetricCard label="Pool Contributions" value={money(totals.groupPool.poolContributions)} note={totals.groupPoolScope} icon={PiggyBank} />
+            <MobileMetricCard label="Loans Issued" value={money(totals.groupPool.loansIssued)} note={totals.groupPoolScope} icon={Banknote} tone="blue" />
+            <MobileMetricCard label="Unborrowed Money" value={money(totals.groupPool.unborrowedMoney)} note="Carried-forward pool" icon={Scale} tone="amber" />
+            <MobileMetricCard label="CI Pool" value={money(totals.groupPool.commonInterestPool)} note="Common interest charge" icon={Scale} tone="purple" />
+            <MobileMetricCard label="Group Accumulated Savings" value={money(totals.groupPool.totalAccumulatedSavings)} note="All members" icon={PiggyBank} />
+          </div>
+        </section>
+
+        <section className="member-mobile-section">
+          <div className="member-mobile-section-head">
+            <h2>Cycle Position</h2>
+            <Badge text={titleCase(totals.borrowingStatus)} tone={statusTone(totals.borrowingStatus)} />
+          </div>
+          <div className="member-mobile-position">
+            <DetailValue label="Minimum Borrowing" value={money(activeMembership?.minimum_borrowing_amount)} />
+            <DetailValue label="Cumulative Borrowed" value={money(totals.borrowed)} />
+            <DetailValue label="Borrowing Shortfall" value={money(totals.borrowingShortfall)} />
+            <DetailValue label="Cycle Status" value={titleCase(activeMembership?.cycle_status)} />
+          </div>
+        </section>
+
+        <section className="member-mobile-section">
+          <div className="member-mobile-section-head">
+            <h2>Recent Transactions</h2>
+            <Badge text={`${transactions.length} records`} tone="blue" />
+          </div>
+          <div className="member-mobile-list">
+            {transactions.slice(0, 4).length ? transactions.slice(0, 4).map((tx, index) => (
+              <MobileListCard
+                key={`${tx.transaction_date}-${tx.transaction_type}-${index}`}
+                title={titleCase(tx.transaction_type)}
+                subtitle={tx.description || dateOnly(tx.transaction_date)}
+                meta={dateOnly(tx.transaction_date)}
+                value={money(tx.amount)}
+                icon={FileText}
+              />
+            )) : <p className="muted">No transactions found.</p>}
+          </div>
+        </section>
+
+        <section className="member-mobile-section">
+          <div className="member-mobile-section-head">
+            <h2>Penalty Snapshot</h2>
+            <Badge text={`${penalties.length} records`} tone={totals.penaltyDue > 0 ? "red" : "green"} />
+          </div>
+          <div className="member-mobile-list">
+            {penalties.slice(0, 3).length ? penalties.slice(0, 3).map((penalty, index) => (
+              <MobileListCard
+                key={`${penalty.penalty_name || penalty.penalty_type}-${index}`}
+                title={penalty.penalty_name || penalty.penalty_type || "Penalty"}
+                subtitle={titleCase(penalty.status)}
+                value={money(penalty.outstanding_amount ?? Number(penalty.amount_assessed || 0) - Number(penalty.amount_paid || 0))}
+                status={{ label: titleCase(penalty.status), tone: totals.penaltyDue > 0 ? "red" : "green" }}
+                icon={AlertTriangle}
+              />
+            )) : <p className="muted">No penalties found.</p>}
+          </div>
+        </section>
+      </MobileScreenShell>
+    </div>
+  );
+}
+
 export function MemberDashboardPage({
   setPage,
   memberApi = api,
@@ -136,6 +291,7 @@ export function MemberDashboardPage({
 
   return (
     <Page
+      className="member-dashboard-page"
       title="My Dashboard"
       actions={(
         <>
@@ -151,6 +307,18 @@ export function MemberDashboardPage({
         <EmptyState title="No active cycle membership" message="Ask an administrator to enroll you into a cycle before declarations, savings, loans, and statements can appear." />
       ) : (
         <>
+          <MemberDashboardMobile
+            portal={portal}
+            totals={totals}
+            transactions={transactions}
+            penalties={penalties}
+            activeMembership={activeMembership}
+            setPage={setPage}
+            loading={loading}
+            load={load}
+          />
+
+          <div className="member-desktop-dashboard">
           <div className="metrics member-dashboard-metrics">
             <Card title="My Accumulated Savings" value={money(totals.accumulatedSavings)} note={`${money(totals.savingsPrincipal)} principal`} icon={PiggyBank} />
             <Card title="My Loan Balance" value={money(totals.outstandingLoan)} note={`${money(totals.borrowingShortfall)} shortfall`} tone="blue" icon={Banknote} />
@@ -224,6 +392,7 @@ export function MemberDashboardPage({
                 empty="No penalties found."
               />
             </section>
+          </div>
           </div>
         </>
       )}

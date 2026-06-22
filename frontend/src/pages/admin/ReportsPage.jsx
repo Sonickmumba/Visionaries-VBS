@@ -8,6 +8,7 @@ import {
   Card,
   DataTable,
   EmptyState,
+  Modal,
   Select,
   Skeleton,
   Tabs,
@@ -24,6 +25,15 @@ function titleCase(value) {
 
 function memberName(row) {
   return `${row?.first_name || ""} ${row?.last_name || ""}`.trim() || "Group";
+}
+
+function initials(row) {
+  return memberName(row)
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase())
+    .join("") || "R";
 }
 
 export const REPORT_DEFINITIONS = {
@@ -278,6 +288,182 @@ function DetailValue({ label, value }) {
   return <div><strong>{label}</strong><span>{value}</span></div>;
 }
 
+function ReportsHero({ definition, data, totals, rows }) {
+  return (
+    <section className="reports-hero">
+      <div>
+        <span>Reports Center</span>
+        <h2>{definition.label}</h2>
+        <p>{data?.cycle?.name || "Visionaries Village Banking"}{data?.cycleMonth ? ` · Month ${data.cycleMonth.month_number}` : " · cycle-wide view"}</p>
+      </div>
+      <div className="reports-hero-stat">
+        <span>Rows</span>
+        <strong>{rows.length}</strong>
+        <small>{money(totals.savings)} savings</small>
+      </div>
+    </section>
+  );
+}
+
+function ReportCards({ rows, report, definition, onSelect }) {
+  if (!rows.length) return null;
+  const columns = definition.columns.filter((column) => column !== "Action");
+  return (
+    <div className="reports-mobile-cards" aria-label="Mobile report rows">
+      {rows.map((row, index) => {
+        const title = row.first_name || row.last_name ? memberName(row) : row.month_number ? `Month ${row.month_number}` : definition.label;
+        const subtitle = row.member_code || row.status || row.month_status || row.penalty_type || row.compliance_status || dataLabel(row);
+        const values = columns.slice(1, 5).map((column) => {
+          const key = columnKeyForReport(column, report);
+          return { column, value: formatReportValue(key, row[key]) };
+        });
+        return (
+          <article key={row.id || row.cycle_member_id || row.cycle_month_id || `${report}-${index}`} className="reports-card">
+            <div className="reports-card-head">
+              <div className="reports-avatar">{initials(row)}</div>
+              <div>
+                <strong>{title}</strong>
+                <span>{titleCase(subtitle)}</span>
+              </div>
+              <Badge text={definition.label} tone="blue" />
+            </div>
+            <div className="reports-card-values">
+              {values.map(({ column, value }) => (
+                <div key={column}><span>{column}</span><strong>{value}</strong></div>
+              ))}
+            </div>
+            {definition.columns.includes("Action") ? (
+              <Button type="button" variant="secondary" size="sm" onClick={() => onSelect(row)}>View Details</Button>
+            ) : null}
+          </article>
+        );
+      })}
+    </div>
+  );
+}
+
+function ReportDetail({ selectedRow, definition, onClose }) {
+  if (!selectedRow) return null;
+  return (
+    <section className="reports-detail">
+      <div className="reports-detail-hero">
+        <div className="reports-avatar">{initials(selectedRow)}</div>
+        <div>
+          <span>Report Detail</span>
+          <h2>{memberName(selectedRow)}</h2>
+          <p>{definition.label}</p>
+        </div>
+        <Badge text={definition.label} tone="blue" />
+      </div>
+      <div className="detail-grid reports-detail-grid">
+        {Object.entries(selectedRow)
+          .filter(([key]) => !["id", "cycle_id", "cycle_month_id", "cycle_member_id", "member_id"].includes(key))
+          .slice(0, 16)
+          .map(([key, value]) => <DetailValue key={key} label={titleCase(key)} value={formatReportValue(key, value)} />)}
+      </div>
+      <div className="button-row">
+        <Button type="button" variant="secondary" onClick={onClose}>Close Detail</Button>
+      </div>
+    </section>
+  );
+}
+
+function dataLabel(row) {
+  return row.closing_status || row.transaction_type || row.penalty_type || "Report row";
+}
+
+function columnKeyForReport(column, report) {
+  const keyMap = {
+    "cycle-summary": {
+      Month: "month_number",
+      Status: "status",
+      Savings: "total_savings_deposits",
+      Loans: "total_loans_issued",
+      "Common Interest": "common_interest_pool",
+      Penalties: "total_penalties_assessed",
+    },
+    "member-statements": {
+      Member: "member_code",
+      Savings: "savings_principal",
+      "Savings Interest": "savings_interest",
+      Borrowed: "borrowed",
+      "Loan Interest": "loan_interest_assessed",
+      "Common Interest": "common_interest",
+      Penalties: "penalties",
+    },
+    "monthly-pool": {
+      Month: "month_number",
+      Status: "status",
+      Contributions: "total_pool_contributions",
+      "Loans Issued": "total_loans_issued",
+      Unborrowed: "unborrowed_money",
+      "CI Pool": "common_interest_pool",
+      Penalties: "total_penalties_assessed",
+    },
+    savings: {
+      Member: "member_code",
+      Principal: "principal_deposited",
+      Interest: "interest_earned",
+      "Cap Remaining": "cap_remaining",
+    },
+    loans: {
+      Member: "member_code",
+      Borrowed: "cumulative_borrowed",
+      "Principal Repaid": "principal_repaid",
+      Interest: "interest_assessed",
+      "Interest Repaid": "interest_repaid",
+      Shortfall: "borrowing_shortfall",
+    },
+    "common-interest": {
+      Month: "month_number",
+      Member: "member_code",
+      Compliance: "compliance_status",
+      Borrowed: "cumulative_borrowed_amount",
+      Shortfall: "borrowing_shortfall",
+      "Assigned Base": "assigned_base",
+      Charge: "final_charge",
+    },
+    declarations: {
+      Member: "member_code",
+      Status: "status",
+      "Within Window": "is_within_window",
+      Submitted: "submitted_at",
+      Savings: "savings_amount",
+      "Loan Request": "loan_request_amount",
+      Repayments: "principal_repayment_amount",
+    },
+    penalties: {
+      Month: "month_number",
+      Member: "member_code",
+      Type: "penalty_type",
+      Assessed: "amount_assessed",
+      Paid: "amount_paid",
+      Outstanding: "outstanding_amount",
+      Status: "status",
+    },
+    "converted-penalties": {
+      Month: "month_number",
+      Member: "member_code",
+      Type: "penalty_type",
+      Assessed: "amount_assessed",
+      "Loan Amount": "converted_loan_amount",
+      Ledger: "converted_loan_ledger_transaction_id",
+      Status: "status",
+    },
+    "cycle-closing": {
+      Month: "month_number",
+      "Month Status": "month_status",
+      Closing: "closing_status",
+      Savings: "total_savings_deposits",
+      "Savings Interest": "total_savings_interest",
+      Loans: "total_loans_issued",
+      "Common Interest": "total_common_interest_charged",
+      Penalties: "total_penalties_assessed",
+    },
+  };
+  return keyMap[report]?.[column] || column.toLowerCase().replaceAll(" ", "_");
+}
+
 export function ReportsPage({
   reportsApi = api,
   initialData = null,
@@ -390,6 +576,7 @@ export function ReportsPage({
   return (
     <Page
       title="Reports Center"
+      className="reports-page"
       actions={(
         <>
           <Button type="button" icon={RefreshCw} onClick={() => loadReport()} loading={loading}>Run Report</Button>
@@ -399,6 +586,14 @@ export function ReportsPage({
       )}
     >
       {error ? <Alert tone="danger" title="Report failed">{error}</Alert> : null}
+
+      <ReportsHero definition={definition} data={data} totals={totals} rows={rows} />
+
+      <div className="admin-mobile-action-row reports-mobile-actions-row mobile-only" aria-label="Reports quick actions">
+        <Button type="button" icon={RefreshCw} onClick={() => loadReport()} loading={loading}>Run</Button>
+        <Button type="button" variant="secondary" icon={Printer} onClick={downloadPdf}>PDF</Button>
+        <Button type="button" variant="secondary" icon={Download} onClick={exportCsv}>CSV</Button>
+      </div>
 
       <Tabs
         active={report}
@@ -442,23 +637,18 @@ export function ReportsPage({
         <Card title="Charges" value={money(totals.charges)} note="Common interest + penalties" tone="amber" icon={Scale} />
       </div>
 
-      {selectedRow ? (
-        <section className="panel reports-detail">
-          <div className="panel-head">
-            <h2>Report Detail</h2>
-            <Badge text={definition.label} tone="blue" />
+      <Modal
+        open={Boolean(selectedRow)}
+        title="Report Details"
+        size="lg"
+        onClose={() => setSelectedRow(null)}
+      >
+        {selectedRow ? (
+          <div className="reports-detail-modal">
+            <ReportDetail selectedRow={selectedRow} definition={definition} onClose={() => setSelectedRow(null)} />
           </div>
-          <div className="detail-grid reports-detail-grid">
-            {Object.entries(selectedRow)
-              .filter(([key]) => !["id", "cycle_id", "cycle_month_id", "cycle_member_id", "member_id"].includes(key))
-              .slice(0, 16)
-              .map(([key, value]) => <DetailValue key={key} label={titleCase(key)} value={formatReportValue(key, value)} />)}
-          </div>
-          <div className="button-row">
-            <Button type="button" variant="secondary" onClick={() => setSelectedRow(null)}>Close Detail</Button>
-          </div>
-        </section>
-      ) : null}
+        ) : null}
+      </Modal>
 
       <section className="panel">
         <div className="panel-head">
@@ -466,7 +656,12 @@ export function ReportsPage({
           <Badge text={data?.cycle?.name || "Cycle context"} tone="blue" />
         </div>
         {loading ? <Skeleton lines={8} /> : rows.length ? (
-          <DataTable columns={definition.columns} rows={reportRows} empty="No report rows found." />
+          <>
+            <ReportCards rows={rows} report={report} definition={definition} onSelect={setSelectedRow} />
+            <div className="reports-desktop-table">
+              <DataTable columns={definition.columns} rows={reportRows} empty="No report rows found." />
+            </div>
+          </>
         ) : (
           <EmptyState title="No report rows" message="Run another report, change filters, or post financial transactions first." />
         )}

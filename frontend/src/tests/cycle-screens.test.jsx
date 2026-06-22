@@ -1,4 +1,6 @@
 import React from "react";
+import fs from "node:fs";
+import path from "node:path";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import {
@@ -141,6 +143,7 @@ describe("cycle screens", () => {
     );
 
     expect(html).toContain("New Cycle");
+    expect(html).toContain("Cycle list quick actions");
     expect(html).toContain("Activate Cycle");
     expect(html).toContain("Generate Months");
     expect(html).toContain("Enroll Members");
@@ -153,5 +156,22 @@ describe("cycle screens", () => {
     expect(html).toContain("Penalty Types");
     expect(html).toContain("Audit");
     expect(html).toContain("K30,000");
+  });
+
+  it("keeps cycle mobile actions compact and removes duplicate mobile toolbars", () => {
+    const css = fs.readFileSync(path.join(process.cwd(), "src/styles/cycles.css"), "utf8");
+    const source = fs.readFileSync(path.join(process.cwd(), "src/pages/admin/CycleScreensPage.jsx"), "utf8");
+
+    expect(source).toContain('className="cycles-page"');
+    expect(source).toContain("cycle-list-mobile-actions");
+    expect(source).toContain("cycle-list-head-action");
+    expect(source).toContain("cycle-detail-generate-action");
+    expect(source).toContain("cycle-months-head-action");
+    expect(css).toContain(".cycles-page > .page-head .button-row");
+    expect(css).toContain(".cycle-list-mobile-actions");
+    expect(css).toContain(".cycle-list-head-action");
+    expect(css).toContain(".cycle-detail-generate-action");
+    expect(css).toContain(".cycle-months-head-action");
+    expect(css).toContain("repeat(2, minmax(0, 1fr))");
   });
 });

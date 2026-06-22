@@ -1,4 +1,6 @@
 import React from "react";
+import fs from "fs";
+import path from "path";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { AdminDashboardPage, dashboardViewModel } from "../pages/admin/AdminDashboardPage.jsx";
@@ -35,6 +37,9 @@ describe("admin dashboard", () => {
 
     expect(view.cycleName).toBe("2026 Main Cycle");
     expect(view.monthLabel).toBe("Month 3");
+    expect(view.monthStatus).toBe("DECLARATION PERIOD");
+    expect(view.heroStats.map((item) => item.label)).toEqual(["Savings", "Loans", "Pending"]);
+    expect(view.quickActions.map((item) => item.label)).toEqual(["Review Declarations", "Approve Loans", "Run Monthly Closing", "View Reports"]);
     expect(view.cards.map((card) => card.title)).toContain("Loans Outstanding");
     expect(view.financialPositionScope).toBe("up to Month 2");
     expect(view.poolCards.map((card) => card.title)).toContain("Pool Contributions");
@@ -51,6 +56,9 @@ describe("admin dashboard", () => {
     const html = renderToStaticMarkup(<AdminDashboardPage initialData={dashboardData} setPage={() => {}} />);
 
     expect(html).toContain("Admin Dashboard");
+    expect(html).toContain("Visionaries Operations");
+    expect(html).toContain("Good day");
+    expect(html).toContain("Quick actions");
     expect(html).toContain("Review Declarations");
     expect(html).toContain("Approve Loans");
     expect(html).toContain("Run Monthly Closing");
@@ -76,5 +84,14 @@ describe("admin dashboard", () => {
     const html = renderToStaticMarkup(<AdminDashboardPage setPage={() => {}} />);
 
     expect(html).toContain("aria-busy=\"true\"");
+  });
+
+  it("keeps admin dashboard mobile actions in content instead of the page header", () => {
+    const css = fs.readFileSync(path.join(process.cwd(), "src/styles/dashboard.css"), "utf8");
+
+    expect(css).toContain(".admin-dashboard-page .page-head .button-row");
+    expect(css).toContain("display: none");
+    expect(css).toContain(".admin-quick-actions");
+    expect(css).toContain("grid-template-columns: repeat(2, minmax(0, 1fr))");
   });
 });

@@ -24,6 +24,15 @@ function memberName(member) {
   return `${member?.first_name || ""} ${member?.last_name || ""}`.trim() || "Member";
 }
 
+function initials(member) {
+  return memberName(member)
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join("")
+    .toUpperCase() || "M";
+}
+
 function contributionLabel(type) {
   return type === "SOCIAL_FUND" ? "Social Fund" : "Membership Fee";
 }
@@ -99,8 +108,13 @@ function SavingsDetail({ detail }) {
   const totals = detail?.totals || {};
   return (
     <section className="panel savings-detail">
-      <div className="panel-head">
-        <h2>Savings Ledger: {memberName(detail?.member)}</h2>
+      <div className="savings-detail-hero">
+        <div className="savings-avatar" aria-hidden="true">{initials(detail?.member)}</div>
+        <div>
+          <span>Savings Ledger</span>
+          <h2>{memberName(detail?.member)}</h2>
+          <p>Principal, interest, and one-time contributions</p>
+        </div>
         <Badge text={`Remaining ${money(totals.savings_cap_remaining)}`} tone="blue" />
       </div>
       <div className="detail-grid savings-detail-grid">
@@ -124,6 +138,71 @@ function SavingsDetail({ detail }) {
   );
 }
 
+function SavingsHero({ context, metrics }) {
+  return (
+    <section className="savings-hero" aria-label="Savings posting overview">
+      <div>
+        <span>Savings Operations</span>
+        <h2>{context.cycle?.name || "No active cycle"}</h2>
+        <p>{context.cycleMonth ? `Month ${context.cycleMonth.month_number} · ${String(context.cycleMonth.status || "OPEN").replaceAll("_", " ")}` : "Activate a cycle month to post savings."}</p>
+      </div>
+      <div className="savings-hero-stat">
+        <strong>{metrics[0]?.value || "K0"}</strong>
+        <span>Principal Posted</span>
+      </div>
+    </section>
+  );
+}
+
+function SelectedMemberCard({ member }) {
+  if (!member) return null;
+  return (
+    <section className="savings-selected-member" aria-label="Selected member savings status">
+      <div className="savings-avatar" aria-hidden="true">{initials(member)}</div>
+      <div>
+        <span>Selected Member</span>
+        <strong>{memberName(member)}</strong>
+        <small>{member.member_code || "No code"} · Cap remaining {money(member.savings_cap_remaining)}</small>
+      </div>
+      <div className="savings-selected-flags">
+        <Badge text={member.social_fund_paid ? "Social Paid" : "Social Due"} tone={member.social_fund_paid ? "green" : "amber"} />
+        <Badge text={member.membership_fee_paid ? "Membership Paid" : "Membership Due"} tone={member.membership_fee_paid ? "green" : "amber"} />
+      </div>
+    </section>
+  );
+}
+
+function SavingsMemberCards({ members, busy, onSelect, onLedger }) {
+  if (!members.length) return null;
+  return (
+    <div className="savings-mobile-cards" aria-label="Member savings cards">
+      {members.map((member) => (
+        <article className="savings-member-card" key={member.cycle_member_id}>
+          <div className="savings-card-head">
+            <div className="savings-avatar" aria-hidden="true">{initials(member)}</div>
+            <div>
+              <strong>{memberName(member)}</strong>
+              <span>{member.member_code || "No code"}</span>
+            </div>
+          </div>
+          <div className="savings-card-values">
+            <div><span>Principal</span><strong>{money(member.savings_principal)}</strong></div>
+            <div><span>Remaining</span><strong>{money(member.savings_cap_remaining)}</strong></div>
+          </div>
+          <div className="savings-card-badges">
+            <Badge text={member.social_fund_paid ? "Social Paid" : "Social Due"} tone={member.social_fund_paid ? "green" : "amber"} />
+            <Badge text={member.membership_fee_paid ? "Membership Paid" : "Membership Due"} tone={member.membership_fee_paid ? "green" : "amber"} />
+          </div>
+          <div className="savings-card-actions">
+            <Button type="button" variant="secondary" size="sm" onClick={() => onSelect(member.cycle_member_id)}>Select</Button>
+            <Button type="button" variant="secondary" size="sm" onClick={() => onLedger(member.cycle_member_id)} loading={busy === `detail-${member.cycle_member_id}`}>Ledger</Button>
+          </div>
+        </article>
+      ))}
+    </div>
+  );
+}
+
 export function SavingsContributionPage({
   savingsApi = api,
   initialContext = undefined,
@@ -133,7 +212,7 @@ export function SavingsContributionPage({
   const [selectedMemberId, setSelectedMemberId] = useState(initialContext?.members?.[0]?.cycle_member_id || "");
   const [savingsAmount, setSavingsAmount] = useState("");
   const [notes, setNotes] = useState("");
-  const [activeTab, setActiveTab] = useState("posting");
+  const [activeTab, setActiveTab] = useState(initialDetail ? "ledger" : "posting");
   const [detail, setDetail] = useState(initialDetail);
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
@@ -234,6 +313,7 @@ export function SavingsContributionPage({
   return (
     <Page
       title="Savings"
+      className="savings-page"
       actions={(
         <>
           <Button type="button" icon={RefreshCw} onClick={loadContext} loading={loading}>Refresh</Button>
@@ -244,6 +324,13 @@ export function SavingsContributionPage({
       {message ? <Alert tone="success" title="Savings action complete">{message}</Alert> : null}
       {error ? <Alert tone="danger" title="Savings action failed">{error}</Alert> : null}
       {errors.context ? <Alert tone="danger" title="Posting unavailable">{errors.context}</Alert> : null}
+
+      <SavingsHero context={context} metrics={metrics} />
+
+      <div className="admin-mobile-action-row savings-mobile-actions mobile-only" aria-label="Savings quick actions">
+        <Button type="button" icon={RefreshCw} onClick={loadContext} loading={loading}>Refresh</Button>
+        <Button type="button" variant="secondary" icon={ClipboardList} onClick={() => setActiveTab("ledger")}>Ledger</Button>
+      </div>
 
       <div className="metrics savings-metrics">
         {metrics.map((metric) => <Card key={metric.title} {...metric} />)}
@@ -270,6 +357,7 @@ export function SavingsContributionPage({
                 <h2>Post Savings and Contributions</h2>
                 {selectedMember ? <Badge text={`Remaining ${money(selectedMember.savings_cap_remaining)}`} tone={Number(selectedMember.savings_cap_remaining) <= 0 ? "red" : "green"} /> : null}
               </div>
+              <SelectedMemberCard member={selectedMember} />
               <form onSubmit={submitSavings}>
                 <div className="form-grid three">
                   <Select
@@ -320,21 +408,24 @@ export function SavingsContributionPage({
               <div className="panel-head">
                 <h2>Member Savings Status</h2>
               </div>
-              <DataTable
-                columns={["Member", "Principal", "Cap Remaining", "Social Fund", "Membership", "Action"]}
-                rows={context.members.map((member) => [
-                  memberName(member),
-                  money(member.savings_principal),
-                  money(member.savings_cap_remaining),
-                  <Badge text={member.social_fund_paid ? "PAID" : "UNPAID"} tone={member.social_fund_paid ? "green" : "amber"} />,
-                  <Badge text={member.membership_fee_paid ? "PAID" : "UNPAID"} tone={member.membership_fee_paid ? "green" : "amber"} />,
-                  <div className="button-row compact">
-                    <Button type="button" variant="secondary" size="sm" onClick={() => setSelectedMemberId(member.cycle_member_id)}>Select</Button>
-                    <Button type="button" variant="secondary" size="sm" onClick={() => loadMemberSavings(member.cycle_member_id)} loading={busy === `detail-${member.cycle_member_id}`}>View Ledger</Button>
-                  </div>,
-                ])}
-                empty="No active members are enrolled in this cycle."
-              />
+              <SavingsMemberCards members={context.members} busy={busy} onSelect={setSelectedMemberId} onLedger={loadMemberSavings} />
+              <div className="savings-desktop-table">
+                <DataTable
+                  columns={["Member", "Principal", "Cap Remaining", "Social Fund", "Membership", "Action"]}
+                  rows={context.members.map((member) => [
+                    memberName(member),
+                    money(member.savings_principal),
+                    money(member.savings_cap_remaining),
+                    <Badge text={member.social_fund_paid ? "PAID" : "UNPAID"} tone={member.social_fund_paid ? "green" : "amber"} />,
+                    <Badge text={member.membership_fee_paid ? "PAID" : "UNPAID"} tone={member.membership_fee_paid ? "green" : "amber"} />,
+                    <div className="button-row compact">
+                      <Button type="button" variant="secondary" size="sm" onClick={() => setSelectedMemberId(member.cycle_member_id)}>Select</Button>
+                      <Button type="button" variant="secondary" size="sm" onClick={() => loadMemberSavings(member.cycle_member_id)} loading={busy === `detail-${member.cycle_member_id}`}>View Ledger</Button>
+                    </div>,
+                  ])}
+                  empty="No active members are enrolled in this cycle."
+                />
+              </div>
             </section>
           ) : null}
 

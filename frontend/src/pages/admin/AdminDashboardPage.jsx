@@ -2,11 +2,14 @@ import React, { useEffect, useMemo, useState } from "react";
 import {
   AlertTriangle,
   Banknote,
+  CalendarDays,
   CheckCircle2,
   ClipboardList,
   FileBarChart,
   PiggyBank,
   Scale,
+  Send,
+  Users,
 } from "lucide-react";
 import { api } from "../../api/client.js";
 import { Alert, Button, Card, EmptyState, Skeleton } from "../../components/ui/index.jsx";
@@ -32,10 +35,22 @@ export function dashboardViewModel(data) {
   return {
     cycleName: data?.cycle?.name || "No active cycle",
     monthLabel: data?.cycleMonth?.month_number ? `Month ${data.cycleMonth.month_number}` : "No active month",
+    monthStatus: data?.cycleMonth?.status ? String(data.cycleMonth.status).replaceAll("_", " ") : "No active month",
     totals,
     declarations,
     financialPosition,
     financialPositionScope,
+    heroStats: [
+      { label: "Savings", value: money(totals.savings), icon: PiggyBank },
+      { label: "Loans", value: money(totals.loans), icon: Banknote },
+      { label: "Pending", value: awaitingReview + pendingLoans, icon: ClipboardList },
+    ],
+    quickActions: [
+      { label: "Review Declarations", detail: `${awaitingReview} awaiting`, page: "declarations", icon: ClipboardList, tone: "green" },
+      { label: "Approve Loans", detail: `${pendingLoans} pending`, page: "loans", icon: Banknote, tone: "amber" },
+      { label: "Run Monthly Closing", detail: viewMonthStatus(data?.cycleMonth?.status), page: "closing", icon: CalendarDays, tone: "blue" },
+      { label: "View Reports", detail: "Cycle insights", page: "reports", icon: FileBarChart, tone: "teal" },
+    ],
     poolCards: [
       {
         title: "Pool Contributions",
@@ -150,6 +165,10 @@ export function dashboardViewModel(data) {
   };
 }
 
+function viewMonthStatus(status) {
+  return status ? String(status).replaceAll("_", " ") : "Choose month";
+}
+
 function DashboardLoading() {
   return (
     <>
@@ -213,6 +232,46 @@ function PriorityPanel({ priorities, setPage }) {
   );
 }
 
+function DashboardHero({ view, setPage }) {
+  return (
+    <section className="admin-dashboard-hero" aria-label="Admin dashboard summary">
+      <div className="admin-hero-copy">
+        <span>Good day</span>
+        <h2>Visionaries Operations</h2>
+        <p>{view.cycleName} · {view.monthLabel}</p>
+      </div>
+      <div className="admin-hero-status" aria-label="Month status">
+        <span>Status</span>
+        <strong>{view.monthStatus}</strong>
+      </div>
+      <div className="admin-hero-stats">
+        {view.heroStats.map(({ label, value, icon: Icon }) => (
+          <button key={label} type="button" onClick={() => setPage?.(label === "Savings" ? "savings" : label === "Loans" ? "loans" : "declarations")}>
+            <Icon size={18} aria-hidden="true" />
+            <span>{label}</span>
+            <strong>{value}</strong>
+          </button>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function QuickActions({ actions, setPage }) {
+  return (
+    <section className="admin-quick-actions" aria-label="Quick actions">
+      {actions.map(({ label, detail, page, icon: Icon, tone }) => (
+        <button key={label} type="button" className={tone} onClick={() => setPage?.(page)}>
+          <span><Icon size={18} aria-hidden="true" /></span>
+          <strong>{label}</strong>
+          <small>{detail}</small>
+          <Send size={15} aria-hidden="true" />
+        </button>
+      ))}
+    </section>
+  );
+}
+
 export function AdminDashboardPage({ setPage, dashboardApi = api, initialData = undefined }) {
   const [data, setData] = useState(initialData);
   const [loading, setLoading] = useState(initialData === undefined);
@@ -241,6 +300,7 @@ export function AdminDashboardPage({ setPage, dashboardApi = api, initialData = 
   return (
     <Page
       title="Admin Dashboard"
+      className="admin-dashboard-page"
       actions={(
         <>
           <Button type="button" onClick={() => setPage?.("declarations")}>Review Declarations</Button>
@@ -259,16 +319,22 @@ export function AdminDashboardPage({ setPage, dashboardApi = api, initialData = 
         />
       ) : (
         <>
+          <DashboardHero view={view} setPage={setPage} />
+          <QuickActions actions={view.quickActions} setPage={setPage} />
+
           <section className="dashboard-context">
             <div>
+              <CalendarDays size={18} aria-hidden="true" />
               <span>Active Cycle</span>
               <strong>{view.cycleName}</strong>
             </div>
             <div>
+              <CheckCircle2 size={18} aria-hidden="true" />
               <span>Current Month</span>
               <strong>{view.monthLabel}</strong>
             </div>
             <div>
+              <Users size={18} aria-hidden="true" />
               <span>Declaration Status</span>
               <strong>{view.declarations.awaiting_review || 0} awaiting review</strong>
             </div>

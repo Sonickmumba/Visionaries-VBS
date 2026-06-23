@@ -5,9 +5,10 @@ let commandConnection = null;
 let subscriberConnection = null;
 let publisherConnection = null;
 let queueConnection = null;
+let redisAvailable = null;
 
 export function redisEnabled() {
-  return Boolean(env.redisUrl);
+  return Boolean(env.redisUrl) && redisAvailable !== false;
 }
 
 function createRedisConnection(role) {
@@ -21,6 +22,31 @@ function createRedisConnection(role) {
     console.warn(`Redis ${role} connection error: ${error.message}`);
   });
   return connection;
+}
+
+export async function probeRedisAvailability() {
+  if (!env.redisUrl) {
+    redisAvailable = false;
+    return false;
+  }
+  const probe = new IORedis(env.redisUrl, {
+    lazyConnect: true,
+    maxRetriesPerRequest: 1,
+    connectTimeout: 1000,
+    enableReadyCheck: false,
+  });
+  try {
+    await probe.connect();
+    await probe.ping();
+    redisAvailable = true;
+    return true;
+  } catch (error) {
+    redisAvailable = false;
+    console.warn(`Redis unavailable; notification queue/fanout disabled for this process: ${error.code || error.message}`);
+    return false;
+  } finally {
+    await probe.quit().catch(() => probe.disconnect());
+  }
 }
 
 export function getRedisCommandConnection() {

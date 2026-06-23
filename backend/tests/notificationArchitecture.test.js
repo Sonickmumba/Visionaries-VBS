@@ -26,7 +26,10 @@ describe("notification production architecture", () => {
     expect(queue).toContain("new Worker");
     expect(queue).toContain("getRedisQueueConnection");
     expect(redis).toContain("maxRetriesPerRequest: role === \"queue\" ? null : 2");
+    expect(redis).toContain("probeRedisAvailability");
+    expect(redis).toContain("Redis unavailable; notification queue/fanout disabled");
     expect(runtime).toContain("startNotificationFanoutSubscriber");
+    expect(runtime).toContain("await probeRedisAvailability()");
     expect(runtime).toContain("startNotificationWorker");
     expect(env).toContain("NOTIFICATIONS_QUEUE_ENABLED");
     expect(env).toContain("NOTIFICATIONS_REDIS_FANOUT_ENABLED");

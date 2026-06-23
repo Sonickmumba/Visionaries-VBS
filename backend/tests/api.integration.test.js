@@ -36,6 +36,7 @@ vi.mock("../src/middleware/auth.js", () => ({
 }));
 
 const { app } = await import("../src/app.js");
+const { clearNotificationsForTests } = await import("../src/services/notificationService.js");
 
 function inject({ method = "GET", url, headers = {}, body = null }) {
   return new Promise((resolve, reject) => {
@@ -111,6 +112,7 @@ describe("API integration smoke tests", () => {
     mocks.withTransaction.mockImplementation(async (work) => work({
       query: mocks.clientQuery,
     }));
+    clearNotificationsForTests();
   });
 
   it("serves health checks without authentication", async () => {
@@ -147,6 +149,70 @@ describe("API integration smoke tests", () => {
     expect(response.body.data.penaltyTypes[0].code).toBe("FAILURE_TO_DECLARE");
     expect(response.body.data.appSettings.notification_preferences.emailEnabled).toBe(false);
     expect(response.body.data.roundingModes).toContain("HALF_UP");
+  });
+
+  it("returns recent notifications for authenticated users", async () => {
+    mocks.query.mockResolvedValueOnce({
+      rows: [{
+        id: "11111111-1111-4111-8111-111111111111",
+        type: "DECLARATION_SUBMITTED",
+        title: "Declaration submitted",
+        message: "A member submitted a declaration for group review.",
+        audience: "ALL",
+        severity: "INFO",
+        action_url: "reports:declarations",
+        action_target: { adminPage: "declarations", memberPage: "my-reports", report: "declarations" },
+        metadata: { savingsAmount: 15000 },
+        created_at: "2026-06-22T10:00:00.000Z",
+        read_at: null,
+      }],
+    });
+
+    const response = await inject({
+      url: "/api/notifications?limit=10",
+      headers: { "x-test-role": "MEMBER" },
+    });
+
+    expect(response.status).toBe(200);
+    expect(response.body.data).toHaveLength(1);
+    expect(response.body.unreadCount).toBe(1);
+    expect(response.body.data[0]).toMatchObject({
+      id: "11111111-1111-4111-8111-111111111111",
+      type: "DECLARATION_SUBMITTED",
+      title: "Declaration submitted",
+      actionUrl: "reports:declarations",
+    });
+  });
+
+  it("marks notifications as read for the authenticated user", async () => {
+    mocks.query
+      .mockResolvedValueOnce({ rows: [], rowCount: 1 })
+      .mockResolvedValueOnce({ rows: [{ unread_count: 0 }] });
+
+    const response = await inject({
+      method: "POST",
+      url: "/api/notifications/read",
+      headers: { "x-test-role": "MEMBER" },
+      body: { notificationIds: ["11111111-1111-4111-8111-111111111111"] },
+    });
+
+    expect(response.status).toBe(200);
+    expect(response.body).toMatchObject({ read: 1, unreadCount: 0 });
+    expect(mocks.query.mock.calls[0][0]).toContain("notification_read_receipts");
+  });
+
+  it("archives expired notifications for administrators", async () => {
+    mocks.query.mockResolvedValueOnce({ rows: [], rowCount: 2 });
+
+    const response = await inject({
+      method: "POST",
+      url: "/api/notifications/archive-expired",
+      body: { reason: "Monthly retention run" },
+    });
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({ archived: 2 });
+    expect(mocks.query.mock.calls[0][0]).toContain("archived_at = now()");
   });
 
   it("invites users through settings with an audit trail", async () => {
@@ -1221,6 +1287,60 @@ describe("API integration smoke tests", () => {
 
     expect(response.status).toBe(403);
     expect(response.body.error).toBe("You can only access your own cycle records");
+  });
+
+  it("allows members to open the read-only reports center for all cycle members", async () => {
+    mocks.query
+      .mockResolvedValueOnce({ rows: [{ id: "11111111-1111-4111-8111-111111111111", name: "Main Cycle", minimum_borrowing_amount: 20000 }] })
+      .mockResolvedValueOnce({ rows: [{ id: "22222222-2222-4222-8222-222222222222", month_number: 1, status: "OPEN" }] })
+      .mockResolvedValueOnce({ rows: [{ id: "22222222-2222-4222-8222-222222222222", month_number: 1, status: "OPEN" }] })
+      .mockResolvedValueOnce({
+        rows: [
+          { cycle_member_id: "33333333-3333-4333-8333-333333333333", first_name: "Mary", last_name: "Phiri" },
+          { cycle_member_id: "44444444-4444-4444-8444-444444444444", first_name: "John", last_name: "Banda" },
+        ],
+      })
+      .mockResolvedValueOnce({
+        rows: [
+          { cycle_member_id: "33333333-3333-4333-8333-333333333333", first_name: "Mary", last_name: "Phiri", savings_principal: "1000" },
+          { cycle_member_id: "44444444-4444-4444-8444-444444444444", first_name: "John", last_name: "Banda", savings_principal: "2000" },
+        ],
+      });
+
+    const response = await inject({
+      url: "/api/reports/center?report=member-statements",
+      headers: { "x-test-role": "MEMBER" },
+    });
+
+    expect(response.status).toBe(200);
+    expect(response.body.data.rows).toHaveLength(2);
+    expect(response.body.data.rows.map((row) => row.first_name)).toEqual(["Mary", "John"]);
+    expect(mocks.query.mock.calls[3][0]).not.toContain("m.user_id");
+    expect(mocks.query.mock.calls[4][0]).not.toContain("m.user_id");
+  });
+
+  it("allows members to view group converted-penalty reports without admin actions", async () => {
+    mocks.query
+      .mockResolvedValueOnce({ rows: [{ id: "11111111-1111-4111-8111-111111111111", name: "Main Cycle" }] })
+      .mockResolvedValueOnce({ rows: [{ id: "22222222-2222-4222-8222-222222222222", month_number: 1 }] })
+      .mockResolvedValueOnce({
+        rows: [{
+          id: "penalty-1",
+          first_name: "Mary",
+          last_name: "Phiri",
+          amount_assessed: "100",
+          converted_loan_amount: "100",
+        }],
+      });
+
+    const response = await inject({
+      url: "/api/reports/converted-penalties",
+      headers: { "x-test-role": "MEMBER" },
+    });
+
+    expect(response.status).toBe(200);
+    expect(response.body.data.rows).toHaveLength(1);
+    expect(mocks.query.mock.calls[2][0]).not.toContain("m.user_id");
   });
 
   it("returns member statements with month filters and reversal-aware ledger totals", async () => {

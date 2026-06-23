@@ -120,6 +120,14 @@ describe("reports screens", () => {
     expect(source).toContain("open={Boolean(selectedRow)}");
   });
 
+  it("accepts a requested report tab from notification navigation", () => {
+    const source = fs.readFileSync(path.join(process.cwd(), "src/pages/admin/ReportsPage.jsx"), "utf8");
+
+    expect(source).toContain("requestedReport");
+    expect(source).toContain("REPORT_DEFINITIONS[requestedReport]");
+    expect(source).toContain("loadReport(requestedReport)");
+  });
+
   it("keeps the reports mobile responsive contract", () => {
     const css = fs.readFileSync(path.join(process.cwd(), "src/styles/reports.css"), "utf8");
 

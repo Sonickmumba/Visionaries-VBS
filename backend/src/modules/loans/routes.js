@@ -7,6 +7,7 @@ import { validate } from "../../middleware/validate.js";
 import { audit } from "../../services/auditService.js";
 import { runIdempotent } from "../../services/idempotencyService.js";
 import { postLedger } from "../../services/ledgerService.js";
+import { queueActivityNotification } from "../../services/notificationService.js";
 import { badRequest, conflict, notFound } from "../../utils/httpError.js";
 
 export const loansRouter = express.Router();
@@ -90,6 +91,22 @@ loansRouter.post("/requests", validate(z.object({
       });
       return rows[0];
     });
+    queueActivityNotification(query, {
+      type: "LOAN_REQUEST_SUBMITTED",
+      title: "Loan request submitted",
+      message: "A member submitted a loan request.",
+      cycleId: result.cycle_id,
+      cycleMonthId: result.cycle_month_id,
+      cycleMemberId: result.cycle_member_id,
+      sourceTable: "loan_requests",
+      sourceId: result.id,
+      actionUrl: "reports:loans",
+      metadata: {
+        requestedAmount: result.requested_amount,
+        originType: result.origin_type,
+        declarationId: result.declaration_id,
+      },
+    });
     res.status(201).json({ data: result });
   } catch (error) {
     next(error);
@@ -123,6 +140,22 @@ loansRouter.post("/requests/:id/approve", requireRole("ADMIN"), validate(z.objec
       });
       return rows[0];
     });
+    queueActivityNotification(query, {
+      type: "LOAN_REQUEST_APPROVED",
+      title: "Loan request approved",
+      message: "An administrator approved a loan request.",
+      cycleId: result.cycle_id,
+      cycleMonthId: result.cycle_month_id,
+      cycleMemberId: result.cycle_member_id,
+      sourceTable: "loan_requests",
+      sourceId: result.id,
+      actionUrl: "reports:loans",
+      metadata: {
+        requestedAmount: result.requested_amount,
+        approvedAmount: result.approved_amount,
+        originType: result.origin_type,
+      },
+    });
     res.json({ data: result });
   } catch (error) {
     next(error);
@@ -152,6 +185,22 @@ loansRouter.post("/requests/:id/reject", requireRole("ADMIN"), validate(z.object
         req,
       });
       return rows[0];
+    });
+    queueActivityNotification(query, {
+      type: "LOAN_REQUEST_REJECTED",
+      title: "Loan request rejected",
+      message: "An administrator rejected a loan request.",
+      severity: "WARNING",
+      cycleId: result.cycle_id,
+      cycleMonthId: result.cycle_month_id,
+      cycleMemberId: result.cycle_member_id,
+      sourceTable: "loan_requests",
+      sourceId: result.id,
+      actionUrl: "reports:loans",
+      metadata: {
+        requestedAmount: result.requested_amount,
+        originType: result.origin_type,
+      },
     });
     res.json({ data: result });
   } catch (error) {
@@ -223,6 +272,25 @@ loansRouter.post("/disbursements", requireRole("ADMIN"), validate(z.object({
       return idem;
     });
     if (result.replayed) res.set("Idempotency-Replayed", "true");
+    if (!result.replayed) {
+      const disbursement = result.body?.data;
+      queueActivityNotification(query, {
+        type: "LOAN_DISBURSED",
+        title: "Loan disbursed",
+        message: "An approved loan was disbursed and posted to the ledger.",
+        cycleId: disbursement?.cycle_id,
+        cycleMonthId: disbursement?.cycle_month_id,
+        cycleMemberId: disbursement?.cycle_member_id,
+        sourceTable: "loan_disbursements",
+        sourceId: disbursement?.id,
+        actionUrl: "reports:loans",
+        metadata: {
+          amount: disbursement?.amount,
+          originType: disbursement?.origin_type,
+          loanRequestId: disbursement?.loan_request_id,
+        },
+      });
+    }
     res.status(result.status).json(result.body);
   } catch (error) {
     next(error);
@@ -297,6 +365,24 @@ loansRouter.post("/repayments", requireRole("ADMIN"), validate(z.object({
       return idem;
     });
     if (result.replayed) res.set("Idempotency-Replayed", "true");
+    if (!result.replayed) {
+      const repayment = result.body?.data;
+      queueActivityNotification(query, {
+        type: "LOAN_REPAYMENT_POSTED",
+        title: "Loan repayment posted",
+        message: "A loan repayment was posted to the ledger.",
+        cycleId: repayment?.cycle_id,
+        cycleMonthId: repayment?.cycle_month_id,
+        cycleMemberId: repayment?.cycle_member_id,
+        sourceTable: "loan_repayments",
+        sourceId: repayment?.id,
+        actionUrl: "reports:loans",
+        metadata: {
+          principalAmount: repayment?.principal_amount,
+          interestAmount: repayment?.interest_amount,
+        },
+      });
+    }
     res.status(result.status).json(result.body);
   } catch (error) {
     next(error);

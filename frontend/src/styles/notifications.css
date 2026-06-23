@@ -1,0 +1,133 @@
+.notifications-page {
+  display: grid;
+  gap: 0;
+}
+
+.notifications-hero {
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 88% 14%, rgba(250, 204, 21, 0.24), transparent 22%),
+    linear-gradient(145deg, #007a43 0%, #006b3d 58%, #0f766e 100%);
+  color: white;
+  padding: 18px;
+  margin-bottom: 16px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  box-shadow: 0 18px 46px rgba(16, 42, 67, 0.14);
+}
+
+.notifications-hero span {
+  color: #d9f99d;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.notifications-hero h2 {
+  margin: 4px 0;
+  color: white;
+  font-size: 25px;
+  line-height: 1.08;
+}
+
+.notifications-hero p {
+  margin: 0;
+  color: #dcfce7;
+  font-weight: 800;
+}
+
+.notifications-metrics {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.notifications-mobile-actions {
+  display: none;
+}
+
+.notification-list {
+  display: grid;
+  gap: 12px;
+}
+
+.notification-card {
+  border: 1px solid #d8e1eb;
+  border-radius: 16px;
+  background: white;
+  padding: 13px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: start;
+  box-shadow: 0 12px 30px rgba(16, 42, 67, 0.06);
+}
+
+.notification-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
+  background: #dcfce7;
+  color: #007a43;
+  display: grid;
+  place-items: center;
+}
+
+.notification-card-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.notification-card strong,
+.notification-card p,
+.notification-meta span {
+  overflow-wrap: anywhere;
+}
+
+.notification-card p {
+  margin: 5px 0 8px;
+  color: #42526b;
+  font-weight: 700;
+}
+
+.notification-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  color: #65758b;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+@media (max-width: 1024px) {
+  .notifications-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .notifications-page .page-head {
+    margin-bottom: 12px;
+  }
+
+  .notifications-hero {
+    border-radius: 0 0 24px 24px;
+    margin: -10px -10px 14px;
+    grid-template-columns: 1fr;
+  }
+
+  .notifications-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .notification-card {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .notification-card .btn {
+    grid-column: 1 / -1;
+    width: 100%;
+    min-height: 40px;
+  }
+}

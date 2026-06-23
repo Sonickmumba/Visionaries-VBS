@@ -98,7 +98,7 @@ describe("design system components", () => {
   });
 
   it("renders mobile shell, header, and active bottom navigation", () => {
-    const nav = <MobileBottomNav active="home" items={[{ id: "home", label: "Home" }, { id: "declare", label: "Declare" }]} />;
+    const nav = <MobileBottomNav active="home" items={[{ id: "home", label: "Home" }, { id: "my-notifications", label: "Alerts", badge: 4 }]} />;
     const html = renderToStaticMarkup(
       <MobileScreenShell bottomNav={nav}>
         <MobileHeader eyebrow="Good morning" title="Visionaries Village Banking" subtitle="Cycle 12" avatar={{ label: "Sonic Mumba", initials: "SM" }} />
@@ -110,7 +110,17 @@ describe("design system components", () => {
     expect(html).toContain("Visionaries Village Banking");
     expect(html).toContain("aria-label=\"Primary mobile navigation\"");
     expect(html).toContain("aria-current=\"page\"");
-    expect(html).toContain("Declare");
+    expect(html).toContain("Alerts");
+    expect(html).toContain("4 unread notifications");
+  });
+
+  it("keeps mobile notification badges visible above nav icons", () => {
+    const css = fs.readFileSync(path.join(process.cwd(), "src/styles/layouts.css"), "utf8");
+
+    expect(css).toContain(".mobile-nav-icon-wrap");
+    expect(css).toContain("overflow: visible");
+    expect(css).toContain(".mobile-bottom-nav .mobile-nav-label");
+    expect(css).not.toContain(".mobile-bottom-nav span {\n    max-width: 100%;\n    overflow: hidden;");
   });
 
   it("keeps shared mobile member layout rules in the design system", () => {

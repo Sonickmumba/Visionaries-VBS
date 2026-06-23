@@ -1,6 +1,7 @@
 import React, { Suspense, lazy, useEffect, useMemo, useState } from "react";
 import { api } from "./api/client.js";
 import { SplashScreen } from "./components/SplashScreen.jsx";
+import { NotificationUnreadProvider } from "./contexts/NotificationUnreadContext.jsx";
 
 function lazyNamed(loader, exportName) {
   return lazy(() => loader().then((module) => ({ default: module[exportName] })));
@@ -41,6 +42,7 @@ export function App() {
   const [user, setUser] = useState(null);
   const [checkingSession, setCheckingSession] = useState(true);
   const [page, setPage] = useState("dashboard");
+  const [navigationIntent, setNavigationIntent] = useState(null);
   const [showWelcomeSplash, setShowWelcomeSplash] = useState(() => (
     !new URLSearchParams(window.location.search).has("resetToken")
   ));
@@ -53,6 +55,11 @@ export function App() {
     setAuthMode("login");
   };
 
+  function navigate(nextPage, intent = null) {
+    setNavigationIntent(intent);
+    setPage(nextPage);
+  }
+
   useEffect(() => {
     let active = true;
     preloadLoginPage();
@@ -60,7 +67,7 @@ export function App() {
       .then((response) => {
         if (!active) return;
         setUser(response.user);
-        setPage(response.user?.role === "MEMBER" ? "member-dashboard" : "dashboard");
+        navigate(response.user?.role === "MEMBER" ? "member-dashboard" : "dashboard");
       })
       .catch(() => {
         if (!active) return;
@@ -84,7 +91,7 @@ export function App() {
     <SignupPage onSignup={(nextUser) => {
       setUser(nextUser);
       setShowWelcomeSplash(false);
-      setPage(nextUser.role === "MEMBER" ? "member-dashboard" : "dashboard");
+      navigate(nextUser.role === "MEMBER" ? "member-dashboard" : "dashboard");
     }} onBackToLogin={() => setAuthMode("login")} onBackToWelcome={backToWelcome} />
   ) : authMode === "forgot" ? (
     <PasswordRecoveryPage
@@ -97,7 +104,7 @@ export function App() {
       onLogin={(nextUser) => {
         setUser(nextUser);
         setShowWelcomeSplash(false);
-        setPage(nextUser.role === "MEMBER" ? "member-dashboard" : "dashboard");
+        navigate(nextUser.role === "MEMBER" ? "member-dashboard" : "dashboard");
       }}
       onSignup={() => setAuthMode("signup")}
       onForgotPassword={() => setAuthMode("forgot")}
@@ -130,7 +137,9 @@ export function App() {
 
   return (
     <Suspense fallback={<LoadingFallback />}>
-      <PortalApp user={user} page={page} setPage={setPage} onLogout={logout} />
+      <NotificationUnreadProvider user={user} page={page}>
+        <PortalApp user={user} page={page} setPage={navigate} navigationIntent={navigationIntent} onLogout={logout} />
+      </NotificationUnreadProvider>
     </Suspense>
   );
 }

@@ -7,6 +7,7 @@ import { validate } from "../../middleware/validate.js";
 import { audit } from "../../services/auditService.js";
 import { runIdempotent } from "../../services/idempotencyService.js";
 import { postLedger, reverseLedgerTransaction } from "../../services/ledgerService.js";
+import { queueActivityNotification } from "../../services/notificationService.js";
 import { badRequest, conflict, notFound } from "../../utils/httpError.js";
 import { getPagination, paginationMeta } from "../../utils/pagination.js";
 
@@ -157,6 +158,26 @@ penaltiesRouter.post("/", requireRole("ADMIN"), validate(z.object({
       return idem;
     });
     if (result.replayed) res.set("Idempotency-Replayed", "true");
+    if (!result.replayed) {
+      const penalty = result.body?.data;
+      queueActivityNotification(query, {
+        type: "PENALTY_ASSESSED",
+        title: "Penalty assessed",
+        message: "An administrator assessed a member penalty.",
+        severity: "WARNING",
+        cycleId: penalty?.cycle_id,
+        cycleMonthId: penalty?.cycle_month_id,
+        cycleMemberId: penalty?.cycle_member_id,
+        sourceTable: "penalties",
+        sourceId: penalty?.id,
+        actionUrl: "reports:penalties",
+        metadata: {
+          amount: penalty?.amount_assessed,
+          penaltyTypeId: penalty?.penalty_type_id,
+          status: penalty?.status,
+        },
+      });
+    }
     res.status(result.status).json(result.body);
   } catch (error) {
     next(error);
@@ -215,6 +236,24 @@ penaltiesRouter.post("/:id/pay", requireRole("ADMIN"), validate(z.object({
       return idem;
     });
     if (result.replayed) res.set("Idempotency-Replayed", "true");
+    if (!result.replayed) {
+      const penalty = result.body?.data;
+      queueActivityNotification(query, {
+        type: "PENALTY_PAYMENT_POSTED",
+        title: "Penalty payment posted",
+        message: "A penalty payment was posted.",
+        cycleId: penalty?.cycle_id,
+        cycleMonthId: penalty?.cycle_month_id,
+        cycleMemberId: penalty?.cycle_member_id,
+        sourceTable: "penalties",
+        sourceId: penalty?.id,
+        actionUrl: "reports:penalties",
+        metadata: {
+          amountPaid: penalty?.amount_paid,
+          status: penalty?.status,
+        },
+      });
+    }
     res.status(result.status).json(result.body);
   } catch (error) {
     next(error);
@@ -292,6 +331,26 @@ penaltiesRouter.post("/:id/convert-to-loan", requireRole("ADMIN"), validate(z.ob
       return idem;
     });
     if (result.replayed) res.set("Idempotency-Replayed", "true");
+    if (!result.replayed) {
+      const penalty = result.body?.data;
+      queueActivityNotification(query, {
+        type: "PENALTY_CONVERTED_TO_LOAN",
+        title: "Penalty converted to loan",
+        message: "An unpaid penalty was converted into a loan balance.",
+        severity: "WARNING",
+        cycleId: penalty?.cycle_id,
+        cycleMonthId: penalty?.cycle_month_id,
+        cycleMemberId: penalty?.cycle_member_id,
+        sourceTable: "penalties",
+        sourceId: penalty?.id,
+        actionUrl: "reports:converted-penalties",
+        metadata: {
+          amountAssessed: penalty?.amount_assessed,
+          amountPaid: penalty?.amount_paid,
+          convertedLoanDisbursementId: penalty?.converted_loan_disbursement_id,
+        },
+      });
+    }
     res.status(result.status).json(result.body);
   } catch (error) {
     next(error);

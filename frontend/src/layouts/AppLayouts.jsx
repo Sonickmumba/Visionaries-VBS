@@ -3,6 +3,7 @@ import {
   Activity,
   AlertTriangle,
   Banknote,
+  Bell,
   BookOpen,
   CalendarDays,
   CheckCircle2,
@@ -22,6 +23,7 @@ import {
 } from "lucide-react";
 import { api } from "../api/client.js";
 import { Badge, IconButton, Select } from "../components/ui/index.jsx";
+import { useNotificationUnread } from "../contexts/NotificationUnreadContext.jsx";
 import "../styles/layouts.css";
 
 export const adminNav = [
@@ -37,6 +39,7 @@ export const adminNav = [
   ["ledger", "Ledger", BookOpen],
   ["reports", "Reports", FileBarChart],
   ["audit", "Audit Trail", Activity],
+  ["notifications", "Notifications", Bell],
   ["settings", "Settings", Settings],
 ];
 
@@ -47,6 +50,8 @@ export const memberNav = [
   ["my-savings", "My Savings", PiggyBank],
   ["my-loans", "My Loans", Banknote],
   ["my-penalties", "My Penalties", AlertTriangle],
+  ["my-reports", "Reports", FileBarChart],
+  ["my-notifications", "Notifications", Bell],
 ];
 
 export function routeLabel(page) {
@@ -132,9 +137,10 @@ function Sidebar({ nav, page, setPage, open, setOpen, user }) {
 }
 
 function MobileBottomNav({ nav, page, setPage, user }) {
+  const { unreadCount } = useNotificationUnread();
   const priorityIds = user.role === "MEMBER"
-    ? ["member-dashboard", "my-declaration", "my-statement", "my-savings", "my-loans"]
-    : ["dashboard", "declarations", "loans", "closing", "reports"];
+    ? ["member-dashboard", "my-declaration", "my-statement", "my-reports", "my-loans"]
+    : ["dashboard", "declarations", "loans", "notifications", "reports"];
   const items = priorityIds
     .map((id) => nav.find(([navId]) => navId === id))
     .filter(Boolean);
@@ -149,8 +155,13 @@ function MobileBottomNav({ nav, page, setPage, user }) {
           aria-current={page === id ? "page" : undefined}
           onClick={() => setPage(id)}
         >
-          <Icon size={18} aria-hidden="true" />
-          <span>{label.replace("My ", "").replace("Monthly ", "")}</span>
+          <span className="mobile-nav-icon-wrap">
+            <Icon size={18} aria-hidden="true" />
+            {id === "notifications" && unreadCount > 0 ? (
+              <span className="mobile-nav-badge" aria-label={`${unreadCount} unread notifications`}>{unreadCount > 99 ? "99+" : unreadCount}</span>
+            ) : null}
+          </span>
+          <span className="mobile-nav-label">{label.replace("My ", "").replace("Monthly ", "")}</span>
         </button>
       ))}
     </nav>

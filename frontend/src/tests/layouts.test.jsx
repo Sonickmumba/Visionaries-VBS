@@ -12,7 +12,12 @@ describe("app layouts", () => {
   it("exposes admin and member navigation labels", () => {
     expect(adminNav.map((item) => item[0])).toContain("dashboard");
     expect(memberNav.map((item) => item[0])).toContain("my-statement");
+    expect(memberNav.map((item) => item[0])).toContain("my-reports");
+    expect(memberNav.map((item) => item[0])).toContain("my-notifications");
+    expect(adminNav.map((item) => item[0])).toContain("notifications");
     expect(routeLabel("common-interest")).toBe("Common Interest");
+    expect(routeLabel("my-reports")).toBe("Reports");
+    expect(routeLabel("my-notifications")).toBe("Notifications");
   });
 
   it("renders public auth layout", () => {

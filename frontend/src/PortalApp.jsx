@@ -19,10 +19,12 @@ const PenaltyScreensPage = lazyNamed(() => import("./pages/admin/PenaltyScreensP
 const ReportsPage = lazyNamed(() => import("./pages/admin/ReportsPage.jsx"), "ReportsPage");
 const SavingsContributionPage = lazyNamed(() => import("./pages/admin/SavingsContributionPage.jsx"), "SavingsContributionPage");
 const SettingsPage = lazyNamed(() => import("./pages/admin/SettingsPage.jsx"), "SettingsPage");
+const NotificationsPage = lazyNamed(() => import("./pages/NotificationsPage.jsx"), "NotificationsPage");
 const MemberDashboardPage = lazyNamed(() => import("./pages/member/MemberDashboardPage.jsx"), "MemberDashboardPage");
 const MemberDeclarationPage = lazyNamed(() => import("./pages/member/MemberDeclarationPage.jsx"), "MemberDeclarationPage");
 const MemberLoansPage = lazyNamed(() => import("./pages/member/MemberLoansPage.jsx"), "MemberLoansPage");
 const MemberPenaltiesPage = lazyNamed(() => import("./pages/member/MemberPenaltiesPage.jsx"), "MemberPenaltiesPage");
+const MemberReportsPage = lazyNamed(() => import("./pages/member/MemberReportsPage.jsx"), "MemberReportsPage");
 const MemberSavingsPage = lazyNamed(() => import("./pages/member/MemberSavingsPage.jsx"), "MemberSavingsPage");
 const MemberStatementScreen = lazyNamed(() => import("./pages/member/MemberStatementPage.jsx"), "MemberStatementPage");
 
@@ -43,7 +45,7 @@ function UnknownPage({ title }) {
   );
 }
 
-function screenForRoute(page, setPage, pageTitle) {
+function screenForRoute(page, setPage, pageTitle, navigationIntent) {
   switch (page) {
     case "dashboard":
       return <AdminDashboardPage setPage={setPage} />;
@@ -66,11 +68,13 @@ function screenForRoute(page, setPage, pageTitle) {
     case "ledger":
       return <LedgerPage />;
     case "reports":
-      return <ReportsPage />;
+      return <ReportsPage requestedReport={navigationIntent?.report} />;
     case "audit":
       return <AuditTrailPage />;
     case "settings":
       return <SettingsPage />;
+    case "notifications":
+      return <NotificationsPage setPage={setPage} role="ADMIN" />;
     case "member-dashboard":
       return <MemberDashboardPage setPage={setPage} />;
     case "my-declaration":
@@ -79,6 +83,10 @@ function screenForRoute(page, setPage, pageTitle) {
       return <MemberStatementScreen setPage={setPage} />;
     case "my-penalties":
       return <MemberPenaltiesPage setPage={setPage} />;
+    case "my-reports":
+      return <MemberReportsPage setPage={setPage} requestedReport={navigationIntent?.report} />;
+    case "my-notifications":
+      return <NotificationsPage setPage={setPage} role="MEMBER" />;
     case "my-savings":
       return <MemberSavingsPage setPage={setPage} />;
     case "my-loans":
@@ -88,13 +96,13 @@ function screenForRoute(page, setPage, pageTitle) {
   }
 }
 
-export function PortalApp({ user, page, setPage, onLogout }) {
+export function PortalApp({ user, page, setPage, navigationIntent = null, onLogout }) {
   const pageTitle = useMemo(() => routeLabel(page), [page]);
 
   return (
     <AppLayout user={user} page={page} setPage={setPage} onLogout={onLogout}>
       <Suspense fallback={<PageLoadingFallback />}>
-        {screenForRoute(page, setPage, pageTitle)}
+        {screenForRoute(page, setPage, pageTitle, navigationIntent)}
       </Suspense>
     </AppLayout>
   );

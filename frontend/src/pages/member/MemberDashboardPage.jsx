@@ -17,6 +17,7 @@ import {
   Skeleton,
 } from "../../components/ui/index.jsx";
 import { Page } from "../../layouts/AppLayouts.jsx";
+import { memberMobileNavItems } from "./memberMobileNav.js";
 import "../../styles/member-dashboard.css";
 
 const money = (value) => `K${Number(value || 0).toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
@@ -149,12 +150,7 @@ function MemberDashboardMobile({ portal, totals, transactions, penalties, active
   const bottomNav = (
     <MobileBottomNav
       active="member-dashboard"
-      items={[
-        { id: "member-dashboard", label: "Home", icon: Gauge },
-        { id: "my-declaration", label: "Declare", icon: ClipboardList },
-        { id: "my-statement", label: "Statement", icon: Receipt },
-        { id: "my-loans", label: "Loans", icon: Banknote },
-      ]}
+      items={memberMobileNavItems}
       onChange={setPage}
     />
   );

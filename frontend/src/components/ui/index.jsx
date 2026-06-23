@@ -15,6 +15,7 @@ import {
   UserRound,
   X,
 } from "lucide-react";
+import { useNotificationUnread } from "../../contexts/NotificationUnreadContext.jsx";
 import "../../styles/design-system.css";
 
 export function Button({
@@ -420,11 +421,13 @@ export function MobileHeader({
 
 export function MobileBottomNav({ items = [], active, onChange, label = "Primary mobile navigation" }) {
   const defaultIcons = [Home, FileText, Plus, Search, UserRound];
+  const { unreadCount } = useNotificationUnread();
   return (
     <nav className="mobile-bottom-nav" aria-label={label}>
       {items.map((item, index) => {
         const Icon = item.icon || defaultIcons[index] || Home;
         const selected = active === item.id;
+        const badge = item.badge ?? (String(item.id).includes("notification") ? unreadCount : 0);
         return (
           <button
             key={item.id}
@@ -433,8 +436,11 @@ export function MobileBottomNav({ items = [], active, onChange, label = "Primary
             aria-current={selected ? "page" : undefined}
             onClick={() => onChange?.(item.id)}
           >
-            <Icon size={19} aria-hidden="true" />
-            <span>{item.label}</span>
+            <span className="mobile-nav-icon-wrap">
+              <Icon size={19} aria-hidden="true" />
+              {badge > 0 ? <span className="mobile-nav-badge" aria-label={`${badge} unread notifications`}>{badge > 99 ? "99+" : badge}</span> : null}
+            </span>
+            <span className="mobile-nav-label">{item.label}</span>
           </button>
         );
       })}

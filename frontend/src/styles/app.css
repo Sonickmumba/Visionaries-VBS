@@ -841,6 +841,7 @@ th {
   .monthly-closing-page > .page-head .button-row,
   .ledger-audit-page > .page-head .button-row,
   .reports-page > .page-head .button-row,
+  .notifications-page > .page-head .button-row,
   .settings-page > .page-head .button-row {
     display: none;
   }

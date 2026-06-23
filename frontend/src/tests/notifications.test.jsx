@@ -72,6 +72,7 @@ describe("notifications", () => {
     expect(html).toContain("K15,000");
     expect(html).toContain("Month 2");
     expect(html).toContain("Open Reports");
+    expect(html).toContain("Notification quick actions");
   });
 
   it("renders member notifications as a bottom-nav destination", () => {
@@ -108,6 +109,8 @@ describe("notifications", () => {
     expect(source).toContain("target.memberPage");
     expect(source).toContain("memberMobileNavItems");
     expect(source).toContain("my-notifications");
+    expect(source).toContain("notifications-mobile-actions");
+    expect(css).toContain(".notifications-mobile-actions");
     expect(css).toContain(".notifications-hero");
     expect(css).toContain(".notification-card");
     expect(css).toContain("@media (max-width: 767px)");

@@ -24,11 +24,17 @@ function eventAmount(event) {
   const metadata = event.metadata || {};
   const value = metadata.amount
     ?? metadata.approvedAmount
+    ?? metadata.approved_amount
     ?? metadata.requestedAmount
+    ?? metadata.requested_amount
     ?? metadata.savingsAmount
+    ?? metadata.savings_amount
     ?? metadata.penaltyAmount
+    ?? metadata.penalty_amount
     ?? metadata.commonInterestPool
-    ?? metadata.totalCommonInterestCharged;
+    ?? metadata.common_interest_pool
+    ?? metadata.totalCommonInterestCharged
+    ?? metadata.total_common_interest_charged;
   return value === null || value === undefined ? "" : money(value);
 }
 
@@ -142,6 +148,10 @@ export function NotificationsPage({ notificationsApi = api, initialEvents = null
           <Card title="Declarations" value={view.declarationCount} note="Submitted or approved" icon={connected ? Wifi : WifiOff} tone="green" />
           <Card title="Loans" value={view.loanCount} note="Requests and disbursements" icon={FileBarChart} tone="blue" />
           <Card title="Financial Posts" value={view.financialCount} note="Penalties, CI, closing" icon={Bell} tone="amber" />
+        </div>
+        <div className="admin-mobile-action-row notifications-mobile-actions mobile-only" aria-label="Notification quick actions">
+          <Button type="button" icon={RefreshCw} onClick={refresh} loading={loading}>Refresh</Button>
+          <Button type="button" variant="secondary" icon={FileBarChart} onClick={openReports}>Reports</Button>
         </div>
         <section className="panel">
           <div className="panel-head">

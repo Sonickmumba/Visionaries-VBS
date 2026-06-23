@@ -201,6 +201,20 @@ describe("API integration smoke tests", () => {
     expect(mocks.query.mock.calls[0][0]).toContain("notification_read_receipts");
   });
 
+  it("archives expired notifications for administrators", async () => {
+    mocks.query.mockResolvedValueOnce({ rows: [], rowCount: 2 });
+
+    const response = await inject({
+      method: "POST",
+      url: "/api/notifications/archive-expired",
+      body: { reason: "Monthly retention run" },
+    });
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({ archived: 2 });
+    expect(mocks.query.mock.calls[0][0]).toContain("archived_at = now()");
+  });
+
   it("invites users through settings with an audit trail", async () => {
     mocks.clientQuery
       .mockResolvedValueOnce({ rows: [] })

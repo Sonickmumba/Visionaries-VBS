@@ -1,5 +1,6 @@
 import { describe, expect, it, beforeEach } from "vitest";
 import {
+  archiveExpiredNotifications,
   clearNotificationsForTests,
   listNotifications,
   markNotificationsRead,
@@ -76,6 +77,42 @@ describe("notification service", () => {
     expect(recentNotifications()[0]).toMatchObject({ id: event.id, type: "COMMON_INTEREST_POSTED" });
   });
 
+  it("supports direct notification recipients", async () => {
+    const calls = [];
+    const db = {
+      query: async (sql, params) => {
+        calls.push({ sql, params });
+        if (sql.includes("INSERT INTO notifications")) {
+          return {
+            rows: [{
+              id: "11111111-1111-4111-8111-111111111111",
+              type: "SYSTEM_EVENT",
+              title: "Direct notice",
+              message: "Private member notice.",
+              audience: "ALL",
+              severity: "INFO",
+              recipient_mode: "USERS",
+              metadata: {},
+              created_at: "2026-06-22T10:00:00.000Z",
+            }],
+          };
+        }
+        return { rows: [], rowCount: 1 };
+      },
+    };
+
+    const event = await publishPersistentNotification(db, {
+      type: "SYSTEM_EVENT",
+      title: "Direct notice",
+      message: "Private member notice.",
+      recipientUserIds: ["00000000-0000-0000-0000-000000000001"],
+    });
+
+    expect(event.recipientUserIds).toEqual(["00000000-0000-0000-0000-000000000001"]);
+    expect(calls[0].params).toContain("USERS");
+    expect(calls[1].sql).toContain("notification_recipients");
+  });
+
   it("lists persisted notifications with unread state and writes read receipts", async () => {
     const calls = [];
     const db = {
@@ -113,6 +150,19 @@ describe("notification service", () => {
     expect(listed.data[0]).toMatchObject({ id: "11111111-1111-4111-8111-111111111111", readAt: null });
     expect(marked.read).toBe(1);
     expect(calls.at(-1).sql).toContain("notification_read_receipts");
+  });
+
+  it("archives expired notifications by retention policy", async () => {
+    const db = {
+      query: async (sql, params) => {
+        expect(sql).toContain("archived_at = now()");
+        expect(sql).toContain("expires_at IS NOT NULL");
+        expect(params).toEqual([30, "Test retention"]);
+        return { rows: [], rowCount: 4 };
+      },
+    };
+
+    await expect(archiveExpiredNotifications(db, { retentionDays: 30, reason: "Test retention" })).resolves.toEqual({ archived: 4 });
   });
 
   it("enriches declaration notifications with member, amount, month, and routing target", async () => {

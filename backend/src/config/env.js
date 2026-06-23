@@ -18,4 +18,9 @@ export const env = {
   cloudinaryProofFolder: process.env.CLOUDINARY_PROOF_FOLDER || "village-banking/payment-proofs",
   paymentProofMaxBytes: Number(process.env.PAYMENT_PROOF_MAX_BYTES || 5 * 1024 * 1024),
   nodeEnv: process.env.NODE_ENV || "development",
+  redisUrl: process.env.REDIS_URL || "",
+  notificationsQueueEnabled: process.env.NOTIFICATIONS_QUEUE_ENABLED === "true",
+  notificationsRedisFanoutEnabled: process.env.NOTIFICATIONS_REDIS_FANOUT_ENABLED === "true",
+  notificationRetentionDays: Number(process.env.NOTIFICATION_RETENTION_DAYS || 730),
+  notificationMaintenanceIntervalMs: Number(process.env.NOTIFICATION_MAINTENANCE_INTERVAL_MS || 60 * 60 * 1000),
 };

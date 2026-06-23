@@ -1,7 +1,12 @@
+import { env } from "../config/env.js";
+import { getRedisPublisherConnection, getRedisSubscriberConnection, redisEnabled } from "./redisService.js";
+
 const MAX_EVENTS = 200;
+const FANOUT_CHANNEL = "visionaries:notifications:fanout";
 const clients = new Map();
 let events = [];
 let nextId = 1;
+let subscriberStarted = false;
 
 function toCamelEvent(row = {}) {
   return {
@@ -40,6 +45,8 @@ function normalizeEvent(input = {}) {
     sourceId: input.sourceId || null,
     actionUrl: input.actionUrl || null,
     actionTarget: input.actionTarget || null,
+    recipientUserIds: input.recipientUserIds || [],
+    expiresAt: input.expiresAt || null,
     metadata: input.metadata || {},
     createdAt: input.createdAt || new Date().toISOString(),
   };
@@ -208,6 +215,8 @@ function writeEvent(res, eventName, data) {
 }
 
 function audienceMatches(event, user = {}) {
+  const directRecipients = event.recipientUserIds || [];
+  if (directRecipients.length) return directRecipients.includes(user.id);
   return !event.audience || event.audience === "ALL" || event.audience === user.role;
 }
 
@@ -217,8 +226,8 @@ async function persistNotification(db, event) {
   const { rows } = await runQuery(
     `INSERT INTO notifications
       (type, title, message, audience, severity, cycle_id, cycle_month_id, cycle_member_id,
-       source_table, source_id, action_url, action_target, metadata)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
+       source_table, source_id, action_url, action_target, metadata, recipient_mode, expires_at)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)
      RETURNING *`,
     [
       event.type,
@@ -234,9 +243,21 @@ async function persistNotification(db, event) {
       event.actionUrl,
       event.actionTarget ? JSON.stringify(event.actionTarget) : null,
       JSON.stringify(event.metadata || {}),
+      event.recipientUserIds?.length ? "USERS" : "AUDIENCE",
+      event.expiresAt || null,
     ]
   );
-  return rows[0]?.id ? toCamelEvent(rows[0]) : event;
+  const saved = rows[0]?.id ? toCamelEvent(rows[0]) : event;
+  const recipientUserIds = Array.from(new Set((event.recipientUserIds || []).filter(Boolean)));
+  if (saved.id && recipientUserIds.length) {
+    await runQuery(
+      `INSERT INTO notification_recipients (notification_id, user_id)
+       SELECT $1, unnest($2::uuid[])
+       ON CONFLICT (notification_id, user_id) DO NOTHING`,
+      [saved.id, recipientUserIds]
+    );
+  }
+  return recipientUserIds.length ? { ...saved, recipientUserIds } : saved;
 }
 
 function broadcastNotification(event) {
@@ -247,6 +268,24 @@ function broadcastNotification(event) {
     } catch {
       clients.delete(clientId);
     }
+  }
+}
+
+async function publishFanout(event) {
+  if (!env.notificationsRedisFanoutEnabled || !redisEnabled()) {
+    broadcastNotification(event);
+    return;
+  }
+  const publisher = getRedisPublisherConnection();
+  try {
+    await publisher.connect().catch((error) => {
+      if (error.message?.includes("already connecting") || error.message?.includes("already connected")) return;
+      throw error;
+    });
+    await publisher.publish(FANOUT_CHANNEL, JSON.stringify(event));
+  } catch (error) {
+    console.warn(`Redis notification fanout failed: ${error.message}`);
+    broadcastNotification(event);
   }
 }
 
@@ -262,7 +301,7 @@ export async function publishPersistentNotification(db, input) {
   try {
     const event = await persistNotification(db, fallback);
     events = [event, ...events.filter((item) => item.id !== event.id)].slice(0, MAX_EVENTS);
-    broadcastNotification(event);
+    await publishFanout(event);
     return event;
   } catch {
     return publishNotification(fallback);
@@ -291,9 +330,15 @@ export async function publishActivityNotification(db, input) {
 }
 
 export function queueActivityNotification(db, input) {
-  setTimeout(() => {
-    publishActivityNotification(db, input).catch(() => null);
-  }, 0);
+  if (env.notificationsQueueEnabled && redisEnabled()) {
+    import("./notificationQueueService.js")
+      .then(({ addNotificationJob }) => addNotificationJob(input))
+      .catch(() => {
+        setTimeout(() => publishActivityNotification(db, input).catch(() => null), 0);
+      });
+    return;
+  }
+  setTimeout(() => publishActivityNotification(db, input).catch(() => null), 0);
 }
 
 export function recentNotifications({ limit = 50 } = {}) {
@@ -312,7 +357,14 @@ export async function listNotifications(db, { user, limit = 50 } = {}) {
      FROM notifications n
      LEFT JOIN notification_read_receipts r
        ON r.notification_id = n.id AND r.user_id = $1
-     WHERE n.audience = 'ALL' OR n.audience = $2
+     WHERE n.archived_at IS NULL
+       AND (
+         n.recipient_mode = 'AUDIENCE' AND (n.audience = 'ALL' OR n.audience = $2)
+         OR EXISTS (
+           SELECT 1 FROM notification_recipients nr
+           WHERE nr.notification_id = n.id AND nr.user_id = $1
+         )
+       )
      ORDER BY n.created_at DESC
      LIMIT $3`,
     [user.id, user.role, bounded]
@@ -328,7 +380,14 @@ export async function countUnreadNotifications(db, { user } = {}) {
   const { rows } = await runQuery(
     `SELECT COUNT(*)::int AS unread_count
      FROM notifications n
-     WHERE (n.audience = 'ALL' OR n.audience = $2)
+     WHERE n.archived_at IS NULL
+       AND (
+         n.recipient_mode = 'AUDIENCE' AND (n.audience = 'ALL' OR n.audience = $2)
+         OR EXISTS (
+           SELECT 1 FROM notification_recipients nr
+           WHERE nr.notification_id = n.id AND nr.user_id = $1
+         )
+       )
        AND NOT EXISTS (
          SELECT 1
          FROM notification_read_receipts r
@@ -351,6 +410,49 @@ export async function markNotificationsRead(db, { userId, notificationIds = [] }
     [userId, notificationIds]
   );
   return { read: rowCount || 0 };
+}
+
+export async function archiveExpiredNotifications(db, { retentionDays = env.notificationRetentionDays, reason = "Retention policy" } = {}) {
+  const runQuery = typeof db === "function" ? db : db?.query;
+  if (!runQuery) return { archived: 0 };
+  const { rowCount } = await runQuery(
+    `UPDATE notifications
+     SET archived_at = now(), archived_reason = $2
+     WHERE archived_at IS NULL
+       AND (
+         (expires_at IS NOT NULL AND expires_at <= now())
+         OR created_at < now() - ($1::int * interval '1 day')
+       )`,
+    [retentionDays, reason]
+  );
+  return { archived: rowCount || 0 };
+}
+
+export async function startNotificationFanoutSubscriber() {
+  if (subscriberStarted || !env.notificationsRedisFanoutEnabled || !redisEnabled()) return null;
+  const subscriber = getRedisSubscriberConnection();
+  try {
+    await subscriber.connect().catch((error) => {
+      if (error.message?.includes("already connecting") || error.message?.includes("already connected")) return;
+      throw error;
+    });
+    await subscriber.subscribe(FANOUT_CHANNEL);
+    subscriber.on("message", (channel, payload) => {
+      if (channel !== FANOUT_CHANNEL) return;
+      try {
+        const event = JSON.parse(payload);
+        events = [event, ...events.filter((item) => item.id !== event.id)].slice(0, MAX_EVENTS);
+        broadcastNotification(event);
+      } catch {
+        // Ignore malformed pub/sub messages.
+      }
+    });
+    subscriberStarted = true;
+    return subscriber;
+  } catch (error) {
+    console.warn(`Redis notification subscriber unavailable: ${error.message}`);
+    return null;
+  }
 }
 
 export async function streamNotifications(req, res, db) {

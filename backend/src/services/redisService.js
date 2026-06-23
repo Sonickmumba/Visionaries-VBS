@@ -4,6 +4,7 @@ import { env } from "../config/env.js";
 let commandConnection = null;
 let subscriberConnection = null;
 let publisherConnection = null;
+let queueConnection = null;
 
 export function redisEnabled() {
   return Boolean(env.redisUrl);
@@ -37,9 +38,15 @@ export function getRedisPublisherConnection() {
   return publisherConnection;
 }
 
+export function getRedisQueueConnection() {
+  if (!queueConnection) queueConnection = createRedisConnection("queue");
+  return queueConnection;
+}
+
 export async function closeRedisConnections() {
-  await Promise.allSettled([commandConnection, subscriberConnection, publisherConnection].filter(Boolean).map((connection) => connection.quit()));
+  await Promise.allSettled([commandConnection, subscriberConnection, publisherConnection, queueConnection].filter(Boolean).map((connection) => connection.quit()));
   commandConnection = null;
   subscriberConnection = null;
   publisherConnection = null;
+  queueConnection = null;
 }

@@ -2,7 +2,7 @@ import { Queue, Worker } from "bullmq";
 import { env } from "../config/env.js";
 import { query } from "../db/pool.js";
 import { publishActivityNotification } from "./notificationService.js";
-import { getRedisCommandConnection, redisEnabled } from "./redisService.js";
+import { getRedisQueueConnection, redisEnabled } from "./redisService.js";
 
 const QUEUE_NAME = "visionaries-notifications";
 let queue = null;
@@ -16,7 +16,7 @@ function getQueue() {
   if (!notificationQueueEnabled()) return null;
   if (!queue) {
     queue = new Queue(QUEUE_NAME, {
-      connection: getRedisCommandConnection(),
+      connection: getRedisQueueConnection(),
       defaultJobOptions: {
         attempts: 5,
         backoff: { type: "exponential", delay: 1000 },
@@ -43,7 +43,7 @@ export function startNotificationWorker() {
       await publishActivityNotification(query, job.data);
     },
     {
-      connection: getRedisCommandConnection(),
+      connection: getRedisQueueConnection(),
       concurrency: 5,
     }
   );

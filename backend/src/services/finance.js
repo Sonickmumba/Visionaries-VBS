@@ -53,17 +53,18 @@ export function calculateSavingsInterest({ broughtForward, deposit, rate, roundi
 }
 
 export function calculateLoanInterest({ broughtForward, newLoan, principalRepaid, interestRepaid, rate, roundingPolicy = {} }) {
-  const interestBase = money(Number(broughtForward || 0) + Number(newLoan || 0), roundingPolicy);
+  const openingBalance = money(Number(broughtForward || 0) + Number(newLoan || 0), roundingPolicy);
+  const interestBase = money(Math.max(
+    openingBalance - Number(principalRepaid || 0) - Number(interestRepaid || 0),
+    0
+  ), roundingPolicy);
   const interest = money(interestBase * Number(rate || 0), roundingPolicy);
-  const beforeNewLoan = money(
-    Number(broughtForward || 0) + interest - Number(principalRepaid || 0) - Number(interestRepaid || 0),
-    roundingPolicy
-  );
+  const beforeNewLoan = interestBase;
   return {
     interestBase,
     interest,
     beforeNewLoan,
-    carriedForward: money(beforeNewLoan + Number(newLoan || 0), roundingPolicy),
+    carriedForward: money(interestBase + interest, roundingPolicy),
   };
 }
 

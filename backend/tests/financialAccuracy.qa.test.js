@@ -69,10 +69,10 @@ describe("QA-003 financial accuracy test pack", () => {
     });
 
     expect(direct).toEqual({
-      interestBase: 13000,
-      interest: 1950,
-      beforeNewLoan: 9450,
-      carriedForward: 12450,
+      interestBase: 10500,
+      interest: 1575,
+      beforeNewLoan: 10500,
+      carriedForward: 12075,
     });
 
     const closing = calculateMemberMonthlyClosing({
@@ -93,8 +93,8 @@ describe("QA-003 financial accuracy test pack", () => {
     });
 
     expect(closing.loanBroughtForward).toBe(10000);
-    expect(closing.loanInterestAssessed).toBe(1950);
-    expect(closing.loanCarriedForward).toBe(12450);
+    expect(closing.loanInterestAssessed).toBe(1575);
+    expect(closing.loanCarriedForward).toBe(12075);
     expect(closing.cumulativeBorrowedAmount).toBe(13000);
     expect(closing.borrowingStatus).toBe("BORROWED_BELOW_MINIMUM");
     expect(closing.borrowingShortfall).toBe(7000);
@@ -119,12 +119,33 @@ describe("QA-003 financial accuracy test pack", () => {
     });
 
     expect(closing.loanBroughtForward).toBe(17000);
-    expect(closing.loanInterestAssessed).toBe(2550);
+    expect(closing.loanInterestAssessed).toBe(2167.5);
     expect(closing.principalRepaid).toBe(2000);
     expect(closing.interestRepaid).toBe(550);
-    expect(closing.loanCarriedForward).toBe(17000);
+    expect(closing.loanCarriedForward).toBe(16617.5);
     expect(closing.cumulativeBorrowedAmount).toBe(20000);
     expect(closing.borrowingStatus).toBe("AT_OR_ABOVE_MINIMUM");
+  });
+
+  it("documents full loan clearance before monthly closing", () => {
+    const closing = calculateMemberMonthlyClosing({
+      cycle,
+      declarationStatus: "APPROVED",
+      previous: {
+        ...emptyClosingSums(),
+        newLoan: 15000,
+        loanInterestAssessed: 2250,
+      },
+      current: {
+        ...emptyClosingSums(),
+        principalRepaid: 15000,
+        interestRepaid: 2250,
+      },
+    });
+
+    expect(closing.loanBroughtForward).toBe(17250);
+    expect(closing.loanInterestAssessed).toBe(0);
+    expect(closing.loanCarriedForward).toBe(0);
   });
 
   it("documents the converted penalty loan scenario", () => {

@@ -2,11 +2,13 @@ import { env } from "../config/env.js";
 import { query } from "../db/pool.js";
 import { archiveExpiredNotifications, startNotificationFanoutSubscriber } from "./notificationService.js";
 import { startNotificationWorker } from "./notificationQueueService.js";
+import { probeRedisAvailability } from "./redisService.js";
 
 let maintenanceTimer = null;
 
-export function startNotificationRuntime() {
-  startNotificationFanoutSubscriber();
+export async function startNotificationRuntime() {
+  await probeRedisAvailability();
+  await startNotificationFanoutSubscriber();
   startNotificationWorker();
   archiveExpiredNotifications(query).catch((error) => {
     console.warn(`Notification archive startup maintenance failed: ${error.message}`);

@@ -10,6 +10,7 @@ describe("notification production architecture", () => {
     const migration = read("migrations/008_notification_recipients_retention.sql");
     const service = read("src/services/notificationService.js");
     const queue = read("src/services/notificationQueueService.js");
+    const redis = read("src/services/redisService.js");
     const runtime = read("src/services/notificationRuntimeService.js");
     const env = read("src/config/env.js");
     const pkg = JSON.parse(read("package.json"));
@@ -23,7 +24,12 @@ describe("notification production architecture", () => {
     expect(service).toContain("Redis notification fanout");
     expect(queue).toContain("new Queue");
     expect(queue).toContain("new Worker");
+    expect(queue).toContain("getRedisQueueConnection");
+    expect(redis).toContain("maxRetriesPerRequest: role === \"queue\" ? null : 2");
+    expect(redis).toContain("probeRedisAvailability");
+    expect(redis).toContain("Redis unavailable; notification queue/fanout disabled");
     expect(runtime).toContain("startNotificationFanoutSubscriber");
+    expect(runtime).toContain("await probeRedisAvailability()");
     expect(runtime).toContain("startNotificationWorker");
     expect(env).toContain("NOTIFICATIONS_QUEUE_ENABLED");
     expect(env).toContain("NOTIFICATIONS_REDIS_FANOUT_ENABLED");

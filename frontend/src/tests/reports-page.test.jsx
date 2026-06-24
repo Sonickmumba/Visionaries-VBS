@@ -108,6 +108,8 @@ describe("reports screens", () => {
     expect(html).toContain("Member Statements");
     expect(html).toContain("Converted Penalties");
     expect(html).toContain("Cycle Closing");
+    expect(html).toContain("Group Surplus");
+    expect(html).toContain("Shareout");
     expect(html).toContain("Report Rows");
     expect(html).toContain("K15,000");
   });

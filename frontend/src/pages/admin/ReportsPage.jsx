@@ -95,6 +95,19 @@ export const REPORT_DEFINITIONS = {
     columns: ["Month", "Month Status", "Closing", "Savings", "Savings Interest", "Loans", "Common Interest", "Penalties"],
     supportsMonth: true,
   },
+  "group-surplus": {
+    label: "Group Surplus",
+    mode: "endpoint",
+    endpoint: "/reports/group-surplus",
+    columns: ["Month", "Opening", "Social Fund", "Membership", "Penalties", "Interest", "Closing"],
+  },
+  shareout: {
+    label: "Shareout",
+    mode: "endpoint",
+    endpoint: "/reports/shareout",
+    columns: ["Member", "Accumulated Savings", "Surplus Share", "Deductions", "Net Shareout", "Status"],
+    supportsMember: true,
+  },
 };
 
 export function reportsQuery({ report, cycleId = "", cycleMonthId = "", cycleMemberId = "", format = "" }) {
@@ -113,10 +126,11 @@ export function reportTotals({ rows = [], totals = {} }) {
   const sum = (keys) => rows.reduce((total, row) => total + keys.reduce((inner, key) => inner + Number(row[key] || 0), 0), 0);
   return {
     savings: Number(totals.savings_principal || totals.principalDeposited || totals.savings || 0) || sum(["principal_deposited", "savings_principal", "total_savings_deposits"]),
-    loans: Number(totals.loans_issued || totals.cumulativeBorrowed || totals.loansIssued || 0) || sum(["cumulative_borrowed", "total_loans_issued"]),
+    loans: Number(totals.loans_issued || totals.cumulativeBorrowed || totals.loansIssued || totals.groupSurplusShare || totals.closingBalance || 0) || sum(["cumulative_borrowed", "total_loans_issued", "group_surplus_share", "closing_balance"]),
     charges: Number(totals.common_interest || 0) + Number(totals.penalties || 0)
       || Number(totals.commonInterest || 0) + Number(totals.assessed || 0)
-      || sum(["common_interest_pool", "calculated_charge", "final_charge", "amount_assessed", "total_common_interest_charged", "total_penalties_assessed"]),
+      || Number(totals.deductions || 0)
+      || sum(["common_interest_pool", "calculated_charge", "final_charge", "amount_assessed", "total_common_interest_charged", "total_penalties_assessed", "total_deductions"]),
   };
 }
 
@@ -225,6 +239,27 @@ export function buildReportRows(rows, report, onSelect) {
       money(row.total_loans_issued),
       money(row.total_common_interest_charged),
       money(row.total_penalties_assessed),
+    ]);
+  }
+  if (report === "group-surplus") {
+    return rows.map((row) => [
+      `Month ${row.month_number}`,
+      money(row.opening_balance),
+      money(row.social_fund_collected),
+      money(row.membership_collected),
+      money(row.penalties_collected),
+      money(row.interest_earned),
+      money(row.closing_balance),
+    ]);
+  }
+  if (report === "shareout") {
+    return rows.map((row) => [
+      <><strong>{memberName(row)}</strong><br /><span className="muted">{row.member_code}</span></>,
+      money(row.accumulated_savings),
+      money(row.group_surplus_share),
+      money(row.total_deductions),
+      money(row.net_shareout),
+      <Badge text={titleCase(row.status)} tone={row.status === "POSTED" ? "green" : "blue"} />,
     ]);
   }
   return rows.map((row) => [
@@ -460,6 +495,23 @@ function columnKeyForReport(column, report) {
       Loans: "total_loans_issued",
       "Common Interest": "total_common_interest_charged",
       Penalties: "total_penalties_assessed",
+    },
+    "group-surplus": {
+      Month: "month_number",
+      Opening: "opening_balance",
+      "Social Fund": "social_fund_collected",
+      Membership: "membership_collected",
+      Penalties: "penalties_collected",
+      Interest: "interest_earned",
+      Closing: "closing_balance",
+    },
+    shareout: {
+      Member: "member_code",
+      "Accumulated Savings": "accumulated_savings",
+      "Surplus Share": "group_surplus_share",
+      Deductions: "total_deductions",
+      "Net Shareout": "net_shareout",
+      Status: "status",
     },
   };
   return keyMap[report]?.[column] || column.toLowerCase().replaceAll(" ", "_");

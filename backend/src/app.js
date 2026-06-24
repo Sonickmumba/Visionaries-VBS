@@ -24,6 +24,7 @@ import { auditRouter } from "./modules/audit/routes.js";
 import { overridesRouter } from "./modules/overrides/routes.js";
 import { settingsRouter } from "./modules/settings/routes.js";
 import { notificationsRouter } from "./modules/notifications/routes.js";
+import { shareoutRouter } from "./modules/shareout/routes.js";
 
 export const app = express();
 
@@ -72,6 +73,7 @@ app.use("/api/audit", auditRouter);
 app.use("/api/overrides", overridesRouter);
 app.use("/api/settings", settingsRouter);
 app.use("/api/notifications", notificationsRouter);
+app.use("/api/shareout", shareoutRouter);
 
 app.use(notFoundHandler);
 app.use(errorHandler);

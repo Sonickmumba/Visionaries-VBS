@@ -39,7 +39,7 @@ describe("finance calculations", () => {
     });
   });
 
-  it("calculates monthly loan interest from brought-forward balance", () => {
+  it("calculates monthly loan interest after current-month repayments reduce the interest base", () => {
     expect(calculateLoanInterest({
       broughtForward: 2000,
       newLoan: 500,
@@ -47,10 +47,10 @@ describe("finance calculations", () => {
       interestRepaid: 50,
       rate: 0.15,
     })).toEqual({
-      interestBase: 2500,
-      interest: 375,
-      beforeNewLoan: 2025,
-      carriedForward: 2525,
+      interestBase: 2150,
+      interest: 322.5,
+      beforeNewLoan: 2150,
+      carriedForward: 2472.5,
     });
   });
 
@@ -64,8 +64,23 @@ describe("finance calculations", () => {
     })).toEqual({
       interestBase: 5000,
       interest: 750,
-      beforeNewLoan: 750,
+      beforeNewLoan: 5000,
       carriedForward: 5750,
+    });
+  });
+
+  it("does not charge new interest when current-month repayments clear the opening loan balance", () => {
+    expect(calculateLoanInterest({
+      broughtForward: 17250,
+      newLoan: 0,
+      principalRepaid: 15000,
+      interestRepaid: 2250,
+      rate: 0.15,
+    })).toEqual({
+      interestBase: 0,
+      interest: 0,
+      beforeNewLoan: 0,
+      carriedForward: 0,
     });
   });
 
@@ -80,7 +95,7 @@ describe("finance calculations", () => {
     })).toEqual({
       interestBase: 10,
       interest: 1.55,
-      beforeNewLoan: 11.55,
+      beforeNewLoan: 10,
       carriedForward: 11.55,
     });
 
@@ -94,7 +109,7 @@ describe("finance calculations", () => {
     })).toEqual({
       interestBase: 10,
       interest: 1.56,
-      beforeNewLoan: 11.56,
+      beforeNewLoan: 10,
       carriedForward: 11.56,
     });
   });

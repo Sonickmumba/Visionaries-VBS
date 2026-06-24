@@ -18,6 +18,7 @@ import {
   Receipt,
   Scale,
   Settings,
+  HandCoins,
   Users,
   X,
 } from "lucide-react";
@@ -38,6 +39,7 @@ export const adminNav = [
   ["closing", "Monthly Closing", CheckCircle2],
   ["ledger", "Ledger", BookOpen],
   ["reports", "Reports", FileBarChart],
+  ["shareout", "Shareout", HandCoins],
   ["audit", "Audit Trail", Activity],
   ["notifications", "Notifications", Bell],
   ["settings", "Settings", Settings],
@@ -51,6 +53,7 @@ export const memberNav = [
   ["my-loans", "My Loans", Banknote],
   ["my-penalties", "My Penalties", AlertTriangle],
   ["my-reports", "Reports", FileBarChart],
+  ["my-shareout", "My Shareout", HandCoins],
   ["my-notifications", "Notifications", Bell],
 ];
 
@@ -139,7 +142,7 @@ function Sidebar({ nav, page, setPage, open, setOpen, user }) {
 function MobileBottomNav({ nav, page, setPage, user }) {
   const { unreadCount } = useNotificationUnread();
   const priorityIds = user.role === "MEMBER"
-    ? ["member-dashboard", "my-declaration", "my-statement", "my-reports", "my-loans"]
+    ? ["member-dashboard", "my-declaration", "my-statement", "my-shareout", "my-reports"]
     : ["dashboard", "declarations", "loans", "notifications", "reports"];
   const items = priorityIds
     .map((id) => nav.find(([navId]) => navId === id))

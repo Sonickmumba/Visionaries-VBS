@@ -19,6 +19,7 @@ const PenaltyScreensPage = lazyNamed(() => import("./pages/admin/PenaltyScreensP
 const ReportsPage = lazyNamed(() => import("./pages/admin/ReportsPage.jsx"), "ReportsPage");
 const SavingsContributionPage = lazyNamed(() => import("./pages/admin/SavingsContributionPage.jsx"), "SavingsContributionPage");
 const SettingsPage = lazyNamed(() => import("./pages/admin/SettingsPage.jsx"), "SettingsPage");
+const ShareoutPage = lazyNamed(() => import("./pages/admin/ShareoutPage.jsx"), "ShareoutPage");
 const NotificationsPage = lazyNamed(() => import("./pages/NotificationsPage.jsx"), "NotificationsPage");
 const MemberDashboardPage = lazyNamed(() => import("./pages/member/MemberDashboardPage.jsx"), "MemberDashboardPage");
 const MemberDeclarationPage = lazyNamed(() => import("./pages/member/MemberDeclarationPage.jsx"), "MemberDeclarationPage");
@@ -26,6 +27,7 @@ const MemberLoansPage = lazyNamed(() => import("./pages/member/MemberLoansPage.j
 const MemberPenaltiesPage = lazyNamed(() => import("./pages/member/MemberPenaltiesPage.jsx"), "MemberPenaltiesPage");
 const MemberReportsPage = lazyNamed(() => import("./pages/member/MemberReportsPage.jsx"), "MemberReportsPage");
 const MemberSavingsPage = lazyNamed(() => import("./pages/member/MemberSavingsPage.jsx"), "MemberSavingsPage");
+const MemberShareoutPage = lazyNamed(() => import("./pages/member/MemberShareoutPage.jsx"), "MemberShareoutPage");
 const MemberStatementScreen = lazyNamed(() => import("./pages/member/MemberStatementPage.jsx"), "MemberStatementPage");
 
 function PageLoadingFallback() {
@@ -69,6 +71,8 @@ function screenForRoute(page, setPage, pageTitle, navigationIntent) {
       return <LedgerPage />;
     case "reports":
       return <ReportsPage requestedReport={navigationIntent?.report} />;
+    case "shareout":
+      return <ShareoutPage />;
     case "audit":
       return <AuditTrailPage />;
     case "settings":
@@ -85,6 +89,8 @@ function screenForRoute(page, setPage, pageTitle, navigationIntent) {
       return <MemberPenaltiesPage setPage={setPage} />;
     case "my-reports":
       return <MemberReportsPage setPage={setPage} requestedReport={navigationIntent?.report} />;
+    case "my-shareout":
+      return <MemberShareoutPage setPage={setPage} />;
     case "my-notifications":
       return <NotificationsPage setPage={setPage} role="MEMBER" />;
     case "my-savings":

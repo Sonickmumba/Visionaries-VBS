@@ -22,6 +22,7 @@ describe("QA-004 frontend regression suite", () => {
       "closing",
       "ledger",
       "reports",
+      "shareout",
       "audit",
       "notifications",
       "settings",
@@ -34,6 +35,7 @@ describe("QA-004 frontend regression suite", () => {
       "my-loans",
       "my-penalties",
       "my-reports",
+      "my-shareout",
       "my-notifications",
     ];
 

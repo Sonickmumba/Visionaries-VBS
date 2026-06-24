@@ -2,6 +2,7 @@ import express from "express";
 import { query } from "../../db/pool.js";
 import { requireAuth, requireRole } from "../../middleware/auth.js";
 import { requireCycleMemberAccessFromParam } from "../../middleware/domainGuards.js";
+import { calculateGroupSurplusSchedule } from "../../services/shareoutService.js";
 
 export const reportsRouter = express.Router();
 reportsRouter.use(requireAuth);
@@ -720,6 +721,92 @@ reportsRouter.get("/cycle-closing", async (req, res, next) => {
       penalties: acc.penalties + Number(row.total_penalties_assessed || 0),
     }), { savings: 0, savingsInterest: 0, loansIssued: 0, loanInterest: 0, commonInterest: 0, penalties: 0 });
     return sendReport(req, res, { data: { cycle, cycleMonth, rows: rows.rows, totals } }, { filename: "cycle-closing-report" });
+  } catch (error) {
+    next(error);
+  }
+});
+
+reportsRouter.get("/group-surplus", async (req, res, next) => {
+  try {
+    const { cycle } = await resolveReportContext(req);
+    if (!cycle) return res.json({ data: { cycle: null, rows: [], totals: {} } });
+    const memberCycleId = await ensureCycleMemberAccessForReport(req, cycle.id);
+    if (memberCycleId === false) return;
+    const schedule = await calculateGroupSurplusSchedule(query, { cycleId: cycle.id, persist: false });
+    const rows = schedule.rows.map((row) => ({
+      cycle_id: row.cycle_id,
+      cycle_month_id: row.cycle_month_id,
+      monthly_closing_run_id: row.monthly_closing_run_id,
+      month_number: row.month_number,
+      interest_rate: row.interest_rate,
+      opening_balance: row.openingBalance,
+      social_fund_collected: row.socialFundCollected,
+      membership_collected: row.membershipCollected,
+      penalties_collected: row.penaltiesCollected,
+      interest_earned: row.interestEarned,
+      closing_balance: row.closingBalance,
+    }));
+    return sendReport(req, res, { data: { cycle, rows, totals: schedule.totals } }, { filename: "group-surplus-report" });
+  } catch (error) {
+    next(error);
+  }
+});
+
+async function ensureCycleMemberAccessForReport(req, cycleId) {
+  if (isPrivileged(req.user)) return null;
+  const access = await query(
+    `SELECT cm.id
+     FROM cycle_members cm
+     JOIN members m ON m.id = cm.member_id
+     WHERE cm.cycle_id = $1 AND m.user_id = $2`,
+    [cycleId, req.user.id]
+  );
+  if (!access.rows[0]) {
+    const error = new Error("You can only access reports for cycles where you are enrolled");
+    error.status = 403;
+    throw error;
+  }
+  return access.rows[0].id;
+}
+
+reportsRouter.get("/shareout", async (req, res, next) => {
+  try {
+    const { cycle } = await resolveReportContext(req);
+    if (!cycle) return res.json({ data: { cycle: null, shareout: null, rows: [], totals: {} } });
+    const memberCycleId = await ensureCycleMemberAccessForReport(req, cycle.id);
+    const params = [cycle.id];
+    let memberFilter = "";
+    if (!isPrivileged(req.user)) {
+      params.push(memberCycleId);
+      memberFilter = ` AND ms.cycle_member_id = $${params.length}`;
+    } else if (req.query.cycleMemberId) {
+      params.push(req.query.cycleMemberId);
+      memberFilter = ` AND ms.cycle_member_id = $${params.length}`;
+    }
+    const shareout = await query(
+      `SELECT *
+       FROM cycle_shareouts
+       WHERE cycle_id = $1
+       ORDER BY CASE status WHEN 'POSTED' THEN 1 ELSE 2 END, generated_at DESC
+       LIMIT 1`,
+      [cycle.id]
+    );
+    if (!shareout.rows[0]) return res.json({ data: { cycle, shareout: null, rows: [], totals: {} } });
+    const rows = await query(
+      `SELECT ms.*, m.member_code, m.first_name, m.last_name
+       FROM member_shareouts ms
+       JOIN members m ON m.id = ms.member_id
+       WHERE ms.shareout_id = $1${memberFilter.replace("$1", "$2")}
+       ORDER BY m.first_name, m.last_name`,
+      [shareout.rows[0].id, ...params.slice(1)]
+    );
+    const totals = rows.rows.reduce((acc, row) => ({
+      accumulatedSavings: acc.accumulatedSavings + Number(row.accumulated_savings || 0),
+      groupSurplusShare: acc.groupSurplusShare + Number(row.group_surplus_share || 0),
+      deductions: acc.deductions + Number(row.total_deductions || 0),
+      netShareout: acc.netShareout + Number(row.net_shareout || 0),
+    }), { accumulatedSavings: 0, groupSurplusShare: 0, deductions: 0, netShareout: 0 });
+    return sendReport(req, res, { data: { cycle, shareout: shareout.rows[0], rows: rows.rows, totals } }, { filename: "shareout-report" });
   } catch (error) {
     next(error);
   }

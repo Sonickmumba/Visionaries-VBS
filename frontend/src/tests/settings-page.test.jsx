@@ -55,23 +55,21 @@ const context = {
 
 describe("settings screens", () => {
   it("validates and normalizes user invites", async () => {
-    expect(validateInviteUser({ email: "", password: "short", role: "NOPE" })).toMatchObject({
+    expect(validateInviteUser({ email: "", role: "NOPE" })).toMatchObject({
       email: "Enter a valid email.",
-      password: "Temporary password must be at least 10 characters.",
       role: "Choose a valid role.",
     });
 
-    expect(inviteUserPayload({ email: " Admin@Example.COM ", password: "Password123!", role: "ADMIN" })).toEqual({
+    expect(inviteUserPayload({ email: " Admin@Example.COM ", role: "ADMIN" })).toEqual({
       email: "admin@example.com",
-      password: "Password123!",
       role: "ADMIN",
     });
 
     const settingsApi = vi.fn().mockResolvedValue({ data: { id: "user-2" } });
-    await inviteSettingsUser({ form: { email: "new@example.com", password: "Password123!", role: "MEMBER" }, settingsApi });
+    await inviteSettingsUser({ form: { email: "new@example.com", role: "MEMBER" }, settingsApi });
     expect(settingsApi).toHaveBeenCalledWith("/settings/users", {
       method: "POST",
-      body: { email: "new@example.com", password: "Password123!", role: "MEMBER" },
+      body: { email: "new@example.com", role: "MEMBER" },
     });
   });
 

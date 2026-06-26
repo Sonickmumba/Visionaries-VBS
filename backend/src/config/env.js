@@ -23,4 +23,8 @@ export const env = {
   notificationsRedisFanoutEnabled: process.env.NOTIFICATIONS_REDIS_FANOUT_ENABLED === "true",
   notificationRetentionDays: Number(process.env.NOTIFICATION_RETENTION_DAYS || 730),
   notificationMaintenanceIntervalMs: Number(process.env.NOTIFICATION_MAINTENANCE_INTERVAL_MS || 60 * 60 * 1000),
+  resendApiKey: process.env.RESEND_API_KEY || "",
+  emailFrom: process.env.EMAIL_FROM || "Visionaries Village Banking <onboarding@resend.dev>",
+  emailVerificationTtlHours: Number(process.env.EMAIL_VERIFICATION_TTL_HOURS || 24),
+  invitationTtlHours: Number(process.env.INVITATION_TTL_HOURS || 72),
 };

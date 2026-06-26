@@ -233,7 +233,9 @@ describe("QA-001 end-to-end admin workflow", () => {
 
     mocks.clientQuery
       .mockResolvedValueOnce(okRows([]))
-      .mockResolvedValueOnce(okRows([{ id: ids.user }]))
+      .mockResolvedValueOnce(okRows([{ id: ids.user, email: "mary@example.com", role: "MEMBER", is_active: false, email_verified_at: null }]))
+      .mockResolvedValueOnce(okRows([]))
+      .mockResolvedValueOnce(okRows([]))
       .mockResolvedValueOnce(okRows([member]));
     const createMember = await inject({
       method: "POST",
@@ -243,7 +245,6 @@ describe("QA-001 end-to-end admin workflow", () => {
         lastName: "Phiri",
         email: "mary@example.com",
         memberCode: "M001",
-        temporaryPassword: "Password123!",
       },
     });
     expect(createMember.status).toBe(201);

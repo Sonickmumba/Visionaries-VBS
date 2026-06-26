@@ -3,7 +3,6 @@ import { ArrowLeft, ShieldCheck, UserPlus } from "lucide-react";
 import { api } from "../../api/client.js";
 import { Alert, Button, Field } from "../../components/ui/index.jsx";
 import { AuthLayout } from "../../layouts/AppLayouts.jsx";
-import { landingPageForRole } from "./LoginPage.jsx";
 import "../../styles/auth.css";
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -97,15 +96,16 @@ export function SignupPage({ onSignup, onBackToLogin, onBackToWelcome, authApi =
         <section className="auth-card login-card">
           <div className="auth-form-head">
             <span className="auth-icon"><UserPlus size={20} aria-hidden="true" /></span>
-            <div>
-              <span className="auth-eyebrow">Account ready</span>
+          <div>
+              <span className="auth-eyebrow">Check your email</span>
               <h2>Account created</h2>
-              <p>Your member account is ready.</p>
+              <p>Verify your email before signing in.</p>
             </div>
           </div>
-          <Alert tone="success" title="Signup complete">Continue to your member portal to submit declarations and view your balances.</Alert>
+          <Alert tone="success" title="Verification email sent">
+            We sent a verification link to {success.email || "your email"}. Open it to activate your account.
+          </Alert>
           <div className="button-row auth-actions">
-            <Button type="button" onClick={() => onSignup?.(success.user, landingPageForRole(success.user?.role))}>Continue</Button>
             <Button type="button" variant="secondary" onClick={onBackToLogin}>Back to Login</Button>
           </div>
         </section>

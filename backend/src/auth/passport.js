@@ -10,6 +10,7 @@ function publicUser(user) {
     email: user.email,
     role: user.role,
     is_active: user.is_active,
+    email_verified_at: user.email_verified_at,
   };
 }
 
@@ -19,7 +20,7 @@ passport.use(new LocalStrategy(
     try {
       const { rows } = await query("SELECT * FROM users WHERE email = $1", [String(email || "").toLowerCase()]);
       const user = rows[0];
-      if (!user || !user.is_active) return done(null, false);
+      if (!user || !user.is_active || !user.email_verified_at) return done(null, false);
 
       const ok = await bcrypt.compare(password, user.password_hash);
       if (!ok) return done(null, false);
@@ -37,9 +38,9 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const { rows } = await query("SELECT id, email, role, is_active FROM users WHERE id = $1", [id]);
+    const { rows } = await query("SELECT id, email, role, is_active, email_verified_at FROM users WHERE id = $1", [id]);
     const user = publicUser(rows[0]);
-    if (!user || !user.is_active) return done(null, false);
+    if (!user || !user.is_active || !user.email_verified_at) return done(null, false);
     return done(null, user);
   } catch (error) {
     return done(error);

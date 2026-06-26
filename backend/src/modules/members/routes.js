@@ -1,11 +1,11 @@
 import express from "express";
 import bcrypt from "bcryptjs";
+import crypto from "node:crypto";
 import { z } from "zod";
 import { query, withTransaction } from "../../db/pool.js";
 import { requireAuth, requireRole } from "../../middleware/auth.js";
 import { validate } from "../../middleware/validate.js";
-import { audit } from "../../services/auditService.js";
-import { validatePasswordPolicy } from "../../services/passwordPolicy.js";
+import { sendAccountInvitation } from "../../services/emailVerificationService.js";
 import { badRequest, forbidden, notFound } from "../../utils/httpError.js";
 import { getPagination, paginationMeta } from "../../utils/pagination.js";
 
@@ -20,7 +20,6 @@ const memberSchema = z.object({
   memberCode: z.string().optional().nullable(),
   nationalId: z.string().optional().nullable(),
   address: z.string().optional().nullable(),
-  temporaryPassword: z.string().min(10).optional().nullable(),
 });
 
 membersRouter.get("/", requireRole("ADMIN", "AUDITOR"), async (req, res, next) => {
@@ -99,15 +98,20 @@ membersRouter.post("/", requireRole("ADMIN"), validate(memberSchema), async (req
           if (linkedMember.rows[0]) throw badRequest("Email is already linked to another member");
           userId = existingUser.rows[0].id;
         } else {
-          const temporaryPassword = req.body.temporaryPassword || "Password123!";
-          validatePasswordPolicy(temporaryPassword);
-          const passwordHash = await bcrypt.hash(temporaryPassword, 10);
+          const passwordHash = await bcrypt.hash(crypto.randomBytes(32).toString("base64url"), 10);
           const user = await client.query(
-            `INSERT INTO users (email, password_hash, role)
-             VALUES ($1,$2,'MEMBER') RETURNING id`,
-            [req.body.email.toLowerCase(), passwordHash]
+            `INSERT INTO users (email, password_hash, role, is_active, invited_by, invited_at)
+             VALUES ($1,$2,'MEMBER',FALSE,$3,now())
+             RETURNING id, email, role, is_active, email_verified_at`,
+            [req.body.email.toLowerCase(), passwordHash, req.user.id]
           );
           userId = user.rows[0].id;
+          await sendAccountInvitation(client, {
+            user: user.rows[0],
+            role: "MEMBER",
+            invitedBy: req.user.id,
+            req,
+          });
         }
       }
 

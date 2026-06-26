@@ -43,7 +43,6 @@ const DEFAULT_FORM = {
   memberCode: "",
   nationalId: "",
   address: "",
-  temporaryPassword: "Password123!",
 };
 
 function memberName(member) {
@@ -76,7 +75,6 @@ function memberFormFromRecord(member) {
     memberCode: member.member_code || "",
     nationalId: member.national_id || "",
     address: member.address || "",
-    temporaryPassword: "",
   };
 }
 
@@ -89,9 +87,6 @@ export function validateMemberForm(form, { editing = false } = {}) {
   if (isBlank(form.firstName)) errors.firstName = "First name is required.";
   if (isBlank(form.lastName)) errors.lastName = "Last name is required.";
   if (!isBlank(form.email) && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) errors.email = "Enter a valid email address.";
-  if (!editing && !isBlank(form.email) && String(form.temporaryPassword || "").length < 10) {
-    errors.temporaryPassword = "Temporary password must be at least 10 characters.";
-  }
   return errors;
 }
 
@@ -105,7 +100,6 @@ export function memberPayload(form, { editing = false } = {}) {
     nationalId: isBlank(form.nationalId) ? null : form.nationalId.trim(),
     address: isBlank(form.address) ? null : form.address.trim(),
   };
-  if (!editing && payload.email) payload.temporaryPassword = form.temporaryPassword || "Password123!";
   return payload;
 }
 
@@ -155,15 +149,7 @@ function MemberForm({ form, setForm, errors, editing }) {
         <Field label="Member code" value={form.memberCode} onChange={set("memberCode")} />
         <Field label="National ID" value={form.nationalId} onChange={set("nationalId")} />
       </div>
-      {!editing ? (
-        <Field
-          label="Temporary password"
-          value={form.temporaryPassword}
-          onChange={set("temporaryPassword")}
-          error={errors.temporaryPassword}
-          hint="Required when creating a member login from email."
-        />
-      ) : null}
+      {!editing && form.email ? <p className="muted">A secure invitation will be sent so the member can verify their email and set a password.</p> : null}
       <Textarea label="Address" value={form.address} onChange={set("address")} rows={3} />
     </div>
   );

@@ -109,15 +109,17 @@ describe("passport session authentication", () => {
       password_hash: passwordHash,
       role: "ADMIN",
       is_active: true,
+      email_verified_at: "2026-01-01T00:00:00.000Z",
     };
 
     mocks.query
       .mockResolvedValueOnce(rows([user]))
+      .mockResolvedValueOnce(rows([user]))
       .mockResolvedValueOnce(rows([]))
       .mockResolvedValueOnce(rows([]))
-      .mockResolvedValueOnce(rows([{ id: user.id, email: user.email, role: user.role, is_active: true }]))
+      .mockResolvedValueOnce(rows([{ id: user.id, email: user.email, role: user.role, is_active: true, email_verified_at: user.email_verified_at }]))
       .mockResolvedValueOnce(rows([]))
-      .mockResolvedValueOnce(rows([{ id: user.id, email: user.email, role: user.role, is_active: true }]));
+      .mockResolvedValueOnce(rows([{ id: user.id, email: user.email, role: user.role, is_active: true, email_verified_at: user.email_verified_at }]));
 
     const login = await inject({
       method: "POST",
@@ -132,6 +134,7 @@ describe("passport session authentication", () => {
         email: user.email,
         role: "ADMIN",
         is_active: true,
+        email_verified_at: user.email_verified_at,
       },
     });
     expect(login.headers["set-cookie"]?.join(";")).toContain("vb_sid=");
@@ -164,6 +167,7 @@ describe("passport session authentication", () => {
 
   it("rejects invalid credentials without setting a session cookie", async () => {
     mocks.query
+      .mockResolvedValueOnce(rows([]))
       .mockResolvedValueOnce(rows([]))
       .mockResolvedValueOnce(rows([]));
 

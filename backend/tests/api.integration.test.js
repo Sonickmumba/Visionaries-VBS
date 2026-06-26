@@ -223,9 +223,13 @@ describe("API integration smoke tests", () => {
           id: "11111111-1111-4111-8111-111111111111",
           email: "new.member@example.com",
           role: "MEMBER",
-          is_active: true,
+          is_active: false,
+          email_verified_at: null,
+          email_verification_sent_at: null,
         }],
       })
+      .mockResolvedValueOnce({ rows: [] })
+      .mockResolvedValueOnce({ rows: [] })
       .mockResolvedValueOnce({ rows: [] });
 
     const response = await inject({
@@ -233,7 +237,6 @@ describe("API integration smoke tests", () => {
       url: "/api/settings/users",
       body: {
         email: "new.member@example.com",
-        password: "Password123!",
         role: "MEMBER",
       },
     });
@@ -241,7 +244,8 @@ describe("API integration smoke tests", () => {
     expect(response.status).toBe(201);
     expect(response.body.data.email).toBe("new.member@example.com");
     expect(mocks.clientQuery.mock.calls[1][0]).toContain("INSERT INTO users");
-    expect(mocks.clientQuery.mock.calls[2][0]).toContain("INSERT INTO audit_logs");
+    expect(mocks.clientQuery.mock.calls[2][0]).toContain("INSERT INTO auth_email_tokens");
+    expect(mocks.clientQuery.mock.calls[4][0]).toContain("INSERT INTO audit_logs");
   });
 
   it("prevents disabling the last active administrator", async () => {

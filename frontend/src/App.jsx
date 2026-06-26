@@ -10,10 +10,14 @@ function lazyNamed(loader, exportName) {
 const preloadLoginPage = () => import("./pages/auth/LoginPage.jsx");
 const preloadPasswordRecoveryPage = () => import("./pages/auth/PasswordRecoveryPage.jsx");
 const preloadSignupPage = () => import("./pages/auth/SignupPage.jsx");
+const preloadEmailVerificationPage = () => import("./pages/auth/EmailVerificationPage.jsx");
+const preloadAcceptInvitationPage = () => import("./pages/auth/AcceptInvitationPage.jsx");
 
 const LoginPage = lazyNamed(preloadLoginPage, "LoginPage");
 const PasswordRecoveryPage = lazyNamed(preloadPasswordRecoveryPage, "PasswordRecoveryPage");
 const SignupPage = lazyNamed(preloadSignupPage, "SignupPage");
+const EmailVerificationPage = lazyNamed(preloadEmailVerificationPage, "EmailVerificationPage");
+const AcceptInvitationPage = lazyNamed(preloadAcceptInvitationPage, "AcceptInvitationPage");
 const PortalApp = lazyNamed(() => import("./PortalApp.jsx"), "PortalApp");
 
 function LoadingFallback() {
@@ -45,11 +49,18 @@ export function App() {
   const [navigationIntent, setNavigationIntent] = useState(null);
   const [showWelcomeSplash, setShowWelcomeSplash] = useState(() => (
     !new URLSearchParams(window.location.search).has("resetToken")
+      && !new URLSearchParams(window.location.search).has("verifyToken")
+      && !new URLSearchParams(window.location.search).has("inviteToken")
   ));
   const [authMode, setAuthMode] = useState(() => (
-    new URLSearchParams(window.location.search).has("resetToken") ? "forgot" : "login"
+    new URLSearchParams(window.location.search).has("resetToken") ? "forgot"
+      : new URLSearchParams(window.location.search).has("verifyToken") ? "verify"
+        : new URLSearchParams(window.location.search).has("inviteToken") ? "invite"
+          : "login"
   ));
   const resetToken = useMemo(() => new URLSearchParams(window.location.search).get("resetToken") || "", []);
+  const verifyToken = useMemo(() => new URLSearchParams(window.location.search).get("verifyToken") || "", []);
+  const inviteToken = useMemo(() => new URLSearchParams(window.location.search).get("inviteToken") || "", []);
   const backToWelcome = resetToken ? undefined : () => {
     setShowWelcomeSplash(true);
     setAuthMode("login");
@@ -85,6 +96,8 @@ export function App() {
     if (user) return;
     if (authMode === "signup") preloadSignupPage();
     if (authMode === "forgot") preloadPasswordRecoveryPage();
+    if (authMode === "verify") preloadEmailVerificationPage();
+    if (authMode === "invite") preloadAcceptInvitationPage();
   }, [authMode, user]);
 
   const authFallback = authMode === "signup" ? (
@@ -98,6 +111,21 @@ export function App() {
       initialToken={resetToken}
       onBackToLogin={() => setAuthMode("login")}
       onBackToWelcome={backToWelcome}
+    />
+  ) : authMode === "verify" ? (
+    <EmailVerificationPage
+      token={verifyToken}
+      onBackToLogin={() => setAuthMode("login")}
+    />
+  ) : authMode === "invite" ? (
+    <AcceptInvitationPage
+      token={inviteToken}
+      onAccepted={(nextUser) => {
+        setUser(nextUser);
+        setShowWelcomeSplash(false);
+        navigate(nextUser.role === "MEMBER" ? "member-dashboard" : "dashboard");
+      }}
+      onBackToLogin={() => setAuthMode("login")}
     />
   ) : (
     <LoginPage

@@ -20,7 +20,6 @@ const validForm = {
   memberCode: "M001",
   nationalId: "NRC123",
   address: "Lusaka",
-  temporaryPassword: "Password123!",
 };
 
 const member = {
@@ -41,19 +40,17 @@ const member = {
 };
 
 describe("member management", () => {
-  it("validates required names, email format, and temporary password length", () => {
+  it("validates required names and email format", () => {
     const errors = validateMemberForm({
       ...validForm,
       firstName: "",
       lastName: "",
       email: "bad-email",
-      temporaryPassword: "short",
     });
 
     expect(errors.firstName).toBe("First name is required.");
     expect(errors.lastName).toBe("Last name is required.");
     expect(errors.email).toBe("Enter a valid email address.");
-    expect(errors.temporaryPassword).toBe("Temporary password must be at least 10 characters.");
   });
 
   it("normalizes member payloads for backend create and edit", () => {
@@ -64,7 +61,6 @@ describe("member management", () => {
       firstName: "Mary",
       email: "mary@example.com",
       phone: null,
-      temporaryPassword: "Password123!",
     });
     expect(editPayload.temporaryPassword).toBeUndefined();
   });
@@ -77,7 +73,7 @@ describe("member management", () => {
 
     expect(memberApi).toHaveBeenCalledWith("/members", {
       method: "POST",
-      body: expect.objectContaining({ firstName: "Mary", temporaryPassword: "Password123!" }),
+      body: expect.objectContaining({ firstName: "Mary", email: "mary@example.com" }),
     });
     expect(memberApi).toHaveBeenCalledWith("/members/member-1", {
       method: "PATCH",

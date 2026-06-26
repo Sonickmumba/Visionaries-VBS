@@ -5,17 +5,17 @@ async function main() {
   const passwordHash = await bcrypt.hash("password123", 10);
 
   const admin = (await pool.query(
-    `INSERT INTO users (email, password_hash, role)
-     VALUES ('admin@example.com',$1,'ADMIN')
-     ON CONFLICT (email) DO UPDATE SET password_hash = EXCLUDED.password_hash
+    `INSERT INTO users (email, password_hash, role, email_verified_at)
+     VALUES ('admin@example.com',$1,'ADMIN',now())
+     ON CONFLICT (email) DO UPDATE SET password_hash = EXCLUDED.password_hash, email_verified_at = COALESCE(users.email_verified_at, now())
      RETURNING *`,
     [passwordHash]
   )).rows[0];
 
   const maryUser = (await pool.query(
-    `INSERT INTO users (email, password_hash, role)
-     VALUES ('mary@example.com',$1,'MEMBER')
-     ON CONFLICT (email) DO UPDATE SET password_hash = EXCLUDED.password_hash
+    `INSERT INTO users (email, password_hash, role, email_verified_at)
+     VALUES ('mary@example.com',$1,'MEMBER',now())
+     ON CONFLICT (email) DO UPDATE SET password_hash = EXCLUDED.password_hash, email_verified_at = COALESCE(users.email_verified_at, now())
      RETURNING *`,
     [passwordHash]
   )).rows[0];

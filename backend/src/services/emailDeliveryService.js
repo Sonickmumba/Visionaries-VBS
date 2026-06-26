@@ -1,10 +1,12 @@
 import { Resend } from "resend";
 import { env } from "../config/env.js";
+import { HttpError } from "../utils/httpError.js";
 
 let resendClient = null;
 
 function getClient() {
   if (!env.resendApiKey) return null;
+  if (env.nodeEnv === "test" && process.env.RESEND_ENABLE_TEST_DELIVERY !== "true") return null;
   if (!resendClient) resendClient = new Resend(env.resendApiKey);
   return resendClient;
 }
@@ -29,6 +31,16 @@ async function sendEmail({ to, subject, html, text }) {
     html,
     text,
   });
+  if (response?.error) {
+    const providerStatus = Number(response.error.statusCode || response.error.status || 502);
+    const status = providerStatus >= 500 ? 502 : 400;
+    const message = response.error.message || "The email provider rejected the message.";
+    throw new HttpError(status, `Email provider rejected the message: ${message}`, {
+      provider: "resend",
+      code: response.error.name || response.error.code || null,
+      providerStatus,
+    });
+  }
   return { skipped: false, provider: "resend", response };
 }
 

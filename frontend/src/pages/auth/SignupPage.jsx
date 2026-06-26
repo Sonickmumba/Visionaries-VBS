@@ -3,6 +3,7 @@ import { ArrowLeft, ShieldCheck, UserPlus } from "lucide-react";
 import { api } from "../../api/client.js";
 import { Alert, Button, Field } from "../../components/ui/index.jsx";
 import { AuthLayout } from "../../layouts/AppLayouts.jsx";
+import { DevEmailLink } from "./DevEmailLink.jsx";
 import "../../styles/auth.css";
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -105,6 +106,7 @@ export function SignupPage({ onSignup, onBackToLogin, onBackToWelcome, authApi =
           <Alert tone="success" title="Verification email sent">
             We sent a verification link to {success.email || "your email"}. Open it to activate your account.
           </Alert>
+          <DevEmailLink delivery={success.delivery} />
           <div className="button-row auth-actions">
             <Button type="button" variant="secondary" onClick={onBackToLogin}>Back to Login</Button>
           </div>

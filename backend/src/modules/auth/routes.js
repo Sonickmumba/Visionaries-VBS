@@ -144,16 +144,20 @@ authRouter.post("/signup", authRateLimit, validate(signupSchema), async (req, re
 
 authRouter.post("/resend-verification", authRateLimit, validate(resendVerificationSchema), async (req, res, next) => {
   try {
-    await withTransaction(async (client) => {
+    const verification = await withTransaction(async (client) => {
       const user = (await client.query(
         "SELECT id, email, role, is_active, email_verified_at FROM users WHERE email = $1",
         [req.body.email.toLowerCase()]
       )).rows[0];
       if (user && !user.email_verified_at) {
-        await sendSignupVerification(client, { user, req });
+        return sendSignupVerification(client, { user, req });
       }
+      return null;
     });
-    res.json({ message: "If the account needs verification, a new email has been sent." });
+    res.json({
+      message: "If the account needs verification, a new email has been sent.",
+      delivery: verification?.delivery?.devFallback ? verification.delivery : undefined,
+    });
   } catch (error) {
     next(error);
   }

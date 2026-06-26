@@ -3,6 +3,7 @@ import { ArrowLeft, MailCheck, Send } from "lucide-react";
 import { api } from "../../api/client.js";
 import { Alert, Button, Field } from "../../components/ui/index.jsx";
 import { AuthLayout } from "../../layouts/AppLayouts.jsx";
+import { DevEmailLink } from "./DevEmailLink.jsx";
 import "../../styles/auth.css";
 
 export async function verifyEmailToken({ token, authApi = api }) {
@@ -17,6 +18,7 @@ export function EmailVerificationPage({ token = "", email = "", onBackToLogin, a
   const [status, setStatus] = useState(token ? "verifying" : "idle");
   const [message, setMessage] = useState("");
   const [resendEmail, setResendEmail] = useState(email);
+  const [delivery, setDelivery] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -42,10 +44,12 @@ export function EmailVerificationPage({ token = "", email = "", onBackToLogin, a
     event.preventDefault();
     setLoading(true);
     setMessage("");
+    setDelivery(null);
     try {
       const response = await resendVerificationEmail({ email: resendEmail, authApi });
       setStatus("sent");
       setMessage(response.message || "If the account needs verification, a new email has been sent.");
+      setDelivery(response.delivery || null);
     } catch (error) {
       setStatus("error");
       setMessage(error.message || "Could not resend verification email.");
@@ -68,6 +72,7 @@ export function EmailVerificationPage({ token = "", email = "", onBackToLogin, a
 
         {status === "verifying" ? <Alert title="Checking link">Please wait while we verify your email.</Alert> : null}
         {message ? <Alert tone={status === "success" || status === "sent" ? "success" : "danger"} title={status === "error" ? "Verification failed" : "Verification update"}>{message}</Alert> : null}
+        <DevEmailLink delivery={delivery} />
 
         {status !== "success" ? (
           <form onSubmit={resend} className="auth-inline-form">

@@ -16,6 +16,7 @@ import {
   Textarea,
 } from "../../components/ui/index.jsx";
 import { Page } from "../../layouts/AppLayouts.jsx";
+import { DevEmailLink } from "../auth/DevEmailLink.jsx";
 import "../../styles/settings.css";
 
 const money = (value) => `K${Number(value || 0).toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
@@ -278,6 +279,7 @@ export function SettingsPage({
   const [activeDefaultsForm, setActiveDefaultsForm] = useState({ autoSelectLatestActive: true, defaultCycleId: "", reason: "" });
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
+  const [devDelivery, setDevDelivery] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(initialContext === null);
   const [busy, setBusy] = useState("");
@@ -330,10 +332,12 @@ export function SettingsPage({
     setBusy("invite");
     setErrors({});
     setMessage("");
+    setDevDelivery(null);
     setError("");
     try {
-      await inviteSettingsUser({ form: userForm, settingsApi });
+      const response = await inviteSettingsUser({ form: userForm, settingsApi });
       setMessage("Invitation sent successfully.");
+      setDevDelivery(response?.data?.invitationDelivery || null);
       setUserForm({ email: "", role: "MEMBER" });
       await loadSettings();
     } catch (err) {
@@ -347,6 +351,7 @@ export function SettingsPage({
   async function updateUser(user, changes) {
     setBusy(user.id);
     setMessage("");
+    setDevDelivery(null);
     setError("");
     try {
       await settingsApi(`/settings/users/${user.id}`, { method: "PATCH", body: userUpdatePayload(changes, userReason) });
@@ -364,6 +369,7 @@ export function SettingsPage({
     setBusy("penalty");
     setErrors({});
     setMessage("");
+    setDevDelivery(null);
     setError("");
     try {
       await savePenaltyType({ form: penaltyForm, selectedCycleId, settingsApi });
@@ -381,6 +387,7 @@ export function SettingsPage({
   async function patchPenaltyType(penaltyType, changes) {
     setBusy(penaltyType.id);
     setMessage("");
+    setDevDelivery(null);
     setError("");
     try {
       await settingsApi(`/settings/penalty-types/${penaltyType.id}`, { method: "PATCH", body: { ...changes, reason: "Administrative penalty configuration update" } });
@@ -397,6 +404,7 @@ export function SettingsPage({
     event.preventDefault();
     setBusy("cycle");
     setMessage("");
+    setDevDelivery(null);
     setError("");
     try {
       await settingsApi(`/settings/cycles/${selectedCycleId}/defaults`, { method: "PATCH", body: cycleDefaultsPayload(cycleForm) });
@@ -413,6 +421,7 @@ export function SettingsPage({
     event.preventDefault();
     setBusy("rounding");
     setMessage("");
+    setDevDelivery(null);
     setError("");
     try {
       await settingsApi(`/settings/cycles/${selectedCycleId}/rounding-policy`, { method: "PATCH", body: roundingPayload(roundingForm) });
@@ -429,6 +438,7 @@ export function SettingsPage({
     event.preventDefault();
     setBusy("notifications");
     setMessage("");
+    setDevDelivery(null);
     setError("");
     try {
       await settingsApi("/settings/notification-preferences", { method: "PATCH", body: notificationPayload(notificationForm) });
@@ -445,6 +455,7 @@ export function SettingsPage({
     event.preventDefault();
     setBusy("active-defaults");
     setMessage("");
+    setDevDelivery(null);
     setError("");
     try {
       await settingsApi("/settings/active-cycle-defaults", {
@@ -489,6 +500,7 @@ export function SettingsPage({
       )}
     >
       {message ? <Alert tone="success" title="Settings updated">{message}</Alert> : null}
+      <DevEmailLink delivery={devDelivery} title="Development invitation link" />
       {error ? <Alert tone="danger" title="Settings action failed">{error}</Alert> : null}
 
       <SettingsHero selectedCycle={selectedCycle} metrics={metrics} />

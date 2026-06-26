@@ -91,6 +91,7 @@ membersRouter.post("/", requireRole("ADMIN"), validate(memberSchema), async (req
   try {
     const member = await withTransaction(async (client) => {
       let userId = null;
+      let invitationDelivery = null;
       if (req.body.email) {
         const existingUser = await client.query("SELECT id FROM users WHERE email = $1", [req.body.email.toLowerCase()]);
         if (existingUser.rows[0]) {
@@ -106,12 +107,13 @@ membersRouter.post("/", requireRole("ADMIN"), validate(memberSchema), async (req
             [req.body.email.toLowerCase(), passwordHash, req.user.id]
           );
           userId = user.rows[0].id;
-          await sendAccountInvitation(client, {
+          const invitation = await sendAccountInvitation(client, {
             user: user.rows[0],
             role: "MEMBER",
             invitedBy: req.user.id,
             req,
           });
+          invitationDelivery = invitation.delivery;
         }
       }
 
@@ -120,7 +122,7 @@ membersRouter.post("/", requireRole("ADMIN"), validate(memberSchema), async (req
          VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *`,
         [userId, req.body.firstName, req.body.lastName, req.body.phone || null, req.body.memberCode || null, req.body.nationalId || null, req.body.address || null]
       );
-      return rows[0];
+      return { ...rows[0], invitationDelivery };
     });
     res.status(201).json({ data: member });
   } catch (error) {

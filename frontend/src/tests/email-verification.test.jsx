@@ -3,6 +3,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import { EmailVerificationPage, resendVerificationEmail, verifyEmailToken } from "../pages/auth/EmailVerificationPage.jsx";
 import { AcceptInvitationPage, acceptInvitation, validateAcceptInviteForm } from "../pages/auth/AcceptInvitationPage.jsx";
+import { DevEmailLink, devEmailLink } from "../pages/auth/DevEmailLink.jsx";
 
 describe("email verification and invitation screens", () => {
   it("calls verification and resend endpoints", async () => {
@@ -27,6 +28,16 @@ describe("email verification and invitation screens", () => {
     expect(html).toContain("Verify your email");
     expect(html).toContain("Resend Email");
     expect(html).toContain("member@example.com");
+  });
+
+  it("renders development email fallback links only when present", () => {
+    expect(devEmailLink({ devFallback: true, link: "http://localhost:5173/?verifyToken=abc" })).toBe("http://localhost:5173/?verifyToken=abc");
+    expect(devEmailLink({ link: "http://localhost:5173/?verifyToken=abc" })).toBe("");
+
+    const html = renderToStaticMarkup(<DevEmailLink delivery={{ devFallback: true, link: "http://localhost:5173/?verifyToken=abc" }} />);
+
+    expect(html).toContain("Development verification link");
+    expect(html).toContain("Open Link");
   });
 
   it("validates and accepts invitations", async () => {

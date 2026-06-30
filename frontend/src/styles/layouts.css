@@ -14,14 +14,14 @@
 }
 
 .top-title-block .top-eyebrow {
-  color: #007a43;
+  color: var(--portal-accent, #007a43);
   font-size: 11px;
   font-weight: 900;
   text-transform: uppercase;
 }
 
 .top-title-block strong {
-  color: #102a43;
+  color: var(--portal-accent-strong, #102a43);
   font-size: 17px;
   line-height: 1.15;
 }
@@ -126,6 +126,12 @@
   padding: 9px 12px;
 }
 
+.member-shell .top-member-summary {
+  border-color: #99f6e4;
+  background: #ffffff;
+  box-shadow: 0 10px 26px rgba(15, 118, 110, 0.08);
+}
+
 .top-member-summary span,
 .top-member-summary small {
   color: #65758b;
@@ -173,15 +179,6 @@
   font-size: 10px !important;
   font-weight: 900;
   line-height: 1;
-}
-
-.member-shell .sidebar {
-  background: #143d3a;
-}
-
-.member-shell .sidebar button.active,
-.member-shell .sidebar button:hover {
-  background: #1f6b63;
 }
 
 .mobile-bottom-nav {
@@ -318,8 +315,8 @@
   }
 
   .mobile-bottom-nav button.active {
-    background: #dcfce7;
-    color: #007a43;
+    background: var(--portal-accent-soft, #dcfce7);
+    color: var(--portal-accent, #007a43);
   }
 
   .mobile-nav-icon-wrap {

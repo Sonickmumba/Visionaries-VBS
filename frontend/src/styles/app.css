@@ -217,6 +217,30 @@ textarea {
   min-height: 100vh;
   display: grid;
   grid-template-columns: 248px 1fr;
+  --portal-accent: #007a43;
+  --portal-accent-strong: #005f36;
+  --portal-accent-soft: #ecfdf5;
+  --portal-sidebar: #102a43;
+  --portal-sidebar-hover: #1e4f78;
+  --portal-page-line: #007a43;
+}
+
+.admin-shell {
+  --portal-accent: #007a43;
+  --portal-accent-strong: #005f36;
+  --portal-accent-soft: #ecfdf5;
+  --portal-sidebar: #102a43;
+  --portal-sidebar-hover: #1e4f78;
+  --portal-page-line: #007a43;
+}
+
+.member-shell {
+  --portal-accent: #0f766e;
+  --portal-accent-strong: #115e59;
+  --portal-accent-soft: #f0fdfa;
+  --portal-sidebar: #143d3a;
+  --portal-sidebar-hover: #1f6b63;
+  --portal-page-line: #0f766e;
 }
 
 .skip-link {
@@ -237,7 +261,7 @@ textarea {
 }
 
 .sidebar {
-  background: #102a43;
+  background: var(--portal-sidebar, #102a43);
   color: white;
   padding: 20px 14px;
   position: sticky;
@@ -274,12 +298,12 @@ textarea {
 
 .sidebar button.active,
 .sidebar button:hover {
-  background: #1e4f78;
+  background: var(--portal-sidebar-hover, #1e4f78);
   color: white;
 }
 
 .sidebar button[aria-current="page"] {
-  box-shadow: inset 4px 0 0 #86efac;
+  box-shadow: inset 4px 0 0 var(--portal-accent, #86efac);
 }
 
 .main {
@@ -299,6 +323,15 @@ textarea {
   top: 0;
   z-index: 4;
   backdrop-filter: blur(14px);
+}
+
+.admin-shell .topbar {
+  box-shadow: 0 10px 30px rgba(16, 42, 67, 0.05);
+}
+
+.member-shell .topbar {
+  background: rgba(240, 253, 250, 0.96);
+  border-bottom-color: #ccfbf1;
 }
 
 .topbar span {
@@ -324,6 +357,8 @@ textarea {
   gap: 16px;
   margin-bottom: 22px;
   min-width: 0;
+  border-left: 4px solid var(--portal-page-line, #007a43);
+  padding-left: 14px;
 }
 
 .page-head h1 {

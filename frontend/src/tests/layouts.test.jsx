@@ -93,5 +93,12 @@ describe("app layouts", () => {
     expect(layoutCss).toContain("width: min(452px, calc(100vw - 20px))");
     expect(layoutCss).toContain(".sidebar-profile");
     expect(layoutCss).toContain("backdrop-filter");
+    expect(appCss).toContain(".admin-shell");
+    expect(appCss).toContain(".member-shell");
+    expect(appCss).toContain("--portal-accent");
+    expect(appCss).toContain("background: var(--portal-sidebar");
+    expect(appCss).toContain("border-left: 4px solid var(--portal-page-line");
+    expect(layoutCss).toContain(".member-shell .top-member-summary");
+    expect(layoutCss).toContain("color: var(--portal-accent");
   });
 });

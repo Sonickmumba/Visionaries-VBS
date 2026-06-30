@@ -393,27 +393,55 @@ textarea {
   color: white;
   cursor: pointer;
   font-weight: 700;
+  box-shadow: 0 8px 18px rgba(22, 101, 52, 0.12);
+  transition: background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.btn:hover:not(:disabled) {
+  background: #14532d;
+  box-shadow: 0 12px 24px rgba(22, 101, 52, 0.16);
 }
 
 .btn.secondary {
   background: white;
   color: #172033;
   border-color: #d8e1eb;
+  box-shadow: 0 8px 18px rgba(16, 42, 67, 0.06);
+}
+
+.btn.secondary:hover:not(:disabled) {
+  background: #f8fafc;
+  border-color: #b8c7d8;
+  box-shadow: 0 12px 24px rgba(16, 42, 67, 0.08);
 }
 
 .btn.danger {
   background: #b42318;
   color: white;
+  box-shadow: 0 8px 18px rgba(180, 35, 24, 0.12);
+}
+
+.btn.danger:hover:not(:disabled) {
+  background: #9f1f16;
+  box-shadow: 0 12px 24px rgba(180, 35, 24, 0.16);
 }
 
 .icon-btn {
   border: 1px solid #d8e1eb;
   background: white;
+  border-radius: 8px;
   min-width: 38px;
   height: 38px;
   display: inline-grid;
   place-items: center;
   cursor: pointer;
+  transition: background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.icon-btn:hover:not(:disabled) {
+  background: #f8fafc;
+  border-color: #b8c7d8;
+  box-shadow: 0 8px 18px rgba(16, 42, 67, 0.08);
 }
 
 .mobile-only {
@@ -446,10 +474,12 @@ textarea {
   background: white;
   border: 1px solid #d8e1eb;
   border-left: 5px solid #166534;
+  border-radius: 8px;
   padding: 16px;
   display: grid;
   gap: 7px;
   min-width: 0;
+  box-shadow: 0 10px 26px rgba(16, 42, 67, 0.05);
 }
 
 .metric svg {
@@ -518,9 +548,11 @@ textarea {
 .panel {
   background: white;
   border: 1px solid #d8e1eb;
+  border-radius: 8px;
   padding: 18px;
   margin-bottom: 18px;
   min-width: 0;
+  box-shadow: 0 12px 30px rgba(16, 42, 67, 0.05);
 }
 
 .panel h2 {
@@ -596,6 +628,8 @@ textarea {
   overflow-x: auto;
   background: white;
   border: 1px solid #d8e1eb;
+  border-radius: 8px;
+  box-shadow: 0 10px 24px rgba(16, 42, 67, 0.04);
   -webkit-overflow-scrolling: touch;
 }
 
@@ -732,15 +766,18 @@ th {
 
 .tabs button {
   border: 1px solid #d8e1eb;
+  border-radius: 8px;
   background: white;
   padding: 9px 13px;
   white-space: nowrap;
   cursor: pointer;
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
 }
 
 .tabs button.active {
-  background: #dbeafe;
-  color: #2563eb;
+  background: var(--portal-accent-soft, #dbeafe);
+  border-color: color-mix(in srgb, var(--portal-accent, #2563eb) 34%, #d8e1eb);
+  color: var(--portal-accent, #2563eb);
   font-weight: 800;
 }
 
@@ -755,6 +792,7 @@ th {
 .queue-note {
   background: #f6f8fb;
   border: 1px solid #d8e1eb;
+  border-radius: 8px;
   padding: 12px;
   min-width: 0;
 }

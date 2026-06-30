@@ -82,6 +82,12 @@ describe("app layouts", () => {
     expect(appCss).toContain(".button-row .btn");
     expect(appCss).toContain("overflow-wrap: anywhere");
     expect(appCss).toContain("-webkit-overflow-scrolling: touch");
+    expect(appCss).toContain(".btn:hover:not(:disabled)");
+    expect(appCss).toContain(".icon-btn:hover:not(:disabled)");
+    expect(appCss).toContain(".panel {\n  background: white;\n  border: 1px solid #d8e1eb;\n  border-radius: 8px;");
+    expect(appCss).toContain(".metric {\n  background: white;\n  border: 1px solid #d8e1eb;\n  border-left: 5px solid #166534;\n  border-radius: 8px;");
+    expect(appCss).toContain(".tabs button.active");
+    expect(appCss).toContain("background: var(--portal-accent-soft");
     expect(layoutCss).toContain("@media (max-width: 900px)");
     expect(layoutCss).toContain(".top-selectors .field:nth-child(2)");
     expect(layoutCss).toContain(".top-title-block");

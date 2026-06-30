@@ -45,7 +45,7 @@ describe("design system components", () => {
   });
 
   it("renders described fields and Kwacha currency inputs", () => {
-    const field = renderToStaticMarkup(<CurrencyInput label="Savings" value="15000" error="Too much" />);
+    const field = renderToStaticMarkup(<CurrencyInput label="Savings" value="15000" error="Too much" required />);
     const input = renderToStaticMarkup(<CurrencyInput label="Savings" value="15000" hint="Principal only" />);
 
     expect(field).toContain(">K<");
@@ -53,6 +53,10 @@ describe("design system components", () => {
     expect(field).toContain("aria-label=\"Savings\"");
     expect(field).toContain("aria-invalid=\"true\"");
     expect(field).toContain("aria-describedby=");
+    expect(field).toContain("field-label");
+    expect(field).toContain("field-required");
+    expect(field).toContain("aria-label=\"required\"");
+    expect(field).toContain("field-error");
     expect(input).toContain("Principal only");
   });
 
@@ -144,6 +148,9 @@ describe("design system components", () => {
     expect(css).toContain(".ui-empty-action");
     expect(css).toContain("@media (prefers-reduced-motion: reduce)");
     expect(css).toContain(".ui-skeleton span:first-child");
+    expect(css).toContain(".field input:focus");
+    expect(css).toContain(".currency-input:focus-within");
+    expect(css).toContain(".field-error svg");
   });
 
   it("anchors mobile modals near the top with internal scrolling", () => {

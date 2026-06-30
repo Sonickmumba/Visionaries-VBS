@@ -75,10 +75,13 @@ function FieldShell({ label, hint, error, required, children, className = "", de
   const descriptionIds = [describedBy, hintId, errorId].filter(Boolean).join(" ") || undefined;
   return (
     <label className={`field ${error ? "has-error" : ""} ${className}`.trim()}>
-      <span>{label}{required ? " *" : ""}</span>
+      <span className="field-label">
+        <span>{label}</span>
+        {required ? <span className="field-required" aria-label="required">*</span> : null}
+      </span>
       {typeof children === "function" ? children({ describedBy: descriptionIds }) : children}
       {hint && !error ? <small id={hintId} className="field-hint">{hint}</small> : null}
-      {error ? <small id={errorId} className="field-error">{error}</small> : null}
+      {error ? <small id={errorId} className="field-error"><AlertCircle size={13} aria-hidden="true" />{error}</small> : null}
     </label>
   );
 }

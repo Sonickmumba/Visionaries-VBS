@@ -92,7 +92,7 @@ function CommonInterestHero({ preview, totals }) {
   return (
     <section className="common-interest-hero">
       <div>
-        <span>Common Interest</span>
+        <span>Pool Assessment</span>
         <h2>{preview?.cycle?.name || "Active Cycle"}</h2>
         <p>{preview?.cycleMonth ? `Month ${preview.cycleMonth.month_number} pool snapshot` : "Calculate the monthly pool before posting allocations."}</p>
       </div>

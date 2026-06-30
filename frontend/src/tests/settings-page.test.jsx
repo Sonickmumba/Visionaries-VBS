@@ -151,7 +151,7 @@ describe("settings screens", () => {
     const html = renderToStaticMarkup(<SettingsPage initialContext={context} />);
 
     expect(html).toContain("Settings");
-    expect(html).toContain("Admin Settings");
+    expect(html).toContain("Configuration Scope");
     expect(html).toContain("Invite User");
     expect(html).toContain("Users");
     expect(html).toContain("Cycle Rules");

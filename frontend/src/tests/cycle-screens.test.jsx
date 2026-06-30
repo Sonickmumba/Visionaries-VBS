@@ -164,14 +164,14 @@ describe("cycle screens", () => {
 
     expect(source).toContain('className="cycles-page"');
     expect(source).toContain("cycle-list-mobile-actions");
-    expect(source).toContain("cycle-list-head-action");
+    expect(source).not.toContain("cycle-list-head-action");
     expect(source).toContain("cycle-detail-generate-action");
-    expect(source).toContain("cycle-months-head-action");
+    expect(source).not.toContain("cycle-months-head-action");
     expect(css).toContain(".cycles-page > .page-head .button-row");
     expect(css).toContain(".cycle-list-mobile-actions");
-    expect(css).toContain(".cycle-list-head-action");
+    expect(css).not.toContain(".cycle-list-head-action");
     expect(css).toContain(".cycle-detail-generate-action");
-    expect(css).toContain(".cycle-months-head-action");
+    expect(css).not.toContain(".cycle-months-head-action");
     expect(css).toContain("repeat(2, minmax(0, 1fr))");
   });
 });

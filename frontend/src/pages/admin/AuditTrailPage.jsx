@@ -76,7 +76,7 @@ function AuditHero({ metrics, section }) {
   return (
     <section className="ledger-audit-hero">
       <div>
-        <span>Audit Trail</span>
+        <span>Governance Log</span>
         <h2>{section === "overrides" ? "Override Review" : section === "reversals" ? "Reversal Review" : "Administrative Events"}</h2>
         <p>Trace who acted, what changed, when it happened, and why it was approved.</p>
       </div>

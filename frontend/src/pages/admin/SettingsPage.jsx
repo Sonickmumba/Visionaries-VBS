@@ -185,7 +185,7 @@ function SettingsHero({ selectedCycle, metrics }) {
   return (
     <section className="settings-hero">
       <div>
-        <span>Admin Settings</span>
+        <span>Configuration Scope</span>
         <h2>{selectedCycle?.name || "System Configuration"}</h2>
         <p>Manage users, cycle rules, penalty types, notifications, and default operating policy.</p>
       </div>

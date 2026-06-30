@@ -594,7 +594,6 @@ export function LoanScreensPage({
         <section className="panel">
           <div className="panel-head">
             <h2>Loan Approval Queue</h2>
-            <Button type="button" className="loan-queue-head-action" size="sm" icon={Banknote} onClick={openNewRequest}>New Loan Request</Button>
           </div>
           {loading ? <Skeleton lines={7} /> : requests.length ? (
             <>

@@ -602,7 +602,6 @@ export function MemberManagementPage({
       <section className="panel">
         <div className="panel-head">
           <h2>Member List</h2>
-          <Button type="button" className="member-list-head-action" size="sm" icon={Plus} onClick={openCreate}>New Member</Button>
         </div>
         <div className="member-list-mobile-actions mobile-only" aria-label="Member list quick actions">
           <Button type="button" icon={Plus} onClick={openCreate}>New Member</Button>

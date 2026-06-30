@@ -270,12 +270,11 @@ function RulesTab({ cycle, onEdit }) {
   );
 }
 
-function MonthsTab({ months, onGenerate, loading }) {
+function MonthsTab({ months }) {
   return (
     <section className="panel cycle-tab-panel">
       <div className="panel-head">
         <h2>Cycle Months</h2>
-        <Button type="button" className="cycle-months-head-action" variant="secondary" size="sm" icon={CalendarDays} onClick={onGenerate} loading={loading}>Generate Months</Button>
       </div>
       <DataTable
         columns={["Month", "Period", "Declaration Window", "Payout Window", "Status"]}
@@ -578,7 +577,6 @@ export function CycleScreensPage({
       <section className="panel">
         <div className="panel-head">
           <h2>Cycle List</h2>
-          <Button type="button" className="cycle-list-head-action" size="sm" icon={Plus} onClick={openCreate}>New Cycle</Button>
         </div>
         <div className="cycle-list-mobile-actions mobile-only" aria-label="Cycle list quick actions">
           <Button type="button" icon={Plus} onClick={openCreate}>New Cycle</Button>

@@ -161,7 +161,7 @@ describe("member management", () => {
     expect(css).toContain(".member-detail-hero");
     expect(css).toContain(".member-detail-mobile-actions");
     expect(css).toContain(".member-list-mobile-actions");
-    expect(css).toContain(".member-list-head-action");
+    expect(css).not.toContain(".member-list-head-action");
     expect(css).toContain(".members-page > .page-head .button-row");
     expect(css).toContain(".member-card-actions");
     expect(css).toContain("repeat(2, minmax(0, 1fr))");

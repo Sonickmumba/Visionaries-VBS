@@ -699,7 +699,6 @@ export function DeclarationScreensPage({
         <section className="panel">
           <div className="panel-head">
             <h2>Submitted Declarations</h2>
-            <Button type="button" className="declaration-list-head-action" size="sm" icon={Plus} onClick={startNewDeclaration}>New Declaration</Button>
           </div>
           <SubmittedDeclarationCards declarations={queue.declarations || []} selectedId={selectedId} busy={busy} onOpen={openDeclaration} />
           <div className="declaration-desktop-table">

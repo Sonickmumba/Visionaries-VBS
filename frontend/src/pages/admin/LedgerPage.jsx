@@ -118,7 +118,7 @@ function LedgerHero({ metrics }) {
   return (
     <section className="ledger-audit-hero">
       <div>
-        <span>Ledger Explorer</span>
+        <span>Posting Review</span>
         <h2>Transaction Trail</h2>
         <p>Review postings, inspect entries, export rows, and reverse errors with reasons.</p>
       </div>

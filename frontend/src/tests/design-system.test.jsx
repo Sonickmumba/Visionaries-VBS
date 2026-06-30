@@ -10,6 +10,7 @@ import {
   ConfirmDialog,
   CurrencyInput,
   DataTable,
+  EmptyState,
   IconButton,
   MobileActionTile,
   MobileBottomNav,
@@ -85,16 +86,23 @@ describe("design system components", () => {
 
   it("renders live alerts and loading status semantics", () => {
     const danger = renderToStaticMarkup(<Alert tone="danger" title="Failed">Try again</Alert>);
-    const skeleton = renderToStaticMarkup(<Skeleton lines={2} />);
+    const skeleton = renderToStaticMarkup(<Skeleton lines={2} label="Loading member records" />);
     const confirm = renderToStaticMarkup(<ConfirmDialog open reason="Because" title="Confirm reversal" />);
     const table = renderToStaticMarkup(<DataTable caption="Members" columns={["Name"]} rows={[]} />);
+    const empty = renderToStaticMarkup(<EmptyState title="No members" message="Invite or add members first." action={<Button type="button">Add member</Button>} />);
 
     expect(danger).toContain("role=\"alert\"");
     expect(danger).toContain("aria-live=\"assertive\"");
+    expect(danger).toContain("ui-alert danger");
     expect(skeleton).toContain("role=\"status\"");
+    expect(skeleton).toContain("aria-label=\"Loading member records\"");
     expect(confirm).toContain("aria-labelledby=");
     expect(table).toContain("aria-label=\"Members\"");
     expect(table).toContain("<caption>Members</caption>");
+    expect(empty).toContain("aria-describedby=");
+    expect(empty).toContain("ui-empty-icon");
+    expect(empty).toContain("ui-empty-action");
+    expect(empty).toContain("Add member");
   });
 
   it("renders mobile shell, header, and active bottom navigation", () => {
@@ -133,6 +141,9 @@ describe("design system components", () => {
     expect(css).toContain("touch-action: manipulation");
     expect(css).toContain(".mobile-shell.has-bottom-nav .mobile-sticky-actions");
     expect(css).toContain("bottom: 84px");
+    expect(css).toContain(".ui-empty-action");
+    expect(css).toContain("@media (prefers-reduced-motion: reduce)");
+    expect(css).toContain(".ui-skeleton span:first-child");
   });
 
   it("anchors mobile modals near the top with internal scrolling", () => {

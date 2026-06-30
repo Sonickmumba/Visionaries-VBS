@@ -625,7 +625,10 @@ th {
 .empty {
   color: #65758b;
   text-align: center;
-  padding: 32px;
+  padding: 34px 18px;
+  background: #f8fafc;
+  font-weight: 800;
+  line-height: 1.45;
 }
 
 .badge {

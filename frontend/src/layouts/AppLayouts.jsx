@@ -67,9 +67,8 @@ function roleTone(role) {
   return "blue";
 }
 
-function buildBreadcrumbs(user, page) {
-  const portal = user?.role === "MEMBER" ? "Member Portal" : "Admin Portal";
-  return [portal, routeLabel(page)];
+function portalLabel(role) {
+  return role === "MEMBER" ? "Member Portal" : "Admin Portal";
 }
 
 export function ProtectedRoute({ user, children, fallback = null }) {
@@ -171,7 +170,8 @@ function MobileBottomNav({ nav, page, setPage, user }) {
   );
 }
 
-function Topbar({ user, page, onLogout }) {
+function Topbar({ user, page, setPage, onLogout }) {
+  const { unreadCount } = useNotificationUnread();
   const [cycles, setCycles] = useState([]);
   const [months, setMonths] = useState([]);
   const [cycleId, setCycleId] = useState("");
@@ -203,21 +203,23 @@ function Topbar({ user, page, onLogout }) {
 
   const selectedCycle = cycles.find((cycle) => cycle.id === cycleId);
   const selectedMonth = months.find((month) => month.id === monthId);
-  const breadcrumbs = buildBreadcrumbs(user, page);
+  const isMember = user.role === "MEMBER";
+  const notificationsPage = isMember ? "my-notifications" : "notifications";
 
   return (
     <header className="topbar">
       <IconButton className="mobile-only" label="Open navigation" icon={Menu} onClick={() => window.dispatchEvent(new CustomEvent("open-mobile-nav"))} />
       <div className="top-context">
-        <nav className="breadcrumbs" aria-label="Breadcrumb">
-          {breadcrumbs.map((crumb, index) => (
-            <span key={crumb}>{index > 0 ? "/ " : ""}{crumb}</span>
-          ))}
-        </nav>
-        {user.role === "MEMBER" ? (
-          <div className="top-cycle-summary">
-            <strong>Member Portal</strong>
-            <span>Statements, declarations, savings, loans, and penalties</span>
+        <div className="top-title-block">
+          <span className="top-eyebrow">Visionaries Village Banking</span>
+          <strong>{portalLabel(user.role)}</strong>
+          <span>{isMember ? "Transparent member access" : "Financial operations workspace"}</span>
+        </div>
+        {isMember ? (
+          <div className="top-member-summary" aria-label="Member account context">
+            <span>Signed in as</span>
+            <strong>{user.email || "Visionaries member"}</strong>
+            <small>Member access</small>
           </div>
         ) : (
           <div className="top-selectors" aria-label="Cycle and month context">
@@ -247,6 +249,10 @@ function Topbar({ user, page, onLogout }) {
       </div>
       <div className="top-actions">
         <Badge tone={roleTone(user.role)} text={user.role} />
+        <span className="top-notification-action">
+          <IconButton label="Open notifications" icon={Bell} onClick={() => setPage?.(notificationsPage)} />
+          {unreadCount > 0 ? <span className="top-unread-badge" aria-label={`${unreadCount} unread notifications`}>{unreadCount > 99 ? "99+" : unreadCount}</span> : null}
+        </span>
         <IconButton label="Log out" icon={LogOut} onClick={onLogout} />
       </div>
     </header>
@@ -268,7 +274,7 @@ export function AppLayout({ user, page, setPage, onLogout, children }) {
       <a className="skip-link" href="#main-content">Skip to main content</a>
       <Sidebar nav={nav} page={page} setPage={setPage} open={open} setOpen={setOpen} user={user} />
       <div className="main">
-        <Topbar user={user} page={page} onLogout={onLogout} />
+        <Topbar user={user} page={page} setPage={setPage} onLogout={onLogout} />
         {open && <button className="overlay" aria-label="Close navigation" onClick={() => setOpen(false)}><X aria-hidden="true" /></button>}
         <main id="main-content" className="content" tabIndex="-1">{children}</main>
         {user.role !== "MEMBER" ? <MobileBottomNav nav={nav} page={page} setPage={setPage} user={user} /> : null}

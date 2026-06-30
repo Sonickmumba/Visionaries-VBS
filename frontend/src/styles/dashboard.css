@@ -23,6 +23,19 @@
   gap: 5px;
 }
 
+.admin-hero-brand {
+  margin-bottom: 4px;
+  color: white;
+}
+
+.admin-hero-brand .brand-mark {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.admin-hero-brand .brand-wordmark small {
+  color: #dcfce7;
+}
+
 .admin-hero-copy span,
 .admin-hero-status span,
 .admin-hero-stats span {

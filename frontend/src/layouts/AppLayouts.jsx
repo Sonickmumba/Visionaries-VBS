@@ -8,7 +8,6 @@ import {
   CalendarDays,
   CheckCircle2,
   ClipboardList,
-  Coins,
   FileBarChart,
   Gauge,
   Lock,
@@ -23,6 +22,7 @@ import {
   X,
 } from "lucide-react";
 import { api } from "../api/client.js";
+import { BrandMark } from "../components/BrandMark.jsx";
 import { Badge, IconButton, Select } from "../components/ui/index.jsx";
 import { useNotificationUnread } from "../contexts/NotificationUnreadContext.jsx";
 import "../styles/layouts.css";
@@ -90,13 +90,11 @@ export function AuthLayout({ children }) {
   return (
     <main className="auth-shell">
       <section className="auth-brand">
-        <div className="auth-brand-mark">
-          <Coins size={28} aria-hidden="true" />
-        </div>
+        <BrandMark size="lg" className="auth-brand-mark" />
         <div className="auth-brand-copy">
           <span>Save Together. Grow Together.</span>
           <h1>Visionaries Village Banking</h1>
-          <p>Cycle-based savings, lending, declarations, penalties, common interest, and monthly closing.</p>
+          <p>Run transparent savings, lending, declarations, common interest, penalties, reports, and monthly closing from one audit-ready mobile platform.</p>
         </div>
         <div className="auth-brand-stats" aria-label="Platform highlights">
           <div><strong>15%</strong><span>Monthly rules</span></div>
@@ -114,7 +112,7 @@ function Sidebar({ nav, page, setPage, open, setOpen, user }) {
   return (
     <aside className={`sidebar ${open ? "open" : ""}`} aria-label={`${user.role === "MEMBER" ? "Member" : "Admin"} navigation`} aria-hidden={!open && undefined}>
       <div className="sidebar-head">
-        <div className="brand"><Coins size={22} aria-hidden="true" /> Visionaries Village Banking</div>
+        <div className="brand"><BrandMark size="sm" /> <span>Visionaries Village Banking</span></div>
         <IconButton className="sidebar-close" label="Close navigation" icon={X} variant="ghost" onClick={() => setOpen(false)} />
       </div>
       <div className="sidebar-profile">

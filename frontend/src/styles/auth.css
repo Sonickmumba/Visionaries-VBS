@@ -97,21 +97,16 @@
   min-height: 46px;
 }
 
-.auth-brand-mark,
 .auth-brand-stats {
   position: relative;
   z-index: 1;
 }
 
-.auth-brand-mark {
-  width: 64px;
-  height: 64px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.16);
-  display: grid;
-  place-items: center;
-  color: #facc15;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+.auth-brand-mark.brand-lockup {
+  position: relative;
+  z-index: 1;
+  width: max-content;
+  height: auto;
 }
 
 .auth-brand-copy {
@@ -225,9 +220,8 @@
   }
 
   .auth-brand-mark {
-    width: 54px;
-    height: 54px;
-    border-radius: 18px;
+    transform: scale(0.9);
+    transform-origin: left top;
   }
 
   .auth-brand h1 {

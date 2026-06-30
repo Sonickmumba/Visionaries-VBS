@@ -70,6 +70,48 @@
   margin-bottom: 18px;
 }
 
+.reports-guide {
+  border: 1px solid #d8e1eb;
+  border-left: 5px solid var(--brand-gold, #f4b400);
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 12px 30px rgba(16, 42, 67, 0.06);
+  padding: 14px;
+  margin-bottom: 16px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+}
+
+.reports-guide span {
+  color: #007a43;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.reports-guide strong {
+  display: block;
+  margin-top: 3px;
+  color: #102a43;
+  font-size: 18px;
+}
+
+.reports-guide p {
+  margin: 5px 0 0;
+  color: #65758b;
+  font-weight: 750;
+  line-height: 1.45;
+}
+
+.reports-guide-chips {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
 .reports-detail {
   display: grid;
   gap: 14px;
@@ -221,6 +263,14 @@
   .reports-card-values,
   .reports-filters .form-grid.three {
     grid-template-columns: 1fr;
+  }
+
+  .reports-guide {
+    grid-template-columns: 1fr;
+  }
+
+  .reports-guide-chips {
+    justify-content: flex-start;
   }
 
   .reports-detail-hero {

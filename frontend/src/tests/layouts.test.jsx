@@ -24,6 +24,7 @@ describe("app layouts", () => {
     const html = renderToStaticMarkup(<AuthLayout><section className="auth-card">Login</section></AuthLayout>);
 
     expect(html).toContain("Visionaries Village Banking");
+    expect(html).toContain("brand-lockup");
     expect(html).toContain("auth-card");
   });
 
@@ -43,6 +44,7 @@ describe("app layouts", () => {
 
     expect(html).toContain("Admin Portal");
     expect(html).toContain("Visionaries Village Banking");
+    expect(html).toContain("brand-mark");
     expect(html).toContain("Financial operations workspace");
     expect(html).toContain("Dashboard");
     expect(html).toContain("Cycle");

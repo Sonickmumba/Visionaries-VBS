@@ -100,6 +100,8 @@ describe("reports screens", () => {
     );
 
     expect(html).toContain("Reports Center");
+    expect(html).toContain("Report guidance");
+    expect(html).toContain("Cycle health");
     expect(html).toContain("Month 1");
     expect(html).toContain("Run Report");
     expect(html).toContain("Download PDF");

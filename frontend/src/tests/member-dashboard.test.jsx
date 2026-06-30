@@ -121,6 +121,8 @@ describe("member dashboard", () => {
     const html = renderToStaticMarkup(<MemberDashboardPage initialPortal={portal} setPage={() => {}} />);
 
     expect(html).toContain("My Dashboard");
+    expect(html).toContain("Welcome back, Mary Phiri");
+    expect(html).toContain("member-dashboard-hero");
     expect(html).toContain("Submit Declaration");
     expect(html).toContain("View Statement");
     expect(html).toContain("member-mobile-dashboard");

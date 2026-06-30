@@ -12,6 +12,9 @@ describe("app shell", () => {
     expect(html).toContain("Visionaries Village Banking splash screen");
     expect(html).toContain("Visionaries Village Banking");
     expect(html).toContain("Save Together. Grow Together.");
+    expect(html).toContain("Track Savings");
+    expect(html).toContain("Manage Loans");
+    expect(html).toContain("Share Interest");
     expect(html).toContain("Checking secure session");
     expect(html).toContain("splash-progress");
   });
@@ -28,6 +31,8 @@ describe("app shell", () => {
     const css = fs.readFileSync(path.join(process.cwd(), "src/styles/app.css"), "utf8");
 
     expect(css).toContain(".splash-screen");
+    expect(css).toContain(".brand-mark");
+    expect(css).toContain(".splash-features");
     expect(css).toContain(".splash-continue");
     expect(css).toContain("100svh");
     expect(css).toContain("@media (prefers-reduced-motion: reduce)");

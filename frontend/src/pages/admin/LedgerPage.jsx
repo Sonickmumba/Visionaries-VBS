@@ -353,7 +353,7 @@ export function LedgerPage({
       className="ledger-audit-page"
       actions={(
         <>
-          <Button type="button" icon={RefreshCw} onClick={() => loadLedger(filters, 1)} loading={loading}>Filter</Button>
+          <Button type="button" icon={RefreshCw} onClick={() => loadLedger(filters, 1)} loading={loading}>Apply Filters</Button>
           <Button type="button" variant="secondary" onClick={clearFilters}>Clear Filters</Button>
           <Button type="button" variant="secondary" icon={Download} onClick={downloadCsv}>Export CSV</Button>
         </>
@@ -365,7 +365,7 @@ export function LedgerPage({
       <LedgerHero metrics={metrics} />
 
       <div className="admin-mobile-action-row ledger-mobile-actions-row mobile-only" aria-label="Ledger quick actions">
-        <Button type="button" icon={RefreshCw} onClick={() => loadLedger(filters, 1)} loading={loading}>Filter</Button>
+        <Button type="button" icon={RefreshCw} onClick={() => loadLedger(filters, 1)} loading={loading}>Apply</Button>
         <Button type="button" variant="secondary" onClick={clearFilters}>Clear</Button>
         <Button type="button" variant="secondary" icon={Download} onClick={downloadCsv}>Export</Button>
       </div>

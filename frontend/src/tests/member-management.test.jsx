@@ -116,7 +116,7 @@ describe("member management", () => {
 
     expect(html).toContain("Members");
     expect(html).toContain("Member cards");
-    expect(html).toContain("New Member");
+    expect(html).toContain("Create Member");
     expect(html).toContain("Enroll Member");
     expect(html).toContain("Member list quick actions");
     expect(html).toContain("Search members");

@@ -142,7 +142,7 @@ describe("cycle screens", () => {
       />
     );
 
-    expect(html).toContain("New Cycle");
+    expect(html).toContain("Create Cycle");
     expect(html).toContain("Cycle list quick actions");
     expect(html).toContain("Activate Cycle");
     expect(html).toContain("Generate Months");

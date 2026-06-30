@@ -561,7 +561,7 @@ export function CycleScreensPage({
       className="cycles-page"
       actions={(
         <>
-          <Button type="button" icon={Plus} onClick={openCreate}>New Cycle</Button>
+          <Button type="button" icon={Plus} onClick={openCreate}>Create Cycle</Button>
           <Button type="button" variant="secondary" icon={RefreshCw} onClick={loadCycles} loading={loading}>Refresh</Button>
           <Button type="button" variant="secondary" icon={CalendarDays} onClick={handleGenerateMonths} disabled={!selectedCycle} loading={busy === "months"}>Generate Months</Button>
         </>
@@ -579,9 +579,9 @@ export function CycleScreensPage({
           <h2>Cycle List</h2>
         </div>
         <div className="cycle-list-mobile-actions mobile-only" aria-label="Cycle list quick actions">
-          <Button type="button" icon={Plus} onClick={openCreate}>New Cycle</Button>
+          <Button type="button" icon={Plus} onClick={openCreate}>Create</Button>
           <Button type="button" variant="secondary" icon={RefreshCw} onClick={loadCycles} loading={loading}>Refresh</Button>
-          <Button type="button" variant="secondary" icon={CalendarDays} onClick={handleGenerateMonths} disabled={!selectedCycle} loading={busy === "months"}>Generate</Button>
+          <Button type="button" variant="secondary" icon={CalendarDays} onClick={handleGenerateMonths} disabled={!selectedCycle} loading={busy === "months"}>Months</Button>
         </div>
         {loading ? <Skeleton lines={5} /> : (
           <DataTable
@@ -643,7 +643,7 @@ export function CycleScreensPage({
         <EmptyState
           title="Select a cycle"
           message="Choose a cycle from the list to view rules, generated months, enrolled members, penalties, and audit history."
-          action={<Button type="button" onClick={openCreate}>New Cycle</Button>}
+          action={<Button type="button" onClick={openCreate}>Create Cycle</Button>}
         />
       )}
 

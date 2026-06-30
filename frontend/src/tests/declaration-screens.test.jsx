@@ -149,8 +149,8 @@ describe("declaration screens", () => {
     expect(html).toContain("Declarations");
     expect(html).toContain("Declaration Queue");
     expect(html).toContain("Submitted declaration cards");
-    expect(html).toContain("Refresh Queue");
-    expect(html).toContain("New Declaration");
+    expect(html).toContain("Refresh");
+    expect(html).toContain("Create Declaration");
     expect(html).toContain("Submitted");
     expect(html).toContain("Missed");
     expect(html).toContain("Summary");

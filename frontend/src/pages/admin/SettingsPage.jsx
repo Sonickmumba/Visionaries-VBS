@@ -16,6 +16,7 @@ import {
   Textarea,
 } from "../../components/ui/index.jsx";
 import { Page } from "../../layouts/AppLayouts.jsx";
+import { DevEmailLink } from "../auth/DevEmailLink.jsx";
 import "../../styles/settings.css";
 
 const money = (value) => `K${Number(value || 0).toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
@@ -54,7 +55,6 @@ function initials(value) {
 export function validateInviteUser(form) {
   const errors = {};
   if (!String(form.email || "").includes("@")) errors.email = "Enter a valid email.";
-  if (String(form.password || "").length < 10) errors.password = "Temporary password must be at least 10 characters.";
   if (!["ADMIN", "MEMBER", "AUDITOR"].includes(form.role)) errors.role = "Choose a valid role.";
   return errors;
 }
@@ -62,7 +62,6 @@ export function validateInviteUser(form) {
 export function inviteUserPayload(form) {
   return {
     email: String(form.email || "").trim().toLowerCase(),
-    password: form.password,
     role: form.role,
   };
 }
@@ -79,6 +78,12 @@ export async function inviteSettingsUser({ form, settingsApi = api }) {
 
 export function userUpdatePayload(changes, reason = "Administrative user setting update") {
   return { ...changes, reason };
+}
+
+function userStatus(user) {
+  if (!user.email_verified_at) return { text: user.invited_at ? "Invite Pending" : "Unverified", tone: "amber" };
+  if (!user.is_active) return { text: "Disabled", tone: "red" };
+  return { text: "Active", tone: "green" };
 }
 
 export function validatePenaltyType(form, selectedCycleId) {
@@ -197,25 +202,29 @@ function UserCards({ users, busy, onUpdate }) {
   if (!users.length) return null;
   return (
     <div className="settings-mobile-cards" aria-label="Mobile user settings cards">
-      {users.map((user) => (
-        <article key={user.id} className="settings-card">
-          <div className="settings-card-head">
-            <div className="settings-avatar">{initials(user.email)}</div>
-            <div>
-              <strong>{user.email}</strong>
-              <span>{titleCase(user.role)}</span>
+      {users.map((user) => {
+        const status = userStatus(user);
+        return (
+          <article key={user.id} className="settings-card">
+            <div className="settings-card-head">
+              <div className="settings-avatar">{initials(user.email)}</div>
+              <div>
+                <strong>{user.email}</strong>
+                <span>{titleCase(user.role)}</span>
+              </div>
+              <Badge text={status.text} tone={status.tone} />
             </div>
-            <Badge text={user.is_active ? "Active" : "Disabled"} tone={user.is_active ? "green" : "red"} />
-          </div>
-          <div className="settings-card-values">
-            <div><span>Created</span><strong>{dateOnly(user.created_at)}</strong></div>
-            <div><span>Role</span><strong>{titleCase(user.role)}</strong></div>
-          </div>
-          <Button type="button" size="sm" variant="secondary" loading={busy === user.id} onClick={() => onUpdate(user, { isActive: !user.is_active })}>
-            {user.is_active ? "Disable User" : "Enable User"}
-          </Button>
-        </article>
-      ))}
+            <div className="settings-card-values">
+              <div><span>Created</span><strong>{dateOnly(user.created_at)}</strong></div>
+              <div><span>Role</span><strong>{titleCase(user.role)}</strong></div>
+              <div><span>Verified</span><strong>{user.email_verified_at ? dateOnly(user.email_verified_at) : "Pending"}</strong></div>
+            </div>
+            <Button type="button" size="sm" variant="secondary" loading={busy === user.id} onClick={() => onUpdate(user, { isActive: !user.is_active })}>
+              {user.is_active ? "Disable User" : "Enable User"}
+            </Button>
+          </article>
+        );
+      })}
     </div>
   );
 }
@@ -255,7 +264,7 @@ export function SettingsPage({
   const [context, setContext] = useState(initialContext);
   const [selectedCycleId, setSelectedCycleId] = useState(initialContext?.selectedCycleId || "");
   const [activeTab, setActiveTab] = useState("users");
-  const [userForm, setUserForm] = useState({ email: "", password: "", role: "MEMBER" });
+  const [userForm, setUserForm] = useState({ email: "", role: "MEMBER" });
   const [penaltyForm, setPenaltyForm] = useState({ code: "", name: "", description: "", amount: "", isConvertibleToLoan: true, isActive: true });
   const [userReason, setUserReason] = useState("Administrative user setting update");
   const [cycleForm, setCycleForm] = useState(cycleToDefaultsForm(null));
@@ -270,6 +279,7 @@ export function SettingsPage({
   const [activeDefaultsForm, setActiveDefaultsForm] = useState({ autoSelectLatestActive: true, defaultCycleId: "", reason: "" });
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
+  const [devDelivery, setDevDelivery] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(initialContext === null);
   const [busy, setBusy] = useState("");
@@ -322,11 +332,13 @@ export function SettingsPage({
     setBusy("invite");
     setErrors({});
     setMessage("");
+    setDevDelivery(null);
     setError("");
     try {
-      await inviteSettingsUser({ form: userForm, settingsApi });
-      setMessage("User invited successfully.");
-      setUserForm({ email: "", password: "", role: "MEMBER" });
+      const response = await inviteSettingsUser({ form: userForm, settingsApi });
+      setMessage("Invitation sent successfully.");
+      setDevDelivery(response?.data?.invitationDelivery || null);
+      setUserForm({ email: "", role: "MEMBER" });
       await loadSettings();
     } catch (err) {
       if (err.validationErrors) setErrors(err.validationErrors);
@@ -339,6 +351,7 @@ export function SettingsPage({
   async function updateUser(user, changes) {
     setBusy(user.id);
     setMessage("");
+    setDevDelivery(null);
     setError("");
     try {
       await settingsApi(`/settings/users/${user.id}`, { method: "PATCH", body: userUpdatePayload(changes, userReason) });
@@ -356,6 +369,7 @@ export function SettingsPage({
     setBusy("penalty");
     setErrors({});
     setMessage("");
+    setDevDelivery(null);
     setError("");
     try {
       await savePenaltyType({ form: penaltyForm, selectedCycleId, settingsApi });
@@ -373,6 +387,7 @@ export function SettingsPage({
   async function patchPenaltyType(penaltyType, changes) {
     setBusy(penaltyType.id);
     setMessage("");
+    setDevDelivery(null);
     setError("");
     try {
       await settingsApi(`/settings/penalty-types/${penaltyType.id}`, { method: "PATCH", body: { ...changes, reason: "Administrative penalty configuration update" } });
@@ -389,6 +404,7 @@ export function SettingsPage({
     event.preventDefault();
     setBusy("cycle");
     setMessage("");
+    setDevDelivery(null);
     setError("");
     try {
       await settingsApi(`/settings/cycles/${selectedCycleId}/defaults`, { method: "PATCH", body: cycleDefaultsPayload(cycleForm) });
@@ -405,6 +421,7 @@ export function SettingsPage({
     event.preventDefault();
     setBusy("rounding");
     setMessage("");
+    setDevDelivery(null);
     setError("");
     try {
       await settingsApi(`/settings/cycles/${selectedCycleId}/rounding-policy`, { method: "PATCH", body: roundingPayload(roundingForm) });
@@ -421,6 +438,7 @@ export function SettingsPage({
     event.preventDefault();
     setBusy("notifications");
     setMessage("");
+    setDevDelivery(null);
     setError("");
     try {
       await settingsApi("/settings/notification-preferences", { method: "PATCH", body: notificationPayload(notificationForm) });
@@ -437,6 +455,7 @@ export function SettingsPage({
     event.preventDefault();
     setBusy("active-defaults");
     setMessage("");
+    setDevDelivery(null);
     setError("");
     try {
       await settingsApi("/settings/active-cycle-defaults", {
@@ -481,6 +500,7 @@ export function SettingsPage({
       )}
     >
       {message ? <Alert tone="success" title="Settings updated">{message}</Alert> : null}
+      <DevEmailLink delivery={devDelivery} title="Development invitation link" />
       {error ? <Alert tone="danger" title="Settings action failed">{error}</Alert> : null}
 
       <SettingsHero selectedCycle={selectedCycle} metrics={metrics} />
@@ -519,11 +539,11 @@ export function SettingsPage({
               <section className="panel settings-form-panel">
                 <div className="panel-head"><h2>Invite User</h2></div>
                 <form id="invite-user-form" onSubmit={inviteUser} className="settings-form">
-                  <div className="form-grid three">
+                  <div className="form-grid two">
                     <Field label="Email" type="email" value={userForm.email} onChange={(value) => setUserForm((current) => ({ ...current, email: value }))} error={errors.email} />
-                    <Field label="Temporary password" type="password" value={userForm.password} onChange={(value) => setUserForm((current) => ({ ...current, password: value }))} error={errors.password} />
                     <Select label="Role" value={userForm.role} onChange={(value) => setUserForm((current) => ({ ...current, role: value }))} error={errors.role} options={["MEMBER", "ADMIN", "AUDITOR"].map((role) => ({ value: role, label: titleCase(role) }))} />
                   </div>
+                  <p className="muted">The invitee will verify their email and set their own password from the invitation link.</p>
                 </form>
               </section>
 
@@ -533,20 +553,24 @@ export function SettingsPage({
                 <UserCards users={context.users || []} busy={busy} onUpdate={updateUser} />
                 <div className="settings-desktop-table">
                   <DataTable
-                    columns={["Email", "Role", "Status", "Created", "Actions"]}
-                    rows={(context.users || []).map((user) => [
-                      user.email,
-                      <Select
-                        label="Role"
-                        className="inline-field"
-                        value={user.role}
-                        onChange={(role) => updateUser(user, { role })}
-                        options={["MEMBER", "ADMIN", "AUDITOR"].map((role) => ({ value: role, label: titleCase(role) }))}
-                      />,
-                      <Badge text={user.is_active ? "Active" : "Disabled"} tone={user.is_active ? "green" : "red"} />,
-                      dateOnly(user.created_at),
-                      <Button type="button" size="sm" variant="secondary" loading={busy === user.id} onClick={() => updateUser(user, { isActive: !user.is_active })}>{user.is_active ? "Disable User" : "Enable User"}</Button>,
-                    ])}
+                    columns={["Email", "Role", "Status", "Verified", "Created", "Actions"]}
+                    rows={(context.users || []).map((user) => {
+                      const status = userStatus(user);
+                      return [
+                        user.email,
+                        <Select
+                          label="Role"
+                          className="inline-field"
+                          value={user.role}
+                          onChange={(role) => updateUser(user, { role })}
+                          options={["MEMBER", "ADMIN", "AUDITOR"].map((role) => ({ value: role, label: titleCase(role) }))}
+                        />,
+                        <Badge text={status.text} tone={status.tone} />,
+                        user.email_verified_at ? dateOnly(user.email_verified_at) : "Pending",
+                        dateOnly(user.created_at),
+                        <Button type="button" size="sm" variant="secondary" loading={busy === user.id} onClick={() => updateUser(user, { isActive: !user.is_active })}>{user.is_active ? "Disable User" : "Enable User"}</Button>,
+                      ];
+                    })}
                     empty="No users found."
                   />
                 </div>

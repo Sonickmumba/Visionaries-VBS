@@ -30,6 +30,7 @@ import {
   Textarea,
 } from "../../components/ui/index.jsx";
 import { Page } from "../../layouts/AppLayouts.jsx";
+import { DevEmailLink } from "../auth/DevEmailLink.jsx";
 import "../../styles/members.css";
 
 const money = (value) => `K${Number(value || 0).toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
@@ -43,7 +44,6 @@ const DEFAULT_FORM = {
   memberCode: "",
   nationalId: "",
   address: "",
-  temporaryPassword: "Password123!",
 };
 
 function memberName(member) {
@@ -76,7 +76,6 @@ function memberFormFromRecord(member) {
     memberCode: member.member_code || "",
     nationalId: member.national_id || "",
     address: member.address || "",
-    temporaryPassword: "",
   };
 }
 
@@ -89,9 +88,6 @@ export function validateMemberForm(form, { editing = false } = {}) {
   if (isBlank(form.firstName)) errors.firstName = "First name is required.";
   if (isBlank(form.lastName)) errors.lastName = "Last name is required.";
   if (!isBlank(form.email) && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) errors.email = "Enter a valid email address.";
-  if (!editing && !isBlank(form.email) && String(form.temporaryPassword || "").length < 10) {
-    errors.temporaryPassword = "Temporary password must be at least 10 characters.";
-  }
   return errors;
 }
 
@@ -105,7 +101,6 @@ export function memberPayload(form, { editing = false } = {}) {
     nationalId: isBlank(form.nationalId) ? null : form.nationalId.trim(),
     address: isBlank(form.address) ? null : form.address.trim(),
   };
-  if (!editing && payload.email) payload.temporaryPassword = form.temporaryPassword || "Password123!";
   return payload;
 }
 
@@ -155,15 +150,7 @@ function MemberForm({ form, setForm, errors, editing }) {
         <Field label="Member code" value={form.memberCode} onChange={set("memberCode")} />
         <Field label="National ID" value={form.nationalId} onChange={set("nationalId")} />
       </div>
-      {!editing ? (
-        <Field
-          label="Temporary password"
-          value={form.temporaryPassword}
-          onChange={set("temporaryPassword")}
-          error={errors.temporaryPassword}
-          hint="Required when creating a member login from email."
-        />
-      ) : null}
+      {!editing && form.email ? <p className="muted">A secure invitation will be sent so the member can verify their email and set a password.</p> : null}
       <Textarea label="Address" value={form.address} onChange={set("address")} rows={3} />
     </div>
   );
@@ -385,6 +372,7 @@ export function MemberManagementPage({
   const [detailLoading, setDetailLoading] = useState(false);
   const [busy, setBusy] = useState("");
   const [message, setMessage] = useState("");
+  const [devDelivery, setDevDelivery] = useState(null);
   const [error, setError] = useState("");
   const [formMode, setFormMode] = useState("");
   const [selectedMember, setSelectedMember] = useState(null);
@@ -464,6 +452,7 @@ export function MemberManagementPage({
     event.preventDefault();
     setBusy("save");
     setMessage("");
+    setDevDelivery(null);
     setError("");
     try {
       const response = await saveMemberForm({
@@ -482,6 +471,7 @@ export function MemberManagementPage({
         setFormMode("");
       }
       setMessage(formMode === "edit" ? "Member updated." : "Member created.");
+      setDevDelivery(response?.data?.invitationDelivery || null);
     } catch (err) {
       if (err.validationErrors) setFormErrors(err.validationErrors);
       else setError(err.message || "Member could not be saved.");
@@ -494,6 +484,7 @@ export function MemberManagementPage({
     if (!member?.id) return;
     setBusy(`toggle-${member.id}`);
     setMessage("");
+    setDevDelivery(null);
     setError("");
     try {
       await toggleMemberStatus({ member, memberApi });
@@ -518,6 +509,7 @@ export function MemberManagementPage({
     event.preventDefault();
     setBusy("enroll");
     setMessage("");
+    setDevDelivery(null);
     setError("");
     setEnrollErrors({});
     try {
@@ -580,6 +572,7 @@ export function MemberManagementPage({
       )}
     >
       {message ? <Alert tone="success" title="Member action complete">{message}</Alert> : null}
+      <DevEmailLink delivery={devDelivery} title="Development member invitation link" />
       {error ? <Alert tone="danger" title="Member action failed">{error}</Alert> : null}
 
       <div className="metrics member-metrics">

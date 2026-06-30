@@ -4,10 +4,16 @@ import { promisify } from "node:util";
 import { passport } from "../../auth/passport.js";
 import { z } from "zod";
 import { env } from "../../config/env.js";
-import { query } from "../../db/pool.js";
+import { query, withTransaction } from "../../db/pool.js";
 import { requireAuth } from "../../middleware/auth.js";
 import { createMemoryRateLimiter } from "../../middleware/rateLimit.js";
 import { validate } from "../../middleware/validate.js";
+import { audit } from "../../services/auditService.js";
+import {
+  acceptInvitationToken,
+  sendSignupVerification,
+  verifyEmailToken,
+} from "../../services/emailVerificationService.js";
 import { validatePasswordPolicy } from "../../services/passwordPolicy.js";
 import { badRequest, unauthorized } from "../../utils/httpError.js";
 
@@ -32,6 +38,19 @@ const signupSchema = z.object({
   password: z.string().min(10),
 });
 
+const resendVerificationSchema = z.object({
+  email: z.string().email(),
+});
+
+const verifyEmailSchema = z.object({
+  token: z.string().min(20),
+});
+
+const acceptInvitationSchema = z.object({
+  token: z.string().min(20),
+  password: z.string().min(10),
+});
+
 async function auditLoginAttempt({ req, user = null, success, reason }) {
   try {
     await query(
@@ -52,6 +71,17 @@ async function auditLoginAttempt({ req, user = null, success, reason }) {
 }
 
 authRouter.post("/login", authRateLimit, validate(loginSchema), async (req, res, next) => {
+  try {
+    const existing = await query("SELECT id, email, is_active, email_verified_at FROM users WHERE email = $1", [req.body.email.toLowerCase()]);
+    const user = existing.rows[0];
+    if (user?.is_active && !user.email_verified_at) {
+      await auditLoginAttempt({ req, user, success: false, reason: "Email not verified" });
+      throw unauthorized("Please verify your email before signing in.");
+    }
+  } catch (error) {
+    return next(error);
+  }
+
   passport.authenticate("local", async (error, user) => {
     try {
       if (error) throw error;
@@ -74,22 +104,105 @@ authRouter.post("/signup", authRateLimit, validate(signupSchema), async (req, re
   try {
     validatePasswordPolicy(req.body.password);
     const passwordHash = await bcrypt.hash(req.body.password, 10);
-    const existing = await query("SELECT id FROM users WHERE email = $1", [req.body.email.toLowerCase()]);
-    if (existing.rows.length) throw badRequest("Email is already registered");
-    const userResult = await query(
-      `INSERT INTO users (email, password_hash, role)
-       VALUES ($1,$2,'MEMBER')
-       RETURNING id, email, role`,
-      [req.body.email.toLowerCase(), passwordHash]
-    );
-    const user = userResult.rows[0];
-    await query(
-      `INSERT INTO members (user_id, first_name, last_name, phone)
-       VALUES ($1,$2,$3,$4)`,
-      [user.id, req.body.firstName, req.body.lastName, req.body.phone || null]
-    );
-    await promisify(req.login.bind(req))({ ...user, is_active: true });
-    res.status(201).json({ user: { ...user, is_active: true } });
+    const result = await withTransaction(async (client) => {
+      const existing = await client.query("SELECT id FROM users WHERE email = $1", [req.body.email.toLowerCase()]);
+      if (existing.rows.length) throw badRequest("Email is already registered");
+      const userResult = await client.query(
+        `INSERT INTO users (email, password_hash, role, is_active)
+         VALUES ($1,$2,'MEMBER',FALSE)
+         RETURNING id, email, role, is_active, email_verified_at`,
+        [req.body.email.toLowerCase(), passwordHash]
+      );
+      const user = userResult.rows[0];
+      await client.query(
+        `INSERT INTO members (user_id, first_name, last_name, phone)
+         VALUES ($1,$2,$3,$4)`,
+        [user.id, req.body.firstName, req.body.lastName, req.body.phone || null]
+      );
+      const verification = await sendSignupVerification(client, { user, firstName: req.body.firstName, req });
+      await audit(client, {
+        actorUserId: user.id,
+        action: "CREATE",
+        entityTable: "users",
+        entityId: user.id,
+        afterData: user,
+        reason: "Public signup pending email verification",
+        req,
+      });
+      return { user, verification };
+    });
+    res.status(201).json({
+      message: "Account created. Please verify your email before signing in.",
+      emailVerificationRequired: true,
+      email: result.user.email,
+      delivery: result.verification.delivery,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+authRouter.post("/resend-verification", authRateLimit, validate(resendVerificationSchema), async (req, res, next) => {
+  try {
+    const verification = await withTransaction(async (client) => {
+      const user = (await client.query(
+        "SELECT id, email, role, is_active, email_verified_at FROM users WHERE email = $1",
+        [req.body.email.toLowerCase()]
+      )).rows[0];
+      if (user && !user.email_verified_at) {
+        return sendSignupVerification(client, { user, req });
+      }
+      return null;
+    });
+    res.json({
+      message: "If the account needs verification, a new email has been sent.",
+      delivery: verification?.delivery?.devFallback ? verification.delivery : undefined,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+authRouter.post("/verify-email", authRateLimit, validate(verifyEmailSchema), async (req, res, next) => {
+  try {
+    const user = await withTransaction(async (client) => {
+      const verified = await verifyEmailToken(client, { token: req.body.token });
+      await audit(client, {
+        actorUserId: verified.id,
+        action: "UPDATE",
+        entityTable: "users",
+        entityId: verified.id,
+        afterData: verified,
+        reason: "Email verified",
+        req,
+      });
+      return verified;
+    });
+    res.json({ message: "Email verified. You can now log in.", user });
+  } catch (error) {
+    next(error);
+  }
+});
+
+authRouter.post("/accept-invite", authRateLimit, validate(acceptInvitationSchema), async (req, res, next) => {
+  try {
+    validatePasswordPolicy(req.body.password);
+    const passwordHash = await bcrypt.hash(req.body.password, 10);
+    const user = await withTransaction(async (client) => {
+      const accepted = await acceptInvitationToken(client, { token: req.body.token, passwordHash });
+      await audit(client, {
+        actorUserId: accepted.id,
+        action: "UPDATE",
+        entityTable: "users",
+        entityId: accepted.id,
+        afterData: accepted,
+        reason: "Account invitation accepted",
+        req,
+      });
+      return accepted;
+    });
+    await promisify(req.login.bind(req))(user);
+    res.json({ message: "Invitation accepted.", user });
   } catch (error) {
     next(error);
   }

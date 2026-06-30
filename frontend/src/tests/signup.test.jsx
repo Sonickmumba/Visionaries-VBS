@@ -37,11 +37,11 @@ describe("signup screen", () => {
   });
 
   it("submits valid signup requests", async () => {
-    const authApi = vi.fn().mockResolvedValue({ user: { role: "MEMBER" } });
+    const authApi = vi.fn().mockResolvedValue({ emailVerificationRequired: true, email: "mary@example.com" });
 
-    const session = await performSignup({ form: validForm, authApi });
+    const response = await performSignup({ form: validForm, authApi });
 
-    expect(session.user.role).toBe("MEMBER");
+    expect(response.emailVerificationRequired).toBe(true);
     expect(authApi).toHaveBeenCalledWith("/auth/signup", {
       method: "POST",
       body: signupPayload(validForm),

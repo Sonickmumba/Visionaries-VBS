@@ -1,11 +1,12 @@
 import express from "express";
 import bcrypt from "bcryptjs";
+import crypto from "node:crypto";
 import { z } from "zod";
 import { query, withTransaction } from "../../db/pool.js";
 import { requireAuth, requireRole } from "../../middleware/auth.js";
 import { validate } from "../../middleware/validate.js";
 import { audit } from "../../services/auditService.js";
-import { validatePasswordPolicy } from "../../services/passwordPolicy.js";
+import { sendAccountInvitation } from "../../services/emailVerificationService.js";
 import {
   normalizeNotificationPreferences,
   normalizeRoundingPolicy,
@@ -33,7 +34,11 @@ async function assertAtLeastOneActiveAdminRemains(client, { targetUserId, nextRo
 
 settingsRouter.get("/users", async (req, res, next) => {
   try {
-    const { rows } = await query("SELECT id, email, role, is_active, created_at FROM users ORDER BY created_at DESC");
+    const { rows } = await query(
+      `SELECT id, email, role, is_active, email_verified_at, email_verification_sent_at,
+        invited_by, invited_at, invitation_accepted_at, created_at
+       FROM users ORDER BY created_at DESC`
+    );
     res.json({ data: rows });
   } catch (error) {
     next(error);
@@ -42,7 +47,11 @@ settingsRouter.get("/users", async (req, res, next) => {
 
 settingsRouter.get("/context", async (req, res, next) => {
   try {
-    const users = await query("SELECT id, email, role, is_active, created_at FROM users ORDER BY created_at DESC");
+    const users = await query(
+      `SELECT id, email, role, is_active, email_verified_at, email_verification_sent_at,
+        invited_by, invited_at, invitation_accepted_at, created_at
+       FROM users ORDER BY created_at DESC`
+    );
     const activeCycle = await query("SELECT * FROM cycles WHERE status = 'ACTIVE' ORDER BY created_at DESC LIMIT 1");
     const cycles = await query(
       `SELECT id, name, status, savings_cap, minimum_borrowing_amount,
@@ -74,21 +83,28 @@ settingsRouter.get("/context", async (req, res, next) => {
 
 settingsRouter.post("/users", validate(z.object({
   email: z.string().email(),
-  password: z.string().min(10),
   role: z.enum(["ADMIN", "MEMBER", "AUDITOR"]),
 })), async (req, res, next) => {
   try {
     const user = await withTransaction(async (client) => {
       const existing = await client.query("SELECT id FROM users WHERE email = $1", [req.body.email.toLowerCase()]);
       if (existing.rows[0]) throw conflict("Email is already registered");
-      validatePasswordPolicy(req.body.password);
-      const hash = await bcrypt.hash(req.body.password, 10);
+      const hash = await bcrypt.hash(crypto.randomBytes(32).toString("base64url"), 10);
       const { rows } = await client.query(
-        "INSERT INTO users (email, password_hash, role) VALUES ($1,$2,$3) RETURNING id, email, role, is_active, created_at",
-        [req.body.email.toLowerCase(), hash, req.body.role]
+        `INSERT INTO users (email, password_hash, role, is_active, invited_by, invited_at)
+         VALUES ($1,$2,$3,FALSE,$4,now())
+         RETURNING id, email, role, is_active, email_verified_at, email_verification_sent_at,
+           invited_by, invited_at, invitation_accepted_at, created_at`,
+        [req.body.email.toLowerCase(), hash, req.body.role, req.user.id]
       );
+      const invitation = await sendAccountInvitation(client, {
+        user: rows[0],
+        role: req.body.role,
+        invitedBy: req.user.id,
+        req,
+      });
       await audit(client, { actorUserId: req.user.id, action: "CREATE", entityTable: "users", entityId: rows[0].id, afterData: rows[0], req });
-      return rows[0];
+      return { ...rows[0], invitationDelivery: invitation.delivery };
     });
     res.status(201).json({ data: user });
   } catch (error) {

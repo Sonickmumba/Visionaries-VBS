@@ -14,6 +14,7 @@ import {
   Tabs,
 } from "../../components/ui/index.jsx";
 import { Page } from "../../layouts/AppLayouts.jsx";
+import { buildCsv, escapeHtml } from "../../utils/exportSafety.js";
 import "../../styles/reports.css";
 
 const money = (value) => `K${Number(value || 0).toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
@@ -296,7 +297,7 @@ export function rawReportRows(rows, report) {
 }
 
 function downloadCsv(filename, headers, rows) {
-  const csv = [headers, ...rows].map((row) => row.map((cell) => `"${String(cell).replaceAll("\"", "\"\"")}"`).join(",")).join("\n");
+  const csv = buildCsv([headers, ...rows]);
   const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
@@ -309,10 +310,12 @@ function downloadCsv(filename, headers, rows) {
 function openPrintableReport({ title, subtitle, metrics, columns, rows }) {
   const printable = window.open("", "_blank", "width=1100,height=800");
   if (!printable) return;
+  const safeTitle = escapeHtml(title);
+  const safeSubtitle = escapeHtml(subtitle);
   printable.document.write(`
     <html>
       <head>
-        <title>${title}</title>
+        <title>${safeTitle}</title>
         <style>
           body{font-family:Inter,Arial,sans-serif;margin:32px;color:#172033}
           h1{margin:0 0 4px} p{margin:0 0 22px;color:#52637a}
@@ -323,10 +326,10 @@ function openPrintableReport({ title, subtitle, metrics, columns, rows }) {
         </style>
       </head>
       <body>
-        <h1>${title}</h1>
-        <p>${subtitle}</p>
-        <section class="metrics">${metrics.map((metric) => `<div class="metric"><span>${metric.label}</span><strong>${metric.value}</strong></div>`).join("")}</section>
-        <table><thead><tr>${columns.map((column) => `<th>${column}</th>`).join("")}</tr></thead><tbody>${rows.map((row) => `<tr>${row.map((cell) => `<td>${cell}</td>`).join("")}</tr>`).join("")}</tbody></table>
+        <h1>${safeTitle}</h1>
+        <p>${safeSubtitle}</p>
+        <section class="metrics">${metrics.map((metric) => `<div class="metric"><span>${escapeHtml(metric.label)}</span><strong>${escapeHtml(metric.value)}</strong></div>`).join("")}</section>
+        <table><thead><tr>${columns.map((column) => `<th>${escapeHtml(column)}</th>`).join("")}</tr></thead><tbody>${rows.map((row) => `<tr>${row.map((cell) => `<td>${escapeHtml(cell)}</td>`).join("")}</tr>`).join("")}</tbody></table>
         <script>window.print()</script>
       </body>
     </html>

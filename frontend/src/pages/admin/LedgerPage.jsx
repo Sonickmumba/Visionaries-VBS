@@ -16,6 +16,7 @@ import {
   Textarea,
 } from "../../components/ui/index.jsx";
 import { Page } from "../../layouts/AppLayouts.jsx";
+import { buildCsv } from "../../utils/exportSafety.js";
 import "../../styles/ledger-audit.css";
 
 const money = (value) => `K${Number(value || 0).toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
@@ -107,7 +108,7 @@ export function exportLedgerCsv(transactions = []) {
     [tx.source_table, tx.source_id].filter(Boolean).join(":"),
     tx.description || "",
   ]);
-  return [header, ...rows].map((row) => row.map((cell) => `"${String(cell).replaceAll("\"", "\"\"")}"`).join(",")).join("\n");
+  return buildCsv([header, ...rows]);
 }
 
 function DetailValue({ label, value }) {

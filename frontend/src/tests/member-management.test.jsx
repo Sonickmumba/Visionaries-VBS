@@ -36,6 +36,9 @@ const member = {
   cumulative_borrowed: "20000",
   approved_declarations: 3,
   current_declaration_status: "APPROVED",
+  active_cycle_member_id: "cm-1",
+  active_cycle_member_status: "ACTIVE",
+  active_cycle_name: "2026 Main Cycle",
   created_at: "2026-01-01",
 };
 
@@ -122,6 +125,8 @@ describe("member management", () => {
     expect(html).toContain("Search members");
     expect(html).toContain("Mary Phiri");
     expect(html).toContain("Details");
+    expect(html).toContain("Enrolled");
+    expect(html).toContain("Enrolled in 2026 Main Cycle");
     expect(html).toContain("Deactivate");
     expect(html).toContain("K15,000");
   });
@@ -166,6 +171,9 @@ describe("member management", () => {
     expect(css).toContain(".member-card-actions");
     expect(css).toContain("repeat(2, minmax(0, 1fr))");
     expect(css).toContain(".member-desktop-table");
+    expect(css).toContain("min-width: 1040px");
+    expect(css).toContain("white-space: nowrap");
+    expect(css).toContain("word-break: keep-all");
     expect(css).toContain("@media (max-width: 767px)");
   });
 });

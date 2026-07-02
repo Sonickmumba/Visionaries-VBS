@@ -392,12 +392,13 @@ describe("API integration smoke tests", () => {
   it("supports member list status filters and pagination metadata", async () => {
     mocks.query
       .mockResolvedValueOnce({ rows: [{ total: 1 }] })
-      .mockResolvedValueOnce({ rows: [{ id: "member-1", first_name: "Mary", is_active: true }] });
+      .mockResolvedValueOnce({ rows: [{ id: "member-1", first_name: "Mary", is_active: true, active_cycle_member_id: "cm-1", active_cycle_member_status: "ACTIVE" }] });
 
     const response = await inject({ url: "/api/members?status=active&page=2&limit=5" });
 
     expect(response.status).toBe(200);
     expect(response.body.data).toHaveLength(1);
+    expect(response.body.data[0]).toMatchObject({ active_cycle_member_id: "cm-1", active_cycle_member_status: "ACTIVE" });
     expect(response.body.pagination).toEqual({ page: 2, limit: 5, total: 1, totalPages: 1 });
     expect(mocks.query.mock.calls[0][1]).toEqual(["%%", true]);
   });

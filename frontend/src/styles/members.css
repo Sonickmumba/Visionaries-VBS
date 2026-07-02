@@ -137,6 +137,40 @@
   display: none;
 }
 
+.member-desktop-table .badge,
+.member-card .badge,
+.member-enrolled-button {
+  white-space: nowrap;
+  word-break: keep-all;
+}
+
+.member-desktop-table th,
+.member-desktop-table td {
+  word-break: normal;
+}
+
+.member-desktop-table table {
+  min-width: 1040px;
+}
+
+.member-desktop-table td {
+  overflow-wrap: normal;
+}
+
+.member-desktop-table td:first-child,
+.member-desktop-table td:nth-child(2),
+.member-desktop-table td:nth-child(3) {
+  overflow-wrap: anywhere;
+}
+
+.member-desktop-table .button-row.compact {
+  flex-wrap: nowrap;
+}
+
+.member-desktop-table .button-row.compact .btn {
+  white-space: nowrap;
+}
+
 .member-card {
   border: 1px solid #d8e1eb;
   border-radius: 16px;
@@ -186,6 +220,7 @@
   font-size: 11px;
   font-weight: 900;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .member-card-values strong {
@@ -268,6 +303,10 @@
 
   .member-desktop-table {
     display: none;
+  }
+
+  .member-desktop-table .button-row.compact {
+    flex-wrap: wrap;
   }
 
   .member-mobile-cards {

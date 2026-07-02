@@ -131,6 +131,31 @@ describe("member management", () => {
     expect(html).toContain("K15,000");
   });
 
+  it("shows enrolled state only for members already in the active cycle", () => {
+    const unenrolledMember = {
+      ...member,
+      id: "member-2",
+      first_name: "John",
+      last_name: "Banda",
+      member_code: "M002",
+      active_cycle_member_id: null,
+      active_cycle_member_status: null,
+      active_cycle_name: null,
+    };
+    const html = renderToStaticMarkup(
+      <MemberManagementPage
+        initialMembers={[member, unenrolledMember]}
+        initialCycles={[{ id: "cycle-1", name: "2026 Main Cycle", status: "ACTIVE" }]}
+      />
+    );
+
+    expect(html).toContain("Mary Phiri");
+    expect(html).toContain("John Banda");
+    expect(html).toContain("Enrolled in 2026 Main Cycle");
+    expect(html).toContain("title=\"Enroll in active cycle\"");
+    expect(html).toContain("member-enrolled-button");
+  });
+
   it("renders member detail tabs and statement data", () => {
     const html = renderToStaticMarkup(
       <MemberManagementPage

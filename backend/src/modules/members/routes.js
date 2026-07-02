@@ -60,7 +60,6 @@ membersRouter.get("/", requireRole("ADMIN", "AUDITOR"), async (req, res, next) =
          FROM cycle_members acm
          JOIN cycles ac ON ac.id = acm.cycle_id
          WHERE acm.member_id = m.id
-           AND ac.status = 'ACTIVE'
            AND acm.status = 'ACTIVE'
          ORDER BY acm.joined_at DESC NULLS LAST, acm.created_at DESC
          LIMIT 1

@@ -704,11 +704,11 @@ export function MemberManagementPage({
         footer={(
           <div className="button-row">
             <Button type="button" variant="secondary" onClick={() => setEnrollOpen(false)}>Cancel</Button>
-            <Button type="button" onClick={submitEnroll} loading={busy === "enroll"}>Enroll Member</Button>
+            <Button type="submit" form="member-enroll-form" loading={busy === "enroll"}>Enroll Member</Button>
           </div>
         )}
       >
-        <form onSubmit={submitEnroll}>
+        <form id="member-enroll-form" onSubmit={submitEnroll}>
           <div className="form-grid two">
             <Select
               label="Member"

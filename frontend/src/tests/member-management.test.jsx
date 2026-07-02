@@ -156,6 +156,14 @@ describe("member management", () => {
     expect(html).toContain("member-enrolled-button");
   });
 
+  it("wires the enroll modal footer button to the enroll form submit", () => {
+    const source = fs.readFileSync(path.join(process.cwd(), "src/pages/admin/MemberManagementPage.jsx"), "utf8");
+
+    expect(source).toContain('form="member-enroll-form"');
+    expect(source).toContain('id="member-enroll-form"');
+    expect(source).toContain('onSubmit={submitEnroll}');
+  });
+
   it("renders member detail tabs and statement data", () => {
     const html = renderToStaticMarkup(
       <MemberManagementPage

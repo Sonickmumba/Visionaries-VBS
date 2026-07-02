@@ -401,6 +401,8 @@ describe("API integration smoke tests", () => {
     expect(response.body.data[0]).toMatchObject({ active_cycle_member_id: "cm-1", active_cycle_member_status: "ACTIVE" });
     expect(response.body.pagination).toEqual({ page: 2, limit: 5, total: 1, totalPages: 1 });
     expect(mocks.query.mock.calls[0][1]).toEqual(["%%", true]);
+    expect(mocks.query.mock.calls[1][0]).toContain("acm.status = 'ACTIVE'");
+    expect(mocks.query.mock.calls[1][0]).not.toContain("ac.status = 'ACTIVE'");
   });
 
   it("blocks members from opening another member profile", async () => {

@@ -10,6 +10,7 @@
     "seed": "node src/db/seed.js",
     "db:wait": "node src/db/wait.js",
     "db:smoke": "node src/db/smoke.js",
+    "smoke:staging": "node scripts/stagingSmoke.js",
     "test": "vitest run",
     "test:regression": "vitest run tests/regression.test.js tests/adminWorkflow.qa.test.js tests/memberWorkflow.qa.test.js tests/financialAccuracy.qa.test.js tests/commonInterestService.test.js tests/authSession.test.js tests/paymentProofService.test.js"
   },

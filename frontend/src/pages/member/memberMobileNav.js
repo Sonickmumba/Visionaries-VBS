@@ -1,10 +1,9 @@
-import { Bell, ClipboardList, FileBarChart, Gauge, HandCoins, Receipt } from "lucide-react";
+import { Banknote, ClipboardList, FileBarChart, Gauge, PiggyBank } from "lucide-react";
 
 export const memberMobileNavItems = [
   { id: "member-dashboard", label: "Home", icon: Gauge },
   { id: "my-declaration", label: "Declare", icon: ClipboardList },
-  { id: "my-statement", label: "Statement", icon: Receipt },
-  { id: "my-shareout", label: "Shareout", icon: HandCoins },
+  { id: "my-savings", label: "Savings", icon: PiggyBank },
+  { id: "my-loans", label: "Loans", icon: Banknote },
   { id: "my-reports", label: "Reports", icon: FileBarChart },
-  { id: "my-notifications", label: "Alerts", icon: Bell },
 ];

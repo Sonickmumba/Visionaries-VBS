@@ -137,10 +137,9 @@ function Sidebar({ nav, page, setPage, open, setOpen, user }) {
 }
 
 function MobileBottomNav({ nav, page, setPage, user }) {
-  const { unreadCount } = useNotificationUnread();
   const priorityIds = user.role === "MEMBER"
-    ? ["member-dashboard", "my-declaration", "my-statement", "my-shareout", "my-reports"]
-    : ["dashboard", "declarations", "loans", "notifications", "reports"];
+    ? ["member-dashboard", "my-declaration", "my-savings", "my-loans", "my-reports"]
+    : ["dashboard", "members", "declarations", "loans", "reports"];
   const items = priorityIds
     .map((id) => nav.find(([navId]) => navId === id))
     .filter(Boolean);
@@ -157,9 +156,6 @@ function MobileBottomNav({ nav, page, setPage, user }) {
         >
           <span className="mobile-nav-icon-wrap">
             <Icon size={18} aria-hidden="true" />
-            {id === "notifications" && unreadCount > 0 ? (
-              <span className="mobile-nav-badge" aria-label={`${unreadCount} unread notifications`}>{unreadCount > 99 ? "99+" : unreadCount}</span>
-            ) : null}
           </span>
           <span className="mobile-nav-label">{label.replace("My ", "").replace("Monthly ", "")}</span>
         </button>

@@ -59,6 +59,18 @@ describe("app layouts", () => {
     expect(html).toContain("Open notifications");
   });
 
+  it("keeps notifications in the header instead of mobile bottom navigation", () => {
+    const source = fs.readFileSync(path.join(process.cwd(), "src/layouts/AppLayouts.jsx"), "utf8");
+    const memberMobileNav = fs.readFileSync(path.join(process.cwd(), "src/pages/member/memberMobileNav.js"), "utf8");
+
+    expect(source).toContain("Open notifications");
+    expect(source).toContain("[\"dashboard\", \"members\", \"declarations\", \"loans\", \"reports\"]");
+    expect(source).toContain("[\"member-dashboard\", \"my-declaration\", \"my-savings\", \"my-loans\", \"my-reports\"]");
+    expect(source).not.toContain("[\"dashboard\", \"declarations\", \"loans\", \"notifications\", \"reports\"]");
+    expect(memberMobileNav).not.toContain("my-notifications");
+    expect(memberMobileNav).not.toContain("Alerts");
+  });
+
   it("renders member shell with member navigation", () => {
     const html = renderToStaticMarkup(
       <AppLayout user={member} page="my-statement" setPage={() => {}} onLogout={() => {}}>

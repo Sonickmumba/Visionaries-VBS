@@ -75,12 +75,12 @@ describe("notifications", () => {
     expect(html).toContain("Notification quick actions");
   });
 
-  it("renders member notifications as a bottom-nav destination", () => {
+  it("renders member notifications without duplicating alerts in the bottom nav", () => {
     const html = renderToStaticMarkup(<NotificationsPage initialEvents={events} setPage={() => {}} role="MEMBER" />);
 
     expect(html).toContain("Primary mobile navigation");
-    expect(html).toContain("Alerts");
-    expect(html).toContain("aria-current=\"page\"");
+    expect(html).toContain("Reports");
+    expect(html).not.toContain("Alerts");
   });
 
   it("renders a notification card with report action", () => {

@@ -23,6 +23,7 @@ import {
   signedPaymentProofUrl,
   validateCloudinaryUploadResult,
   validatePaymentProofRequest,
+  verifyCloudinaryUploadedAsset,
 } from "../../services/paymentProofService.js";
 import { badRequest, forbidden, notFound } from "../../utils/httpError.js";
 
@@ -527,14 +528,19 @@ declarationsRouter.post("/:id/attachments", validate(proofConfirmSchema), requir
         contentType: req.body.contentType,
         fileSizeBytes: req.body.fileSizeBytes,
       });
+      const expectedResourceType = resourceTypeForContentType(req.body.contentType);
       validateCloudinaryUploadResult({
         expectedPublicId: req.body.expectedPublicId,
-        expectedResourceType: resourceTypeForContentType(req.body.contentType),
+        expectedResourceType,
         upload: {
           publicId: req.body.cloudinary.publicId,
           resourceType: req.body.cloudinary.resourceType,
           bytes: req.body.cloudinary.bytes || req.body.fileSizeBytes,
         },
+      });
+      const cloudinaryAsset = await verifyCloudinaryUploadedAsset({
+        expectedPublicId: req.body.expectedPublicId,
+        expectedResourceType,
       });
       if (!String(req.body.cloudinary.publicId).includes(`/${declaration.id}/`)) {
         throw badRequest("Uploaded proof does not belong to this declaration.");
@@ -559,16 +565,16 @@ declarationsRouter.post("/:id/attachments", validate(proofConfirmSchema), requir
           declaration.cycle_member_id,
           req.user.id,
           req.body.attachmentType,
-          req.body.cloudinary.assetId || null,
+          cloudinaryAsset.asset_id || req.body.cloudinary.assetId || null,
           req.body.cloudinary.publicId,
-          req.body.cloudinary.resourceType,
+          cloudinaryAsset.resource_type || req.body.cloudinary.resourceType,
           req.body.cloudinary.deliveryType || "authenticated",
-          req.body.cloudinary.format || null,
-          req.body.cloudinary.version || null,
+          cloudinaryAsset.format || req.body.cloudinary.format || null,
+          cloudinaryAsset.version || req.body.cloudinary.version || null,
           req.body.originalFilename,
           req.body.contentType,
-          req.body.cloudinary.bytes || req.body.fileSizeBytes,
-          req.body.cloudinary.secureUrl || null,
+          cloudinaryAsset.bytes || req.body.cloudinary.bytes || req.body.fileSizeBytes,
+          cloudinaryAsset.secure_url || req.body.cloudinary.secureUrl || null,
         ]
       );
       await audit(client, {

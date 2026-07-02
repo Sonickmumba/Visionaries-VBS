@@ -118,6 +118,32 @@ export function validateCloudinaryUploadResult({ expectedPublicId, expectedResou
   }
 }
 
+export async function verifyCloudinaryUploadedAsset({ expectedPublicId, expectedResourceType }) {
+  assertCloudinaryConfigured();
+  configureCloudinary();
+  try {
+    const asset = await cloudinary.api.resource(expectedPublicId, {
+      resource_type: expectedResourceType,
+      type: "authenticated",
+    });
+    validateCloudinaryUploadResult({
+      expectedPublicId,
+      expectedResourceType,
+      upload: {
+        publicId: asset.public_id,
+        resourceType: asset.resource_type,
+        bytes: asset.bytes,
+      },
+    });
+    return asset;
+  } catch (error) {
+    if (error?.http_code === 404) {
+      throw badRequest("Uploaded proof could not be verified in Cloudinary.");
+    }
+    throw error;
+  }
+}
+
 export function signedPaymentProofUrl(attachment, { asAttachment = false } = {}) {
   assertCloudinaryConfigured();
   configureCloudinary();

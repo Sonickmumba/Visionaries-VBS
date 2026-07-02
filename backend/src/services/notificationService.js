@@ -272,7 +272,7 @@ function broadcastNotification(event) {
 }
 
 async function publishFanout(event) {
-  if (!env.notificationsRedisFanoutEnabled || !redisEnabled()) {
+  if (env.nodeEnv === "test" || !env.notificationsRedisFanoutEnabled || !redisEnabled()) {
     broadcastNotification(event);
     return;
   }
@@ -330,7 +330,7 @@ export async function publishActivityNotification(db, input) {
 }
 
 export function queueActivityNotification(db, input) {
-  if (env.notificationsQueueEnabled && redisEnabled()) {
+  if (env.nodeEnv !== "test" && env.notificationsQueueEnabled && redisEnabled()) {
     import("./notificationQueueService.js")
       .then(({ addNotificationJob }) => addNotificationJob(input))
       .catch(() => {
@@ -429,7 +429,7 @@ export async function archiveExpiredNotifications(db, { retentionDays = env.noti
 }
 
 export async function startNotificationFanoutSubscriber() {
-  if (subscriberStarted || !env.notificationsRedisFanoutEnabled || !redisEnabled()) return null;
+  if (env.nodeEnv === "test" || subscriberStarted || !env.notificationsRedisFanoutEnabled || !redisEnabled()) return null;
   const subscriber = getRedisSubscriberConnection();
   try {
     await subscriber.connect().catch((error) => {

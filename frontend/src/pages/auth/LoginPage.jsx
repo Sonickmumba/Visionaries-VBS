@@ -65,6 +65,8 @@ export function LoginPage({
   const [email, setEmail] = useState(initialEmail);
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(true);
+  const [mfaRequired, setMfaRequired] = useState(false);
+  const [mfaCode, setMfaCode] = useState("");
   const [errors, setErrors] = useState({});
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -74,6 +76,23 @@ export function LoginPage({
   async function submit(event) {
     event.preventDefault();
     setError("");
+    if (mfaRequired) {
+      if (!/^\d{6}$/.test(mfaCode.trim())) {
+        setError("Enter the 6-digit admin verification code.");
+        return;
+      }
+      setLoading(true);
+      try {
+        const session = await authApi("/auth/mfa/verify", { method: "POST", body: { code: mfaCode.trim() } });
+        onLogin?.(session.user, landingPageForRole(session.user?.role), { rememberMe });
+      } catch (err) {
+        setError(friendlyLoginError(err));
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
+
     const nextErrors = validateLoginForm({ email, password });
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length) return;
@@ -81,6 +100,12 @@ export function LoginPage({
     setLoading(true);
     try {
       const session = await performLogin({ email, password, authApi });
+      if (session.mfaRequired) {
+        setMfaRequired(true);
+        setPassword("");
+        setError("");
+        return;
+      }
       onLogin?.(session.user, landingPageForRole(session.user?.role), { rememberMe });
     } catch (err) {
       setError(err.validationErrors ? "Check the highlighted fields." : friendlyLoginError(err));
@@ -125,31 +150,46 @@ export function LoginPage({
           error={errors.email}
           icon={Mail}
         />
-        <Field
-          label="Password"
-          value={password}
-          onChange={(value) => {
-            setPassword(value);
-            if (errors.password) setErrors((current) => ({ ...current, password: "" }));
-          }}
-          type="password"
-          placeholder="Enter password"
-          autoComplete="current-password"
-          error={errors.password}
-        />
 
-        <div className="login-options">
-          <label className="check-field">
-            <input type="checkbox" checked={rememberMe} onChange={(event) => setRememberMe(event.target.checked)} />
-            Remember me
-          </label>
-          <button type="button" className="link-button" onClick={navigateForgot}>Forgot password?</button>
-        </div>
+        {mfaRequired ? (
+          <Field
+            label="Admin verification code"
+            value={mfaCode}
+            onChange={setMfaCode}
+            type="text"
+            placeholder="6-digit code"
+            autoComplete="one-time-code"
+            icon={ShieldCheck}
+          />
+        ) : (
+          <Field
+            label="Password"
+            value={password}
+            onChange={(value) => {
+              setPassword(value);
+              if (errors.password) setErrors((current) => ({ ...current, password: "" }));
+            }}
+            type="password"
+            placeholder="Enter password"
+            autoComplete="current-password"
+            error={errors.password}
+          />
+        )}
+
+        {!mfaRequired ? (
+          <div className="login-options">
+            <label className="check-field">
+              <input type="checkbox" checked={rememberMe} onChange={(event) => setRememberMe(event.target.checked)} />
+              Remember me
+            </label>
+            <button type="button" className="link-button" onClick={navigateForgot}>Forgot password?</button>
+          </div>
+        ) : null}
 
         {error ? <Alert tone="danger" title="Unable to log in">{error}</Alert> : null}
 
         <div className="button-row auth-actions">
-          <Button loading={loading} disabled={loading}>Log In</Button>
+          <Button loading={loading} disabled={loading}>{mfaRequired ? "Verify Code" : "Log In"}</Button>
           <Button type="button" variant="secondary" disabled={loading} onClick={navigateSignup}>Create Account</Button>
         </div>
       </form>

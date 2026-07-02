@@ -1,10 +1,12 @@
-import { describe, expect, it } from "vitest";
+import { v2 as cloudinary } from "cloudinary";
+import { describe, expect, it, vi } from "vitest";
 import { env } from "../src/config/env.js";
 import {
   buildPaymentProofUploadSignature,
   signedPaymentProofUrl,
   validateCloudinaryUploadResult,
   validatePaymentProofRequest,
+  verifyCloudinaryUploadedAsset,
 } from "../src/services/paymentProofService.js";
 
 const declaration = {
@@ -88,5 +90,29 @@ describe("payment proof service", () => {
     expect(url).toContain("demo-cloud");
     expect(url).toContain("public_id=proofs%2Ffile-1");
     expect(url).toContain("signature=");
+  });
+
+  it("verifies uploaded assets with Cloudinary before persistence", async () => {
+    env.cloudinaryCloudName = "demo-cloud";
+    env.cloudinaryApiKey = "demo-key";
+    env.cloudinaryApiSecret = "demo-secret";
+    const resource = vi.spyOn(cloudinary.api, "resource").mockResolvedValueOnce({
+      public_id: "proofs/file-1",
+      resource_type: "image",
+      bytes: 1000,
+      asset_id: "asset-1",
+    });
+
+    const asset = await verifyCloudinaryUploadedAsset({
+      expectedPublicId: "proofs/file-1",
+      expectedResourceType: "image",
+    });
+
+    expect(asset.asset_id).toBe("asset-1");
+    expect(resource).toHaveBeenCalledWith("proofs/file-1", {
+      resource_type: "image",
+      type: "authenticated",
+    });
+    resource.mockRestore();
   });
 });

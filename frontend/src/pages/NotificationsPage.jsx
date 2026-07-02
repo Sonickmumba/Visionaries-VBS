@@ -115,6 +115,7 @@ export function NotificationsPage({ notificationsApi = api, initialEvents = null
   }
 
   useEffect(() => {
+    if (initialEvents === null && useSharedTracker) refresh();
     if (initialEvents === null && !useSharedTracker) refresh();
   }, [initialEvents, useSharedTracker]);
 

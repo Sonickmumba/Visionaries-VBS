@@ -7,6 +7,7 @@ const NotificationUnreadContext = createContext({
   connected: false,
   loading: false,
   error: "",
+  refreshUnreadCount: async () => 0,
   refresh: async () => [],
   markRead: async () => {},
   markAllRead: () => {},
@@ -50,6 +51,19 @@ export function NotificationUnreadProvider({ user, page, children, notifications
 
   const markAllRead = useCallback((items = []) => markRead(items), [markRead]);
 
+  const refreshUnreadCount = useCallback(async () => {
+    setError("");
+    try {
+      const response = await notificationsApi("/notifications/unread-count");
+      const count = Number(response.unreadCount || 0);
+      setUnreadCount(count);
+      return count;
+    } catch (err) {
+      setError(err.message || "Notification count could not load.");
+      return 0;
+    }
+  }, [notificationsApi]);
+
   const refresh = useCallback(async () => {
     setLoading(true);
     setError("");
@@ -75,9 +89,9 @@ export function NotificationUnreadProvider({ user, page, children, notifications
 
   useEffect(() => {
     if (!user) return undefined;
-    refresh();
+    refreshUnreadCount();
     return undefined;
-  }, [user, refresh]);
+  }, [user, refreshUnreadCount]);
 
   useEffect(() => {
     if (!user || typeof EventSource === "undefined") return undefined;
@@ -108,10 +122,11 @@ export function NotificationUnreadProvider({ user, page, children, notifications
     connected,
     loading,
     error,
+    refreshUnreadCount,
     refresh,
     markRead,
     markAllRead,
-  }), [connected, error, events, loading, markAllRead, markRead, refresh, unreadCount]);
+  }), [connected, error, events, loading, markAllRead, markRead, refresh, refreshUnreadCount, unreadCount]);
 
   return (
     <NotificationUnreadContext.Provider value={value}>

@@ -111,6 +111,8 @@ describe("notifications", () => {
     expect(contextSource).toContain("/notifications/stream");
     expect(contextSource).toContain("withCredentials: true");
     expect(contextSource).toContain("unreadCount");
+    expect(contextSource).toContain("refreshUnreadCount");
+    expect(contextSource).toContain("/notifications/unread-count");
     expect(contextSource).toContain("markRead");
     expect(contextSource).toContain("markAllRead");
     expect(contextSource).toContain("/notifications/read");

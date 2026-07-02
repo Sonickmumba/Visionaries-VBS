@@ -133,6 +133,9 @@ describe("notification service", () => {
             }],
           };
         }
+        if (sql.includes("COUNT(*)::int AS unread_count")) {
+          return { rows: [{ unread_count: 3 }] };
+        }
         return { rows: [], rowCount: 1 };
       },
     };
@@ -146,7 +149,7 @@ describe("notification service", () => {
       notificationIds: ["11111111-1111-4111-8111-111111111111"],
     });
 
-    expect(listed.unreadCount).toBe(1);
+    expect(listed.unreadCount).toBe(3);
     expect(listed.data[0]).toMatchObject({ id: "11111111-1111-4111-8111-111111111111", readAt: null });
     expect(marked.read).toBe(1);
     expect(calls.at(-1).sql).toContain("notification_read_receipts");

@@ -152,21 +152,23 @@ describe("API integration smoke tests", () => {
   });
 
   it("returns recent notifications for authenticated users", async () => {
-    mocks.query.mockResolvedValueOnce({
-      rows: [{
-        id: "11111111-1111-4111-8111-111111111111",
-        type: "DECLARATION_SUBMITTED",
-        title: "Declaration submitted",
-        message: "A member submitted a declaration for group review.",
-        audience: "ALL",
-        severity: "INFO",
-        action_url: "reports:declarations",
-        action_target: { adminPage: "declarations", memberPage: "my-reports", report: "declarations" },
-        metadata: { savingsAmount: 15000 },
-        created_at: "2026-06-22T10:00:00.000Z",
-        read_at: null,
-      }],
-    });
+    mocks.query
+      .mockResolvedValueOnce({
+        rows: [{
+          id: "11111111-1111-4111-8111-111111111111",
+          type: "DECLARATION_SUBMITTED",
+          title: "Declaration submitted",
+          message: "A member submitted a declaration for group review.",
+          audience: "ALL",
+          severity: "INFO",
+          action_url: "reports:declarations",
+          action_target: { adminPage: "declarations", memberPage: "my-reports", report: "declarations" },
+          metadata: { savingsAmount: 15000 },
+          created_at: "2026-06-22T10:00:00.000Z",
+          read_at: null,
+        }],
+      })
+      .mockResolvedValueOnce({ rows: [{ unread_count: 4 }] });
 
     const response = await inject({
       url: "/api/notifications?limit=10",
@@ -175,13 +177,28 @@ describe("API integration smoke tests", () => {
 
     expect(response.status).toBe(200);
     expect(response.body.data).toHaveLength(1);
-    expect(response.body.unreadCount).toBe(1);
+    expect(response.body.unreadCount).toBe(4);
     expect(response.body.data[0]).toMatchObject({
       id: "11111111-1111-4111-8111-111111111111",
       type: "DECLARATION_SUBMITTED",
       title: "Declaration submitted",
       actionUrl: "reports:declarations",
     });
+    expect(mocks.query.mock.calls[1][0]).toContain("COUNT(*)::int AS unread_count");
+  });
+
+  it("returns notification unread count without loading the feed", async () => {
+    mocks.query.mockResolvedValueOnce({ rows: [{ unread_count: 27 }] });
+
+    const response = await inject({
+      url: "/api/notifications/unread-count",
+      headers: { "x-test-role": "MEMBER" },
+    });
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({ unreadCount: 27 });
+    expect(mocks.query.mock.calls[0][0]).toContain("COUNT(*)::int AS unread_count");
+    expect(mocks.query.mock.calls[0][0]).not.toContain("SELECT n.*, r.read_at");
   });
 
   it("marks notifications as read for the authenticated user", async () => {

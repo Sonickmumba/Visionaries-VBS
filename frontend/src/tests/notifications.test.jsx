@@ -72,15 +72,16 @@ describe("notifications", () => {
     expect(html).toContain("K15,000");
     expect(html).toContain("Month 2");
     expect(html).toContain("Open Reports");
+    expect(html).toContain("Mark all read");
     expect(html).toContain("Notification quick actions");
   });
 
-  it("renders member notifications as a bottom-nav destination", () => {
+  it("renders member notifications without duplicating alerts in the bottom nav", () => {
     const html = renderToStaticMarkup(<NotificationsPage initialEvents={events} setPage={() => {}} role="MEMBER" />);
 
     expect(html).toContain("Primary mobile navigation");
-    expect(html).toContain("Alerts");
-    expect(html).toContain("aria-current=\"page\"");
+    expect(html).toContain("Reports");
+    expect(html).not.toContain("Alerts");
   });
 
   it("renders a notification card with report action", () => {
@@ -88,7 +89,17 @@ describe("notifications", () => {
 
     expect(html).toContain("Declaration Submitted");
     expect(html).toContain("View");
+    expect(html).toContain("Unread");
+    expect(html).toContain("Mark read");
     expect(html).toContain("K15,000");
+  });
+
+  it("renders read notifications without a per-card mark-read action", () => {
+    const html = renderToStaticMarkup(<NotificationCard event={{ ...events[0], readAt: "2026-06-22T10:15:00Z" }} onOpenTarget={() => {}} />);
+
+    expect(html).toContain("Read");
+    expect(html).toContain("View");
+    expect(html).not.toContain("Mark read");
   });
 
   it("keeps real-time stream wiring and responsive styles", () => {
@@ -100,10 +111,20 @@ describe("notifications", () => {
     expect(contextSource).toContain("/notifications/stream");
     expect(contextSource).toContain("withCredentials: true");
     expect(contextSource).toContain("unreadCount");
+    expect(contextSource).toContain("refreshUnreadCount");
+    expect(contextSource).toContain("/notifications/unread-count");
+    expect(contextSource).toContain("markRead");
+    expect(contextSource).toContain("markAllRead");
     expect(contextSource).toContain("/notifications/read");
     expect(contextSource).toContain("!event.readAt");
+    expect(contextSource).toContain("Math.max(0, current - notificationIds.length)");
+    expect(contextSource).toContain("setUnreadCount(Number(response.unreadCount || 0))");
+    expect(contextSource).not.toContain("markAllRead(nextEvents)");
+    expect(contextSource).not.toContain("markAllRead(events)");
     expect(contextSource).not.toContain("localStorage");
     expect(source).not.toContain("useSharedTracker && events.length");
+    expect(source).toContain("markEventRead");
+    expect(source).toContain("markVisibleRead");
     expect(source).toContain("actionTarget");
     expect(source).toContain("target.adminPage");
     expect(source).toContain("target.memberPage");
@@ -113,6 +134,8 @@ describe("notifications", () => {
     expect(css).toContain(".notifications-mobile-actions");
     expect(css).toContain(".notifications-hero");
     expect(css).toContain(".notification-card");
+    expect(css).toContain(".notification-card.unread");
+    expect(css).toContain(".notification-actions");
     expect(css).toContain("@media (max-width: 767px)");
   });
 });

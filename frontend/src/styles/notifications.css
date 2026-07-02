@@ -62,6 +62,15 @@
   box-shadow: 0 12px 30px rgba(16, 42, 67, 0.06);
 }
 
+.notification-card.unread {
+  border-color: #f7c948;
+  box-shadow: 0 14px 32px rgba(180, 83, 9, 0.11);
+}
+
+.notification-card.read {
+  background: #fbfdff;
+}
+
 .notification-icon {
   width: 40px;
   height: 40px;
@@ -77,6 +86,19 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 8px;
+}
+
+.notification-card-badges,
+.notification-actions,
+.notifications-panel-head .button-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.notification-actions {
+  justify-content: flex-end;
 }
 
 .notification-card strong,
@@ -125,8 +147,12 @@
     grid-template-columns: auto minmax(0, 1fr);
   }
 
-  .notification-card .btn {
+  .notification-actions {
     grid-column: 1 / -1;
+    justify-content: stretch;
+  }
+
+  .notification-card .btn {
     width: 100%;
     min-height: 40px;
   }

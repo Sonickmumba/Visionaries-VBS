@@ -59,6 +59,27 @@ function initials(member) {
     .toUpperCase() || "M";
 }
 
+function isEnrolledInActiveCycle(member) {
+  return Boolean(member?.active_cycle_member_id || member?.active_cycle_member_status === "ACTIVE");
+}
+
+function EnrollmentButton({ member, onEnroll }) {
+  const enrolled = isEnrolledInActiveCycle(member);
+  return (
+    <Button
+      type="button"
+      variant="secondary"
+      size="sm"
+      onClick={() => onEnroll(member)}
+      disabled={enrolled}
+      className={enrolled ? "member-enrolled-button" : ""}
+      title={enrolled ? `Enrolled${member?.active_cycle_name ? ` in ${member.active_cycle_name}` : ""}` : "Enroll in active cycle"}
+    >
+      {enrolled ? "Enrolled" : "Enroll"}
+    </Button>
+  );
+}
+
 function badgeTone(status) {
   if (status === "APPROVED" || status === "ACTIVE") return "green";
   if (status === "SUBMITTED" || status === "LATE") return "amber";
@@ -340,7 +361,7 @@ function MemberCards({ members, busy, onView, onEdit, onEnroll, onToggle }) {
           <div className="member-card-actions">
             <Button type="button" variant="secondary" size="sm" onClick={() => onView(member.id)}>Details</Button>
             <Button type="button" variant="secondary" size="sm" onClick={() => onEdit(member)}>Edit</Button>
-            <Button type="button" variant="secondary" size="sm" onClick={() => onEnroll(member)}>Enroll</Button>
+            <EnrollmentButton member={member} onEnroll={onEnroll} />
             <Button
               type="button"
               variant={member.is_active ? "danger" : "secondary"}
@@ -626,7 +647,7 @@ export function MemberManagementPage({
                   <div className="button-row compact">
                     <Button type="button" variant="secondary" size="sm" onClick={() => loadDetail(member.id)}>View Details</Button>
                     <Button type="button" variant="secondary" size="sm" onClick={() => openEdit(member)}>Edit</Button>
-                    <Button type="button" variant="secondary" size="sm" onClick={() => openEnroll(member)}>Enroll</Button>
+                    <EnrollmentButton member={member} onEnroll={openEnroll} />
                     <Button
                       type="button"
                       variant={member.is_active ? "danger" : "secondary"}
@@ -683,11 +704,11 @@ export function MemberManagementPage({
         footer={(
           <div className="button-row">
             <Button type="button" variant="secondary" onClick={() => setEnrollOpen(false)}>Cancel</Button>
-            <Button type="button" onClick={submitEnroll} loading={busy === "enroll"}>Enroll Member</Button>
+            <Button type="submit" form="member-enroll-form" loading={busy === "enroll"}>Enroll Member</Button>
           </div>
         )}
       >
-        <form onSubmit={submitEnroll}>
+        <form id="member-enroll-form" onSubmit={submitEnroll}>
           <div className="form-grid two">
             <Select
               label="Member"

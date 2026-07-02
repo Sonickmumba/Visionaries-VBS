@@ -63,7 +63,9 @@
         width: 118px;
         height: 118px;
         border-radius: 34px;
-        background: rgba(255, 255, 255, 0.16);
+        background:
+          radial-gradient(circle at 50% 42%, rgba(244, 180, 0, 0.28), transparent 38%),
+          rgba(255, 255, 255, 0.16);
         color: #facc15;
         display: grid;
         place-items: center;
@@ -72,6 +74,22 @@
           0 18px 48px rgba(16, 42, 67, 0.24);
         font-size: 46px;
         font-weight: 900;
+        position: relative;
+      }
+
+      .boot-mark::before {
+        content: "";
+        position: absolute;
+        inset: 14%;
+        border: 3px solid rgba(244, 180, 0, 0.85);
+        border-top-color: rgba(255, 255, 255, 0.35);
+        border-radius: 999px;
+      }
+
+      .boot-mark span {
+        position: relative;
+        z-index: 1;
+        color: white;
       }
 
       .boot-copy {
@@ -129,7 +147,7 @@
     <div id="root">
       <main class="boot-shell" aria-label="Visionaries Village Banking loading">
         <section class="boot-phone">
-          <div class="boot-mark" aria-hidden="true">K</div>
+          <div class="boot-mark" aria-hidden="true"><span>V</span></div>
           <div class="boot-copy">
             <h1>Visionaries Village Banking</h1>
             <p>Save Together. Grow Together.</p>

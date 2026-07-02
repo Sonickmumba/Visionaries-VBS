@@ -56,6 +56,7 @@ describe("admin dashboard", () => {
     const html = renderToStaticMarkup(<AdminDashboardPage initialData={dashboardData} setPage={() => {}} />);
 
     expect(html).toContain("Admin Dashboard");
+    expect(html).toContain("brand-lockup");
     expect(html).toContain("Visionaries Operations");
     expect(html).toContain("Good day");
     expect(html).toContain("Quick actions");

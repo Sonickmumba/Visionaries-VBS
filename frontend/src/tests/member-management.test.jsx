@@ -36,6 +36,9 @@ const member = {
   cumulative_borrowed: "20000",
   approved_declarations: 3,
   current_declaration_status: "APPROVED",
+  active_cycle_member_id: "cm-1",
+  active_cycle_member_status: "ACTIVE",
+  active_cycle_name: "2026 Main Cycle",
   created_at: "2026-01-01",
 };
 
@@ -122,8 +125,43 @@ describe("member management", () => {
     expect(html).toContain("Search members");
     expect(html).toContain("Mary Phiri");
     expect(html).toContain("Details");
+    expect(html).toContain("Enrolled");
+    expect(html).toContain("Enrolled in 2026 Main Cycle");
     expect(html).toContain("Deactivate");
     expect(html).toContain("K15,000");
+  });
+
+  it("shows enrolled state only for members already in the active cycle", () => {
+    const unenrolledMember = {
+      ...member,
+      id: "member-2",
+      first_name: "John",
+      last_name: "Banda",
+      member_code: "M002",
+      active_cycle_member_id: null,
+      active_cycle_member_status: null,
+      active_cycle_name: null,
+    };
+    const html = renderToStaticMarkup(
+      <MemberManagementPage
+        initialMembers={[member, unenrolledMember]}
+        initialCycles={[{ id: "cycle-1", name: "2026 Main Cycle", status: "ACTIVE" }]}
+      />
+    );
+
+    expect(html).toContain("Mary Phiri");
+    expect(html).toContain("John Banda");
+    expect(html).toContain("Enrolled in 2026 Main Cycle");
+    expect(html).toContain("title=\"Enroll in active cycle\"");
+    expect(html).toContain("member-enrolled-button");
+  });
+
+  it("wires the enroll modal footer button to the enroll form submit", () => {
+    const source = fs.readFileSync(path.join(process.cwd(), "src/pages/admin/MemberManagementPage.jsx"), "utf8");
+
+    expect(source).toContain('form="member-enroll-form"');
+    expect(source).toContain('id="member-enroll-form"');
+    expect(source).toContain('onSubmit={submitEnroll}');
   });
 
   it("renders member detail tabs and statement data", () => {
@@ -166,6 +204,9 @@ describe("member management", () => {
     expect(css).toContain(".member-card-actions");
     expect(css).toContain("repeat(2, minmax(0, 1fr))");
     expect(css).toContain(".member-desktop-table");
+    expect(css).toContain("min-width: 1040px");
+    expect(css).toContain("white-space: nowrap");
+    expect(css).toContain("word-break: keep-all");
     expect(css).toContain("@media (max-width: 767px)");
   });
 });

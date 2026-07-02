@@ -12,6 +12,7 @@ import {
   Users,
 } from "lucide-react";
 import { api } from "../../api/client.js";
+import { BrandMark } from "../../components/BrandMark.jsx";
 import { Alert, Button, Card, EmptyState, Skeleton } from "../../components/ui/index.jsx";
 import { Page } from "../../layouts/AppLayouts.jsx";
 import "../../styles/dashboard.css";
@@ -236,6 +237,7 @@ function DashboardHero({ view, setPage }) {
   return (
     <section className="admin-dashboard-hero" aria-label="Admin dashboard summary">
       <div className="admin-hero-copy">
+        <BrandMark size="sm" showText className="admin-hero-brand" />
         <span>Good day</span>
         <h2>Visionaries Operations</h2>
         <p>{view.cycleName} · {view.monthLabel}</p>

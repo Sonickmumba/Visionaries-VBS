@@ -550,12 +550,14 @@ caption {
   gap: 2px;
   font-size: 11px;
   font-weight: 800;
+  position: relative;
   touch-action: manipulation;
 }
 
 .mobile-bottom-nav button.active {
-  background: #dcfce7;
-  color: #007a43;
+  background: linear-gradient(180deg, #ecfdf5 0%, #dcfce7 100%);
+  color: var(--portal-accent, #007a43);
+  box-shadow: inset 0 -3px 0 var(--brand-gold, #f4b400);
 }
 
 .mobile-bottom-nav button:focus-visible {

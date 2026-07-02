@@ -103,13 +103,13 @@ export function LoginPage({
           <div>
             <span className="auth-eyebrow">Welcome back</span>
             <h2>Log in</h2>
-            <p>Use your account to access the correct portal.</p>
+            <p>Sign in to manage declarations, savings, loans, reports, and transparent member records.</p>
           </div>
         </div>
 
         <div className="auth-mobile-summary" aria-label="Secure portal">
           <ShieldCheck size={18} aria-hidden="true" />
-          <span>Protected member and admin access</span>
+          <span>Protected member and admin access for transparent financial records</span>
         </div>
 
         <Field

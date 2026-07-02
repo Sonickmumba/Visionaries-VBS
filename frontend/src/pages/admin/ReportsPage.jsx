@@ -110,6 +110,21 @@ export const REPORT_DEFINITIONS = {
   },
 };
 
+const REPORT_GUIDE = {
+  "cycle-summary": ["Cycle health", "Month-by-month savings, loans, charges, and status for transparent leadership review."],
+  "member-statements": ["Member transparency", "Open each member's full financial position without giving approval permissions."],
+  "monthly-pool": ["Pool movement", "Track contributions, issued loans, unborrowed money, and common-interest pool by month."],
+  savings: ["Savings progress", "Compare principal savings, interest earned, and remaining cycle cap per member."],
+  loans: ["Borrowing compliance", "Review cumulative borrowing, repayments, loan interest, and minimum-borrowing shortfalls."],
+  "common-interest": ["Interest sharing", "Explain common-interest allocation from compliance status and assigned base."],
+  declarations: ["Declaration visibility", "See submitted activity, timing, savings, loan requests, and repayments."],
+  penalties: ["Penalty follow-up", "Monitor assessed, paid, outstanding, waived, or converted penalty balances."],
+  "converted-penalties": ["Conversion audit", "Trace unpaid penalties that became loan balances and retained their origin."],
+  "cycle-closing": ["Closing readiness", "Review finalized monthly outputs before cycle reporting and shareout."],
+  "group-surplus": ["Surplus growth", "Track social fund, membership, penalties, and interest accumulation for equal sharing."],
+  shareout: ["Member payout", "Preview accumulated savings, surplus share, deductions, and net shareout."],
+};
+
 export function reportsQuery({ report, cycleId = "", cycleMonthId = "", cycleMemberId = "", format = "" }) {
   const definition = REPORT_DEFINITIONS[report] || REPORT_DEFINITIONS["cycle-summary"];
   const params = new URLSearchParams();
@@ -336,6 +351,28 @@ function ReportsHero({ definition, data, totals, rows, eyebrow = "Reports Center
         <span>Rows</span>
         <strong>{rows.length}</strong>
         <small>{money(totals.savings)} savings</small>
+      </div>
+    </section>
+  );
+}
+
+function ReportsGuide({ report, definition }) {
+  const [title, detail] = REPORT_GUIDE[report] || ["Report guidance", "Use filters and exports to review financial activity with full transparency."];
+  const chips = [
+    definition.supportsMonth ? "Month filter" : "Cycle-wide",
+    definition.supportsMember ? "Member filter" : "All members",
+    "PDF + CSV",
+  ];
+
+  return (
+    <section className="reports-guide" aria-label="Report guidance">
+      <div>
+        <span>{title}</span>
+        <strong>{definition.label}</strong>
+        <p>{detail}</p>
+      </div>
+      <div className="reports-guide-chips">
+        {chips.map((chip) => <Badge key={chip} text={chip} tone="blue" />)}
       </div>
     </section>
   );
@@ -653,6 +690,7 @@ export function ReportsPage({
       {error ? <Alert tone="danger" title="Report failed">{error}</Alert> : null}
 
       <ReportsHero definition={definition} data={data} totals={totals} rows={rows} eyebrow={heroEyebrow} note={readOnlyNote} />
+      <ReportsGuide report={report} definition={definition} />
 
       <div className="admin-mobile-action-row reports-mobile-actions-row mobile-only" aria-label="Reports quick actions">
         <Button type="button" icon={RefreshCw} onClick={() => loadReport()} loading={loading}>Run Report</Button>

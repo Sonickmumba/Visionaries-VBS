@@ -24,6 +24,7 @@ describe("app layouts", () => {
     const html = renderToStaticMarkup(<AuthLayout><section className="auth-card">Login</section></AuthLayout>);
 
     expect(html).toContain("Visionaries Village Banking");
+    expect(html).toContain("brand-lockup");
     expect(html).toContain("auth-card");
   });
 
@@ -43,6 +44,7 @@ describe("app layouts", () => {
 
     expect(html).toContain("Admin Portal");
     expect(html).toContain("Visionaries Village Banking");
+    expect(html).toContain("brand-mark");
     expect(html).toContain("Financial operations workspace");
     expect(html).toContain("Dashboard");
     expect(html).toContain("Cycle");
@@ -55,6 +57,18 @@ describe("app layouts", () => {
     expect(html).toContain("Admin quick navigation");
     expect(html).toContain("Close navigation");
     expect(html).toContain("Open notifications");
+  });
+
+  it("keeps notifications in the header instead of mobile bottom navigation", () => {
+    const source = fs.readFileSync(path.join(process.cwd(), "src/layouts/AppLayouts.jsx"), "utf8");
+    const memberMobileNav = fs.readFileSync(path.join(process.cwd(), "src/pages/member/memberMobileNav.js"), "utf8");
+
+    expect(source).toContain("Open notifications");
+    expect(source).toContain("[\"dashboard\", \"members\", \"declarations\", \"loans\", \"reports\"]");
+    expect(source).toContain("[\"member-dashboard\", \"my-declaration\", \"my-savings\", \"my-loans\", \"my-reports\"]");
+    expect(source).not.toContain("[\"dashboard\", \"declarations\", \"loans\", \"notifications\", \"reports\"]");
+    expect(memberMobileNav).not.toContain("my-notifications");
+    expect(memberMobileNav).not.toContain("Alerts");
   });
 
   it("renders member shell with member navigation", () => {

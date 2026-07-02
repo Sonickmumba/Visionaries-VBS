@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { AlertTriangle, Banknote, ClipboardList, FileText, Gauge, PiggyBank, Receipt, RefreshCw, Scale } from "lucide-react";
 import { api } from "../../api/client.js";
+import { BrandMark } from "../../components/BrandMark.jsx";
 import {
   Alert,
   Badge,
@@ -315,7 +316,21 @@ export function MemberDashboardPage({
           />
 
           <div className="member-desktop-dashboard">
-          <div className="metrics member-dashboard-metrics">
+            <section className="member-dashboard-hero" aria-label="Member dashboard welcome">
+              <div>
+                <BrandMark size="sm" showText className="member-dashboard-brand" />
+                <span>Transparent member access</span>
+                <h2>Welcome back, {memberName(portal?.me?.member)}</h2>
+                <p>{activeMembership?.cycle_name || "Active cycle"} · {titleCase(totals.borrowingStatus)}</p>
+              </div>
+              <div className="member-dashboard-hero-value">
+                <span>My Accumulated Savings</span>
+                <strong>{money(totals.accumulatedSavings)}</strong>
+                <small>{money(totals.savingsPrincipal)} savings principal</small>
+              </div>
+            </section>
+
+            <div className="metrics member-dashboard-metrics">
             <Card title="My Accumulated Savings" value={money(totals.accumulatedSavings)} note={`${money(totals.savingsPrincipal)} principal`} icon={PiggyBank} />
             <Card title="My Loan Balance" value={money(totals.outstandingLoan)} note={`${money(totals.borrowingShortfall)} shortfall`} tone="blue" icon={Banknote} />
             <Card title="Common Interest Due" value={money(totals.commonInterestDue)} note="Assessed less paid" tone="amber" icon={Scale} />

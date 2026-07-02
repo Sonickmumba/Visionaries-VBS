@@ -128,13 +128,13 @@ export function SignupPage({ onSignup, onBackToLogin, onBackToWelcome, authApi =
           <div>
             <span className="auth-eyebrow">Member access</span>
             <h2>Create account</h2>
-            <p>Register a member account. Admin invitations can also be accepted from here.</p>
+            <p>Create a secure member account for declarations, reports, statements, and cycle transparency.</p>
           </div>
         </div>
 
         <div className="auth-mobile-summary" aria-label="Signup note">
           <ShieldCheck size={18} aria-hidden="true" />
-          <span>Use the same details your administrators have on record.</span>
+          <span>Use the same details your administrators have on record. This keeps enrollment smooth.</span>
         </div>
 
         <div className="form-grid two">

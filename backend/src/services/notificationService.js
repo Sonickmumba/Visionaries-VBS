@@ -370,7 +370,7 @@ export async function listNotifications(db, { user, limit = 50 } = {}) {
     [user.id, user.role, bounded]
   );
   const data = rows.map(toCamelEvent);
-  const unreadCount = data.filter((event) => !event.readAt).length;
+  const unreadCount = await countUnreadNotifications(db, { user });
   return { data, unreadCount };
 }
 

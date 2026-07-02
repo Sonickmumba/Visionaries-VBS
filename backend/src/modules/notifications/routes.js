@@ -24,6 +24,15 @@ notificationsRouter.get("/", async (req, res, next) => {
   }
 });
 
+notificationsRouter.get("/unread-count", async (req, res, next) => {
+  try {
+    const unreadCount = await countUnreadNotifications(query, { user: req.user });
+    res.json({ unreadCount });
+  } catch (error) {
+    next(error);
+  }
+});
+
 notificationsRouter.get("/stream", (req, res) => {
   streamNotifications(req, res, query);
 });

@@ -52,16 +52,20 @@ export async function loadNotifications({ notificationsApi = api } = {}) {
   return response.data || [];
 }
 
-export function NotificationCard({ event, onOpenTarget }) {
+export function NotificationCard({ event, onOpenTarget, onMarkRead }) {
   const amount = eventAmount(event);
   const month = event.metadata?.monthNumber ? `Month ${event.metadata.monthNumber}` : "";
+  const unread = !event.readAt;
   return (
-    <article className="notification-card">
+    <article className={`notification-card ${unread ? "unread" : "read"}`.trim()}>
       <div className="notification-icon"><Bell size={18} aria-hidden="true" /></div>
       <div>
         <div className="notification-card-head">
           <strong>{event.title}</strong>
-          <Badge text={titleCase(event.type)} tone={eventTone(event)} />
+          <div className="notification-card-badges">
+            {unread ? <Badge text="Unread" tone="amber" /> : <Badge text="Read" tone="green" />}
+            <Badge text={titleCase(event.type)} tone={eventTone(event)} />
+          </div>
         </div>
         <p>{event.message}</p>
         <div className="notification-meta">
@@ -70,9 +74,14 @@ export function NotificationCard({ event, onOpenTarget }) {
           {month ? <span>{month}</span> : null}
         </div>
       </div>
-      {event.actionTarget || event.actionUrl ? (
-        <Button type="button" size="sm" variant="secondary" icon={FileBarChart} onClick={() => onOpenTarget?.(event)}>View</Button>
-      ) : null}
+      <div className="notification-actions">
+        {event.actionTarget || event.actionUrl ? (
+          <Button type="button" size="sm" variant="secondary" icon={FileBarChart} onClick={() => onOpenTarget?.(event)}>View</Button>
+        ) : null}
+        {unread ? (
+          <Button type="button" size="sm" variant="secondary" onClick={() => onMarkRead?.(event)}>Mark read</Button>
+        ) : null}
+      </div>
     </article>
   );
 }
@@ -83,7 +92,7 @@ export function NotificationsPage({ notificationsApi = api, initialEvents = null
   const [localEvents, setLocalEvents] = useState(initialEvents || []);
   const [localLoading, setLocalLoading] = useState(initialEvents === null && !useSharedTracker);
   const [localError, setLocalError] = useState("");
-  const { markAllRead } = shared;
+  const { markAllRead, markRead } = shared;
   const events = useSharedTracker ? shared.events : localEvents;
   const loading = useSharedTracker ? shared.loading : localLoading;
   const error = useSharedTracker ? shared.error : localError;
@@ -91,8 +100,7 @@ export function NotificationsPage({ notificationsApi = api, initialEvents = null
 
   async function refresh() {
     if (useSharedTracker) {
-      const nextEvents = await shared.refresh();
-      markAllRead(nextEvents);
+      await shared.refresh();
       return;
     }
     setLocalLoading(true);
@@ -107,12 +115,41 @@ export function NotificationsPage({ notificationsApi = api, initialEvents = null
   }
 
   useEffect(() => {
+    if (initialEvents === null && useSharedTracker) refresh();
     if (initialEvents === null && !useSharedTracker) refresh();
   }, [initialEvents, useSharedTracker]);
 
   const view = useMemo(() => notificationsViewModel(events), [events]);
   const openReports = () => setPage?.(role === "MEMBER" ? "my-reports" : "reports");
-  const openTarget = (event) => {
+  async function markEventRead(event) {
+    if (!event?.id || event.readAt) return;
+    if (useSharedTracker) {
+      await markRead(event);
+      return;
+    }
+    const readAt = new Date().toISOString();
+    setLocalEvents((current) => current.map((item) => (item.id === event.id ? { ...item, readAt } : item)));
+    await notificationsApi("/notifications/read", {
+      method: "POST",
+      body: { notificationIds: [event.id] },
+    }).catch(() => null);
+  }
+  async function markVisibleRead() {
+    if (useSharedTracker) {
+      await markAllRead(events);
+      return;
+    }
+    const unreadEvents = events.filter((event) => event.id && !event.readAt);
+    if (!unreadEvents.length) return;
+    const readAt = new Date().toISOString();
+    setLocalEvents((current) => current.map((event) => (!event.readAt ? { ...event, readAt } : event)));
+    await notificationsApi("/notifications/read", {
+      method: "POST",
+      body: { notificationIds: unreadEvents.map((event) => event.id) },
+    }).catch(() => null);
+  }
+  const openTarget = async (event) => {
+    await markEventRead(event);
     const target = event.actionTarget || {};
     const fallbackPage = role === "MEMBER" ? "my-reports" : "reports";
     const page = role === "MEMBER" ? target.memberPage : target.adminPage;
@@ -154,13 +191,16 @@ export function NotificationsPage({ notificationsApi = api, initialEvents = null
           <Button type="button" variant="secondary" icon={FileBarChart} onClick={openReports}>Reports</Button>
         </div>
         <section className="panel">
-          <div className="panel-head">
+          <div className="panel-head notifications-panel-head">
             <h2>Recent Notifications</h2>
-            <Badge text={connected ? "Streaming" : "Offline fallback"} tone={connected ? "green" : "amber"} />
+            <div className="button-row compact">
+              <Badge text={connected ? "Streaming" : "Offline fallback"} tone={connected ? "green" : "amber"} />
+              <Button type="button" size="sm" variant="secondary" onClick={markVisibleRead} disabled={!events.some((event) => !event.readAt)}>Mark all read</Button>
+            </div>
           </div>
           {loading ? <Skeleton lines={8} /> : events.length ? (
             <div className="notification-list">
-              {events.map((event) => <NotificationCard key={event.id} event={event} onOpenTarget={openTarget} />)}
+              {events.map((event) => <NotificationCard key={event.id} event={event} onOpenTarget={openTarget} onMarkRead={markEventRead} />)}
             </div>
           ) : (
             <EmptyState title="No notifications yet" message="Submitted declarations and financial actions will appear here in real time." />

@@ -152,21 +152,23 @@ describe("API integration smoke tests", () => {
   });
 
   it("returns recent notifications for authenticated users", async () => {
-    mocks.query.mockResolvedValueOnce({
-      rows: [{
-        id: "11111111-1111-4111-8111-111111111111",
-        type: "DECLARATION_SUBMITTED",
-        title: "Declaration submitted",
-        message: "A member submitted a declaration for group review.",
-        audience: "ALL",
-        severity: "INFO",
-        action_url: "reports:declarations",
-        action_target: { adminPage: "declarations", memberPage: "my-reports", report: "declarations" },
-        metadata: { savingsAmount: 15000 },
-        created_at: "2026-06-22T10:00:00.000Z",
-        read_at: null,
-      }],
-    });
+    mocks.query
+      .mockResolvedValueOnce({
+        rows: [{
+          id: "11111111-1111-4111-8111-111111111111",
+          type: "DECLARATION_SUBMITTED",
+          title: "Declaration submitted",
+          message: "A member submitted a declaration for group review.",
+          audience: "ALL",
+          severity: "INFO",
+          action_url: "reports:declarations",
+          action_target: { adminPage: "declarations", memberPage: "my-reports", report: "declarations" },
+          metadata: { savingsAmount: 15000 },
+          created_at: "2026-06-22T10:00:00.000Z",
+          read_at: null,
+        }],
+      })
+      .mockResolvedValueOnce({ rows: [{ unread_count: 4 }] });
 
     const response = await inject({
       url: "/api/notifications?limit=10",
@@ -175,19 +177,34 @@ describe("API integration smoke tests", () => {
 
     expect(response.status).toBe(200);
     expect(response.body.data).toHaveLength(1);
-    expect(response.body.unreadCount).toBe(1);
+    expect(response.body.unreadCount).toBe(4);
     expect(response.body.data[0]).toMatchObject({
       id: "11111111-1111-4111-8111-111111111111",
       type: "DECLARATION_SUBMITTED",
       title: "Declaration submitted",
       actionUrl: "reports:declarations",
     });
+    expect(mocks.query.mock.calls[1][0]).toContain("COUNT(*)::int AS unread_count");
   });
 
-  it("marks notifications as read for the authenticated user", async () => {
+  it("returns notification unread count without loading the feed", async () => {
+    mocks.query.mockResolvedValueOnce({ rows: [{ unread_count: 27 }] });
+
+    const response = await inject({
+      url: "/api/notifications/unread-count",
+      headers: { "x-test-role": "MEMBER" },
+    });
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({ unreadCount: 27 });
+    expect(mocks.query.mock.calls[0][0]).toContain("COUNT(*)::int AS unread_count");
+    expect(mocks.query.mock.calls[0][0]).not.toContain("SELECT n.*, r.read_at");
+  });
+
+  it("marks one notification as read and returns the reduced unread count", async () => {
     mocks.query
       .mockResolvedValueOnce({ rows: [], rowCount: 1 })
-      .mockResolvedValueOnce({ rows: [{ unread_count: 0 }] });
+      .mockResolvedValueOnce({ rows: [{ unread_count: 26 }] });
 
     const response = await inject({
       method: "POST",
@@ -197,8 +214,9 @@ describe("API integration smoke tests", () => {
     });
 
     expect(response.status).toBe(200);
-    expect(response.body).toMatchObject({ read: 1, unreadCount: 0 });
+    expect(response.body).toMatchObject({ read: 1, unreadCount: 26 });
     expect(mocks.query.mock.calls[0][0]).toContain("notification_read_receipts");
+    expect(mocks.query.mock.calls[1][0]).toContain("COUNT(*)::int AS unread_count");
   });
 
   it("archives expired notifications for administrators", async () => {
@@ -392,14 +410,17 @@ describe("API integration smoke tests", () => {
   it("supports member list status filters and pagination metadata", async () => {
     mocks.query
       .mockResolvedValueOnce({ rows: [{ total: 1 }] })
-      .mockResolvedValueOnce({ rows: [{ id: "member-1", first_name: "Mary", is_active: true }] });
+      .mockResolvedValueOnce({ rows: [{ id: "member-1", first_name: "Mary", is_active: true, active_cycle_member_id: "cm-1", active_cycle_member_status: "ACTIVE" }] });
 
     const response = await inject({ url: "/api/members?status=active&page=2&limit=5" });
 
     expect(response.status).toBe(200);
     expect(response.body.data).toHaveLength(1);
+    expect(response.body.data[0]).toMatchObject({ active_cycle_member_id: "cm-1", active_cycle_member_status: "ACTIVE" });
     expect(response.body.pagination).toEqual({ page: 2, limit: 5, total: 1, totalPages: 1 });
     expect(mocks.query.mock.calls[0][1]).toEqual(["%%", true]);
+    expect(mocks.query.mock.calls[1][0]).toContain("acm.status = 'ACTIVE'");
+    expect(mocks.query.mock.calls[1][0]).not.toContain("ac.status = 'ACTIVE'");
   });
 
   it("blocks members from opening another member profile", async () => {
@@ -413,6 +434,32 @@ describe("API integration smoke tests", () => {
     });
 
     expect(response.status).toBe(403);
+  });
+
+  it("enrolls a member through the members endpoint with audit logging", async () => {
+    const cycleMember = {
+      id: "33333333-3333-4333-8333-333333333333",
+      cycle_id: "11111111-1111-4111-8111-111111111111",
+      member_id: "22222222-2222-4222-8222-222222222222",
+      status: "ACTIVE",
+    };
+    mocks.clientQuery
+      .mockResolvedValueOnce({ rows: [{ id: cycleMember.cycle_id }] })
+      .mockResolvedValueOnce({ rows: [{ id: cycleMember.member_id }] })
+      .mockResolvedValueOnce({ rows: [] })
+      .mockResolvedValueOnce({ rows: [cycleMember] })
+      .mockResolvedValueOnce({ rows: [] });
+
+    const response = await inject({
+      method: "POST",
+      url: "/api/members/enroll",
+      body: { cycleId: cycleMember.cycle_id, memberId: cycleMember.member_id },
+    });
+
+    expect(response.status).toBe(201);
+    expect(response.body.data).toMatchObject(cycleMember);
+    expect(mocks.clientQuery.mock.calls[3][0]).toContain("ON CONFLICT");
+    expect(mocks.clientQuery.mock.calls[4][0]).toContain("INSERT INTO audit_logs");
   });
 
   it("enrolls a member through the canonical cycle endpoint", async () => {
@@ -608,6 +655,42 @@ describe("API integration smoke tests", () => {
     expect(response.body.totals.savings_principal).toBe("1000");
     expect(response.body.totals.savings_cap).toBe(30000);
     expect(response.body.totals.savings_cap_remaining).toBe(29000);
+  });
+
+  it("excludes reversed social fund and membership payments from savings posting context", async () => {
+    mocks.query
+      .mockResolvedValueOnce({
+        rows: [{
+          id: "11111111-1111-4111-8111-111111111111",
+          savings_cap: 30000,
+          social_fund_amount: 240,
+          membership_fee_amount: 80,
+        }],
+      })
+      .mockResolvedValueOnce({
+        rows: [{ id: "22222222-2222-4222-8222-222222222222", month_number: 1, status: "OPEN" }],
+      })
+      .mockResolvedValueOnce({
+        rows: [{
+          cycle_member_id: "33333333-3333-4333-8333-333333333333",
+          first_name: "Karen",
+          last_name: "Chileshe",
+          social_fund_paid: false,
+          membership_fee_paid: false,
+        }],
+      });
+
+    const response = await inject({ url: "/api/savings/posting-context" });
+
+    expect(response.status).toBe(200);
+    expect(response.body.data.members[0]).toMatchObject({
+      first_name: "Karen",
+      social_fund_paid: false,
+      membership_fee_paid: false,
+    });
+    expect(mocks.query.mock.calls[2][0]).toContain("contribution_rev.reversed_transaction_id = contribution_lt.id");
+    expect(mocks.query.mock.calls[2][0]).toContain("contribution_rev.id IS NULL");
+    expect(mocks.query.mock.calls[2][0]).toContain("contribution_lt.is_reversal = FALSE");
   });
 
   it("posts one-time contributions through the canonical contributions API", async () => {

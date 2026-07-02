@@ -1,5 +1,6 @@
 import React, { Suspense, lazy, useEffect, useMemo, useState } from "react";
 import { api } from "./api/client.js";
+import { BrandMark } from "./components/BrandMark.jsx";
 import { SplashScreen } from "./components/SplashScreen.jsx";
 import { NotificationUnreadProvider } from "./contexts/NotificationUnreadContext.jsx";
 
@@ -30,6 +31,7 @@ function DisabledAccount() {
   return (
     <main className="auth-shell">
       <section className="auth-brand">
+        <BrandMark size="lg" className="auth-brand-mark" />
         <h1>Visionaries Village Banking</h1>
         <p>Cycle-based savings, lending, declarations, penalties, common interest, and monthly closing.</p>
         <div className="auth-note">Built as a financial operations system with auditability at the center.</div>

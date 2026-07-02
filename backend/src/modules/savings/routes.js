@@ -42,11 +42,21 @@ savingsRouter.get("/posting-context", requireRole("ADMIN", "AUDITOR"), async (re
         ($2::numeric - COALESCE(SUM(CASE WHEN lt.transaction_type = 'SAVINGS_DEPOSIT' AND rev.id IS NULL THEN lt.amount ELSE 0 END),0)) AS savings_cap_remaining,
         EXISTS (
           SELECT 1 FROM contribution_payments cp
-          WHERE cp.cycle_member_id = cm.id AND cp.contribution_type = 'SOCIAL_FUND'
+          JOIN ledger_transactions contribution_lt ON contribution_lt.id = cp.ledger_transaction_id
+          LEFT JOIN ledger_transactions contribution_rev ON contribution_rev.reversed_transaction_id = contribution_lt.id
+          WHERE cp.cycle_member_id = cm.id
+            AND cp.contribution_type = 'SOCIAL_FUND'
+            AND contribution_lt.is_reversal = FALSE
+            AND contribution_rev.id IS NULL
         ) AS social_fund_paid,
         EXISTS (
           SELECT 1 FROM contribution_payments cp
-          WHERE cp.cycle_member_id = cm.id AND cp.contribution_type = 'MEMBERSHIP_FEE'
+          JOIN ledger_transactions contribution_lt ON contribution_lt.id = cp.ledger_transaction_id
+          LEFT JOIN ledger_transactions contribution_rev ON contribution_rev.reversed_transaction_id = contribution_lt.id
+          WHERE cp.cycle_member_id = cm.id
+            AND cp.contribution_type = 'MEMBERSHIP_FEE'
+            AND contribution_lt.is_reversal = FALSE
+            AND contribution_rev.id IS NULL
         ) AS membership_fee_paid
        FROM cycle_members cm
        JOIN members m ON m.id = cm.member_id

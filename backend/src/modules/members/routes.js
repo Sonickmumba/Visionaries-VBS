@@ -5,6 +5,7 @@ import { z } from "zod";
 import { query, withTransaction } from "../../db/pool.js";
 import { requireAuth, requireRole } from "../../middleware/auth.js";
 import { validate } from "../../middleware/validate.js";
+import { audit } from "../../services/auditService.js";
 import { sendAccountInvitation } from "../../services/emailVerificationService.js";
 import { badRequest, forbidden, notFound } from "../../utils/httpError.js";
 import { getPagination, paginationMeta } from "../../utils/pagination.js";
@@ -46,12 +47,24 @@ membersRouter.get("/", requireRole("ADMIN", "AUDITOR"), async (req, res, next) =
         COALESCE(SUM(CASE WHEN lt.transaction_type IN ('LOAN_DISBURSEMENT','LOAN_TOP_UP','CONVERTED_PENALTY_LOAN') AND rev.id IS NULL THEN lt.amount ELSE 0 END),0) AS cumulative_borrowed,
         COALESCE(declaration_counts.approved_declarations,0)::int AS approved_declarations,
         current_declaration.status AS current_declaration_status,
-        current_declaration.submitted_at AS current_declaration_submitted_at
+        current_declaration.submitted_at AS current_declaration_submitted_at,
+        active_membership.id AS active_cycle_member_id,
+        active_membership.status AS active_cycle_member_status,
+        active_membership.cycle_name AS active_cycle_name
        FROM members m
        LEFT JOIN users u ON u.id = m.user_id
        LEFT JOIN cycle_members cm ON cm.member_id = m.id
        LEFT JOIN ledger_transactions lt ON lt.cycle_member_id = cm.id AND lt.is_reversal = FALSE
        LEFT JOIN ledger_transactions rev ON rev.reversed_transaction_id = lt.id
+       LEFT JOIN LATERAL (
+         SELECT acm.id, acm.status, ac.name AS cycle_name
+         FROM cycle_members acm
+         JOIN cycles ac ON ac.id = acm.cycle_id
+         WHERE acm.member_id = m.id
+           AND acm.status = 'ACTIVE'
+         ORDER BY acm.joined_at DESC NULLS LAST, acm.created_at DESC
+         LIMIT 1
+       ) active_membership ON TRUE
        LEFT JOIN LATERAL (
          SELECT COUNT(*) FILTER (WHERE d.status = 'APPROVED') AS approved_declarations
          FROM declarations d
@@ -76,7 +89,8 @@ membersRouter.get("/", requireRole("ADMIN", "AUDITOR"), async (req, res, next) =
          LIMIT 1
        ) current_declaration ON TRUE
        WHERE (m.first_name ILIKE $1 OR m.last_name ILIKE $1 OR m.member_code ILIKE $1)${statusFilter}
-       GROUP BY m.id, u.email, declaration_counts.approved_declarations, current_declaration.status, current_declaration.submitted_at
+       GROUP BY m.id, u.email, declaration_counts.approved_declarations, current_declaration.status,
+         current_declaration.submitted_at, active_membership.id, active_membership.status, active_membership.cycle_name
        ORDER BY m.created_at DESC
        LIMIT $${listParams.length - 1} OFFSET $${listParams.length}`,
       listParams

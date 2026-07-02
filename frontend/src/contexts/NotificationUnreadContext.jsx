@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { API_URL, api } from "../api/client.js";
 
 const NotificationUnreadContext = createContext({
@@ -8,6 +8,7 @@ const NotificationUnreadContext = createContext({
   loading: false,
   error: "",
   refresh: async () => [],
+  markRead: async () => {},
   markAllRead: () => {},
 });
 
@@ -21,28 +22,33 @@ export function NotificationUnreadProvider({ user, page, children, notifications
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [connected, setConnected] = useState(false);
-  const pageRef = useRef(page);
 
-  useEffect(() => {
-    pageRef.current = page;
-  }, [page]);
-
-  const markAllRead = useCallback((items = []) => {
-    const notificationIds = items
+  const markRead = useCallback(async (items = []) => {
+    const list = Array.isArray(items) ? items : [items];
+    const notificationIds = list
       .filter((event) => event?.id && !event.readAt)
       .map((event) => event.id);
-    if (!notificationIds.length) return;
+    if (!notificationIds.length) return { read: 0 };
+    const readAt = new Date().toISOString();
+    setError("");
     setEvents((current) => current.map((event) => (
-      notificationIds.includes(event.id) && !event.readAt ? { ...event, readAt: new Date().toISOString() } : event
+      notificationIds.includes(event.id) && !event.readAt ? { ...event, readAt } : event
     )));
-    setUnreadCount(0);
-    notificationsApi("/notifications/read", {
-      method: "POST",
-      body: { notificationIds },
-    })
-      .then((response) => setUnreadCount(Number(response.unreadCount || 0)))
-      .catch(() => null);
+    setUnreadCount((current) => Math.max(0, current - notificationIds.length));
+    try {
+      const response = await notificationsApi("/notifications/read", {
+        method: "POST",
+        body: { notificationIds },
+      });
+      setUnreadCount(Number(response.unreadCount || 0));
+      return response;
+    } catch (err) {
+      setError(err.message || "Notifications could not be marked read.");
+      return { read: 0, error: err };
+    }
   }, [notificationsApi]);
+
+  const markAllRead = useCallback((items = []) => markRead(items), [markRead]);
 
   const refresh = useCallback(async () => {
     setLoading(true);
@@ -69,13 +75,8 @@ export function NotificationUnreadProvider({ user, page, children, notifications
 
   useEffect(() => {
     if (!user) return undefined;
-    let active = true;
-    refresh().then((nextEvents) => {
-      if (active && ["notifications", "my-notifications"].includes(page)) markAllRead(nextEvents);
-    });
-    return () => {
-      active = false;
-    };
+    refresh();
+    return undefined;
   }, [user, refresh]);
 
   useEffect(() => {
@@ -91,7 +92,7 @@ export function NotificationUnreadProvider({ user, page, children, notifications
         return mergeEvents(current, event);
       });
       if (isNew) {
-        setUnreadCount((current) => ["notifications", "my-notifications"].includes(pageRef.current) ? current : current + 1);
+        setUnreadCount((current) => event.readAt ? current : current + 1);
       }
     });
     stream.onerror = () => setConnected(false);
@@ -101,12 +102,6 @@ export function NotificationUnreadProvider({ user, page, children, notifications
     };
   }, [user]);
 
-  useEffect(() => {
-    if (["notifications", "my-notifications"].includes(page) && events.length) {
-      markAllRead(events);
-    }
-  }, [events, markAllRead, page]);
-
   const value = useMemo(() => ({
     events,
     unreadCount,
@@ -114,8 +109,9 @@ export function NotificationUnreadProvider({ user, page, children, notifications
     loading,
     error,
     refresh,
+    markRead,
     markAllRead,
-  }), [connected, error, events, loading, markAllRead, refresh, unreadCount]);
+  }), [connected, error, events, loading, markAllRead, markRead, refresh, unreadCount]);
 
   return (
     <NotificationUnreadContext.Provider value={value}>

@@ -76,7 +76,7 @@ function AuditHero({ metrics, section }) {
   return (
     <section className="ledger-audit-hero">
       <div>
-        <span>Audit Trail</span>
+        <span>Governance Log</span>
         <h2>{section === "overrides" ? "Override Review" : section === "reversals" ? "Reversal Review" : "Administrative Events"}</h2>
         <p>Trace who acted, what changed, when it happened, and why it was approved.</p>
       </div>
@@ -292,7 +292,7 @@ export function AuditTrailPage({
       className="ledger-audit-page"
       actions={(
         <>
-          <Button type="button" icon={RefreshCw} onClick={() => loadAudit(filters, 1)} loading={loading}>Filter</Button>
+          <Button type="button" icon={RefreshCw} onClick={() => loadAudit(filters, 1)} loading={loading}>Apply Filters</Button>
           <Button type="button" variant="secondary" onClick={clearFilters}>Clear Filters</Button>
           <Button type="button" variant="secondary" icon={Download} onClick={exportCsv}>Export CSV</Button>
         </>
@@ -303,7 +303,7 @@ export function AuditTrailPage({
       <AuditHero metrics={metrics} section={section} />
 
       <div className="admin-mobile-action-row audit-mobile-actions-row mobile-only" aria-label="Audit quick actions">
-        <Button type="button" icon={RefreshCw} onClick={() => loadAudit(filters, 1)} loading={loading}>Filter</Button>
+        <Button type="button" icon={RefreshCw} onClick={() => loadAudit(filters, 1)} loading={loading}>Apply</Button>
         <Button type="button" variant="secondary" onClick={clearFilters}>Clear</Button>
         <Button type="button" variant="secondary" icon={Download} onClick={exportCsv}>Export</Button>
       </div>

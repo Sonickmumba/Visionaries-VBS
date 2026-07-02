@@ -125,8 +125,8 @@ describe("loan screens", () => {
 
     expect(html).toContain("Loans");
     expect(html).toContain("Loan Desk");
-    expect(html).toContain("Refresh Queue");
-    expect(html).toContain("New Loan Request");
+    expect(html).toContain("Refresh");
+    expect(html).toContain("Create Loan Request");
     expect(html).toContain("Record Repayment");
     expect(html).toContain("Approval Queue");
     expect(html).toContain("Member Ledger");

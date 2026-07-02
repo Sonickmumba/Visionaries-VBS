@@ -75,10 +75,13 @@ function FieldShell({ label, hint, error, required, children, className = "", de
   const descriptionIds = [describedBy, hintId, errorId].filter(Boolean).join(" ") || undefined;
   return (
     <label className={`field ${error ? "has-error" : ""} ${className}`.trim()}>
-      <span>{label}{required ? " *" : ""}</span>
+      <span className="field-label">
+        <span>{label}</span>
+        {required ? <span className="field-required" aria-label="required">*</span> : null}
+      </span>
       {typeof children === "function" ? children({ describedBy: descriptionIds }) : children}
       {hint && !error ? <small id={hintId} className="field-hint">{hint}</small> : null}
-      {error ? <small id={errorId} className="field-error">{error}</small> : null}
+      {error ? <small id={errorId} className="field-error"><AlertCircle size={13} aria-hidden="true" />{error}</small> : null}
     </label>
   );
 }
@@ -329,19 +332,23 @@ export function Pagination({ page = 1, totalPages = 1, onPageChange, disabled = 
 }
 
 export function EmptyState({ title = "No records found", message = "There is nothing to show yet.", action }) {
+  const titleId = useId();
+  const messageId = useId();
   return (
-    <section className="ui-empty" aria-live="polite">
-      <Search size={24} aria-hidden="true" />
-      <h2>{title}</h2>
-      <p>{message}</p>
-      {action ? <div>{action}</div> : null}
+    <section className="ui-empty" aria-live="polite" aria-labelledby={titleId} aria-describedby={messageId}>
+      <span className="ui-empty-icon"><Search size={24} aria-hidden="true" /></span>
+      <div className="ui-empty-copy">
+        <h2 id={titleId}>{title}</h2>
+        <p id={messageId}>{message}</p>
+      </div>
+      {action ? <div className="ui-empty-action">{action}</div> : null}
     </section>
   );
 }
 
-export function Skeleton({ lines = 3 }) {
+export function Skeleton({ lines = 3, label = "Loading content" }) {
   return (
-    <div className="ui-skeleton" role="status" aria-busy="true" aria-label="Loading">
+    <div className="ui-skeleton" role="status" aria-busy="true" aria-label={label}>
       {Array.from({ length: lines }, (_, index) => <span key={index} />)}
     </div>
   );

@@ -34,7 +34,7 @@ describe("app layouts", () => {
     expect(html).not.toContain("Secret");
   });
 
-  it("renders admin shell with breadcrumbs and cycle selectors", () => {
+  it("renders admin shell with portal header and cycle selectors", () => {
     const html = renderToStaticMarkup(
       <AppLayout user={admin} page="dashboard" setPage={() => {}} onLogout={() => {}}>
         <Page title="Dashboard">Content</Page>
@@ -42,6 +42,8 @@ describe("app layouts", () => {
     );
 
     expect(html).toContain("Admin Portal");
+    expect(html).toContain("Visionaries Village Banking");
+    expect(html).toContain("Financial operations workspace");
     expect(html).toContain("Dashboard");
     expect(html).toContain("Cycle");
     expect(html).toContain("Month");
@@ -52,6 +54,7 @@ describe("app layouts", () => {
     expect(html).toContain("sidebar-profile");
     expect(html).toContain("Admin quick navigation");
     expect(html).toContain("Close navigation");
+    expect(html).toContain("Open notifications");
   });
 
   it("renders member shell with member navigation", () => {
@@ -62,6 +65,7 @@ describe("app layouts", () => {
     );
 
     expect(html).toContain("Member Portal");
+    expect(html).toContain("Transparent member access");
     expect(html).toContain("My Statement");
     expect(html).toContain("aria-label=\"Member navigation\"");
     expect(html).not.toContain("Member quick navigation");
@@ -78,13 +82,29 @@ describe("app layouts", () => {
     expect(appCss).toContain(".button-row .btn");
     expect(appCss).toContain("overflow-wrap: anywhere");
     expect(appCss).toContain("-webkit-overflow-scrolling: touch");
+    expect(appCss).toContain(".btn:hover:not(:disabled)");
+    expect(appCss).toContain(".icon-btn:hover:not(:disabled)");
+    expect(appCss).toContain(".panel {\n  background: white;\n  border: 1px solid #d8e1eb;\n  border-radius: 8px;");
+    expect(appCss).toContain(".metric {\n  background: white;\n  border: 1px solid #d8e1eb;\n  border-left: 5px solid #166534;\n  border-radius: 8px;");
+    expect(appCss).toContain(".tabs button.active");
+    expect(appCss).toContain("background: var(--portal-accent-soft");
     expect(layoutCss).toContain("@media (max-width: 900px)");
     expect(layoutCss).toContain(".top-selectors .field:nth-child(2)");
+    expect(layoutCss).toContain(".top-title-block");
+    expect(layoutCss).toContain(".top-member-summary");
+    expect(layoutCss).toContain(".top-unread-badge");
     expect(layoutCss).toContain(".mobile-bottom-nav");
     expect(layoutCss).toContain("left: 50%");
     expect(layoutCss).toContain("transform: translateX(-50%)");
     expect(layoutCss).toContain("width: min(452px, calc(100vw - 20px))");
     expect(layoutCss).toContain(".sidebar-profile");
     expect(layoutCss).toContain("backdrop-filter");
+    expect(appCss).toContain(".admin-shell");
+    expect(appCss).toContain(".member-shell");
+    expect(appCss).toContain("--portal-accent");
+    expect(appCss).toContain("background: var(--portal-sidebar");
+    expect(appCss).toContain("border-left: 4px solid var(--portal-page-line");
+    expect(layoutCss).toContain(".member-shell .top-member-summary");
+    expect(layoutCss).toContain("color: var(--portal-accent");
   });
 });

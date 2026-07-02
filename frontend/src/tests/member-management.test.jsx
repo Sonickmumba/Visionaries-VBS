@@ -116,7 +116,7 @@ describe("member management", () => {
 
     expect(html).toContain("Members");
     expect(html).toContain("Member cards");
-    expect(html).toContain("New Member");
+    expect(html).toContain("Create Member");
     expect(html).toContain("Enroll Member");
     expect(html).toContain("Member list quick actions");
     expect(html).toContain("Search members");
@@ -161,7 +161,7 @@ describe("member management", () => {
     expect(css).toContain(".member-detail-hero");
     expect(css).toContain(".member-detail-mobile-actions");
     expect(css).toContain(".member-list-mobile-actions");
-    expect(css).toContain(".member-list-head-action");
+    expect(css).not.toContain(".member-list-head-action");
     expect(css).toContain(".members-page > .page-head .button-row");
     expect(css).toContain(".member-card-actions");
     expect(css).toContain("repeat(2, minmax(0, 1fr))");

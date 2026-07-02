@@ -217,6 +217,30 @@ textarea {
   min-height: 100vh;
   display: grid;
   grid-template-columns: 248px 1fr;
+  --portal-accent: #007a43;
+  --portal-accent-strong: #005f36;
+  --portal-accent-soft: #ecfdf5;
+  --portal-sidebar: #102a43;
+  --portal-sidebar-hover: #1e4f78;
+  --portal-page-line: #007a43;
+}
+
+.admin-shell {
+  --portal-accent: #007a43;
+  --portal-accent-strong: #005f36;
+  --portal-accent-soft: #ecfdf5;
+  --portal-sidebar: #102a43;
+  --portal-sidebar-hover: #1e4f78;
+  --portal-page-line: #007a43;
+}
+
+.member-shell {
+  --portal-accent: #0f766e;
+  --portal-accent-strong: #115e59;
+  --portal-accent-soft: #f0fdfa;
+  --portal-sidebar: #143d3a;
+  --portal-sidebar-hover: #1f6b63;
+  --portal-page-line: #0f766e;
 }
 
 .skip-link {
@@ -237,7 +261,7 @@ textarea {
 }
 
 .sidebar {
-  background: #102a43;
+  background: var(--portal-sidebar, #102a43);
   color: white;
   padding: 20px 14px;
   position: sticky;
@@ -274,12 +298,12 @@ textarea {
 
 .sidebar button.active,
 .sidebar button:hover {
-  background: #1e4f78;
+  background: var(--portal-sidebar-hover, #1e4f78);
   color: white;
 }
 
 .sidebar button[aria-current="page"] {
-  box-shadow: inset 4px 0 0 #86efac;
+  box-shadow: inset 4px 0 0 var(--portal-accent, #86efac);
 }
 
 .main {
@@ -287,21 +311,27 @@ textarea {
 }
 
 .topbar {
-  height: 68px;
-  background: white;
+  min-height: 76px;
+  background: rgba(255, 255, 255, 0.96);
   border-bottom: 1px solid #d8e1eb;
-  padding: 0 24px;
+  padding: 12px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 18px;
   position: sticky;
   top: 0;
   z-index: 4;
+  backdrop-filter: blur(14px);
 }
 
-.topbar div:first-of-type {
-  display: grid;
-  gap: 2px;
+.admin-shell .topbar {
+  box-shadow: 0 10px 30px rgba(16, 42, 67, 0.05);
+}
+
+.member-shell .topbar {
+  background: rgba(240, 253, 250, 0.96);
+  border-bottom-color: #ccfbf1;
 }
 
 .topbar span {
@@ -312,7 +342,8 @@ textarea {
 .top-actions {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  flex: 0 0 auto;
 }
 
 .content {
@@ -325,11 +356,15 @@ textarea {
   justify-content: space-between;
   gap: 16px;
   margin-bottom: 22px;
+  min-width: 0;
+  border-left: 4px solid var(--portal-page-line, #007a43);
+  padding-left: 14px;
 }
 
 .page-head h1 {
   font-size: 24px;
   overflow-wrap: anywhere;
+  line-height: 1.12;
 }
 
 .button-row,
@@ -358,27 +393,55 @@ textarea {
   color: white;
   cursor: pointer;
   font-weight: 700;
+  box-shadow: 0 8px 18px rgba(22, 101, 52, 0.12);
+  transition: background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.btn:hover:not(:disabled) {
+  background: #14532d;
+  box-shadow: 0 12px 24px rgba(22, 101, 52, 0.16);
 }
 
 .btn.secondary {
   background: white;
   color: #172033;
   border-color: #d8e1eb;
+  box-shadow: 0 8px 18px rgba(16, 42, 67, 0.06);
+}
+
+.btn.secondary:hover:not(:disabled) {
+  background: #f8fafc;
+  border-color: #b8c7d8;
+  box-shadow: 0 12px 24px rgba(16, 42, 67, 0.08);
 }
 
 .btn.danger {
   background: #b42318;
   color: white;
+  box-shadow: 0 8px 18px rgba(180, 35, 24, 0.12);
+}
+
+.btn.danger:hover:not(:disabled) {
+  background: #9f1f16;
+  box-shadow: 0 12px 24px rgba(180, 35, 24, 0.16);
 }
 
 .icon-btn {
   border: 1px solid #d8e1eb;
   background: white;
+  border-radius: 8px;
   min-width: 38px;
   height: 38px;
   display: inline-grid;
   place-items: center;
   cursor: pointer;
+  transition: background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.icon-btn:hover:not(:disabled) {
+  background: #f8fafc;
+  border-color: #b8c7d8;
+  box-shadow: 0 8px 18px rgba(16, 42, 67, 0.08);
 }
 
 .mobile-only {
@@ -387,7 +450,7 @@ textarea {
 
 .admin-mobile-action-row {
   width: 100%;
-  grid-template-columns: repeat(auto-fit, minmax(92px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(104px, 1fr));
   gap: 8px;
   margin: 0 0 14px;
 }
@@ -396,6 +459,8 @@ textarea {
   width: 100%;
   min-height: 44px;
   padding-inline: 10px;
+  justify-content: center;
+  white-space: normal;
 }
 
 .metrics {
@@ -409,10 +474,12 @@ textarea {
   background: white;
   border: 1px solid #d8e1eb;
   border-left: 5px solid #166534;
+  border-radius: 8px;
   padding: 16px;
   display: grid;
   gap: 7px;
   min-width: 0;
+  box-shadow: 0 10px 26px rgba(16, 42, 67, 0.05);
 }
 
 .metric svg {
@@ -420,7 +487,7 @@ textarea {
 }
 
 .metric span,
-.field span {
+.field-label {
   color: #65758b;
   font-size: 12px;
   font-weight: 800;
@@ -481,9 +548,11 @@ textarea {
 .panel {
   background: white;
   border: 1px solid #d8e1eb;
+  border-radius: 8px;
   padding: 18px;
   margin-bottom: 18px;
   min-width: 0;
+  box-shadow: 0 12px 30px rgba(16, 42, 67, 0.05);
 }
 
 .panel h2 {
@@ -559,6 +628,8 @@ textarea {
   overflow-x: auto;
   background: white;
   border: 1px solid #d8e1eb;
+  border-radius: 8px;
+  box-shadow: 0 10px 24px rgba(16, 42, 67, 0.04);
   -webkit-overflow-scrolling: touch;
 }
 
@@ -588,7 +659,10 @@ th {
 .empty {
   color: #65758b;
   text-align: center;
-  padding: 32px;
+  padding: 34px 18px;
+  background: #f8fafc;
+  font-weight: 800;
+  line-height: 1.45;
 }
 
 .badge {
@@ -608,6 +682,24 @@ th {
   display: grid;
   gap: 7px;
   min-width: 0;
+}
+
+.field-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+.field-label span:first-child {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.field-required {
+  color: #b42318;
+  font-size: 14px;
+  line-height: 1;
 }
 
 .check-field {
@@ -635,6 +727,7 @@ th {
   min-height: 40px;
   padding: 8px 10px;
   min-width: 0;
+  transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
 }
 
 .field select {
@@ -643,6 +736,7 @@ th {
   min-height: 40px;
   padding: 8px 10px;
   min-width: 0;
+  transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
 }
 
 .form-grid {
@@ -672,15 +766,18 @@ th {
 
 .tabs button {
   border: 1px solid #d8e1eb;
+  border-radius: 8px;
   background: white;
   padding: 9px 13px;
   white-space: nowrap;
   cursor: pointer;
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
 }
 
 .tabs button.active {
-  background: #dbeafe;
-  color: #2563eb;
+  background: var(--portal-accent-soft, #dbeafe);
+  border-color: color-mix(in srgb, var(--portal-accent, #2563eb) 34%, #d8e1eb);
+  color: var(--portal-accent, #2563eb);
   font-weight: 800;
 }
 
@@ -695,6 +792,7 @@ th {
 .queue-note {
   background: #f6f8fb;
   border: 1px solid #d8e1eb;
+  border-radius: 8px;
   padding: 12px;
   min-width: 0;
 }

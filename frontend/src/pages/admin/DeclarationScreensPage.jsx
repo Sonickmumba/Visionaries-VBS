@@ -616,8 +616,8 @@ export function DeclarationScreensPage({
       className="declarations-page"
       actions={(
         <>
-          <Button type="button" icon={RefreshCw} onClick={() => loadQueue()} loading={loading}>Refresh Queue</Button>
-          <Button type="button" variant="secondary" icon={Plus} onClick={startNewDeclaration}>New Declaration</Button>
+          <Button type="button" icon={RefreshCw} onClick={() => loadQueue()} loading={loading}>Refresh</Button>
+          <Button type="button" variant="secondary" icon={Plus} onClick={startNewDeclaration}>Create Declaration</Button>
         </>
       )}
     >
@@ -699,7 +699,6 @@ export function DeclarationScreensPage({
         <section className="panel">
           <div className="panel-head">
             <h2>Submitted Declarations</h2>
-            <Button type="button" className="declaration-list-head-action" size="sm" icon={Plus} onClick={startNewDeclaration}>New Declaration</Button>
           </div>
           <SubmittedDeclarationCards declarations={queue.declarations || []} selectedId={selectedId} busy={busy} onOpen={openDeclaration} />
           <div className="declaration-desktop-table">

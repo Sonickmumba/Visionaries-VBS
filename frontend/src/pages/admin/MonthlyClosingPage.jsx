@@ -132,7 +132,7 @@ function ClosingHero({ preview, totals, exceptions }) {
   return (
     <section className="closing-hero">
       <div>
-        <span>Monthly Closing</span>
+        <span>Closing Preview</span>
         <h2>{preview?.cycle?.name || "Active Cycle"}</h2>
         <p>{preview?.cycleMonth ? `Month ${preview.cycleMonth.month_number} closing preview` : "Review declarations, interest, penalties, and carry-forward balances."}</p>
       </div>

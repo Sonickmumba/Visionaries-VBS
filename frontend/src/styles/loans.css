@@ -273,10 +273,6 @@
     display: none;
   }
 
-  .loan-queue-head-action {
-    display: none;
-  }
-
   .loan-mobile-cards {
     display: grid;
     gap: 12px;

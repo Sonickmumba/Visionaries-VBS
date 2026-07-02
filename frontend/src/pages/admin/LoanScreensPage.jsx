@@ -511,8 +511,8 @@ export function LoanScreensPage({
       className="loans-page"
       actions={(
         <>
-          <Button type="button" icon={RefreshCw} onClick={loadRequests} loading={loading}>Refresh Queue</Button>
-          <Button type="button" variant="secondary" icon={Banknote} onClick={openNewRequest}>New Loan Request</Button>
+          <Button type="button" icon={RefreshCw} onClick={loadRequests} loading={loading}>Refresh</Button>
+          <Button type="button" variant="secondary" icon={Banknote} onClick={openNewRequest}>Create Loan Request</Button>
           <Button type="button" variant="secondary" icon={Send} onClick={openRepayment}>Record Repayment</Button>
         </>
       )}
@@ -525,8 +525,8 @@ export function LoanScreensPage({
 
       <div className="admin-mobile-action-row loan-mobile-actions mobile-only" aria-label="Loan quick actions">
         <Button type="button" icon={RefreshCw} onClick={loadRequests} loading={loading}>Refresh</Button>
-        <Button type="button" variant="secondary" icon={Banknote} onClick={openNewRequest}>New Request</Button>
-        <Button type="button" variant="secondary" icon={Send} onClick={openRepayment}>Payment</Button>
+        <Button type="button" variant="secondary" icon={Banknote} onClick={openNewRequest}>Create</Button>
+        <Button type="button" variant="secondary" icon={Send} onClick={openRepayment}>Repayment</Button>
       </div>
 
       <div className="metrics loan-metrics">
@@ -594,7 +594,6 @@ export function LoanScreensPage({
         <section className="panel">
           <div className="panel-head">
             <h2>Loan Approval Queue</h2>
-            <Button type="button" className="loan-queue-head-action" size="sm" icon={Banknote} onClick={openNewRequest}>New Loan Request</Button>
           </div>
           {loading ? <Skeleton lines={7} /> : requests.length ? (
             <>

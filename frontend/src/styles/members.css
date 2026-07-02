@@ -255,10 +255,6 @@
     display: grid;
   }
 
-  .member-list-head-action {
-    display: none;
-  }
-
   .member-metrics,
   .member-profile,
   .member-form .form-grid.two,

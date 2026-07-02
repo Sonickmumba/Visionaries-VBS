@@ -10,6 +10,7 @@ import {
   ConfirmDialog,
   CurrencyInput,
   DataTable,
+  EmptyState,
   IconButton,
   MobileActionTile,
   MobileBottomNav,
@@ -44,7 +45,7 @@ describe("design system components", () => {
   });
 
   it("renders described fields and Kwacha currency inputs", () => {
-    const field = renderToStaticMarkup(<CurrencyInput label="Savings" value="15000" error="Too much" />);
+    const field = renderToStaticMarkup(<CurrencyInput label="Savings" value="15000" error="Too much" required />);
     const input = renderToStaticMarkup(<CurrencyInput label="Savings" value="15000" hint="Principal only" />);
 
     expect(field).toContain(">K<");
@@ -52,6 +53,10 @@ describe("design system components", () => {
     expect(field).toContain("aria-label=\"Savings\"");
     expect(field).toContain("aria-invalid=\"true\"");
     expect(field).toContain("aria-describedby=");
+    expect(field).toContain("field-label");
+    expect(field).toContain("field-required");
+    expect(field).toContain("aria-label=\"required\"");
+    expect(field).toContain("field-error");
     expect(input).toContain("Principal only");
   });
 
@@ -85,16 +90,23 @@ describe("design system components", () => {
 
   it("renders live alerts and loading status semantics", () => {
     const danger = renderToStaticMarkup(<Alert tone="danger" title="Failed">Try again</Alert>);
-    const skeleton = renderToStaticMarkup(<Skeleton lines={2} />);
+    const skeleton = renderToStaticMarkup(<Skeleton lines={2} label="Loading member records" />);
     const confirm = renderToStaticMarkup(<ConfirmDialog open reason="Because" title="Confirm reversal" />);
     const table = renderToStaticMarkup(<DataTable caption="Members" columns={["Name"]} rows={[]} />);
+    const empty = renderToStaticMarkup(<EmptyState title="No members" message="Invite or add members first." action={<Button type="button">Add member</Button>} />);
 
     expect(danger).toContain("role=\"alert\"");
     expect(danger).toContain("aria-live=\"assertive\"");
+    expect(danger).toContain("ui-alert danger");
     expect(skeleton).toContain("role=\"status\"");
+    expect(skeleton).toContain("aria-label=\"Loading member records\"");
     expect(confirm).toContain("aria-labelledby=");
     expect(table).toContain("aria-label=\"Members\"");
     expect(table).toContain("<caption>Members</caption>");
+    expect(empty).toContain("aria-describedby=");
+    expect(empty).toContain("ui-empty-icon");
+    expect(empty).toContain("ui-empty-action");
+    expect(empty).toContain("Add member");
   });
 
   it("renders mobile shell, header, and active bottom navigation", () => {
@@ -133,6 +145,12 @@ describe("design system components", () => {
     expect(css).toContain("touch-action: manipulation");
     expect(css).toContain(".mobile-shell.has-bottom-nav .mobile-sticky-actions");
     expect(css).toContain("bottom: 84px");
+    expect(css).toContain(".ui-empty-action");
+    expect(css).toContain("@media (prefers-reduced-motion: reduce)");
+    expect(css).toContain(".ui-skeleton span:first-child");
+    expect(css).toContain(".field input:focus");
+    expect(css).toContain(".currency-input:focus-within");
+    expect(css).toContain(".field-error svg");
   });
 
   it("anchors mobile modals near the top with internal scrolling", () => {

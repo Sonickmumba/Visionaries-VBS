@@ -93,9 +93,7 @@
     display: grid;
   }
 
-  .cycle-list-head-action,
-  .cycle-detail-generate-action,
-  .cycle-months-head-action {
+  .cycle-detail-generate-action {
     display: none;
   }
 

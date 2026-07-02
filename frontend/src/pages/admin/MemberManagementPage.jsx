@@ -565,7 +565,7 @@ export function MemberManagementPage({
       className="members-page"
       actions={(
         <>
-          <Button type="button" icon={Plus} onClick={openCreate}>New Member</Button>
+          <Button type="button" icon={Plus} onClick={openCreate}>Create Member</Button>
           <Button type="button" variant="secondary" icon={UserPlus} onClick={() => openEnroll()}>Enroll Member</Button>
           <Button type="button" variant="secondary" icon={RefreshCw} onClick={() => loadMembers(pagination.page)} loading={loading}>Refresh</Button>
         </>
@@ -602,10 +602,9 @@ export function MemberManagementPage({
       <section className="panel">
         <div className="panel-head">
           <h2>Member List</h2>
-          <Button type="button" className="member-list-head-action" size="sm" icon={Plus} onClick={openCreate}>New Member</Button>
         </div>
         <div className="member-list-mobile-actions mobile-only" aria-label="Member list quick actions">
-          <Button type="button" icon={Plus} onClick={openCreate}>New Member</Button>
+          <Button type="button" icon={Plus} onClick={openCreate}>Create</Button>
           <Button type="button" variant="secondary" icon={UserPlus} onClick={() => openEnroll()}>Enroll</Button>
           <Button type="button" variant="secondary" icon={RefreshCw} onClick={() => loadMembers(pagination.page)} loading={loading}>Refresh</Button>
         </div>
@@ -652,7 +651,7 @@ export function MemberManagementPage({
           <EmptyState
             title="No members found"
             message="Create members, then enroll them into a cycle so their savings, borrowing, declarations, and penalties can be tracked."
-            action={<Button type="button" onClick={openCreate}>New Member</Button>}
+            action={<Button type="button" onClick={openCreate}>Create Member</Button>}
           />
         )}
       </section>

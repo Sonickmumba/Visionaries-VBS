@@ -5,6 +5,7 @@ import { z } from "zod";
 import { query, withTransaction } from "../../db/pool.js";
 import { requireAuth, requireRole } from "../../middleware/auth.js";
 import { validate } from "../../middleware/validate.js";
+import { audit } from "../../services/auditService.js";
 import { sendAccountInvitation } from "../../services/emailVerificationService.js";
 import { badRequest, forbidden, notFound } from "../../utils/httpError.js";
 import { getPagination, paginationMeta } from "../../utils/pagination.js";

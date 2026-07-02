@@ -418,6 +418,32 @@ describe("API integration smoke tests", () => {
     expect(response.status).toBe(403);
   });
 
+  it("enrolls a member through the members endpoint with audit logging", async () => {
+    const cycleMember = {
+      id: "33333333-3333-4333-8333-333333333333",
+      cycle_id: "11111111-1111-4111-8111-111111111111",
+      member_id: "22222222-2222-4222-8222-222222222222",
+      status: "ACTIVE",
+    };
+    mocks.clientQuery
+      .mockResolvedValueOnce({ rows: [{ id: cycleMember.cycle_id }] })
+      .mockResolvedValueOnce({ rows: [{ id: cycleMember.member_id }] })
+      .mockResolvedValueOnce({ rows: [] })
+      .mockResolvedValueOnce({ rows: [cycleMember] })
+      .mockResolvedValueOnce({ rows: [] });
+
+    const response = await inject({
+      method: "POST",
+      url: "/api/members/enroll",
+      body: { cycleId: cycleMember.cycle_id, memberId: cycleMember.member_id },
+    });
+
+    expect(response.status).toBe(201);
+    expect(response.body.data).toMatchObject(cycleMember);
+    expect(mocks.clientQuery.mock.calls[3][0]).toContain("ON CONFLICT");
+    expect(mocks.clientQuery.mock.calls[4][0]).toContain("INSERT INTO audit_logs");
+  });
+
   it("enrolls a member through the canonical cycle endpoint", async () => {
     const cycleMember = {
       id: "33333333-3333-4333-8333-333333333333",

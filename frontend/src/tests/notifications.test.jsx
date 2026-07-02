@@ -117,6 +117,8 @@ describe("notifications", () => {
     expect(contextSource).toContain("markAllRead");
     expect(contextSource).toContain("/notifications/read");
     expect(contextSource).toContain("!event.readAt");
+    expect(contextSource).toContain("Math.max(0, current - notificationIds.length)");
+    expect(contextSource).toContain("setUnreadCount(Number(response.unreadCount || 0))");
     expect(contextSource).not.toContain("markAllRead(nextEvents)");
     expect(contextSource).not.toContain("markAllRead(events)");
     expect(contextSource).not.toContain("localStorage");

@@ -201,10 +201,10 @@ describe("API integration smoke tests", () => {
     expect(mocks.query.mock.calls[0][0]).not.toContain("SELECT n.*, r.read_at");
   });
 
-  it("marks notifications as read for the authenticated user", async () => {
+  it("marks one notification as read and returns the reduced unread count", async () => {
     mocks.query
       .mockResolvedValueOnce({ rows: [], rowCount: 1 })
-      .mockResolvedValueOnce({ rows: [{ unread_count: 0 }] });
+      .mockResolvedValueOnce({ rows: [{ unread_count: 26 }] });
 
     const response = await inject({
       method: "POST",
@@ -214,8 +214,9 @@ describe("API integration smoke tests", () => {
     });
 
     expect(response.status).toBe(200);
-    expect(response.body).toMatchObject({ read: 1, unreadCount: 0 });
+    expect(response.body).toMatchObject({ read: 1, unreadCount: 26 });
     expect(mocks.query.mock.calls[0][0]).toContain("notification_read_receipts");
+    expect(mocks.query.mock.calls[1][0]).toContain("COUNT(*)::int AS unread_count");
   });
 
   it("archives expired notifications for administrators", async () => {

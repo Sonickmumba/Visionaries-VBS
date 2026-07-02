@@ -639,6 +639,42 @@ describe("API integration smoke tests", () => {
     expect(response.body.totals.savings_cap_remaining).toBe(29000);
   });
 
+  it("excludes reversed social fund and membership payments from savings posting context", async () => {
+    mocks.query
+      .mockResolvedValueOnce({
+        rows: [{
+          id: "11111111-1111-4111-8111-111111111111",
+          savings_cap: 30000,
+          social_fund_amount: 240,
+          membership_fee_amount: 80,
+        }],
+      })
+      .mockResolvedValueOnce({
+        rows: [{ id: "22222222-2222-4222-8222-222222222222", month_number: 1, status: "OPEN" }],
+      })
+      .mockResolvedValueOnce({
+        rows: [{
+          cycle_member_id: "33333333-3333-4333-8333-333333333333",
+          first_name: "Karen",
+          last_name: "Chileshe",
+          social_fund_paid: false,
+          membership_fee_paid: false,
+        }],
+      });
+
+    const response = await inject({ url: "/api/savings/posting-context" });
+
+    expect(response.status).toBe(200);
+    expect(response.body.data.members[0]).toMatchObject({
+      first_name: "Karen",
+      social_fund_paid: false,
+      membership_fee_paid: false,
+    });
+    expect(mocks.query.mock.calls[2][0]).toContain("contribution_rev.reversed_transaction_id = contribution_lt.id");
+    expect(mocks.query.mock.calls[2][0]).toContain("contribution_rev.id IS NULL");
+    expect(mocks.query.mock.calls[2][0]).toContain("contribution_lt.is_reversal = FALSE");
+  });
+
   it("posts one-time contributions through the canonical contributions API", async () => {
     mocks.query
       .mockResolvedValueOnce({ rows: [{ id: "22222222-2222-4222-8222-222222222222", cycle_id: "11111111-1111-4111-8111-111111111111" }] })

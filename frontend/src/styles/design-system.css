@@ -661,8 +661,8 @@ caption {
   color: #172033;
   font-size: 16px;
   line-height: 1.2;
-  margin-top: 40px;
-  /* margin: 0; */
+  /* margin-top: 40px; */
+  margin: 0;
 }
 
 .member-mobile-section-head .badge {

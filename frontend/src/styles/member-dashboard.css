@@ -145,10 +145,16 @@
   }
 
   .member-mobile-hero-head {
-    display: flex;
+    display: grid;
+    grid-template-columns: 38px minmax(0, 1fr) 38px;
     align-items: center;
-    justify-content: space-between;
     gap: 12px;
+  }
+
+  .member-mobile-hero-head > div {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    min-width: 0;
   }
 
   .member-mobile-menu,
@@ -163,6 +169,17 @@
     place-items: center;
   }
 
+  .member-mobile-bell {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
+  }
+
+  .member-mobile-menu {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
   .member-mobile-hero-head span {
     color: #cdeeda;
     font-size: 12px;
@@ -172,8 +189,9 @@
   .member-mobile-hero h2 {
     margin: 3px 0 0;
     color: white;
-    font-size: 21px;
+    font-size: 23px;
     line-height: 1.1;
+    overflow-wrap: anywhere;
   }
 
   .member-mobile-hero-main strong {

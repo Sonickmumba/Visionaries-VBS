@@ -470,6 +470,51 @@ caption {
     padding-left: 14px;
     padding-right: 14px;
   }
+
+  .member-dashboard-page .mobile-bottom-nav,
+  .member-savings-page .mobile-bottom-nav,
+  .member-loans-page .mobile-bottom-nav,
+  .member-reports-mobile .mobile-bottom-nav,
+  .member-more-page .mobile-bottom-nav {
+    left: 50%;
+    bottom: 0;
+    width: min(100vw, 480px);
+    min-height: 68px;
+    border-right: 0;
+    border-bottom: 0;
+    border-left: 0;
+    border-radius: 22px 22px 0 0;
+    box-shadow: 0 -12px 34px rgba(16, 42, 67, 0.14);
+    padding: 7px 10px calc(7px + env(safe-area-inset-bottom));
+  }
+
+  .member-dashboard-page .mobile-bottom-nav button,
+  .member-savings-page .mobile-bottom-nav button,
+  .member-loans-page .mobile-bottom-nav button,
+  .member-reports-mobile .mobile-bottom-nav button,
+  .member-more-page .mobile-bottom-nav button {
+    min-height: 48px;
+    border-radius: 14px;
+    font-size: 10px;
+  }
+
+  .member-dashboard-page .mobile-bottom-nav button.active,
+  .member-savings-page .mobile-bottom-nav button.active,
+  .member-loans-page .mobile-bottom-nav button.active,
+  .member-reports-mobile .mobile-bottom-nav button.active,
+  .member-more-page .mobile-bottom-nav button.active {
+    background: transparent;
+    color: #007a43;
+    box-shadow: none;
+  }
+
+  .member-dashboard-page .mobile-bottom-nav button.active svg,
+  .member-savings-page .mobile-bottom-nav button.active svg,
+  .member-loans-page .mobile-bottom-nav button.active svg,
+  .member-reports-mobile .mobile-bottom-nav button.active svg,
+  .member-more-page .mobile-bottom-nav button.active svg {
+    stroke-width: 2.8;
+  }
 }
 
 .mobile-header {

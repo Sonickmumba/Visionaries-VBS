@@ -192,6 +192,10 @@
     grid-template-columns: 1fr;
   }
 
+  .member-loans-page .member-mobile-section-head h2 {
+    margin-top: 0;
+  }
+
   .member-loans-mobile-secondary {
     display: none;
   }

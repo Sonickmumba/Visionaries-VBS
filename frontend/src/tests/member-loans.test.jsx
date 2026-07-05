@@ -138,6 +138,7 @@ describe("member loans screen", () => {
     expect(css).toContain(".member-loans-mobile");
     expect(css).toContain(".member-loans-breakdown-row:last-child");
     expect(css).toContain(".member-loans-breakdown-icon");
+    expect(css).toContain(".member-loans-page .member-mobile-section-head h2");
     expect(css).toContain(".loan-action.topup");
     expect(css).toContain("@media (max-width: 767px)");
   });

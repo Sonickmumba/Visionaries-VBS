@@ -132,7 +132,7 @@ export function MemberReportsPage({ setPage, reportsApi, initialData, initialCyc
       <div className="member-reports-mobile">
         <MobileScreenShell bottomNav={bottomNav}>
           <header className="member-reports-topbar">
-            <button type="button" aria-label="Open menu"><Menu size={18} aria-hidden="true" /></button>
+            <button type="button" onClick={() => setPage?.("member-more")} aria-label="Open menu"><Menu size={18} aria-hidden="true" /></button>
             <h1>Reports</h1>
             <button type="button" onClick={loadMobileReports} aria-label="Refresh reports"><Search size={18} aria-hidden="true" /></button>
           </header>

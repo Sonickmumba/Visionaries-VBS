@@ -134,7 +134,7 @@ function MemberMobileHero({ portal, totals, activeMembership, setPage }) {
   return (
     <section className="member-mobile-hero" aria-label="Member dashboard summary">
       <div className="member-mobile-hero-head">
-        <button type="button" className="member-mobile-menu" aria-label="Open menu">
+        <button type="button" className="member-mobile-menu" onClick={() => setPage?.("member-more")} aria-label="Open menu">
           <Menu size={18} aria-hidden="true" />
         </button>
         <div>

@@ -79,7 +79,7 @@ export function MemberMorePage({ setPage, memberApi = api, initialData = null })
           <MobileScreenShell bottomNav={bottomNav}>
             <section className="member-more-hero" aria-label="Member profile summary">
               <div className="member-more-topbar">
-                <button type="button" aria-label="Open menu"><Menu size={18} aria-hidden="true" /></button>
+                <button type="button" onClick={() => setPage?.("member-more")} aria-label="Open menu"><Menu size={18} aria-hidden="true" /></button>
                 <button type="button" onClick={() => setPage?.("my-notifications")} aria-label="Notifications"><Bell size={18} aria-hidden="true" /></button>
               </div>
               <div className="member-more-avatar" aria-hidden="true">{initials(name)}</div>

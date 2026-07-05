@@ -184,7 +184,6 @@ export function NotificationsPage({ notificationsApi = api, initialEvents = null
             <h2>Group Activity Feed</h2>
             <p>Declarations, loans, penalties, common interest, and monthly closings in one transparent feed.</p>
           </div>
-          <Badge tone={connected ? "green" : "amber"} text={connected ? "Live" : "Reconnecting"} />
         </section>
         <div className="metrics notifications-metrics">
           <Card title="All Events" value={view.total} note="Recent activity" icon={Bell} />

@@ -69,6 +69,8 @@ describe("notifications", () => {
     expect(html).toContain("Refresh notifications");
     expect(html).toContain("Group Activity Feed");
     expect(html).toContain("Declarations, loans, penalties, common interest");
+    expect(html).not.toContain('aria-label="Reconnecting"');
+    expect(html).not.toContain('aria-label="Live"');
     expect(html).toContain("Declaration submitted");
     expect(html).toContain("Loan disbursed");
     expect(html).toContain("Penalty assessed");

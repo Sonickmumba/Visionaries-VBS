@@ -158,6 +158,9 @@ describe("member declaration screen", () => {
     expect(html).toContain("Save Draft");
     expect(html).toContain("member-declaration-mobile");
     expect(html).toContain("Monthly Declaration");
+    expect(html).toContain("member-declaration-topbar");
+    expect(html).toContain("Back to dashboard");
+    expect(html).toContain("Refresh declaration");
     expect(html).toContain("Declaration status summary");
     expect(html).toContain("Declaration amount summary");
     expect(html).toContain("Declaration progress");
@@ -177,7 +180,10 @@ describe("member declaration screen", () => {
     const css = fs.readFileSync(path.join(process.cwd(), "src/styles/member-declaration.css"), "utf8");
 
     expect(css).toContain(".member-declaration-hero");
+    expect(css).toContain(".member-declaration-page .mobile-shell-inner");
+    expect(css).toContain(".member-declaration-topbar");
     expect(css).toContain(".member-declaration-hero-values");
+    expect(css).toContain(".member-declaration-page .member-mobile-section-head h2");
     expect(css).toContain(".member-declaration-mobile-summary");
     expect(css).toContain(".member-declaration-mobile");
     expect(css).toContain("@media (max-width: 767px)");

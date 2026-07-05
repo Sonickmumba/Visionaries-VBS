@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { AlertTriangle, Banknote, ClipboardList, Download, Eye, FileText, Gauge, PiggyBank, Receipt, RefreshCw, Scale } from "lucide-react";
+import { AlertTriangle, ArrowLeft, Banknote, Download, Eye, FileText, Gauge, PiggyBank, RefreshCw, Scale } from "lucide-react";
 import { api } from "../../api/client.js";
 import {
   Alert,
@@ -10,7 +10,6 @@ import {
   EmptyState,
   MobileActionTile,
   MobileBottomNav,
-  MobileHeader,
   MobileListCard,
   MobileMetricCard,
   MobileScreenShell,
@@ -96,6 +95,11 @@ function DetailValue({ label, value }) {
 function MemberStatementMobileHero({ cycleTotals, selectedMonth, activeMembership, exportStatement, setPage }) {
   return (
     <section className="member-statement-hero" aria-label="Statement summary">
+      <div className="member-statement-topbar">
+        <button type="button" aria-label="Back to dashboard" onClick={() => setPage?.("member-dashboard")}><ArrowLeft size={18} aria-hidden="true" /></button>
+        <h1>Statement</h1>
+        <button type="button" aria-label="Export statement" onClick={exportStatement}><Download size={18} aria-hidden="true" /></button>
+      </div>
       <div className="member-statement-hero-head">
         <div>
           <span>{selectedMonth ? `Month ${selectedMonth.month_number}` : "Full Cycle"}</span>
@@ -242,12 +246,6 @@ export function MemberStatementPage({
         <>
           <div className="member-statement-mobile">
             <MobileScreenShell bottomNav={bottomNav}>
-              <MobileHeader
-                eyebrow="Member Statement"
-                title={memberName(statement?.member || data?.me?.member)}
-                subtitle={selectedMonth ? `Month ${selectedMonth.month_number} statement` : activeMembership.cycle_name || "Full cycle"}
-              />
-
               <MemberStatementMobileHero
                 cycleTotals={cycleTotals}
                 selectedMonth={selectedMonth}

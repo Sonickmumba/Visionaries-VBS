@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Banknote, ClipboardCheck, ClipboardList, FileText, Gauge, PiggyBank, Receipt, RefreshCw, RotateCcw, Scale, Send, UploadCloud } from "lucide-react";
+import { ArrowLeft, Banknote, ClipboardCheck, FileText, PiggyBank, Receipt, RefreshCw, RotateCcw, Scale, Send, UploadCloud } from "lucide-react";
 import { api } from "../../api/client.js";
 import {
   Alert,
@@ -9,7 +9,6 @@ import {
   DataTable,
   EmptyState,
   MobileBottomNav,
-  MobileHeader,
   MobileMetricCard,
   MobileScreenShell,
   MobileStepper,
@@ -231,12 +230,18 @@ function MemberDeclarationMobileHero({
   enteredRepayments,
   form,
   load,
+  setPage,
 }) {
   return (
     <section className="member-declaration-hero" aria-label="Declaration status summary">
+      <div className="member-declaration-topbar">
+        <button type="button" aria-label="Back to dashboard" onClick={() => setPage?.("member-dashboard")}><ArrowLeft size={18} aria-hidden="true" /></button>
+        <h1>Declaration</h1>
+        <button type="button" aria-label="Refresh declaration" onClick={load}><RefreshCw size={18} aria-hidden="true" /></button>
+      </div>
       <div className="member-declaration-hero-head">
         <div>
-          <span>Declaration Status</span>
+          <span>Monthly Declaration</span>
           <h2>{titleCase(declarationStatus)}</h2>
         </div>
         <Badge text={selectedMonth ? `Month ${selectedMonth.month_number}` : "No month"} tone={statusTone(declarationStatus)} />
@@ -248,7 +253,6 @@ function MemberDeclarationMobileHero({
         <FieldSummary label="Repayments" value={money(enteredRepayments)} />
         <FieldSummary label="Common Interest" value={money(form.commonInterestPaymentAmount)} />
       </div>
-      <Button type="button" size="sm" variant="secondary" icon={RefreshCw} onClick={load}>Refresh</Button>
     </section>
   );
 }
@@ -490,12 +494,6 @@ export function MemberDeclarationPage({
         <>
           <div className="member-declaration-mobile">
             <MobileScreenShell bottomNav={bottomNav}>
-              <MobileHeader
-                eyebrow="Monthly Declaration"
-                title={monthLabel(selectedMonth)}
-                subtitle={activeMembership.cycle_name || "Active cycle"}
-              />
-
               <MemberDeclarationMobileHero
                 selectedMonth={selectedMonth}
                 declarationStatus={declarationStatus}
@@ -504,6 +502,7 @@ export function MemberDeclarationPage({
                 enteredRepayments={enteredRepayments}
                 form={form}
                 load={load}
+                setPage={setPage}
               />
 
               <MobileStepper
@@ -534,6 +533,7 @@ export function MemberDeclarationPage({
                   />
                   <FieldSummary label="Savings Cap" value={money(activeMembership.savings_cap)} />
                   <FieldSummary label="Minimum Borrowing" value={money(activeMembership.minimum_borrowing_amount)} />
+                  <FieldSummary label="Cycle" value={activeMembership.cycle_name || "-"} />
                 </div>
               </section>
 

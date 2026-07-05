@@ -117,7 +117,10 @@ describe("member statement screens", () => {
     expect(html).toContain("Export CSV");
     expect(html).toContain("member-statement-mobile");
     expect(html).toContain("Statement summary");
-    expect(html).toContain("Member Statement");
+    expect(html).toContain("<h1>Statement</h1>");
+    expect(html).toContain("member-statement-topbar");
+    expect(html).toContain("Back to dashboard");
+    expect(html).toContain("Export statement");
     expect(html).toContain("Statement financial summary");
     expect(html).toContain("Statement Period");
     expect(html).toContain("aria-label=\"Statement actions\"");
@@ -144,7 +147,10 @@ describe("member statement screens", () => {
     const css = fs.readFileSync(path.join(process.cwd(), "src/styles/member-statement.css"), "utf8");
 
     expect(css).toContain(".member-statement-hero");
+    expect(css).toContain(".member-statement-page .mobile-shell-inner");
+    expect(css).toContain(".member-statement-topbar");
     expect(css).toContain(".member-statement-hero-actions");
+    expect(css).toContain(".member-statement-page .member-mobile-section-head h2");
     expect(css).toContain(".member-statement-hero-strip");
     expect(css).toContain(".member-statement-mobile");
     expect(css).toContain("@media (max-width: 767px)");

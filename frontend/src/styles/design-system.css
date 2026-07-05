@@ -478,7 +478,8 @@ caption {
   .member-more-page .mobile-bottom-nav {
     left: 50%;
     bottom: 0;
-    width: min(100vw, 480px);
+    width: 100vw;
+    max-width: none;
     min-height: 68px;
     border-right: 0;
     border-bottom: 0;

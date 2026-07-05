@@ -20,7 +20,7 @@
 
   .member-reports-mobile {
     display: block;
-    margin: -10px;
+    margin: 0;
   }
 
   .member-reports-mobile .mobile-shell {

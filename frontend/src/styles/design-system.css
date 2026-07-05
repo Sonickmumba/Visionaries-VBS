@@ -445,6 +445,33 @@ caption {
   padding-bottom: 92px;
 }
 
+@media (max-width: 767px) {
+  .member-dashboard-page .mobile-shell-inner,
+  .member-savings-page .mobile-shell-inner,
+  .member-loans-page .mobile-shell-inner,
+  .member-reports-mobile .mobile-shell-inner,
+  .member-more-page .mobile-shell-inner {
+    width: 100%;
+    max-width: none;
+    padding: 0 14px 92px;
+  }
+
+  .member-mobile-hero,
+  .member-savings-hero,
+  .member-loans-hero,
+  .member-more-hero {
+    margin-left: -14px;
+    margin-right: -14px;
+  }
+
+  .member-reports-topbar {
+    margin-left: -14px;
+    margin-right: -14px;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+}
+
 .mobile-header {
   padding-top: env(safe-area-inset-top, 0);
 }

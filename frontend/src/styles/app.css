@@ -1084,6 +1084,10 @@ th {
     padding: 14px 14px 94px;
   }
 
+  .member-shell .content {
+    padding: 0 0 94px;
+  }
+
   .page-head {
     align-items: flex-start;
     flex-direction: column;
@@ -1134,6 +1138,10 @@ th {
 
   .content {
     padding: 10px 10px 94px;
+  }
+
+  .member-shell .content {
+    padding: 0 0 94px;
   }
 
   .panel {

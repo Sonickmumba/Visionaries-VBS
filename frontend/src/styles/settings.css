@@ -63,6 +63,40 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
+.settings-account-panel {
+  border: 1px solid #fee2e2;
+  border-radius: 18px;
+  background: #fffafa;
+  padding: 14px;
+  margin-bottom: 16px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+}
+
+.settings-account-panel span {
+  color: #991b1b;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.settings-account-panel strong {
+  display: block;
+  margin-top: 3px;
+  color: #172033;
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.settings-account-panel p {
+  margin: 4px 0 0;
+  color: #65758b;
+  font-size: 13px;
+  font-weight: 750;
+}
+
 .settings-form-panel,
 .settings-form {
   margin-bottom: 18px;
@@ -207,6 +241,14 @@
   .settings-hero-stat {
     width: 100%;
     min-width: 0;
+  }
+
+  .settings-account-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-account-panel .btn {
+    width: 100%;
   }
 
   .settings-metrics,

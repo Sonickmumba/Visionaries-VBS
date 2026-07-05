@@ -32,7 +32,7 @@ export async function loadMemberMoreData({ memberApi = api } = {}) {
   return { me, activeMembership, statement: statement.data };
 }
 
-export function MemberMorePage({ setPage, memberApi = api, initialData = null }) {
+export function MemberMorePage({ setPage, onLogout, memberApi = api, initialData = null }) {
   const [data, setData] = useState(initialData);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(initialData === null);
@@ -119,9 +119,9 @@ export function MemberMorePage({ setPage, memberApi = api, initialData = null })
                   key={item.title}
                   type="button"
                   className={`member-more-menu-row ${item.page === "logout" ? "danger" : ""}`.trim()}
-                  onClick={item.page && item.page !== "logout" ? () => setPage?.(item.page) : undefined}
-                  disabled={!item.page || item.page === "logout"}
-                  aria-label={item.page && item.page !== "logout" ? `Open ${item.title}` : item.title}
+                  onClick={item.page === "logout" ? onLogout : item.page ? () => setPage?.(item.page) : undefined}
+                  disabled={!item.page || (item.page === "logout" && !onLogout)}
+                  aria-label={item.page === "logout" ? "Log out" : item.page ? `Open ${item.title}` : item.title}
                 >
                   <span className="member-more-menu-icon"><item.icon size={18} aria-hidden="true" /></span>
                   <span>

@@ -38,7 +38,7 @@ const initialData = {
 
 describe("member more screen", () => {
   it("renders menu rows with chevrons instead of visible Open actions", () => {
-    const html = renderToStaticMarkup(<MemberMorePage initialData={initialData} setPage={() => {}} />);
+    const html = renderToStaticMarkup(<MemberMorePage initialData={initialData} setPage={() => {}} onLogout={() => {}} />);
 
     expect(html).toContain("member-cycle-position-icon");
     expect(html).toContain("Accumulated Savings");
@@ -50,7 +50,10 @@ describe("member more screen", () => {
     expect(html).toContain("Statements");
     expect(html).toContain("Payment Proofs");
     expect(html).toContain("Reports");
+    expect(html).toContain("Log out");
+    expect(html).toContain("Sign out from this device");
     expect(html).toContain("lucide-chevron-right");
+    expect(html).not.toContain("aria-label=\"Logout\"");
     expect(html).not.toContain("Member profile quick actions");
     expect(html).not.toContain("member-more-command-strip");
     expect(html).not.toContain(">Open</button>");
@@ -65,6 +68,7 @@ describe("member more screen", () => {
     expect(css).toContain("grid-template-columns: 34px minmax(0, 1fr) 22px");
     expect(css).toContain(".member-more-menu-row > svg");
     expect(css).toContain(".member-more-menu-icon");
+    expect(css).toContain(".member-more-menu-row.danger");
     expect(css).toContain(".member-cycle-position-icon");
     expect(css).toContain("grid-template-columns: 34px minmax(0, 1fr) auto");
     expect(css).not.toContain(".member-more-command-strip");

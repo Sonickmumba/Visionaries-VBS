@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { AlertTriangle, CalendarDays, Lock, RefreshCw, Save, Settings, UserPlus, Users } from "lucide-react";
+import { AlertTriangle, CalendarDays, Lock, LogOut, RefreshCw, Save, UserPlus, Users } from "lucide-react";
 import { api } from "../../api/client.js";
 import {
   Alert,
@@ -260,6 +260,7 @@ function PenaltyTypeCards({ penaltyTypes, busy, onPatch }) {
 export function SettingsPage({
   settingsApi = api,
   initialContext = null,
+  onLogout,
 }) {
   const [context, setContext] = useState(initialContext);
   const [selectedCycleId, setSelectedCycleId] = useState(initialContext?.selectedCycleId || "");
@@ -504,6 +505,15 @@ export function SettingsPage({
       {error ? <Alert tone="danger" title="Settings action failed">{error}</Alert> : null}
 
       <SettingsHero selectedCycle={selectedCycle} metrics={metrics} />
+
+      <section className="settings-account-panel" aria-label="Account session">
+        <div>
+          <span>Current Session</span>
+          <strong>Account access</strong>
+          <p>Sign out from this device when you finish managing the group workspace.</p>
+        </div>
+        <Button type="button" variant="danger" icon={LogOut} onClick={onLogout} disabled={!onLogout}>Log Out</Button>
+      </section>
 
       <div className="admin-mobile-action-row settings-mobile-actions-row mobile-only" aria-label="Settings quick actions">
         <Button type="button" icon={RefreshCw} onClick={() => loadSettings()} loading={loading}>Refresh</Button>

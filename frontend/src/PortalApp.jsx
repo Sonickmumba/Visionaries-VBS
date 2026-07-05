@@ -48,7 +48,7 @@ function UnknownPage({ title }) {
   );
 }
 
-function screenForRoute(page, setPage, pageTitle, navigationIntent) {
+function screenForRoute(page, setPage, pageTitle, navigationIntent, onLogout) {
   switch (page) {
     case "dashboard":
       return <AdminDashboardPage setPage={setPage} />;
@@ -77,7 +77,7 @@ function screenForRoute(page, setPage, pageTitle, navigationIntent) {
     case "audit":
       return <AuditTrailPage />;
     case "settings":
-      return <SettingsPage />;
+      return <SettingsPage onLogout={onLogout} />;
     case "notifications":
       return <NotificationsPage setPage={setPage} role="ADMIN" />;
     case "member-dashboard":
@@ -99,7 +99,7 @@ function screenForRoute(page, setPage, pageTitle, navigationIntent) {
     case "my-loans":
       return <MemberLoansPage setPage={setPage} />;
     case "member-more":
-      return <MemberMorePage setPage={setPage} />;
+      return <MemberMorePage setPage={setPage} onLogout={onLogout} />;
     default:
       return <UnknownPage title={pageTitle} />;
   }
@@ -111,7 +111,7 @@ export function PortalApp({ user, page, setPage, navigationIntent = null, onLogo
   return (
     <AppLayout user={user} page={page} setPage={setPage} onLogout={onLogout}>
       <Suspense fallback={<PageLoadingFallback />}>
-        {screenForRoute(page, setPage, pageTitle, navigationIntent)}
+        {screenForRoute(page, setPage, pageTitle, navigationIntent, onLogout)}
       </Suspense>
     </AppLayout>
   );

@@ -148,10 +148,12 @@ describe("settings screens", () => {
   });
 
   it("renders settings metrics, tabs, user form, and user table", () => {
-    const html = renderToStaticMarkup(<SettingsPage initialContext={context} />);
+    const html = renderToStaticMarkup(<SettingsPage initialContext={context} onLogout={() => {}} />);
 
     expect(html).toContain("Settings");
     expect(html).toContain("Configuration Scope");
+    expect(html).toContain("Account access");
+    expect(html).toContain("Log Out");
     expect(html).toContain("Invite User");
     expect(html).toContain("Users");
     expect(html).toContain("Cycle Rules");
@@ -166,6 +168,8 @@ describe("settings screens", () => {
 
     expect(css).toContain(".settings-hero");
     expect(css).toContain(".settings-mobile-cards");
+    expect(css).toContain(".settings-account-panel");
+    expect(css).toContain("grid-template-columns: 1fr");
     expect(css).toContain(".settings-card");
     expect(css).toContain(".settings-desktop-table");
     expect(css).toContain("@media (max-width: 767px)");

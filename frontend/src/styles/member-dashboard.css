@@ -132,13 +132,14 @@
   .member-mobile-hero {
     border-radius: 0 0 26px 26px;
     background:
-      radial-gradient(circle at 86% 12%, rgba(250, 204, 21, 0.24), transparent 22%),
-      linear-gradient(145deg, #007a43 0%, #006b3d 58%, #0f766e 100%);
+      radial-gradient(circle at 86% 12%, rgba(250, 204, 21, 0.28), transparent 22%),
+      radial-gradient(circle at 16% 94%, rgba(255, 255, 255, 0.16), transparent 26%),
+      linear-gradient(145deg, #003f27 0%, #007a43 60%, #0f766e 100%);
     color: white;
     padding: 18px;
     display: grid;
     gap: 14px;
-    box-shadow: 0 18px 46px rgba(16, 42, 67, 0.14);
+    box-shadow: 0 20px 54px rgba(0, 63, 39, 0.22);
   }
 
   .member-mobile-hero-head {
@@ -182,6 +183,7 @@
     font-size: 34px;
     line-height: 1.02;
     overflow-wrap: anywhere;
+    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.12);
   }
 
   .member-mobile-hero-main small {
@@ -207,6 +209,61 @@
   .member-mobile-hero-actions .btn.secondary {
     background: rgba(255, 255, 255, 0.12);
     color: white;
+  }
+
+  .member-mobile-community-card {
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.13);
+    backdrop-filter: blur(10px);
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .member-mobile-community-card strong,
+  .member-mobile-community-card small {
+    display: block;
+  }
+
+  .member-mobile-community-card strong {
+    color: white;
+    font-size: 14px;
+    line-height: 1.2;
+  }
+
+  .member-mobile-community-card small {
+    margin-top: 3px;
+    color: #dcfce7;
+    font-size: 12px;
+    font-weight: 750;
+  }
+
+  .member-mobile-community-stack {
+    flex: 0 0 auto;
+    width: 72px;
+    display: flex;
+    align-items: center;
+  }
+
+  .member-mobile-community-stack span {
+    width: 34px;
+    height: 34px;
+    margin-left: -8px;
+    border: 2px solid rgba(255, 255, 255, 0.82);
+    border-radius: 999px;
+    background: #f4b000;
+    color: #003f27;
+    display: grid;
+    place-items: center;
+    font-size: 11px;
+    font-weight: 950;
+  }
+
+  .member-mobile-community-stack span:first-child {
+    margin-left: 0;
+    background: #dcfce7;
   }
 
   .member-mobile-hero-strip {
@@ -250,6 +307,59 @@
 
   .member-mobile-actions.command {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .member-mobile-insight {
+    border: 1px solid rgba(216, 230, 223, 0.92);
+    border-radius: 22px;
+    background: #ffffff;
+    box-shadow: 0 14px 34px rgba(16, 42, 67, 0.08);
+    padding: 15px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .member-mobile-insight span,
+  .member-mobile-insight small {
+    display: block;
+    color: #65758b;
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .member-mobile-insight strong {
+    display: block;
+    margin: 3px 0;
+    color: #172033;
+    font-size: 17px;
+    line-height: 1.15;
+  }
+
+  .member-mobile-ring {
+    width: 64px;
+    height: 64px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    background: conic-gradient(#007a43 0 78%, #e8f0ea 78% 100%);
+  }
+
+  .member-mobile-ring.amber {
+    background: conic-gradient(#f4b000 0 58%, #e8f0ea 58% 100%);
+  }
+
+  .member-mobile-ring span {
+    width: 44px;
+    height: 44px;
+    border-radius: inherit;
+    background: white;
+    color: #005f36;
+    display: grid;
+    place-items: center;
+    font-size: 12px;
+    font-weight: 950;
   }
 
   .member-mobile-metrics.compact {

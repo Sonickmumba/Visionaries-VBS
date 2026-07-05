@@ -48,6 +48,10 @@ function rowsForReport(report, statement) {
   return filtered.slice(0, 6);
 }
 
+function reportTotal(rows) {
+  return rows.reduce((sum, row) => sum + Number(row.amount || 0), 0);
+}
+
 function exportCsv(report, rows) {
   const csv = buildCsv([
     ["Date", "Type", "Amount", "Description", "Source"],
@@ -120,6 +124,7 @@ export function MemberReportsPage({ setPage, reportsApi, initialData, initialCyc
   const totals = useMemo(() => memberDashboardTotals(mobileData), [mobileData]);
   const report = REPORTS.find((item) => item.id === selectedReport) || REPORTS[0];
   const rows = rowsForReport(report.id, mobileData?.statement);
+  const selectedTotal = reportTotal(rows);
   const bottomNav = <MobileBottomNav active="my-reports" items={memberMobileNavItems} onChange={setPage} />;
 
   return (
@@ -171,6 +176,19 @@ export function MemberReportsPage({ setPage, reportsApi, initialData, initialCyc
                     <p>{memberName(mobileData?.statement?.member || mobileData?.me?.member)} · Full cycle</p>
                   </div>
                   <Badge text={`${rows.length} rows`} tone="blue" />
+                </div>
+                <div className="member-report-visual" aria-label={`${report.title} visual summary`}>
+                  <div>
+                    <span>Selected Total</span>
+                    <strong>{money(selectedTotal)}</strong>
+                    <small>{report.note}</small>
+                  </div>
+                  <div className="member-report-chart" aria-hidden="true">
+                    <span style={{ height: `${Math.max(22, Math.min(88, rows.length * 13))}%` }} />
+                    <span style={{ height: `${Math.max(28, Math.min(92, Number(totals.accumulatedSavings || 0) / 500))}%` }} />
+                    <span style={{ height: `${Math.max(18, Math.min(84, Number(totals.outstandingLoan || 0) / 350))}%` }} />
+                    <span style={{ height: `${Math.max(24, Math.min(90, Number(totals.groupPool.commonInterestPool || 0) / 120))}%` }} />
+                  </div>
                 </div>
                 <div className="member-report-preview-list">
                   {rows.slice(0, 3).length ? rows.slice(0, 3).map((row) => (

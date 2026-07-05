@@ -44,6 +44,8 @@ function DetailValue({ label, value }) {
 
 function MemberLoansMobileHero({ summary, activeMembership, setPage }) {
   const statusTone = summary.borrowingShortfall > 0 ? "amber" : "green";
+  const repayBase = Math.max(1, summary.principalRepaid + summary.outstandingBalance);
+  const repayPercent = Math.min(100, Math.round((summary.principalRepaid / repayBase) * 100));
 
   return (
     <section className="member-loans-hero" aria-label="Loan account summary">
@@ -59,6 +61,17 @@ function MemberLoansMobileHero({ summary, activeMembership, setPage }) {
         <span>Outstanding Loan Balance</span>
         <strong>{money(summary.outstandingBalance)}</strong>
         <small>{money(summary.cumulativeBorrowed)} cumulative borrowed</small>
+      </div>
+
+      <div className="member-loans-progress-card" aria-label={`Loan repayment progress ${repayPercent}%`}>
+        <div>
+          <strong>Repayment Progress</strong>
+          <span>{money(summary.principalRepaid)} repaid from active cycle loans</span>
+        </div>
+        <em>{repayPercent}%</em>
+        <div className="member-loans-progress">
+          <span style={{ width: `${repayPercent}%` }} />
+        </div>
       </div>
 
       <div className="member-loans-hero-actions">

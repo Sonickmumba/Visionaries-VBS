@@ -107,6 +107,21 @@ export function MemberMorePage({ setPage, memberApi = api, initialData = null })
               </div>
             </section>
 
+            <section className="member-more-command-strip" aria-label="Member profile quick actions">
+              <button type="button" onClick={() => setPage?.("my-declaration")}>
+                <Receipt size={18} aria-hidden="true" />
+                <span>Declare</span>
+              </button>
+              <button type="button" onClick={() => setPage?.("my-reports")}>
+                <FileBarChart size={18} aria-hidden="true" />
+                <span>Reports</span>
+              </button>
+              <button type="button" onClick={() => setPage?.("my-statement")}>
+                <FileText size={18} aria-hidden="true" />
+                <span>Statement</span>
+              </button>
+            </section>
+
             <section className="member-more-menu" aria-label="Member menu">
               {menu.map((item) => (
                 <MobileListCard

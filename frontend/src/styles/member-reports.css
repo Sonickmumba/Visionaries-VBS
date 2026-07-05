@@ -74,9 +74,9 @@
   .member-report-card {
     scroll-snap-align: start;
     border: 1px solid #e5edf5;
-    border-radius: 18px;
+    border-radius: 22px;
     background: #ffffff;
-    box-shadow: 0 10px 30px rgba(16, 42, 67, 0.08);
+    box-shadow: 0 14px 34px rgba(16, 42, 67, 0.08);
     padding: 14px;
     display: grid;
     gap: 10px;
@@ -84,8 +84,10 @@
   }
 
   .member-report-card.active {
-    border-color: rgba(0, 122, 67, 0.35);
-    background: linear-gradient(180deg, #ffffff 0%, #f4fbf7 100%);
+    border-color: rgba(0, 122, 67, 0.42);
+    background:
+      radial-gradient(circle at 92% 14%, rgba(244, 180, 0, 0.16), transparent 25%),
+      linear-gradient(180deg, #ffffff 0%, #f4fbf7 100%);
   }
 
   .member-report-card > span {
@@ -119,10 +121,61 @@
 
   .member-report-preview {
     border: 1px solid #e5edf5;
-    border-radius: 18px;
+    border-radius: 22px;
     background: #ffffff;
-    box-shadow: 0 10px 30px rgba(16, 42, 67, 0.08);
+    box-shadow: 0 14px 34px rgba(16, 42, 67, 0.08);
     padding: 14px;
+  }
+
+  .member-report-visual {
+    border-radius: 20px;
+    background:
+      radial-gradient(circle at 92% 10%, rgba(244, 180, 0, 0.2), transparent 26%),
+      linear-gradient(145deg, #003f27 0%, #007a43 64%, #0f766e 100%);
+    color: white;
+    padding: 14px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 96px;
+    gap: 12px;
+    align-items: end;
+    overflow: hidden;
+  }
+
+  .member-report-visual span,
+  .member-report-visual small {
+    display: block;
+    color: #dcfce7;
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .member-report-visual strong {
+    display: block;
+    margin-top: 5px;
+    color: white;
+    font-size: 27px;
+    line-height: 1.05;
+    overflow-wrap: anywhere;
+  }
+
+  .member-report-visual small {
+    margin-top: 5px;
+  }
+
+  .member-report-chart {
+    height: 94px;
+    display: flex;
+    align-items: end;
+    justify-content: flex-end;
+    gap: 7px;
+  }
+
+  .member-report-chart span {
+    width: 14px;
+    min-height: 18px;
+    border-radius: 999px 999px 6px 6px;
+    background: linear-gradient(180deg, #f4b000, #d9f99d);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.14);
   }
 
   .member-report-preview-list {
@@ -132,8 +185,19 @@
 
   .member-report-export-actions {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 9px;
+  }
+}
+
+@media (max-width: 380px) {
+  .member-report-visual,
+  .member-report-export-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .member-report-chart {
+    justify-content: flex-start;
   }
 }
 

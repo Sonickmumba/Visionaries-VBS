@@ -64,6 +64,12 @@ function MemberSavingsMobileHero({ summary, activeMembership, setPage }) {
         <em>{capPercent}% of principal cap</em>
       </div>
 
+      <div className="member-savings-progress-stats" aria-label="Savings progress details">
+        <DetailValue label="Principal" value={money(summary.savingsPrincipal)} />
+        <DetailValue label="Interest" value={money(summary.savingsInterest)} />
+        <DetailValue label="Remaining" value={money(summary.savingsCapRemaining)} />
+      </div>
+
       <div className="member-savings-hero-actions">
         <Button type="button" size="sm" onClick={() => setPage?.("my-declaration")}>Make Declaration</Button>
         <Button type="button" size="sm" variant="secondary" onClick={() => setPage?.("my-statement")}>Statement</Button>

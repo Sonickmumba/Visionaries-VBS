@@ -144,6 +144,17 @@ function MemberMobileHero({ portal, totals, activeMembership, setPage }) {
         <strong>{money(totals.accumulatedSavings)}</strong>
         <small>{activeMembership?.cycle_name || "Active cycle"} · {titleCase(activeMembership?.cycle_status)}</small>
       </div>
+      <div className="member-mobile-community-card" aria-label="Cycle identity">
+        <div className="member-mobile-community-stack" aria-hidden="true">
+          <span>{name.slice(0, 1).toUpperCase()}</span>
+          <span>VB</span>
+          <span>{String(activeMembership?.cycle_name || "C").slice(0, 1).toUpperCase()}</span>
+        </div>
+        <div>
+          <strong>Visionaries Village Banking</strong>
+          <small>{activeMembership?.cycle_name || "Active cycle"} · transparent member view</small>
+        </div>
+      </div>
       <div className="member-mobile-hero-actions">
         <Button type="button" size="sm" onClick={() => setPage?.("my-declaration")}>Make Declaration</Button>
         <Button type="button" size="sm" variant="secondary" onClick={() => setPage?.("my-reports")}>View Reports</Button>
@@ -191,6 +202,17 @@ function MemberDashboardMobile({ portal, totals, transactions, penalties, active
             <MobileActionTile label="Request Loan" icon={Banknote} tone="blue" onClick={() => setPage?.("my-declaration")} />
             <MobileActionTile label="My Statement" icon={Receipt} tone="amber" onClick={() => setPage?.("my-statement")} />
             <MobileActionTile label="View Reports" icon={FileBarChart} tone="purple" onClick={() => setPage?.("my-reports")} />
+          </div>
+        </section>
+
+        <section className="member-mobile-insight" aria-label="Financial health snapshot">
+          <div>
+            <span>Financial Health</span>
+            <strong>{totals.borrowingShortfall > 0 ? "Borrowing target pending" : "Borrowing target met"}</strong>
+            <small>{money(totals.borrowingShortfall)} minimum borrowing shortfall</small>
+          </div>
+          <div className={`member-mobile-ring ${totals.borrowingShortfall > 0 ? "amber" : "green"}`} aria-hidden="true">
+            <span>{totals.borrowingShortfall > 0 ? "!" : "OK"}</span>
           </div>
         </section>
 

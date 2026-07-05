@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { AlertTriangle, Banknote, ClipboardList, FileText, Gauge, PiggyBank, Receipt, RefreshCw } from "lucide-react";
+import { AlertTriangle, ArrowLeft, Banknote, ClipboardList, FileText, Info, PiggyBank, Receipt, RefreshCw } from "lucide-react";
 import { api } from "../../api/client.js";
 import {
   Alert,
@@ -10,7 +10,6 @@ import {
   EmptyState,
   MobileActionTile,
   MobileBottomNav,
-  MobileHeader,
   MobileListCard,
   MobileMetricCard,
   MobileScreenShell,
@@ -50,16 +49,16 @@ function MemberLoansMobileHero({ summary, activeMembership, setPage }) {
   return (
     <section className="member-loans-hero" aria-label="Loan account summary">
       <div className="member-loans-hero-head">
-        <div>
-          <span>{activeMembership?.cycle_name || "Active cycle"}</span>
-          <h2>My Loans</h2>
-        </div>
-        <Badge text={titleCase(summary.borrowingStatus)} tone={statusTone} />
+        <button type="button" aria-label="Back to dashboard" onClick={() => setPage?.("member-dashboard")}><ArrowLeft size={18} aria-hidden="true" /></button>
+        <span hidden>Member Loans</span>
+        <h2>Loans</h2>
+        <button type="button" aria-label="Loan information"><Info size={18} aria-hidden="true" /></button>
       </div>
 
       <div className="member-loans-hero-main">
         <span>Outstanding Loan Balance</span>
         <strong>{money(summary.outstandingBalance)}</strong>
+        <Badge text={titleCase(summary.borrowingStatus)} tone={statusTone} />
         <small>{money(summary.cumulativeBorrowed)} cumulative borrowed</small>
       </div>
 
@@ -74,15 +73,6 @@ function MemberLoansMobileHero({ summary, activeMembership, setPage }) {
         </div>
       </div>
 
-      <div className="member-loans-hero-actions">
-        <Button type="button" size="sm" onClick={() => setPage?.("my-declaration")}>Request Loan</Button>
-        <Button type="button" size="sm" variant="secondary" onClick={() => setPage?.("my-declaration")}>Request Top-up</Button>
-      </div>
-
-      <div className="member-loans-hero-strip">
-        <DetailValue label="Interest Due" value={money(Math.max(0, summary.interestAssessed - summary.interestRepaid))} />
-        <DetailValue label="Shortfall" value={money(summary.borrowingShortfall)} />
-      </div>
     </section>
   );
 }
@@ -196,26 +186,20 @@ export function MemberLoansPage({
         <>
           <div className="member-loans-mobile">
             <MobileScreenShell bottomNav={bottomNav}>
-              <MobileHeader
-                eyebrow="Member Loans"
-                title={memberName(data?.me?.member)}
-                subtitle={activeMembership.cycle_name || "Active cycle"}
-              />
-
               <MemberLoansMobileHero
                 summary={summary}
                 activeMembership={activeMembership}
                 setPage={setPage}
               />
 
-              <div className="member-loans-mobile-metrics" aria-label="Member loan summary">
+              <div className="member-loans-mobile-metrics member-loans-mobile-secondary" aria-label="Member loan summary">
                 <MobileMetricCard label="Borrowing Shortfall" value={money(summary.borrowingShortfall)} note={titleCase(summary.borrowingStatus)} icon={PiggyBank} />
                 <MobileMetricCard label="Interest Assessed" value={money(summary.interestAssessed)} note={`${money(summary.interestRepaid)} repaid`} icon={Receipt} tone="amber" />
                 <MobileMetricCard label="Principal Repaid" value={money(summary.principalRepaid)} note="Paid toward balance" icon={Banknote} tone="green" />
                 <MobileMetricCard label="Top-ups" value={money(summary.topUps)} note="Additional borrowing" icon={Banknote} tone="blue" />
               </div>
 
-              <section className="member-mobile-section" aria-label="Loan actions">
+              <section className="member-mobile-section member-loans-mobile-secondary" aria-label="Loan actions">
                 <div className="member-mobile-section-head">
                   <h2>Actions</h2>
                 </div>
@@ -244,7 +228,7 @@ export function MemberLoansPage({
               <section className="member-mobile-section">
                 <div className="member-mobile-section-head">
                   <h2>Loan Ledger</h2>
-                  <Badge text={`${entries.length} records`} tone="blue" />
+                  <button type="button" className="member-mobile-text-link" onClick={() => setPage?.("my-statement")}>View All</button>
                 </div>
                 <div className="member-mobile-list">
                   {entries.length ? entries.map((entry) => (
@@ -260,6 +244,12 @@ export function MemberLoansPage({
                   )) : <p className="muted">No loan ledger entries found.</p>}
                 </div>
               </section>
+
+              <div className="member-loans-bottom-actions" aria-label="Loan actions">
+                <Button type="button" variant="secondary" icon={ClipboardList} onClick={() => setPage?.("my-declaration")}>Request Loan</Button>
+                <Button type="button" variant="secondary" icon={Banknote} onClick={() => setPage?.("my-declaration")}>Request Top-up</Button>
+                <Button type="button" variant="secondary" icon={Receipt} onClick={() => setPage?.("my-declaration")}>Declare Repayment</Button>
+              </div>
             </MobileScreenShell>
           </div>
 

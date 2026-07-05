@@ -56,52 +56,72 @@
   }
 
   .member-savings-hero {
-    border-radius: 0 0 26px 26px;
+    margin-bottom: -42px;
+    padding: 14px 14px 60px;
+    border-radius: 0 0 34px 34px;
     background:
-      radial-gradient(circle at 88% 14%, rgba(250, 204, 21, 0.28), transparent 23%),
-      radial-gradient(circle at 10% 90%, rgba(255, 255, 255, 0.14), transparent 26%),
-      linear-gradient(145deg, #003f27 0%, #007a43 62%, #0f766e 100%);
+      radial-gradient(circle at 90% 16%, rgba(244, 180, 0, 0.15), transparent 24%),
+      linear-gradient(155deg, #002f1f 0%, #005f36 48%, #007a43 100%);
     box-shadow: 0 20px 54px rgba(0, 63, 39, 0.22);
     color: white;
     display: grid;
-    gap: 14px;
-    padding: 18px;
+    gap: 16px;
   }
 
   .member-savings-hero-head {
-    align-items: flex-start;
-    display: flex;
-    gap: 12px;
-    justify-content: space-between;
+    min-height: 42px;
+    align-items: center;
+    display: grid;
+    grid-template-columns: 42px 1fr 42px;
+    gap: 8px;
   }
 
-  .member-savings-hero-head span,
-  .member-savings-hero-main span,
-  .member-savings-hero-strip strong {
-    color: #d9f99d;
-    font-size: 12px;
-    font-weight: 900;
-    text-transform: uppercase;
+  .member-savings-hero-head button {
+    width: 38px;
+    height: 38px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    display: inline-grid;
+    place-items: center;
   }
 
   .member-savings-hero h2 {
     color: white;
-    font-size: 27px;
+    font-size: 17px;
     line-height: 1.05;
-    margin: 4px 0 0;
+    margin: 0;
+    text-align: center;
+  }
+
+  .member-savings-hero-main {
+    border: 1px solid rgba(216, 230, 223, 0.92);
+    border-radius: 22px;
+    background: #ffffff;
+    color: #172033;
+    box-shadow: 0 16px 38px rgba(16, 42, 67, 0.14);
+    padding: 16px;
+    display: grid;
+    gap: 8px;
+  }
+
+  .member-savings-hero-main span {
+    color: #172033;
+    font-size: 13px;
+    font-weight: 850;
   }
 
   .member-savings-hero-main strong {
-    color: white;
+    color: #053b2a;
     display: block;
-    font-size: 34px;
+    font-size: 29px;
     line-height: 1.02;
-    margin-top: 5px;
     overflow-wrap: anywhere;
   }
 
   .member-savings-hero-main small {
-    color: #dcfce7;
+    color: #52637a;
     display: block;
     font-size: 13px;
     font-weight: 800;
@@ -109,7 +129,7 @@
   }
 
   .member-savings-hero-main em {
-    color: #fef9c3;
+    color: #172033;
     display: block;
     font-size: 12px;
     font-style: normal;
@@ -120,7 +140,7 @@
   .member-savings-progress {
     height: 9px;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.22);
+    background: #e5e7eb;
     overflow: hidden;
     margin-top: 12px;
   }
@@ -129,39 +149,47 @@
     display: block;
     height: 100%;
     border-radius: inherit;
-    background: linear-gradient(90deg, #f4b000, #d9f99d);
+    background: linear-gradient(90deg, #007a43, #22c55e);
   }
 
   .member-savings-progress-stats {
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    border-radius: 18px;
-    background: rgba(255, 255, 255, 0.13);
-    backdrop-filter: blur(10px);
+    border: 0;
+    border-radius: 0;
+    background: transparent;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1px;
-    overflow: hidden;
+    gap: 10px;
   }
 
   .member-savings-progress-stats div {
     min-width: 0;
-    padding: 11px 8px;
+    border: 1px solid rgba(216, 230, 223, 0.92);
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 12px 28px rgba(16, 42, 67, 0.08);
+    padding: 11px;
     display: grid;
     gap: 4px;
   }
 
   .member-savings-progress-stats strong {
-    color: #d9f99d;
+    color: #52637a;
     font-size: 10px;
     font-weight: 900;
     text-transform: uppercase;
   }
 
   .member-savings-progress-stats span {
-    color: white;
+    color: #172033;
     font-size: 13px;
     font-weight: 950;
     overflow-wrap: anywhere;
+  }
+
+  .member-savings-cap-note {
+    color: #dcfce7;
+    font-size: 12px;
+    font-weight: 800;
   }
 
   .member-savings-hero-actions {
@@ -209,6 +237,22 @@
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
+  }
+
+  .member-savings-mobile-metrics {
+    position: relative;
+    z-index: 2;
+  }
+
+  .member-savings-mobile-secondary {
+    display: none;
+  }
+
+  .member-savings-primary-action {
+    width: 100%;
+    min-height: 52px;
+    border-radius: 13px;
+    box-shadow: 0 16px 32px rgba(0, 95, 54, 0.22);
   }
 
   .member-savings-mobile-actions {

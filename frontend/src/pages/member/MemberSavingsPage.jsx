@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Banknote, ClipboardList, FileText, Gauge, PiggyBank, Receipt, RefreshCw, Scale } from "lucide-react";
+import { ArrowLeft, ClipboardList, FileText, Info, PiggyBank, Receipt, RefreshCw, Scale } from "lucide-react";
 import { api } from "../../api/client.js";
 import {
   Alert,
@@ -10,7 +10,6 @@ import {
   EmptyState,
   MobileActionTile,
   MobileBottomNav,
-  MobileHeader,
   MobileListCard,
   MobileMetricCard,
   MobileScreenShell,
@@ -47,11 +46,10 @@ function MemberSavingsMobileHero({ summary, activeMembership, setPage }) {
   return (
     <section className="member-savings-hero" aria-label="Savings account summary">
       <div className="member-savings-hero-head">
-        <div>
-          <span>{activeMembership?.cycle_name || "Active cycle"}</span>
-          <h2>My Savings</h2>
-        </div>
-        <Badge text={titleCase(activeMembership?.cycle_status)} tone="green" />
+        <button type="button" aria-label="Back to dashboard" onClick={() => setPage?.("member-dashboard")}><ArrowLeft size={18} aria-hidden="true" /></button>
+        <span hidden>Member Savings</span>
+        <h2>Savings</h2>
+        <button type="button" aria-label="Savings information"><Info size={18} aria-hidden="true" /></button>
       </div>
 
       <div className="member-savings-hero-main">
@@ -70,15 +68,7 @@ function MemberSavingsMobileHero({ summary, activeMembership, setPage }) {
         <DetailValue label="Remaining" value={money(summary.savingsCapRemaining)} />
       </div>
 
-      <div className="member-savings-hero-actions">
-        <Button type="button" size="sm" onClick={() => setPage?.("my-declaration")}>Make Declaration</Button>
-        <Button type="button" size="sm" variant="secondary" onClick={() => setPage?.("my-statement")}>Statement</Button>
-      </div>
-
-      <div className="member-savings-hero-strip">
-        <DetailValue label="Interest Earned" value={money(summary.savingsInterest)} />
-        <DetailValue label="Cap Remaining" value={money(summary.savingsCapRemaining)} />
-      </div>
+      <small className="member-savings-cap-note">Savings cap applies to principal only</small>
     </section>
   );
 }
@@ -195,12 +185,6 @@ export function MemberSavingsPage({
         <>
           <div className="member-savings-mobile">
             <MobileScreenShell bottomNav={bottomNav}>
-              <MobileHeader
-                eyebrow="Member Savings"
-                title={memberName(data?.me?.member || data?.savings?.member)}
-                subtitle={activeMembership.cycle_name || "Active cycle"}
-              />
-
               <MemberSavingsMobileHero
                 summary={summary}
                 activeMembership={activeMembership}
@@ -214,7 +198,7 @@ export function MemberSavingsPage({
                 <MobileMetricCard label="Membership Fee" value={money(summary.membershipFeePaid)} note="Once per cycle" icon={FileText} tone="purple" />
               </div>
 
-              <section className="member-mobile-section" aria-label="Savings actions">
+              <section className="member-mobile-section member-savings-mobile-secondary" aria-label="Savings actions">
                 <div className="member-mobile-section-head">
                   <h2>Actions</h2>
                 </div>
@@ -225,7 +209,7 @@ export function MemberSavingsPage({
                 </div>
               </section>
 
-              <section className="member-mobile-section">
+              <section className="member-mobile-section member-savings-mobile-secondary">
                 <div className="member-mobile-section-head">
                   <h2>Savings Breakdown</h2>
                   <Badge text={`Remaining ${money(summary.savingsCapRemaining)}`} tone="blue" />
@@ -242,8 +226,8 @@ export function MemberSavingsPage({
 
               <section className="member-mobile-section">
                 <div className="member-mobile-section-head">
-                  <h2>Savings Ledger</h2>
-                  <Badge text={`${entries.length} records`} tone="blue" />
+                  <h2>Recent Savings Deposits</h2>
+                  <button type="button" className="member-mobile-text-link" onClick={() => setPage?.("my-statement")}>View All</button>
                 </div>
                 <div className="member-mobile-list">
                   {entries.length ? entries.map((entry) => (
@@ -260,7 +244,7 @@ export function MemberSavingsPage({
                 </div>
               </section>
 
-              <section className="member-mobile-section">
+              <section className="member-mobile-section member-savings-mobile-secondary">
                 <div className="member-mobile-section-head">
                   <h2>One-Time Contributions</h2>
                   <Badge text={`${contributions.length} records`} tone="blue" />
@@ -278,6 +262,8 @@ export function MemberSavingsPage({
                   )) : <p className="muted">No one-time contributions found.</p>}
                 </div>
               </section>
+
+              <Button type="button" className="member-savings-primary-action" icon={ClipboardList} onClick={() => setPage?.("my-declaration")}>Make Declaration</Button>
             </MobileScreenShell>
           </div>
 

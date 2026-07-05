@@ -1,12 +1,11 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Bell, ClipboardList, FileBarChart, FileText, LogOut, Receipt, RefreshCw, Settings, ShieldCheck, Upload } from "lucide-react";
+import { Bell, ClipboardList, FileBarChart, FileText, LogOut, Menu, Receipt, Settings, ShieldCheck, Upload } from "lucide-react";
 import { api } from "../../api/client.js";
 import {
   Alert,
   Badge,
   EmptyState,
   MobileBottomNav,
-  MobileHeader,
   MobileListCard,
   MobileScreenShell,
   Skeleton,
@@ -78,20 +77,16 @@ export function MemberMorePage({ setPage, memberApi = api, initialData = null })
       ) : (
         <div className="member-more-mobile">
           <MobileScreenShell bottomNav={bottomNav}>
-            <MobileHeader
-              eyebrow="Member Profile"
-              title={name}
-              subtitle={data.activeMembership?.cycle_name || "Active cycle"}
-              avatar={{ label: name, initials: initials(name) }}
-              actions={<button type="button" className="member-more-refresh" onClick={load} aria-label="Refresh profile"><RefreshCw size={17} aria-hidden="true" /></button>}
-            />
-
             <section className="member-more-hero" aria-label="Member profile summary">
+              <div className="member-more-topbar">
+                <button type="button" aria-label="Open menu"><Menu size={18} aria-hidden="true" /></button>
+                <button type="button" onClick={() => setPage?.("my-notifications")} aria-label="Notifications"><Bell size={18} aria-hidden="true" /></button>
+              </div>
               <div className="member-more-avatar" aria-hidden="true">{initials(name)}</div>
               <div>
-                <span>{data?.me?.member?.member_code || "Member"}</span>
                 <h2>{name}</h2>
                 <Badge text="Active Member" tone="green" />
+                <p>Member Code: {data?.me?.member?.member_code || "Member"}</p>
               </div>
             </section>
 
@@ -129,7 +124,8 @@ export function MemberMorePage({ setPage, memberApi = api, initialData = null })
                   title={item.title}
                   subtitle={item.subtitle}
                   icon={item.icon}
-                  onClick={() => item.page && item.page !== "logout" ? setPage?.(item.page) : null}
+                  onAction={item.page && item.page !== "logout" ? () => setPage?.(item.page) : undefined}
+                  actionLabel={item.page === "logout" ? "Use header" : item.page ? "Open" : "Soon"}
                   status={!item.page || item.page === "logout" ? { label: item.page === "logout" ? "Use header" : "Soon", tone: "gray" } : undefined}
                 />
               ))}

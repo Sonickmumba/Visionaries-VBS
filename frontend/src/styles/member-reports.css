@@ -23,6 +23,53 @@
     margin: -10px;
   }
 
+  .member-reports-mobile .mobile-shell {
+    background: linear-gradient(180deg, #003f27 0, #006b3d 152px, #f6f8fb 152px, #f6f8fb 100%);
+  }
+
+  .member-reports-topbar {
+    min-height: 52px;
+    color: white;
+    display: grid;
+    grid-template-columns: 42px 1fr 42px;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .member-reports-topbar h1 {
+    margin: 0;
+    color: white;
+    font-size: 17px;
+    text-align: center;
+  }
+
+  .member-reports-topbar button {
+    width: 38px;
+    height: 38px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    display: inline-grid;
+    place-items: center;
+  }
+
+  .member-reports-summary-panel {
+    border: 1px solid rgba(216, 230, 223, 0.92);
+    border-radius: 22px;
+    background: #ffffff;
+    box-shadow: 0 16px 38px rgba(16, 42, 67, 0.14);
+    padding: 14px;
+    display: grid;
+    gap: 12px;
+  }
+
+  .member-reports-summary-panel h2 {
+    margin: 0;
+    color: #172033;
+    font-size: 15px;
+  }
+
   .member-reports-summary {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -59,7 +106,7 @@
   .member-report-carousel {
     display: grid;
     grid-auto-flow: column;
-    grid-auto-columns: minmax(178px, 74%);
+    grid-auto-columns: minmax(112px, 31%);
     gap: 12px;
     overflow-x: auto;
     padding: 2px 2px 12px;
@@ -77,10 +124,10 @@
     border-radius: 22px;
     background: #ffffff;
     box-shadow: 0 14px 34px rgba(16, 42, 67, 0.08);
-    padding: 14px;
+    padding: 12px;
     display: grid;
     gap: 10px;
-    min-height: 172px;
+    min-height: 136px;
   }
 
   .member-report-card.active {
@@ -91,9 +138,9 @@
   }
 
   .member-report-card > span {
-    width: 38px;
-    height: 38px;
-    border-radius: 14px;
+    width: 34px;
+    height: 34px;
+    border-radius: 12px;
     background: #e9f7ef;
     color: #007a43;
     display: inline-grid;
@@ -103,11 +150,12 @@
   .member-report-card h3 {
     margin: 0;
     color: #172033;
-    font-size: 16px;
+    font-size: 12px;
     line-height: 1.15;
   }
 
   .member-report-card p {
+    display: none;
     margin: 0;
     color: #65758b;
     font-size: 12px;
@@ -117,6 +165,9 @@
 
   .member-report-card .btn {
     width: 100%;
+    min-height: 30px;
+    border-radius: 9px;
+    font-size: 11px;
   }
 
   .member-report-preview {
@@ -127,12 +178,24 @@
     padding: 14px;
   }
 
+  .member-report-period {
+    width: fit-content;
+    border: 1px solid #e5edf5;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #172033;
+    padding: 7px 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    font-weight: 850;
+  }
+
   .member-report-visual {
     border-radius: 20px;
-    background:
-      radial-gradient(circle at 92% 10%, rgba(244, 180, 0, 0.2), transparent 26%),
-      linear-gradient(145deg, #003f27 0%, #007a43 64%, #0f766e 100%);
-    color: white;
+    background: #f8fbf9;
+    color: #172033;
     padding: 14px;
     display: grid;
     grid-template-columns: minmax(0, 1fr) 96px;
@@ -144,7 +207,7 @@
   .member-report-visual span,
   .member-report-visual small {
     display: block;
-    color: #dcfce7;
+    color: #52637a;
     font-size: 12px;
     font-weight: 800;
   }
@@ -152,8 +215,8 @@
   .member-report-visual strong {
     display: block;
     margin-top: 5px;
-    color: white;
-    font-size: 27px;
+    color: #053b2a;
+    font-size: 24px;
     line-height: 1.05;
     overflow-wrap: anywhere;
   }

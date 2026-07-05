@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Banknote, ClipboardList, Download, FileBarChart, FileText, PiggyBank, Printer, RefreshCw, Scale, ShieldAlert, WalletCards } from "lucide-react";
+import { Banknote, CalendarDays, ClipboardList, Download, FileBarChart, FileText, Menu, PiggyBank, Printer, Scale, Search, ShieldAlert, WalletCards } from "lucide-react";
 import { api } from "../../api/client.js";
-import { Alert, Badge, Button, MobileBottomNav, MobileHeader, MobileListCard, MobileMetricCard, MobileScreenShell, Skeleton } from "../../components/ui/index.jsx";
+import { Alert, Badge, Button, MobileBottomNav, MobileListCard, MobileMetricCard, MobileScreenShell, Skeleton } from "../../components/ui/index.jsx";
 import { ReportsPage } from "../admin/ReportsPage.jsx";
 import { buildCsv, escapeHtml } from "../../utils/exportSafety.js";
 import { chooseActiveMembership, memberDashboardTotals } from "./MemberDashboardPage.jsx";
@@ -131,21 +131,23 @@ export function MemberReportsPage({ setPage, reportsApi, initialData, initialCyc
     <>
       <div className="member-reports-mobile">
         <MobileScreenShell bottomNav={bottomNav}>
-          <MobileHeader
-            eyebrow="Reports"
-            title="Transparency Center"
-            subtitle={mobileData?.activeMembership?.cycle_name || "Member reports"}
-            actions={<button type="button" className="member-reports-refresh" onClick={loadMobileReports} aria-label="Refresh reports"><RefreshCw size={17} aria-hidden="true" /></button>}
-          />
+          <header className="member-reports-topbar">
+            <button type="button" aria-label="Open menu"><Menu size={18} aria-hidden="true" /></button>
+            <h1>Reports</h1>
+            <button type="button" onClick={loadMobileReports} aria-label="Refresh reports"><Search size={18} aria-hidden="true" /></button>
+          </header>
 
           {mobileError ? <Alert tone="danger" title="Reports failed">{mobileError}</Alert> : null}
           {mobileLoading ? <section className="panel"><Skeleton lines={8} /></section> : (
             <>
-              <section className="member-reports-summary" aria-label="Group transparency summary">
+              <section className="member-reports-summary-panel" aria-label="Group transparency summary">
+                <h2>Group Transparency Summary</h2>
+                <div className="member-reports-summary">
                 <MobileMetricCard label="Total Savings" value={money(totals.groupPool.totalAccumulatedSavings || totals.accumulatedSavings)} note="Transparent view" icon={PiggyBank} />
                 <MobileMetricCard label="Loans Issued" value={money(totals.groupPool.loansIssued || totals.borrowed)} note="Latest calculated" icon={Banknote} tone="blue" />
                 <MobileMetricCard label="CI Pool" value={money(totals.groupPool.commonInterestPool)} note={totals.groupPoolScope} icon={Scale} tone="amber" />
                 <MobileMetricCard label="Penalties Due" value={money(totals.penaltyDue)} note="Your outstanding" icon={ShieldAlert} tone={totals.penaltyDue > 0 ? "red" : "green"} />
+                </div>
               </section>
 
               <section className="member-report-center" aria-label="Report Center">
@@ -176,6 +178,10 @@ export function MemberReportsPage({ setPage, reportsApi, initialData, initialCyc
                     <p>{memberName(mobileData?.statement?.member || mobileData?.me?.member)} · Full cycle</p>
                   </div>
                   <Badge text={`${rows.length} rows`} tone="blue" />
+                </div>
+                <div className="member-report-period">
+                  <CalendarDays size={14} aria-hidden="true" />
+                  <span>{mobileData?.statement?.cycle?.name || mobileData?.activeMembership?.cycle_name || "Current cycle"}</span>
                 </div>
                 <div className="member-report-visual" aria-label={`${report.title} visual summary`}>
                   <div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { AlertTriangle, Banknote, Bell, ClipboardList, FileBarChart, FileText, PiggyBank, Receipt, RefreshCw, Scale } from "lucide-react";
+import { AlertTriangle, Banknote, Bell, CheckCircle2, ClipboardList, FileBarChart, FileText, Menu, PiggyBank, Receipt, RefreshCw, Scale } from "lucide-react";
 import { api } from "../../api/client.js";
 import { BrandMark } from "../../components/BrandMark.jsx";
 import {
@@ -11,7 +11,6 @@ import {
   EmptyState,
   MobileActionTile,
   MobileBottomNav,
-  MobileHeader,
   MobileListCard,
   MobileMetricCard,
   MobileScreenShell,
@@ -126,42 +125,36 @@ function nextRequiredAction(totals) {
   return "Ready for declaration";
 }
 
+function declarationDisplay(transactions) {
+  return transactions?.length ? "Submitted" : "Open";
+}
+
 function MemberMobileHero({ portal, totals, activeMembership, setPage }) {
   const name = memberName(portal?.me?.member);
   return (
     <section className="member-mobile-hero" aria-label="Member dashboard summary">
       <div className="member-mobile-hero-head">
+        <button type="button" className="member-mobile-menu" aria-label="Open menu">
+          <Menu size={18} aria-hidden="true" />
+        </button>
         <div>
-          <span>Good Morning</span>
+          <span hidden>Good Morning</span>
+          <span>Good morning,</span>
           <h2>{name}</h2>
         </div>
         <button type="button" className="member-mobile-bell" onClick={() => setPage?.("my-notifications")} aria-label="Notifications">
           <Bell size={18} aria-hidden="true" />
         </button>
       </div>
-      <div className="member-mobile-hero-main">
-        <span>Accumulated Savings</span>
-        <strong>{money(totals.accumulatedSavings)}</strong>
-        <small>{activeMembership?.cycle_name || "Active cycle"} · {titleCase(activeMembership?.cycle_status)}</small>
-      </div>
       <div className="member-mobile-community-card" aria-label="Cycle identity">
-        <div className="member-mobile-community-stack" aria-hidden="true">
-          <span>{name.slice(0, 1).toUpperCase()}</span>
-          <span>VB</span>
-          <span>{String(activeMembership?.cycle_name || "C").slice(0, 1).toUpperCase()}</span>
+        <div className="member-mobile-community-pin" aria-hidden="true">
+          <PiggyBank size={16} />
         </div>
         <div>
-          <strong>Visionaries Village Banking</strong>
-          <small>{activeMembership?.cycle_name || "Active cycle"} · transparent member view</small>
+          <strong>Visionaries Savings Group</strong>
+          <small>{activeMembership?.cycle_name || "Cycle 2026"}</small>
         </div>
-      </div>
-      <div className="member-mobile-hero-actions">
-        <Button type="button" size="sm" onClick={() => setPage?.("my-declaration")}>Make Declaration</Button>
-        <Button type="button" size="sm" variant="secondary" onClick={() => setPage?.("my-reports")}>View Reports</Button>
-      </div>
-      <div className="member-mobile-hero-strip">
-        <DetailValue label="My Loan Balance" value={money(totals.outstandingLoan)} />
-        <DetailValue label="Next Action" value={nextRequiredAction(totals)} />
+        <Badge text={`${activeMembership?.current_month_label || totals.groupPoolScope}`} tone="green" />
       </div>
     </section>
   );
@@ -179,18 +172,13 @@ function MemberDashboardMobile({ portal, totals, transactions, penalties, active
   return (
     <div className="member-mobile-dashboard">
       <MobileScreenShell bottomNav={bottomNav}>
-        <MobileHeader
-          eyebrow="Member Portal"
-          title={memberName(portal?.me?.member)}
-          subtitle={activeMembership?.cycle_name || "Active cycle"}
-          avatar={{ label: memberName(portal?.me?.member), initials: memberName(portal?.me?.member).slice(0, 2).toUpperCase() }}
-        />
-
         <MemberMobileHero portal={portal} totals={totals} activeMembership={activeMembership} setPage={setPage} />
 
-        <div className="member-mobile-metrics compact" aria-label="Member financial summary">
-          <MobileMetricCard label="Cycle Status" value={titleCase(activeMembership?.cycle_status)} note="Current membership" icon={ClipboardList} tone="green" />
-          <MobileMetricCard label="Principal Remaining" value={money(totals.savingsCapRemaining)} note={`${money(activeMembership?.savings_cap)} cap`} icon={PiggyBank} />
+        <div className="member-mobile-metrics mockup-grid" aria-label="Member financial summary">
+          <MobileMetricCard label="Accumulated Savings" value={money(totals.accumulatedSavings)} note="Total with interest" icon={PiggyBank} tone="green" />
+          <MobileMetricCard label="My Loan Balance" value={money(totals.outstandingLoan)} note="Outstanding loan" icon={Banknote} tone="amber" />
+          <MobileMetricCard label="Declaration Status" value={declarationDisplay(transactions)} note="Latest activity" icon={CheckCircle2} tone="green" />
+          <MobileMetricCard label="Next Required Action" value={nextRequiredAction(totals)} note="Cycle task" icon={Receipt} tone="amber" />
         </div>
 
         <section className="member-mobile-section" aria-label="Quick actions">
@@ -205,21 +193,10 @@ function MemberDashboardMobile({ portal, totals, transactions, penalties, active
           </div>
         </section>
 
-        <section className="member-mobile-insight" aria-label="Financial health snapshot">
-          <div>
-            <span>Financial Health</span>
-            <strong>{totals.borrowingShortfall > 0 ? "Borrowing target pending" : "Borrowing target met"}</strong>
-            <small>{money(totals.borrowingShortfall)} minimum borrowing shortfall</small>
-          </div>
-          <div className={`member-mobile-ring ${totals.borrowingShortfall > 0 ? "amber" : "green"}`} aria-hidden="true">
-            <span>{totals.borrowingShortfall > 0 ? "!" : "OK"}</span>
-          </div>
-        </section>
-
         <section className="member-mobile-section">
           <div className="member-mobile-section-head">
             <h2>Recent Activity</h2>
-            <Badge text={`${transactions.length} records`} tone="blue" />
+            <button type="button" className="member-mobile-text-link" onClick={() => setPage?.("my-statement")}>View All</button>
           </div>
           <div className="member-mobile-list">
             {transactions.slice(0, 4).length ? transactions.slice(0, 4).map((tx, index) => (
@@ -235,7 +212,7 @@ function MemberDashboardMobile({ portal, totals, transactions, penalties, active
           </div>
         </section>
 
-        <section className="member-mobile-section" aria-label={`Group Pool Snapshot ${totals.groupPoolScope}`}>
+        <section className="member-mobile-section member-mobile-secondary" aria-label={`Group Pool Snapshot ${totals.groupPoolScope}`}>
           <div className="member-mobile-section-head">
             <h2>Group Pool Snapshot {totals.groupPoolScope}</h2>
             <Badge text="Latest Calculated" tone="blue" />
@@ -249,7 +226,7 @@ function MemberDashboardMobile({ portal, totals, transactions, penalties, active
           </div>
         </section>
 
-        <section className="member-mobile-section">
+        <section className="member-mobile-section member-mobile-secondary">
           <div className="member-mobile-section-head">
             <h2>Cycle Position</h2>
             <Badge text={titleCase(totals.borrowingStatus)} tone={statusTone(totals.borrowingStatus)} />
@@ -262,7 +239,7 @@ function MemberDashboardMobile({ portal, totals, transactions, penalties, active
           </div>
         </section>
 
-        <section className="member-mobile-section">
+        <section className="member-mobile-section member-mobile-secondary">
           <div className="member-mobile-section-head">
             <h2>Penalty Snapshot</h2>
             <Badge text={`${penalties.length} records`} tone={totals.penaltyDue > 0 ? "red" : "green"} />

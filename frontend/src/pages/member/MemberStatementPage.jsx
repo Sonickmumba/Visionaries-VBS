@@ -434,6 +434,8 @@ export function MemberStatementPage({
             />
           </section>
 
+          </div>
+
           <Modal
             open={Boolean(selectedTransaction)}
             title="Transaction Detail"
@@ -443,7 +445,6 @@ export function MemberStatementPage({
           >
             <TransactionDetail transaction={selectedTransaction} />
           </Modal>
-          </div>
         </>
       )}
     </Page>

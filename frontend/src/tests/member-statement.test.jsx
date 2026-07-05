@@ -135,6 +135,19 @@ describe("member statement screens", () => {
     expect(html).toContain("Mary Phiri");
   });
 
+  it("keeps the transaction detail modal outside the desktop-only statement wrapper", () => {
+    const source = fs.readFileSync(path.join(process.cwd(), "src/pages/member/MemberStatementPage.jsx"), "utf8");
+    const desktopStart = source.indexOf('<div className="member-statement-desktop">');
+    const desktopClose = source.indexOf("</div>\n\n          <Modal", desktopStart);
+    const modalIndex = source.indexOf("<Modal", desktopStart);
+
+    expect(desktopStart).toBeGreaterThan(-1);
+    expect(desktopClose).toBeGreaterThan(desktopStart);
+    expect(modalIndex).toBeGreaterThan(desktopClose);
+    expect(source).toContain("onAction={() => setSelectedTransaction(tx)}");
+    expect(source).toContain("statementRows(transactions, setSelectedTransaction)");
+  });
+
   it("renders an empty state without active membership", () => {
     const html = renderToStaticMarkup(
       <MemberStatementPage initialData={{ me: { member: null, cycleMemberships: [] }, activeMembership: null, statement: null, months: [] }} />,

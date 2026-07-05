@@ -105,6 +105,10 @@ describe("member loans screen", () => {
     expect(html).toContain("Loan Balance Breakdown");
     expect(html).toContain("Interest Assessed (Unpaid)");
     expect(html).toContain("Minimum Borrowing Pending");
+    expect(html).toContain("member-loans-breakdown-icon");
+    expect(html).toContain("loan-action request");
+    expect(html).toContain("loan-action topup");
+    expect(html).toContain("loan-action repayment");
     expect(html).toContain("Loan Ledger");
     expect(html).toContain("Loan disbursement");
     expect(html).toContain("K9,000");
@@ -124,12 +128,14 @@ describe("member loans screen", () => {
     const css = fs.readFileSync(path.join(process.cwd(), "src/styles/member-loans.css"), "utf8");
 
     expect(source).toContain("borrowingBadgeText");
+    expect(source).toContain("MobileBreakdownValue");
     expect(css).toContain(".member-loans-hero");
     expect(css).toContain(".member-loans-hero-actions");
     expect(css).toContain(".member-loans-hero-strip");
     expect(css).toContain(".member-loans-mobile");
-    expect(css).toContain(".member-loans-mobile-breakdown div:last-child");
-    expect(css).toContain("justify-content: space-between");
+    expect(css).toContain(".member-loans-breakdown-row:last-child");
+    expect(css).toContain(".member-loans-breakdown-icon");
+    expect(css).toContain(".loan-action.topup");
     expect(css).toContain("@media (max-width: 767px)");
   });
 

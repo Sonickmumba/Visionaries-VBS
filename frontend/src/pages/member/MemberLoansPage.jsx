@@ -41,6 +41,16 @@ function DetailValue({ label, value }) {
   return <div><strong>{label}</strong><span>{value}</span></div>;
 }
 
+function MobileBreakdownValue({ label, value, icon: Icon = Banknote, tone = "green" }) {
+  return (
+    <div className={`member-loans-breakdown-row ${tone}`.trim()}>
+      <span className="member-loans-breakdown-icon"><Icon size={14} aria-hidden="true" /></span>
+      <strong>{label}</strong>
+      <span>{value}</span>
+    </div>
+  );
+}
+
 function borrowingBadgeText(summary) {
   return summary.borrowingShortfall > 0 ? "Minimum Borrowing Pending" : "Minimum Borrowing Met";
 }
@@ -208,12 +218,12 @@ export function MemberLoansPage({
                   <h2>Loan Balance Breakdown</h2>
                 </div>
                 <div className="member-loans-mobile-breakdown">
-                  <DetailValue label="Original Loans" value={money(summary.originalLoans)} />
-                  <DetailValue label="Top-ups" value={money(summary.topUps)} />
-                  <DetailValue label="Converted Penalty Loans" value={money(summary.convertedPenaltyLoans)} />
-                  <DetailValue label="Interest Assessed (Unpaid)" value={money(unpaidInterest)} />
-                  <DetailValue label="Principal Repaid" value={money(summary.principalRepaid)} />
-                  <DetailValue label="Interest Paid" value={money(summary.interestRepaid)} />
+                  <MobileBreakdownValue label="Original Loans" value={money(summary.originalLoans)} icon={Banknote} />
+                  <MobileBreakdownValue label="Top-ups" value={money(summary.topUps)} icon={PiggyBank} tone="amber" />
+                  <MobileBreakdownValue label="Converted Penalty Loans" value={money(summary.convertedPenaltyLoans)} icon={AlertTriangle} tone="red" />
+                  <MobileBreakdownValue label="Interest Assessed (Unpaid)" value={money(unpaidInterest)} icon={Receipt} tone="blue" />
+                  <MobileBreakdownValue label="Principal Repaid" value={money(summary.principalRepaid)} icon={Banknote} />
+                  <MobileBreakdownValue label="Interest Paid" value={money(summary.interestRepaid)} icon={Receipt} />
                 </div>
                 <div className="member-loans-progress-card" aria-label={`Loan repayment progress ${repayPercent}%`}>
                   <div>
@@ -248,9 +258,9 @@ export function MemberLoansPage({
               </section>
 
               <div className="member-loans-bottom-actions" aria-label="Loan actions">
-                <Button type="button" variant="secondary" icon={ClipboardList} onClick={() => setPage?.("my-declaration")}>Request Loan</Button>
-                <Button type="button" variant="secondary" icon={Banknote} onClick={() => setPage?.("my-declaration")}>Request Top-up</Button>
-                <Button type="button" variant="secondary" icon={Receipt} onClick={() => setPage?.("my-declaration")}>Declare Repayment</Button>
+                <Button type="button" variant="secondary" className="loan-action request" icon={ClipboardList} onClick={() => setPage?.("my-declaration")}>Request Loan</Button>
+                <Button type="button" variant="secondary" className="loan-action topup" icon={Banknote} onClick={() => setPage?.("my-declaration")}>Request Top-up</Button>
+                <Button type="button" variant="secondary" className="loan-action repayment" icon={Receipt} onClick={() => setPage?.("my-declaration")}>Declare Repayment</Button>
               </div>
             </MobileScreenShell>
           </div>

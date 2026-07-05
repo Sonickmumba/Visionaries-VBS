@@ -252,14 +252,17 @@
   .member-loans-bottom-actions {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 8px;
+    gap: 7px;
   }
 
   .member-loans-bottom-actions .btn {
-    min-height: 48px;
+    min-height: 44px;
     border-radius: 12px;
+    background: #ffffff;
+    box-shadow: none;
     padding: 0 6px;
-    font-size: 11px;
+    font-size: 10px;
+    font-weight: 900;
   }
 
   .member-loans-bottom-actions .btn span {
@@ -267,19 +270,63 @@
     line-height: 1.1;
   }
 
-  .member-loans-mobile-breakdown div {
+  .member-loans-bottom-actions .loan-action.request {
+    border-color: #007a43;
+    color: #00683a;
+  }
+
+  .member-loans-bottom-actions .loan-action.topup {
+    border-color: #f59e0b;
+    color: #b45309;
+  }
+
+  .member-loans-bottom-actions .loan-action.repayment {
+    border-color: #2563eb;
+    color: #1d4ed8;
+  }
+
+  .member-loans-bottom-actions .btn svg {
+    flex: 0 0 auto;
+  }
+
+  .member-loans-breakdown-row {
     min-width: 0;
     align-items: center;
     border-bottom: 1px solid #eef2f6;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 24px minmax(0, 1fr) auto;
     gap: 12px;
     min-height: 42px;
     padding: 8px 0;
   }
 
-  .member-loans-mobile-breakdown div:last-child {
+  .member-loans-breakdown-row:last-child {
     border-bottom: 0;
+  }
+
+  .member-loans-breakdown-icon {
+    width: 18px;
+    height: 18px;
+    border-radius: 6px;
+    background: #dcfce7;
+    color: #007a43;
+    display: inline-grid;
+    place-items: center;
+  }
+
+  .member-loans-breakdown-row.amber .member-loans-breakdown-icon {
+    background: #ffedd5;
+    color: #ea580c;
+  }
+
+  .member-loans-breakdown-row.red .member-loans-breakdown-icon {
+    background: #fee2e2;
+    color: #dc2626;
+  }
+
+  .member-loans-breakdown-row.blue .member-loans-breakdown-icon {
+    background: #dbeafe;
+    color: #2563eb;
   }
 
   .member-loans-mobile-breakdown strong {

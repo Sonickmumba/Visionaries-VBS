@@ -41,6 +41,10 @@ function DetailValue({ label, value }) {
   return <div><strong>{label}</strong><span>{value}</span></div>;
 }
 
+function borrowingBadgeText(summary) {
+  return summary.borrowingShortfall > 0 ? "Minimum Borrowing Pending" : "Minimum Borrowing Met";
+}
+
 function MemberLoansMobileHero({ summary, activeMembership, setPage }) {
   const statusTone = summary.borrowingShortfall > 0 ? "amber" : "green";
 
@@ -56,7 +60,7 @@ function MemberLoansMobileHero({ summary, activeMembership, setPage }) {
       <div className="member-loans-hero-main">
         <span>Outstanding Loan Balance</span>
         <strong>{money(summary.outstandingBalance)}</strong>
-        <Badge text={titleCase(summary.borrowingStatus)} tone={statusTone} />
+        <Badge text={borrowingBadgeText(summary)} tone={statusTone} />
         <small>{money(summary.cumulativeBorrowed)} cumulative borrowed</small>
       </div>
     </section>
@@ -146,6 +150,7 @@ export function MemberLoansPage({
   const entries = data?.ledger?.data || [];
   const repayBase = Math.max(1, summary.principalRepaid + summary.outstandingBalance);
   const repayPercent = Math.min(100, Math.round((summary.principalRepaid / repayBase) * 100));
+  const unpaidInterest = Math.max(0, summary.interestAssessed - summary.interestRepaid);
   const bottomNav = (
     <MobileBottomNav
       active="my-loans"
@@ -200,16 +205,15 @@ export function MemberLoansPage({
 
               <section className="member-mobile-section">
                 <div className="member-mobile-section-head">
-                  <h2>Loan Breakdown</h2>
-                  <Badge text={titleCase(summary.borrowingStatus)} tone={summary.borrowingShortfall > 0 ? "amber" : "green"} />
+                  <h2>Loan Balance Breakdown</h2>
                 </div>
                 <div className="member-loans-mobile-breakdown">
                   <DetailValue label="Original Loans" value={money(summary.originalLoans)} />
                   <DetailValue label="Top-ups" value={money(summary.topUps)} />
-                  <DetailValue label="Converted Penalties" value={money(summary.convertedPenaltyLoans)} />
-                  <DetailValue label="Interest Assessed" value={money(summary.interestAssessed)} />
+                  <DetailValue label="Converted Penalty Loans" value={money(summary.convertedPenaltyLoans)} />
+                  <DetailValue label="Interest Assessed (Unpaid)" value={money(unpaidInterest)} />
                   <DetailValue label="Principal Repaid" value={money(summary.principalRepaid)} />
-                  <DetailValue label="Interest Repaid" value={money(summary.interestRepaid)} />
+                  <DetailValue label="Interest Paid" value={money(summary.interestRepaid)} />
                 </div>
                 <div className="member-loans-progress-card" aria-label={`Loan repayment progress ${repayPercent}%`}>
                   <div>

@@ -102,7 +102,9 @@ describe("member loans screen", () => {
     expect(html).toContain("My Loan Balance");
     expect(html).toContain("Loan account summary");
     expect(html).toContain("Member loan summary");
-    expect(html).toContain("Loan Breakdown");
+    expect(html).toContain("Loan Balance Breakdown");
+    expect(html).toContain("Interest Assessed (Unpaid)");
+    expect(html).toContain("Minimum Borrowing Pending");
     expect(html).toContain("Loan Ledger");
     expect(html).toContain("Loan disbursement");
     expect(html).toContain("K9,000");
@@ -118,12 +120,16 @@ describe("member loans screen", () => {
   });
 
   it("keeps the member loans mobile responsive contract", () => {
+    const source = fs.readFileSync(path.join(process.cwd(), "src/pages/member/MemberLoansPage.jsx"), "utf8");
     const css = fs.readFileSync(path.join(process.cwd(), "src/styles/member-loans.css"), "utf8");
 
+    expect(source).toContain("borrowingBadgeText");
     expect(css).toContain(".member-loans-hero");
     expect(css).toContain(".member-loans-hero-actions");
     expect(css).toContain(".member-loans-hero-strip");
     expect(css).toContain(".member-loans-mobile");
+    expect(css).toContain(".member-loans-mobile-breakdown div:last-child");
+    expect(css).toContain("justify-content: space-between");
     expect(css).toContain("@media (max-width: 767px)");
   });
 

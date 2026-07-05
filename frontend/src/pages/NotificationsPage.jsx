@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Bell, FileBarChart, RefreshCw, Wifi, WifiOff } from "lucide-react";
+import { ArrowLeft, Bell, FileBarChart, RefreshCw, Wifi, WifiOff } from "lucide-react";
 import { api } from "../api/client.js";
 import { Alert, Badge, Button, Card, EmptyState, MobileBottomNav, Skeleton } from "../components/ui/index.jsx";
 import { useNotificationUnread } from "../contexts/NotificationUnreadContext.jsx";
@@ -158,9 +158,10 @@ export function NotificationsPage({ notificationsApi = api, initialEvents = null
   const memberBottomNav = role === "MEMBER" ? (
     <MobileBottomNav active="my-notifications" items={memberMobileNavItems} onChange={setPage} />
   ) : null;
+  const backPage = role === "MEMBER" ? "member-dashboard" : "dashboard";
 
   return (
-    <>
+    <div className={role === "MEMBER" ? "member-notifications-shell" : "admin-notifications-shell"}>
       <Page
         title="Notifications"
         className="notifications-page"
@@ -173,6 +174,11 @@ export function NotificationsPage({ notificationsApi = api, initialEvents = null
       >
         {error ? <Alert tone="danger" title="Notifications failed">{error}</Alert> : null}
         <section className="notifications-hero">
+          <div className="notifications-mobile-topbar">
+            <button type="button" aria-label="Back" onClick={() => setPage?.(backPage)}><ArrowLeft size={18} aria-hidden="true" /></button>
+            <h1>Notifications</h1>
+            <button type="button" aria-label="Refresh notifications" onClick={refresh}><RefreshCw size={18} aria-hidden="true" /></button>
+          </div>
           <div>
             <span>Real-time Activity</span>
             <h2>Group Transparency Feed</h2>
@@ -208,6 +214,6 @@ export function NotificationsPage({ notificationsApi = api, initialEvents = null
         </section>
       </Page>
       {memberBottomNav}
-    </>
+    </div>
   );
 }

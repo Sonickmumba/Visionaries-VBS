@@ -65,6 +65,8 @@ describe("notifications", () => {
     const html = renderToStaticMarkup(<NotificationsPage initialEvents={events} setPage={() => {}} />);
 
     expect(html).toContain("Notifications");
+    expect(html).toContain("notifications-mobile-topbar");
+    expect(html).toContain("Refresh notifications");
     expect(html).toContain("Group Transparency Feed");
     expect(html).toContain("Declaration submitted");
     expect(html).toContain("Loan disbursed");
@@ -79,6 +81,7 @@ describe("notifications", () => {
   it("renders member notifications without duplicating alerts in the bottom nav", () => {
     const html = renderToStaticMarkup(<NotificationsPage initialEvents={events} setPage={() => {}} role="MEMBER" />);
 
+    expect(html).toContain("member-notifications-shell");
     expect(html).toContain("Primary mobile navigation");
     expect(html).toContain("Reports");
     expect(html).not.toContain("Alerts");
@@ -130,8 +133,12 @@ describe("notifications", () => {
     expect(source).toContain("target.memberPage");
     expect(source).toContain("memberMobileNavItems");
     expect(source).toContain("my-notifications");
+    expect(source).toContain("member-notifications-shell");
     expect(source).toContain("notifications-mobile-actions");
     expect(css).toContain(".notifications-mobile-actions");
+    expect(css).toContain(".notifications-mobile-topbar");
+    expect(css).toContain(".member-notifications-shell .mobile-bottom-nav");
+    expect(css).toContain("width: 100vw");
     expect(css).toContain(".notifications-hero");
     expect(css).toContain(".notification-card");
     expect(css).toContain(".notification-card.unread");

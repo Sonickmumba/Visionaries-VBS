@@ -1076,6 +1076,10 @@ th {
     box-shadow: 0 10px 30px rgba(16, 42, 67, 0.08);
   }
 
+  .member-shell .topbar {
+    display: none;
+  }
+
   .content {
     padding: 14px 14px 94px;
   }

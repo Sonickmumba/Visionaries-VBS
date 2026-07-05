@@ -8,6 +8,7 @@ import { requestId } from "./middleware/requestId.js";
 import { errorHandler, notFoundHandler } from "./middleware/errorHandler.js";
 import { sanitizeInput } from "./middleware/sanitizeInput.js";
 import { sessionMiddleware } from "./middleware/session.js";
+import { csrfProtection } from "./middleware/csrf.js";
 import { authRouter } from "./modules/auth/routes.js";
 import { cyclesRouter } from "./modules/cycles/routes.js";
 import { membersRouter } from "./modules/members/routes.js";
@@ -32,11 +33,13 @@ app.use(helmet());
 if (env.nodeEnv === "production") app.set("trust proxy", 1);
 const allowedOrigins = new Set([
   env.frontendOrigin,
-  "http://localhost:5173",
-  "http://127.0.0.1:5173",
-  "http://localhost:4173",
-  "http://127.0.0.1:4173",
 ]);
+if (env.nodeEnv !== "production") {
+  allowedOrigins.add("http://localhost:5173");
+  allowedOrigins.add("http://127.0.0.1:5173");
+  allowedOrigins.add("http://localhost:4173");
+  allowedOrigins.add("http://127.0.0.1:4173");
+}
 
 app.use(cors({
   origin(origin, callback) {
@@ -52,6 +55,7 @@ app.use(morgan("dev"));
 app.use(sessionMiddleware());
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(csrfProtection);
 
 app.get("/health", (req, res) => {
   res.json({ status: "ok", timestamp: new Date().toISOString(), requestId: req.requestId });

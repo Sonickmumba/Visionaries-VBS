@@ -7,6 +7,13 @@ let publisherConnection = null;
 let queueConnection = null;
 let redisAvailable = null;
 
+function redisErrorMessage(error) {
+  if (!error) return "unknown error";
+  if (error.code) return error.code;
+  if (error.message) return error.message;
+  return String(error);
+}
+
 export function redisEnabled() {
   return Boolean(env.redisUrl) && redisAvailable !== false;
 }
@@ -19,7 +26,7 @@ function createRedisConnection(role) {
     enableReadyCheck: false,
   });
   connection.on("error", (error) => {
-    console.warn(`Redis ${role} connection error: ${error.message}`);
+    console.warn(`Redis ${role} connection error: ${redisErrorMessage(error)}`);
   });
   return connection;
 }
@@ -35,6 +42,9 @@ export async function probeRedisAvailability() {
     connectTimeout: 1000,
     enableReadyCheck: false,
   });
+  probe.on("error", () => {
+    // The availability probe reports failures through the catch block below.
+  });
   try {
     await probe.connect();
     await probe.ping();
@@ -42,7 +52,7 @@ export async function probeRedisAvailability() {
     return true;
   } catch (error) {
     redisAvailable = false;
-    console.warn(`Redis unavailable; notification queue/fanout disabled for this process: ${error.code || error.message}`);
+    console.warn(`Redis unavailable; notification queue/fanout disabled for this process: ${redisErrorMessage(error)}`);
     return false;
   } finally {
     await probe.quit().catch(() => probe.disconnect());

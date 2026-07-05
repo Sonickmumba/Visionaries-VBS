@@ -119,3 +119,19 @@ export async function sendInvitationEmail({ to, token, role }) {
     `,
   });
 }
+
+export async function sendAdminMfaEmail({ to, code }) {
+  return sendEmail({
+    to,
+    subject: "Visionaries Village Banking admin sign-in code",
+    text: `Your admin sign-in code is ${code}. It expires soon. If you did not request it, contact the system owner immediately.`,
+    html: `
+      <div style="font-family:Inter,Arial,sans-serif;line-height:1.5;color:#172033">
+        <h2>Admin sign-in code</h2>
+        <p>Use this code to finish signing in to Visionaries Village Banking:</p>
+        <p style="font-size:28px;font-weight:700;letter-spacing:4px;color:#007a3d">${code}</p>
+        <p>This code expires soon. If you did not request it, contact the system owner immediately.</p>
+      </div>
+    `,
+  });
+}

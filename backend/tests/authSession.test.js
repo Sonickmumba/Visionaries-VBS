@@ -128,7 +128,7 @@ describe("passport session authentication", () => {
     });
 
     expect(login.status).toBe(200);
-    expect(login.body).toEqual({
+    expect(login.body).toMatchObject({
       user: {
         id: user.id,
         email: user.email,
@@ -137,6 +137,7 @@ describe("passport session authentication", () => {
         email_verified_at: user.email_verified_at,
       },
     });
+    expect(login.body.csrfToken).toBeTruthy();
     expect(login.headers["set-cookie"]?.join(";")).toContain("vb_sid=");
     expect(login.headers["set-cookie"]?.join(";")).toContain("HttpOnly");
     expect(login.headers["set-cookie"]?.join(";")).not.toContain("vb_token");

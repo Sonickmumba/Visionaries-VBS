@@ -19,6 +19,7 @@ import {
   Skeleton,
 } from "../../components/ui/index.jsx";
 import { Page } from "../../layouts/AppLayouts.jsx";
+import { buildCsv } from "../../utils/exportSafety.js";
 import { chooseActiveMembership, memberDashboardTotals } from "./MemberDashboardPage.jsx";
 import { memberMobileNavItems } from "./memberMobileNav.js";
 import "../../styles/member-statement.css";
@@ -141,9 +142,7 @@ function monthLabel(month) {
 
 function downloadCsv(filename, rows) {
   const headers = ["Date", "Type", "Amount", "Description", "Source", "Source ID"];
-  const csv = [headers, ...rows]
-    .map((row) => row.map((cell) => `"${String(cell ?? "").replaceAll('"', '""')}"`).join(","))
-    .join("\n");
+  const csv = buildCsv([headers, ...rows]);
   const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");

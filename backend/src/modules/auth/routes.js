@@ -6,9 +6,11 @@ import { z } from "zod";
 import { env } from "../../config/env.js";
 import { query, withTransaction } from "../../db/pool.js";
 import { requireAuth } from "../../middleware/auth.js";
-import { createMemoryRateLimiter } from "../../middleware/rateLimit.js";
+import { ensureCsrfToken } from "../../middleware/csrf.js";
+import { createRateLimiter } from "../../middleware/rateLimit.js";
 import { validate } from "../../middleware/validate.js";
 import { audit } from "../../services/auditService.js";
+import { assertAdminMfaCode, beginAdminMfa, clearAdminMfa, shouldRequireAdminMfa } from "../../services/adminMfaService.js";
 import {
   acceptInvitationToken,
   sendSignupVerification,
@@ -19,15 +21,20 @@ import { badRequest, unauthorized } from "../../utils/httpError.js";
 
 export const authRouter = express.Router();
 
-const authRateLimit = createMemoryRateLimiter({
+const authRateLimit = createRateLimiter({
   windowMs: env.authRateLimitWindowMs,
   max: env.authRateLimitMax,
   keyGenerator: (req) => `${req.ip || req.socket?.remoteAddress || "unknown"}:${String(req.body?.email || "").toLowerCase()}`,
+  prefix: "auth",
 });
 
 const loginSchema = z.object({
   email: z.string().email(),
   password: z.string().min(1),
+});
+
+const mfaVerifySchema = z.object({
+  code: z.string().regex(/^\d{6}$/),
 });
 
 const signupSchema = z.object({
@@ -70,6 +77,18 @@ async function auditLoginAttempt({ req, user = null, success, reason }) {
   }
 }
 
+async function loginWithRegeneratedSession(req, user) {
+  if (req.session?.regenerate) {
+    await promisify(req.session.regenerate.bind(req.session))();
+  }
+  await promisify(req.login.bind(req))(user);
+  return ensureCsrfToken(req);
+}
+
+authRouter.get("/csrf", (req, res) => {
+  res.json({ csrfToken: ensureCsrfToken(req) });
+});
+
 authRouter.post("/login", authRateLimit, validate(loginSchema), async (req, res, next) => {
   try {
     const existing = await query("SELECT id, email, is_active, email_verified_at FROM users WHERE email = $1", [req.body.email.toLowerCase()]);
@@ -90,14 +109,40 @@ authRouter.post("/login", authRateLimit, validate(loginSchema), async (req, res,
         throw unauthorized("Invalid email or password");
       }
 
-      await promisify(req.login.bind(req))(user);
+      if (shouldRequireAdminMfa(user)) {
+        await beginAdminMfa(req, user);
+        await auditLoginAttempt({ req, user, success: false, reason: "Admin MFA challenge issued" });
+        return res.json({ mfaRequired: true, message: "Enter the verification code sent to your admin email." });
+      }
+
+      const csrfToken = await loginWithRegeneratedSession(req, user);
       await query("UPDATE users SET last_login_at = now() WHERE id = $1", [user.id]);
       await auditLoginAttempt({ req, user, success: true, reason: "Successful login" });
-      res.json({ user });
+      res.json({ user, csrfToken });
     } catch (innerError) {
       next(innerError);
     }
   })(req, res, next);
+});
+
+authRouter.post("/mfa/verify", authRateLimit, validate(mfaVerifySchema), async (req, res, next) => {
+  try {
+    const userId = assertAdminMfaCode(req, req.body.code);
+    const result = await query(
+      "SELECT id, email, role, is_active, email_verified_at FROM users WHERE id = $1 AND is_active = TRUE",
+      [userId]
+    );
+    const user = result.rows[0];
+    if (!user) throw unauthorized("Invalid admin verification code.");
+
+    clearAdminMfa(req);
+    const csrfToken = await loginWithRegeneratedSession(req, user);
+    await query("UPDATE users SET last_login_at = now() WHERE id = $1", [user.id]);
+    await auditLoginAttempt({ req, user, success: true, reason: "Successful admin MFA login" });
+    res.json({ user, csrfToken });
+  } catch (error) {
+    next(error);
+  }
 });
 
 authRouter.post("/signup", authRateLimit, validate(signupSchema), async (req, res, next) => {
@@ -201,8 +246,8 @@ authRouter.post("/accept-invite", authRateLimit, validate(acceptInvitationSchema
       });
       return accepted;
     });
-    await promisify(req.login.bind(req))(user);
-    res.json({ message: "Invitation accepted.", user });
+    const csrfToken = await loginWithRegeneratedSession(req, user);
+    res.json({ message: "Invitation accepted.", user, csrfToken });
   } catch (error) {
     next(error);
   }

@@ -110,6 +110,9 @@ describe("member loans screen", () => {
     expect(html).toContain("loan-action topup");
     expect(html).toContain("loan-action repayment");
     expect(html).toContain("Loan Ledger");
+    expect(html.indexOf("Loan Balance Breakdown")).toBeLessThan(html.indexOf("Loan Ledger"));
+    expect(html.indexOf("Loan Ledger")).toBeLessThan(html.indexOf("loan-action request"));
+    expect(html).not.toContain("Repayment Progress");
     expect(html).toContain("Loan disbursement");
     expect(html).toContain("K9,000");
     expect(html).toContain("aria-label=\"Primary mobile navigation\"");

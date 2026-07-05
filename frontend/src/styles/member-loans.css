@@ -129,59 +129,6 @@
     margin-top: 5px;
   }
 
-  .member-loans-progress-card {
-    border: 1px solid rgba(216, 230, 223, 0.92);
-    border-radius: 20px;
-    background: #ffffff;
-    color: #172033;
-    box-shadow: 0 14px 34px rgba(16, 42, 67, 0.1);
-    margin-top: 10px;
-    padding: 12px;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 9px 12px;
-    align-items: center;
-  }
-
-  .member-loans-progress-card strong,
-  .member-loans-progress-card span {
-    display: block;
-  }
-
-  .member-loans-progress-card strong {
-    color: #172033;
-    font-size: 14px;
-  }
-
-  .member-loans-progress-card span {
-    margin-top: 3px;
-    color: #52637a;
-    font-size: 12px;
-    font-weight: 750;
-  }
-
-  .member-loans-progress-card em {
-    color: #007a43;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 950;
-  }
-
-  .member-loans-progress {
-    grid-column: 1 / -1;
-    height: 9px;
-    border-radius: 999px;
-    background: #e5e7eb;
-    overflow: hidden;
-  }
-
-  .member-loans-progress span {
-    display: block;
-    height: 100%;
-    border-radius: inherit;
-    background: linear-gradient(90deg, #f4b000, #d9f99d);
-  }
-
   .member-loans-hero-actions {
     display: grid;
     gap: 8px;

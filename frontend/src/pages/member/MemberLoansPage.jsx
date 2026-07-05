@@ -158,8 +158,6 @@ export function MemberLoansPage({
   const activeMembership = data?.activeMembership;
   const summary = useMemo(() => memberLoanSummary(data), [data]);
   const entries = data?.ledger?.data || [];
-  const repayBase = Math.max(1, summary.principalRepaid + summary.outstandingBalance);
-  const repayPercent = Math.min(100, Math.round((summary.principalRepaid / repayBase) * 100));
   const unpaidInterest = Math.max(0, summary.interestAssessed - summary.interestRepaid);
   const bottomNav = (
     <MobileBottomNav
@@ -224,16 +222,6 @@ export function MemberLoansPage({
                   <MobileBreakdownValue label="Interest Assessed (Unpaid)" value={money(unpaidInterest)} icon={Receipt} tone="blue" />
                   <MobileBreakdownValue label="Principal Repaid" value={money(summary.principalRepaid)} icon={Banknote} />
                   <MobileBreakdownValue label="Interest Paid" value={money(summary.interestRepaid)} icon={Receipt} />
-                </div>
-                <div className="member-loans-progress-card" aria-label={`Loan repayment progress ${repayPercent}%`}>
-                  <div>
-                    <strong>Repayment Progress</strong>
-                    <span>{money(summary.principalRepaid)} repaid from active cycle loans</span>
-                  </div>
-                  <em>{repayPercent}%</em>
-                  <div className="member-loans-progress">
-                    <span style={{ width: `${repayPercent}%` }} />
-                  </div>
                 </div>
               </section>
 

@@ -47,6 +47,8 @@ describe("member more screen", () => {
     expect(html).toContain("Payment Proofs");
     expect(html).toContain("Reports");
     expect(html).toContain("lucide-chevron-right");
+    expect(html).not.toContain("Member profile quick actions");
+    expect(html).not.toContain("member-more-command-strip");
     expect(html).not.toContain(">Open</button>");
     expect(html).not.toContain("Use header");
     expect(html).not.toContain(">Soon<");
@@ -59,5 +61,6 @@ describe("member more screen", () => {
     expect(css).toContain("grid-template-columns: 34px minmax(0, 1fr) 22px");
     expect(css).toContain(".member-more-menu-row > svg");
     expect(css).toContain(".member-more-menu-icon");
+    expect(css).not.toContain(".member-more-command-strip");
   });
 });

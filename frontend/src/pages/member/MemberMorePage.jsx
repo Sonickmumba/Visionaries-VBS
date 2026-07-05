@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Bell, ChevronRight, ClipboardList, FileBarChart, FileText, LogOut, Menu, Receipt, Settings, ShieldCheck, Upload } from "lucide-react";
+import { Bell, ChevronRight, ClipboardList, FileBarChart, FileText, LogOut, Menu, Settings, ShieldCheck, Upload } from "lucide-react";
 import { api } from "../../api/client.js";
 import {
   Alert,
@@ -99,21 +99,6 @@ export function MemberMorePage({ setPage, memberApi = api, initialData = null })
                 <div><strong>Loan Balance</strong><span>{money(totals.outstandingLoan)}</span></div>
                 <div><strong>Estimated Shareout</strong><span>{money(estimatedShareout)}</span></div>
               </div>
-            </section>
-
-            <section className="member-more-command-strip" aria-label="Member profile quick actions">
-              <button type="button" onClick={() => setPage?.("my-declaration")}>
-                <Receipt size={18} aria-hidden="true" />
-                <span>Declare</span>
-              </button>
-              <button type="button" onClick={() => setPage?.("my-reports")}>
-                <FileBarChart size={18} aria-hidden="true" />
-                <span>Reports</span>
-              </button>
-              <button type="button" onClick={() => setPage?.("my-statement")}>
-                <FileText size={18} aria-hidden="true" />
-                <span>Statement</span>
-              </button>
             </section>
 
             <section className="member-more-menu" aria-label="Member menu">

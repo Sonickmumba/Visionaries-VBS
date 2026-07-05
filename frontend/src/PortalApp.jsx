@@ -24,6 +24,7 @@ const NotificationsPage = lazyNamed(() => import("./pages/NotificationsPage.jsx"
 const MemberDashboardPage = lazyNamed(() => import("./pages/member/MemberDashboardPage.jsx"), "MemberDashboardPage");
 const MemberDeclarationPage = lazyNamed(() => import("./pages/member/MemberDeclarationPage.jsx"), "MemberDeclarationPage");
 const MemberLoansPage = lazyNamed(() => import("./pages/member/MemberLoansPage.jsx"), "MemberLoansPage");
+const MemberMorePage = lazyNamed(() => import("./pages/member/MemberMorePage.jsx"), "MemberMorePage");
 const MemberPenaltiesPage = lazyNamed(() => import("./pages/member/MemberPenaltiesPage.jsx"), "MemberPenaltiesPage");
 const MemberReportsPage = lazyNamed(() => import("./pages/member/MemberReportsPage.jsx"), "MemberReportsPage");
 const MemberSavingsPage = lazyNamed(() => import("./pages/member/MemberSavingsPage.jsx"), "MemberSavingsPage");
@@ -97,6 +98,8 @@ function screenForRoute(page, setPage, pageTitle, navigationIntent) {
       return <MemberSavingsPage setPage={setPage} />;
     case "my-loans":
       return <MemberLoansPage setPage={setPage} />;
+    case "member-more":
+      return <MemberMorePage setPage={setPage} />;
     default:
       return <UnknownPage title={pageTitle} />;
   }

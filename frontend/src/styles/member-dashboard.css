@@ -148,6 +148,17 @@
     gap: 12px;
   }
 
+  .member-mobile-bell {
+    width: 38px;
+    height: 38px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.12);
+    color: white;
+    display: inline-grid;
+    place-items: center;
+  }
+
   .member-mobile-hero-head span,
   .member-mobile-hero-main span,
   .member-mobile-hero-strip strong {
@@ -235,6 +246,14 @@
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 10px;
+  }
+
+  .member-mobile-actions.command {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .member-mobile-metrics.compact {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .member-mobile-position {

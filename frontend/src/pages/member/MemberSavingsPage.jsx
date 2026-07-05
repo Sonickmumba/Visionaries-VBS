@@ -43,6 +43,7 @@ function DetailValue({ label, value }) {
 }
 
 function MemberSavingsMobileHero({ summary, activeMembership, setPage }) {
+  const capPercent = summary.savingsCap > 0 ? Math.min(100, Math.round((summary.savingsPrincipal / summary.savingsCap) * 100)) : 0;
   return (
     <section className="member-savings-hero" aria-label="Savings account summary">
       <div className="member-savings-hero-head">
@@ -56,11 +57,15 @@ function MemberSavingsMobileHero({ summary, activeMembership, setPage }) {
       <div className="member-savings-hero-main">
         <span>Accumulated Savings</span>
         <strong>{money(summary.accumulatedSavings)}</strong>
-        <small>{money(summary.savingsPrincipal)} principal saved</small>
+        <small>Principal Saved: {money(summary.savingsPrincipal)} of {money(summary.savingsCap)} cap</small>
+        <div className="member-savings-progress" aria-label={`Principal savings cap progress ${capPercent}%`}>
+          <span style={{ width: `${capPercent}%` }} />
+        </div>
+        <em>{capPercent}% of principal cap</em>
       </div>
 
       <div className="member-savings-hero-actions">
-        <Button type="button" size="sm" onClick={() => setPage?.("my-declaration")}>Declare Savings</Button>
+        <Button type="button" size="sm" onClick={() => setPage?.("my-declaration")}>Make Declaration</Button>
         <Button type="button" size="sm" variant="secondary" onClick={() => setPage?.("my-statement")}>Statement</Button>
       </div>
 

@@ -1,0 +1,144 @@
+.member-reports-mobile {
+  display: none;
+}
+
+.member-reports-refresh {
+  width: 38px;
+  height: 38px;
+  border: 1px solid #d8e6df;
+  border-radius: 14px;
+  background: #ffffff;
+  color: #005f36;
+  display: inline-grid;
+  place-items: center;
+}
+
+@media (max-width: 767px) {
+  .member-reports-desktop {
+    display: none;
+  }
+
+  .member-reports-mobile {
+    display: block;
+    margin: -10px;
+  }
+
+  .member-reports-summary {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .member-report-section-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .member-report-section-head h2 {
+    margin: 0;
+    color: #172033;
+    font-size: 18px;
+    line-height: 1.15;
+  }
+
+  .member-report-section-head p {
+    margin: 4px 0 0;
+    color: #65758b;
+    font-size: 12px;
+    font-weight: 750;
+  }
+
+  .member-report-center,
+  .member-report-preview {
+    display: grid;
+    gap: 12px;
+  }
+
+  .member-report-carousel {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(178px, 74%);
+    gap: 12px;
+    overflow-x: auto;
+    padding: 2px 2px 12px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .member-report-carousel::-webkit-scrollbar {
+    display: none;
+  }
+
+  .member-report-card {
+    scroll-snap-align: start;
+    border: 1px solid #e5edf5;
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 10px 30px rgba(16, 42, 67, 0.08);
+    padding: 14px;
+    display: grid;
+    gap: 10px;
+    min-height: 172px;
+  }
+
+  .member-report-card.active {
+    border-color: rgba(0, 122, 67, 0.35);
+    background: linear-gradient(180deg, #ffffff 0%, #f4fbf7 100%);
+  }
+
+  .member-report-card > span {
+    width: 38px;
+    height: 38px;
+    border-radius: 14px;
+    background: #e9f7ef;
+    color: #007a43;
+    display: inline-grid;
+    place-items: center;
+  }
+
+  .member-report-card h3 {
+    margin: 0;
+    color: #172033;
+    font-size: 16px;
+    line-height: 1.15;
+  }
+
+  .member-report-card p {
+    margin: 0;
+    color: #65758b;
+    font-size: 12px;
+    line-height: 1.35;
+    min-height: 32px;
+  }
+
+  .member-report-card .btn {
+    width: 100%;
+  }
+
+  .member-report-preview {
+    border: 1px solid #e5edf5;
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 10px 30px rgba(16, 42, 67, 0.08);
+    padding: 14px;
+  }
+
+  .member-report-preview-list {
+    display: grid;
+    gap: 10px;
+  }
+
+  .member-report-export-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 9px;
+  }
+}
+
+@media (min-width: 768px) {
+  .member-reports-desktop {
+    display: block;
+  }
+}

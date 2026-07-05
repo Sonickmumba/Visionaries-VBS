@@ -56,14 +56,14 @@ function MemberLoansMobileHero({ summary, activeMembership, setPage }) {
       </div>
 
       <div className="member-loans-hero-main">
-        <span>Loan Balance</span>
+        <span>Outstanding Loan Balance</span>
         <strong>{money(summary.outstandingBalance)}</strong>
         <small>{money(summary.cumulativeBorrowed)} cumulative borrowed</small>
       </div>
 
       <div className="member-loans-hero-actions">
         <Button type="button" size="sm" onClick={() => setPage?.("my-declaration")}>Request Loan</Button>
-        <Button type="button" size="sm" variant="secondary" onClick={() => setPage?.("my-statement")}>Statement</Button>
+        <Button type="button" size="sm" variant="secondary" onClick={() => setPage?.("my-declaration")}>Request Top-up</Button>
       </div>
 
       <div className="member-loans-hero-strip">
@@ -208,8 +208,8 @@ export function MemberLoansPage({
                 </div>
                 <div className="member-loans-mobile-actions">
                   <MobileActionTile label="Request Loan" icon={ClipboardList} onClick={() => setPage?.("my-declaration")} />
-                  <MobileActionTile label="Statement" icon={Receipt} tone="blue" onClick={() => setPage?.("my-statement")} />
-                  <MobileActionTile label="Refresh" icon={RefreshCw} tone="amber" onClick={load} disabled={loading} />
+                  <MobileActionTile label="Request Top-up" icon={Banknote} tone="blue" onClick={() => setPage?.("my-declaration")} />
+                  <MobileActionTile label="Declare Repayment" icon={Receipt} tone="amber" onClick={() => setPage?.("my-declaration")} />
                 </div>
               </section>
 

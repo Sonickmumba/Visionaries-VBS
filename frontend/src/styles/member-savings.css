@@ -107,6 +107,30 @@
     margin-top: 5px;
   }
 
+  .member-savings-hero-main em {
+    color: #fef9c3;
+    display: block;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 850;
+    margin-top: 6px;
+  }
+
+  .member-savings-progress {
+    height: 9px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.22);
+    overflow: hidden;
+    margin-top: 12px;
+  }
+
+  .member-savings-progress span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #f4b000, #d9f99d);
+  }
+
   .member-savings-hero-actions {
     display: grid;
     gap: 8px;

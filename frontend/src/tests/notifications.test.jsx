@@ -67,7 +67,8 @@ describe("notifications", () => {
     expect(html).toContain("Notifications");
     expect(html).toContain("notifications-mobile-topbar");
     expect(html).toContain("Refresh notifications");
-    expect(html).toContain("Group Transparency Feed");
+    expect(html).toContain("Group Activity Feed");
+    expect(html).toContain("Declarations, loans, penalties, common interest");
     expect(html).toContain("Declaration submitted");
     expect(html).toContain("Loan disbursed");
     expect(html).toContain("Penalty assessed");
@@ -76,6 +77,11 @@ describe("notifications", () => {
     expect(html).toContain("Open Reports");
     expect(html).toContain("Mark all read");
     expect(html).toContain("Notification quick actions");
+    const actionStart = html.indexOf('aria-label="Notification quick actions"');
+    const actionEnd = html.indexOf("</div><section", actionStart);
+    const actionHtml = html.slice(actionStart, actionEnd);
+    expect(actionHtml).toContain("Reports");
+    expect(actionHtml).not.toContain("Refresh");
   });
 
   it("renders member notifications without duplicating alerts in the bottom nav", () => {
@@ -136,6 +142,7 @@ describe("notifications", () => {
     expect(source).toContain("member-notifications-shell");
     expect(source).toContain("notifications-mobile-actions");
     expect(css).toContain(".notifications-mobile-actions");
+    expect(css).toContain("grid-template-columns: minmax(0, 1fr)");
     expect(css).toContain(".notifications-mobile-topbar");
     expect(css).toContain(".member-notifications-shell .mobile-bottom-nav");
     expect(css).toContain("width: 100vw");

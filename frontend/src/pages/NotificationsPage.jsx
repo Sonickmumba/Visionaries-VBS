@@ -180,9 +180,9 @@ export function NotificationsPage({ notificationsApi = api, initialEvents = null
             <button type="button" aria-label="Refresh notifications" onClick={refresh}><RefreshCw size={18} aria-hidden="true" /></button>
           </div>
           <div>
-            <span>Real-time Activity</span>
-            <h2>Group Transparency Feed</h2>
-            <p>Live declarations, loan requests, approvals, disbursements, penalties, common interest, and monthly closing events.</p>
+            <span>Live Updates</span>
+            <h2>Group Activity Feed</h2>
+            <p>Declarations, loans, penalties, common interest, and monthly closings in one transparent feed.</p>
           </div>
           <Badge tone={connected ? "green" : "amber"} text={connected ? "Live" : "Reconnecting"} />
         </section>
@@ -193,7 +193,6 @@ export function NotificationsPage({ notificationsApi = api, initialEvents = null
           <Card title="Financial Posts" value={view.financialCount} note="Penalties, CI, closing" icon={Bell} tone="amber" />
         </div>
         <div className="admin-mobile-action-row notifications-mobile-actions mobile-only" aria-label="Notification quick actions">
-          <Button type="button" icon={RefreshCw} onClick={refresh} loading={loading}>Refresh</Button>
           <Button type="button" variant="secondary" icon={FileBarChart} onClick={openReports}>Reports</Button>
         </div>
         <section className="panel">

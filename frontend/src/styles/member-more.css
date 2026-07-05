@@ -128,7 +128,7 @@
   background: transparent;
   padding: 12px 2px;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: 34px minmax(0, 1fr) auto;
   align-items: center;
   gap: 10px;
 }
@@ -144,11 +144,32 @@
   text-transform: uppercase;
 }
 
-.member-cycle-position-grid span {
+.member-cycle-position-grid div > span:last-child {
   color: var(--text);
   font-size: 15px;
   font-weight: 950;
   overflow-wrap: anywhere;
+  text-align: right;
+}
+
+.member-cycle-position-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 12px;
+  background: #dcfce7;
+  color: #007a43;
+  display: inline-grid;
+  place-items: center;
+}
+
+.member-cycle-position-icon.amber {
+  background: #ffedd5;
+  color: #ea580c;
+}
+
+.member-cycle-position-icon.purple {
+  background: #ede9fe;
+  color: #7c3aed;
 }
 
 .member-more-menu {

@@ -40,6 +40,10 @@ describe("member more screen", () => {
   it("renders menu rows with chevrons instead of visible Open actions", () => {
     const html = renderToStaticMarkup(<MemberMorePage initialData={initialData} setPage={() => {}} />);
 
+    expect(html).toContain("member-cycle-position-icon");
+    expect(html).toContain("Accumulated Savings");
+    expect(html).toContain("Loan Balance");
+    expect(html).toContain("Estimated Shareout");
     expect(html).toContain("member-more-menu-row");
     expect(html).toContain("Notifications");
     expect(html).toContain("Declarations");
@@ -61,6 +65,8 @@ describe("member more screen", () => {
     expect(css).toContain("grid-template-columns: 34px minmax(0, 1fr) 22px");
     expect(css).toContain(".member-more-menu-row > svg");
     expect(css).toContain(".member-more-menu-icon");
+    expect(css).toContain(".member-cycle-position-icon");
+    expect(css).toContain("grid-template-columns: 34px minmax(0, 1fr) auto");
     expect(css).not.toContain(".member-more-command-strip");
   });
 });

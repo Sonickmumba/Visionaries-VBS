@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Bell, ChevronRight, ClipboardList, FileBarChart, FileText, LogOut, Menu, Settings, ShieldCheck, Upload } from "lucide-react";
+import { Banknote, Bell, ChevronRight, ClipboardList, FileBarChart, FileText, LogOut, Menu, PiggyBank, Settings, ShieldCheck, Sparkles, Upload } from "lucide-react";
 import { api } from "../../api/client.js";
 import {
   Alert,
@@ -95,9 +95,21 @@ export function MemberMorePage({ setPage, memberApi = api, initialData = null })
                 <Badge text="Transparent" tone="blue" />
               </div>
               <div className="member-cycle-position-grid">
-                <div><strong>Accumulated Savings</strong><span>{money(totals.accumulatedSavings)}</span></div>
-                <div><strong>Loan Balance</strong><span>{money(totals.outstandingLoan)}</span></div>
-                <div><strong>Estimated Shareout</strong><span>{money(estimatedShareout)}</span></div>
+                <div>
+                  <span className="member-cycle-position-icon"><PiggyBank size={16} aria-hidden="true" /></span>
+                  <strong>Accumulated Savings</strong>
+                  <span>{money(totals.accumulatedSavings)}</span>
+                </div>
+                <div>
+                  <span className="member-cycle-position-icon amber"><Banknote size={16} aria-hidden="true" /></span>
+                  <strong>Loan Balance</strong>
+                  <span>{money(totals.outstandingLoan)}</span>
+                </div>
+                <div>
+                  <span className="member-cycle-position-icon purple"><Sparkles size={16} aria-hidden="true" /></span>
+                  <strong>Estimated Shareout</strong>
+                  <span>{money(estimatedShareout)}</span>
+                </div>
               </div>
             </section>
 

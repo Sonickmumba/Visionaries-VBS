@@ -449,6 +449,8 @@ caption {
   .member-dashboard-page .mobile-shell-inner,
   .member-savings-page .mobile-shell-inner,
   .member-loans-page .mobile-shell-inner,
+  .member-declaration-page .mobile-shell-inner,
+  .member-statement-page .mobile-shell-inner,
   .member-reports-mobile .mobile-shell-inner,
   .member-more-page .mobile-shell-inner {
     width: 100%;
@@ -474,6 +476,8 @@ caption {
   .member-dashboard-page .mobile-bottom-nav,
   .member-savings-page .mobile-bottom-nav,
   .member-loans-page .mobile-bottom-nav,
+  .member-declaration-page .mobile-bottom-nav,
+  .member-statement-page .mobile-bottom-nav,
   .member-reports-mobile .mobile-bottom-nav,
   .member-more-page .mobile-bottom-nav {
     left: 50%;
@@ -492,6 +496,8 @@ caption {
   .member-dashboard-page .mobile-bottom-nav button,
   .member-savings-page .mobile-bottom-nav button,
   .member-loans-page .mobile-bottom-nav button,
+  .member-declaration-page .mobile-bottom-nav button,
+  .member-statement-page .mobile-bottom-nav button,
   .member-reports-mobile .mobile-bottom-nav button,
   .member-more-page .mobile-bottom-nav button {
     min-height: 48px;
@@ -502,6 +508,8 @@ caption {
   .member-dashboard-page .mobile-bottom-nav button.active,
   .member-savings-page .mobile-bottom-nav button.active,
   .member-loans-page .mobile-bottom-nav button.active,
+  .member-declaration-page .mobile-bottom-nav button.active,
+  .member-statement-page .mobile-bottom-nav button.active,
   .member-reports-mobile .mobile-bottom-nav button.active,
   .member-more-page .mobile-bottom-nav button.active {
     background: transparent;
@@ -512,6 +520,8 @@ caption {
   .member-dashboard-page .mobile-bottom-nav button.active svg,
   .member-savings-page .mobile-bottom-nav button.active svg,
   .member-loans-page .mobile-bottom-nav button.active svg,
+  .member-declaration-page .mobile-bottom-nav button.active svg,
+  .member-statement-page .mobile-bottom-nav button.active svg,
   .member-reports-mobile .mobile-bottom-nav button.active svg,
   .member-more-page .mobile-bottom-nav button.active svg {
     stroke-width: 2.8;

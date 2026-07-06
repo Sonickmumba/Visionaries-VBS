@@ -141,7 +141,7 @@ export function LoginPage({
         ) : null}
         <div className="auth-hero login-hero">
           <BrandMark size="lg" className="auth-hero-mark text-cream" />
-          <h1>Visionaries<br className="signup-title-break" /> Village Banking</h1>
+          <h1 className="login-title">Village Banking</h1>
           <span className="auth-gold-rule" aria-hidden="true" />
           <h2>Welcome Back</h2>
           <p>Sign in to continue saving and growing together.</p>
@@ -205,8 +205,6 @@ export function LoginPage({
             <span>{mfaRequired ? "Verify Code" : "Log In"}</span>
             <ArrowRight size={26} aria-hidden="true" />
           </button>
-
-          <div className="auth-village-scene auth-form-landscape" aria-hidden="true" />
 
           <p className="auth-switch-copy">Don't have an account? <button type="button" disabled={loading} onClick={navigateSignup}>Sign Up</button></p>
         </section>

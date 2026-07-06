@@ -299,6 +299,13 @@
   color: #F7F4EE;
 }
 
+.login-phone {
+  min-height: min(932px, calc(100svh - 24px));
+  background:
+    radial-gradient(circle at 88% 9%, rgba(217, 162, 39, 0.42), transparent 16%),
+    linear-gradient(160deg, #0D3B2E 0%, #0D3B2E 58%, #127A5A 100%);
+}
+
 .signup-phone {
   min-height: min(980px, calc(100svh - 24px));
 }
@@ -364,7 +371,19 @@
 }
 
 .login-hero {
-  min-height: 430px;
+  min-height: 436px;
+  padding-top: 112px;
+  padding-bottom: 84px;
+}
+
+.login-hero .auth-hero-mark .brand-mark {
+  width: 98px;
+  height: 98px;
+}
+
+.login-title {
+  white-space: nowrap;
+  font-size: clamp(42px, 11vw, 56px);
 }
 
 .signup-hero {
@@ -467,6 +486,33 @@
     #F7F4EE;
   color: #1F2933;
   box-shadow: 0 -18px 44px rgba(31, 41, 51, 0.12);
+}
+
+.login-sheet {
+  min-height: 496px;
+  margin-top: -58px;
+  padding: 48px 38px 34px;
+  border-radius: 38px 38px 0 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.98) 62%, rgba(247, 244, 238, 0.76) 79%, rgba(247, 244, 238, 0.24) 100%),
+    url("../assets/auth/background-image-splash.png") center bottom / 132% auto no-repeat,
+    #F7F4EE;
+  box-shadow: 0 -20px 46px rgba(31, 41, 51, 0.14);
+}
+
+.login-sheet .auth-input-shell {
+  min-height: 64px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.86);
+}
+
+.login-sheet .auth-primary-action {
+  margin-top: 6px;
+}
+
+.login-sheet .auth-switch-copy {
+  align-self: end;
+  margin-top: 86px;
 }
 
 .signup-sheet {
@@ -722,6 +768,21 @@
 
   .auth-form-sheet {
     padding-inline: 22px;
+  }
+
+  .login-hero {
+    min-height: 416px;
+    padding-top: 102px;
+  }
+
+  .login-sheet {
+    min-height: calc(100svh - 358px);
+    margin-top: -56px;
+    padding: 42px 24px 28px;
+  }
+
+  .login-sheet .auth-switch-copy {
+    margin-top: 72px;
   }
 
   .signup-hero {

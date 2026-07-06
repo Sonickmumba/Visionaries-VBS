@@ -77,7 +77,7 @@ describe("login screen", () => {
     expect(html).toContain("Sign in to continue saving and growing together.");
     expect(html).toContain("auth-phone");
     expect(html).toContain("auth-form-sheet");
-    expect(html).toContain("auth-village-scene");
+    expect(html).toContain("login-sheet");
     expect(html).not.toContain("Continue with Biometrics");
   });
 
@@ -96,7 +96,8 @@ describe("login screen", () => {
     expect(css).toContain(".auth-form-sheet");
     expect(css).toContain(".auth-input-shell");
     expect(css).toContain(".auth-primary-action");
-    expect(css).toContain(".auth-village-scene");
+    expect(css).toContain(".login-sheet");
+    expect(css).toContain("background-image-splash.png");
     expect(css).toContain("display: none");
     expect(css).toContain(".auth-back-button svg");
     expect(css).toContain("overflow: visible");

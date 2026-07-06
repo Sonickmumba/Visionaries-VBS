@@ -38,7 +38,12 @@ function transactionTone(type) {
 }
 
 function DetailValue({ label, value }) {
-  return <div><strong>{label}</strong><span>{value}</span></div>;
+  return (
+    <div className="grid gap-1 rounded-app border border-mist bg-cream p-3">
+      <strong className="text-xs font-black uppercase text-charcoal/70">{label}</strong>
+      <span className="break-words text-sm font-extrabold text-charcoal">{value}</span>
+    </div>
+  );
 }
 
 function MobileBreakdownValue({ label, value, icon: Icon = Banknote, tone = "green" }) {
@@ -169,7 +174,7 @@ export function MemberLoansPage({
 
   return (
     <Page
-      className="member-loans-page"
+      className="member-loans-page grid gap-0"
       title="My Loans"
       actions={(
         <>
@@ -181,7 +186,7 @@ export function MemberLoansPage({
     >
       {error ? <Alert tone="danger" title="Loans failed">{error}</Alert> : null}
 
-      {loading ? <section className="panel"><Skeleton lines={8} /></section> : !activeMembership ? (
+      {loading ? <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft"><Skeleton lines={8} /></section> : !activeMembership ? (
         <EmptyState title="No active cycle membership" message="Ask an administrator to enroll you into a cycle before loan details can appear." />
       ) : (
         <>
@@ -254,19 +259,19 @@ export function MemberLoansPage({
           </div>
 
           <div className="member-loans-desktop">
-            <div className="metrics member-loans-metrics">
+            <div className="metrics member-loans-metrics grid gap-4 md:grid-cols-2 xl:grid-cols-4">
               <Card title="My Loan Balance" value={money(summary.outstandingBalance)} note="Outstanding balance" tone="blue" icon={Banknote} />
               <Card title="Cumulative Borrowed" value={money(summary.cumulativeBorrowed)} note="Cycle borrowing" icon={PiggyBank} />
               <Card title="Interest Assessed" value={money(summary.interestAssessed)} note={`${money(summary.interestRepaid)} repaid`} tone="amber" icon={Receipt} />
               <Card title="Borrowing Shortfall" value={money(summary.borrowingShortfall)} note={titleCase(summary.borrowingStatus)} tone={summary.borrowingShortfall > 0 ? "amber" : "green"} icon={AlertTriangle} />
             </div>
 
-            <section className="panel member-loans-context">
-              <div className="panel-head">
-                <h2>Loan Breakdown</h2>
+            <section className="panel member-loans-context mb-5 rounded-app border border-mist bg-cream p-4 shadow-soft">
+              <div className="panel-head mb-3 flex items-center justify-between gap-3">
+                <h2 className="m-0 text-lg font-extrabold text-charcoal">Loan Breakdown</h2>
                 <Badge text={titleCase(summary.borrowingStatus)} tone={summary.borrowingShortfall > 0 ? "amber" : "green"} />
               </div>
-              <div className="detail-grid member-loans-detail-grid">
+              <div className="detail-grid member-loans-detail-grid grid gap-3 md:grid-cols-2 xl:grid-cols-4">
                 <DetailValue label="Original Loans" value={money(summary.originalLoans)} />
                 <DetailValue label="Top-ups" value={money(summary.topUps)} />
                 <DetailValue label="Converted Penalties" value={money(summary.convertedPenaltyLoans)} />
@@ -278,9 +283,9 @@ export function MemberLoansPage({
               </div>
             </section>
 
-            <section className="panel">
-              <div className="panel-head">
-                <h2>Loan Ledger</h2>
+            <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+              <div className="panel-head mb-3 flex items-center justify-between gap-3">
+                <h2 className="m-0 text-lg font-extrabold text-charcoal">Loan Ledger</h2>
                 <Badge text={`${entries.length} records`} tone="blue" />
               </div>
               <LedgerRows entries={entries} />

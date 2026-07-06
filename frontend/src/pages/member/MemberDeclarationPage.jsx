@@ -473,7 +473,7 @@ export function MemberDeclarationPage({
 
   return (
     <Page
-      className="member-declaration-page"
+      className="member-declaration-page grid gap-0"
       title="My Declaration"
       actions={(
         <>

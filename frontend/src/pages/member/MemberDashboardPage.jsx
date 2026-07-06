@@ -376,7 +376,7 @@ export function MemberDashboardPage({
           </section>
 
           <div className="member-dashboard-grid grid items-start gap-5 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
-            <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+            <section className="panel min-w-0 rounded-app border border-mist bg-cream p-4 shadow-soft">
               <div className="panel-head mb-3 flex items-center justify-between gap-3">
                 <h2 className="text-lg font-extrabold text-charcoal">Recent Transactions</h2>
                 <Badge text={`${transactions.length} records`} tone="blue" />
@@ -393,7 +393,7 @@ export function MemberDashboardPage({
               />
             </section>
 
-            <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+            <section className="panel min-w-0 rounded-app border border-mist bg-cream p-4 shadow-soft">
               <div className="panel-head mb-3 flex items-center justify-between gap-3">
                 <h2 className="text-lg font-extrabold text-charcoal">Penalty Snapshot</h2>
                 <Badge text={`${penalties.length} records`} tone={totals.penaltyDue > 0 ? "red" : "green"} />

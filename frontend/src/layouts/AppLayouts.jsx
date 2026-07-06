@@ -116,7 +116,7 @@ function Sidebar({ nav, page, setPage, open, setOpen, user }) {
   return (
     <aside
       className={cx(
-        "sidebar sticky top-0 h-screen overflow-y-auto bg-charcoal px-3.5 py-5 text-cream",
+        "sidebar h-screen overflow-y-auto bg-charcoal px-3.5 py-5 text-cream md:sticky md:top-0",
         user.role === "MEMBER" && "bg-forest",
         open && "open"
       )}
@@ -282,7 +282,7 @@ export function AppLayout({ user, page, setPage, onLogout, children }) {
   }, []);
 
   return (
-    <div className={cx("app-shell grid min-h-screen grid-cols-[248px_1fr] bg-cream text-charcoal", user.role === "MEMBER" ? "member-shell" : "admin-shell")}>
+    <div className={cx("app-shell grid min-h-screen grid-cols-1 bg-cream text-charcoal md:grid-cols-[248px_1fr]", user.role === "MEMBER" ? "member-shell" : "admin-shell")}>
       <a className="skip-link fixed left-3 top-3 z-[100] -translate-y-[160%] bg-charcoal px-3 py-2.5 font-extrabold text-cream no-underline focus:translate-y-0" href="#main-content">Skip to main content</a>
       <Sidebar nav={nav} page={page} setPage={setPage} open={open} setOpen={setOpen} user={user} />
       <div className="main min-w-0">

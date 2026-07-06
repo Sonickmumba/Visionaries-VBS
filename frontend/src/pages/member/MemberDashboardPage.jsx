@@ -115,7 +115,7 @@ function statusTone(status) {
 }
 
 function DetailValue({ label, value }) {
-  return <div><strong>{label}</strong><span>{value}</span></div>;
+  return <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><strong className="text-xs font-black uppercase text-charcoal/70">{label}</strong><span className="break-words text-sm font-extrabold text-charcoal">{value}</span></div>;
 }
 
 function nextRequiredAction(totals) {
@@ -132,9 +132,9 @@ function declarationDisplay(transactions) {
 function MemberMobileHero({ portal, totals, activeMembership, setPage }) {
   const name = memberName(portal?.me?.member);
   return (
-    <section className="member-mobile-hero" aria-label="Member dashboard summary">
-      <div className="member-mobile-hero-head">
-        <button type="button" className="member-mobile-menu" onClick={() => setPage?.("member-more")} aria-label="Open menu">
+    <section className="member-mobile-hero grid min-h-[246px] content-start gap-5 rounded-b-[34px] bg-gradient-to-br from-forest to-emerald px-[18px] pb-[84px] pt-[18px] text-cream shadow-lift" aria-label="Member dashboard summary">
+      <div className="member-mobile-hero-head grid grid-cols-[38px_minmax(0,1fr)_38px] items-center gap-3">
+        <button type="button" className="member-mobile-menu inline-grid h-[38px] w-[38px] place-items-center rounded-app border border-cream/20 bg-white/10 text-cream" onClick={() => setPage?.("member-more")} aria-label="Open menu">
           <Menu size={18} aria-hidden="true" />
         </button>
         <div>
@@ -142,12 +142,12 @@ function MemberMobileHero({ portal, totals, activeMembership, setPage }) {
           <span>Good morning,</span>
           <h2>{name}</h2>
         </div>
-        <button type="button" className="member-mobile-bell" onClick={() => setPage?.("my-notifications")} aria-label="Notifications">
+        <button type="button" className="member-mobile-bell inline-grid h-[38px] w-[38px] place-items-center rounded-app border border-cream/20 bg-white/10 text-cream" onClick={() => setPage?.("my-notifications")} aria-label="Notifications">
           <Bell size={18} aria-hidden="true" />
         </button>
       </div>
-      <div className="member-mobile-community-card" aria-label="Cycle identity">
-        <div className="member-mobile-community-pin" aria-hidden="true">
+      <div className="member-mobile-community-card grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 rounded-mobile border border-cream/20 bg-white/10 p-3 backdrop-blur" aria-label="Cycle identity">
+        <div className="member-mobile-community-pin grid h-[34px] w-[34px] place-items-center rounded-full bg-white/10 text-cream" aria-hidden="true">
           <PiggyBank size={16} />
         </div>
         <div>
@@ -174,7 +174,7 @@ function MemberDashboardMobile({ portal, totals, transactions, penalties, active
       <MobileScreenShell bottomNav={bottomNav}>
         <MemberMobileHero portal={portal} totals={totals} activeMembership={activeMembership} setPage={setPage} />
 
-        <div className="member-mobile-metrics mockup-grid" aria-label="Member financial summary">
+        <div className="member-mobile-metrics mockup-grid grid grid-cols-2 gap-2.5" aria-label="Member financial summary">
           <MobileMetricCard label="Accumulated Savings" value={money(totals.accumulatedSavings)} note="Total with interest" icon={PiggyBank} tone="green" />
           <MobileMetricCard label="My Loan Balance" value={money(totals.outstandingLoan)} note="Outstanding loan" icon={Banknote} tone="amber" />
           <MobileMetricCard label="Declaration Status" value={declarationDisplay(transactions)} note="Latest activity" icon={CheckCircle2} tone="green" />
@@ -182,10 +182,10 @@ function MemberDashboardMobile({ portal, totals, transactions, penalties, active
         </div>
 
         <section className="member-mobile-section" aria-label="Quick actions">
-          <div className="member-mobile-section-head">
-            <h2>Quick Actions</h2>
+          <div className="member-mobile-section-head flex items-center justify-between gap-3">
+            <h2 className="text-base font-extrabold text-charcoal">Quick Actions</h2>
           </div>
-          <div className="member-mobile-actions command">
+          <div className="member-mobile-actions command grid grid-cols-2 gap-2.5">
             <MobileActionTile label="Make Declaration" icon={ClipboardList} onClick={() => setPage?.("my-declaration")} />
             <MobileActionTile label="Request Loan" icon={Banknote} tone="blue" onClick={() => setPage?.("my-declaration")} />
             <MobileActionTile label="My Statement" icon={Receipt} tone="amber" onClick={() => setPage?.("my-statement")} />
@@ -194,11 +194,11 @@ function MemberDashboardMobile({ portal, totals, transactions, penalties, active
         </section>
 
         <section className="member-mobile-section">
-          <div className="member-mobile-section-head">
-            <h2>Recent Activity</h2>
+          <div className="member-mobile-section-head flex items-center justify-between gap-3">
+            <h2 className="text-base font-extrabold text-charcoal">Recent Activity</h2>
             <button type="button" className="member-mobile-text-link" onClick={() => setPage?.("my-statement")}>View All</button>
           </div>
-          <div className="member-mobile-list">
+          <div className="member-mobile-list grid gap-2.5">
             {transactions.slice(0, 4).length ? transactions.slice(0, 4).map((tx, index) => (
               <MobileListCard
                 key={`${tx.transaction_date}-${tx.transaction_type}-${index}`}
@@ -323,33 +323,33 @@ export function MemberDashboardPage({
           />
 
           <div className="member-desktop-dashboard">
-            <section className="member-dashboard-hero" aria-label="Member dashboard welcome">
+            <section className="member-dashboard-hero mb-5 grid items-end gap-4 rounded-mobile bg-gradient-to-br from-emerald to-forest p-5 text-cream shadow-lift lg:grid-cols-[minmax(0,1fr)_minmax(220px,auto)]" aria-label="Member dashboard welcome">
               <div>
                 <BrandMark size="sm" showText className="member-dashboard-brand" />
-                <span>Transparent member access</span>
-                <h2>Welcome back, {memberName(portal?.me?.member)}</h2>
-                <p>{activeMembership?.cycle_name || "Active cycle"} · {titleCase(totals.borrowingStatus)}</p>
+                <span className="text-xs font-black uppercase text-cream">Transparent member access</span>
+                <h2 className="my-1 text-[27px] font-extrabold leading-tight text-cream">Welcome back, {memberName(portal?.me?.member)}</h2>
+                <p className="m-0 text-sm font-extrabold text-cream/90">{activeMembership?.cycle_name || "Active cycle"} · {titleCase(totals.borrowingStatus)}</p>
               </div>
-              <div className="member-dashboard-hero-value">
-                <span>My Accumulated Savings</span>
-                <strong>{money(totals.accumulatedSavings)}</strong>
-                <small>{money(totals.savingsPrincipal)} savings principal</small>
+              <div className="member-dashboard-hero-value grid gap-1 rounded-mobile border border-cream/20 bg-white/10 p-4 backdrop-blur">
+                <span className="text-xs font-black uppercase text-cream">My Accumulated Savings</span>
+                <strong className="break-words text-[26px] font-extrabold leading-tight text-cream">{money(totals.accumulatedSavings)}</strong>
+                <small className="font-extrabold text-cream/85">{money(totals.savingsPrincipal)} savings principal</small>
               </div>
             </section>
 
-            <div className="metrics member-dashboard-metrics">
-            <Card title="My Accumulated Savings" value={money(totals.accumulatedSavings)} note={`${money(totals.savingsPrincipal)} principal`} icon={PiggyBank} />
-            <Card title="My Loan Balance" value={money(totals.outstandingLoan)} note={`${money(totals.borrowingShortfall)} shortfall`} tone="blue" icon={Banknote} />
-            <Card title="Common Interest Due" value={money(totals.commonInterestDue)} note="Assessed less paid" tone="amber" icon={Scale} />
-            <Card title="Penalty Due" value={money(totals.penaltyDue)} note="Outstanding penalties" tone={totals.penaltyDue > 0 ? "red" : "green"} icon={AlertTriangle} />
-          </div>
+            <div className="metrics member-dashboard-metrics grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              <Card title="My Accumulated Savings" value={money(totals.accumulatedSavings)} note={`${money(totals.savingsPrincipal)} principal`} icon={PiggyBank} />
+              <Card title="My Loan Balance" value={money(totals.outstandingLoan)} note={`${money(totals.borrowingShortfall)} shortfall`} tone="blue" icon={Banknote} />
+              <Card title="Common Interest Due" value={money(totals.commonInterestDue)} note="Assessed less paid" tone="amber" icon={Scale} />
+              <Card title="Penalty Due" value={money(totals.penaltyDue)} note="Outstanding penalties" tone={totals.penaltyDue > 0 ? "red" : "green"} icon={AlertTriangle} />
+            </div>
 
-          <section className="panel member-pool-panel">
-            <div className="panel-head">
-              <h2>Group Pool Snapshot {totals.groupPoolScope}</h2>
+          <section className="panel member-pool-panel mb-5 rounded-app border border-mist bg-cream p-4 shadow-soft">
+            <div className="panel-head mb-3 flex items-center justify-between gap-3">
+              <h2 className="text-lg font-extrabold text-charcoal">Group Pool Snapshot {totals.groupPoolScope}</h2>
               <Badge text="Latest Calculated" tone="blue" />
             </div>
-            <div className="metrics member-pool-metrics">
+            <div className="metrics member-pool-metrics grid gap-4 md:grid-cols-2 xl:grid-cols-5">
               <Card title="Pool Contributions" value={money(totals.groupPool.poolContributions)} note={`Calculated ${totals.groupPoolScope}`} icon={PiggyBank} />
               <Card title="Loans Issued" value={money(totals.groupPool.loansIssued)} note={`Calculated ${totals.groupPoolScope}`} tone="blue" icon={Banknote} />
               <Card title="Unborrowed Money" value={money(totals.groupPool.unborrowedMoney)} note={`Balance ${totals.groupPoolScope}`} tone="amber" icon={Scale} />
@@ -358,12 +358,12 @@ export function MemberDashboardPage({
             </div>
           </section>
 
-          <section className="panel member-cycle-panel">
-            <div className="panel-head">
-              <h2>Cycle Position</h2>
+          <section className="panel member-cycle-panel mb-5 rounded-app border border-mist bg-cream p-4 shadow-soft">
+            <div className="panel-head mb-3 flex items-center justify-between gap-3">
+              <h2 className="text-lg font-extrabold text-charcoal">Cycle Position</h2>
               <Badge text={titleCase(totals.borrowingStatus)} tone={statusTone(totals.borrowingStatus)} />
             </div>
-            <div className="detail-grid member-dashboard-detail-grid">
+            <div className="detail-grid member-dashboard-detail-grid grid gap-3 md:grid-cols-2 xl:grid-cols-4">
               <DetailValue label="Member" value={memberName(portal?.me?.member)} />
               <DetailValue label="Cycle" value={activeMembership?.cycle_name || "-"} />
               <DetailValue label="Savings Cap" value={money(activeMembership?.savings_cap)} />
@@ -375,10 +375,10 @@ export function MemberDashboardPage({
             </div>
           </section>
 
-          <div className="member-dashboard-grid">
-            <section className="panel">
-              <div className="panel-head">
-                <h2>Recent Transactions</h2>
+          <div className="member-dashboard-grid grid items-start gap-5 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
+            <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+              <div className="panel-head mb-3 flex items-center justify-between gap-3">
+                <h2 className="text-lg font-extrabold text-charcoal">Recent Transactions</h2>
                 <Badge text={`${transactions.length} records`} tone="blue" />
               </div>
               <DataTable
@@ -393,9 +393,9 @@ export function MemberDashboardPage({
               />
             </section>
 
-            <section className="panel">
-              <div className="panel-head">
-                <h2>Penalty Snapshot</h2>
+            <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+              <div className="panel-head mb-3 flex items-center justify-between gap-3">
+                <h2 className="text-lg font-extrabold text-charcoal">Penalty Snapshot</h2>
                 <Badge text={`${penalties.length} records`} tone={totals.penaltyDue > 0 ? "red" : "green"} />
               </div>
               <DataTable

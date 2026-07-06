@@ -1,17 +1,9 @@
 import React, { useState } from "react";
-import { ArrowLeft, Lock, Mail, ShieldCheck } from "lucide-react";
+import { ArrowLeft, ArrowRight, Eye, EyeOff, Lock, ShieldCheck, UserRound } from "lucide-react";
 import { api } from "../../api/client.js";
-import { Alert, Button, Field } from "../../components/ui/index.jsx";
+import { Alert } from "../../components/ui/index.jsx";
+import { BrandMark } from "../../components/BrandMark.jsx";
 import { AuthLayout } from "../../layouts/AppLayouts.jsx";
-import {
-  authActionsClass,
-  authBackButtonClass,
-  authCardClass,
-  authEyebrowClass,
-  authFormHeadClass,
-  authIconClass,
-  authMobileSummaryClass,
-} from "./authTailwind.js";
 import "../../styles/auth.css";
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -61,6 +53,18 @@ export async function performLogin({ email, password, authApi = api }) {
   });
 }
 
+function AuthInput({ label, icon: Icon, error, action, ...props }) {
+  return (
+    <label className={`auth-input-shell ${error ? "has-error" : ""}`}>
+      <span className="sr-only">{label}</span>
+      {Icon ? <Icon size={24} aria-hidden="true" /> : null}
+      <input aria-label={label} aria-invalid={error ? "true" : undefined} {...props} />
+      {action}
+      {error ? <small className="auth-input-error">{error}</small> : null}
+    </label>
+  );
+}
+
 export function LoginPage({
   onLogin,
   onNavigateSignup,
@@ -73,9 +77,10 @@ export function LoginPage({
 }) {
   const [email, setEmail] = useState(initialEmail);
   const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(true);
+  const rememberMe = true;
   const [mfaRequired, setMfaRequired] = useState(false);
   const [mfaCode, setMfaCode] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -126,81 +131,85 @@ export function LoginPage({
 
   return (
     <AuthLayout>
-      <form className={authCardClass} onSubmit={submit} noValidate>
+      <form className="auth-phone login-phone" onSubmit={submit} noValidate>
+        <div className="auth-status-bar" aria-hidden="true"><span>9:41</span><span className="auth-device-icons">▮▮▮ ))) ▭</span></div>
+        <div className="auth-orbit" aria-hidden="true" />
         {onBackToWelcome ? (
-          <button type="button" className={authBackButtonClass} onClick={onBackToWelcome} aria-label="Back to welcome">
+          <button type="button" className="auth-back-button" onClick={onBackToWelcome} aria-label="Back to welcome">
             <ArrowLeft size={18} aria-hidden="true" />
           </button>
         ) : null}
-        <div className={authFormHeadClass}>
-          <span className={authIconClass}><Lock size={20} aria-hidden="true" /></span>
-          <div>
-            <span className={authEyebrowClass}>Welcome back</span>
-            <h2 className="mt-1 text-2xl font-extrabold text-charcoal">Log in</h2>
-            <p className="mt-2 text-sm leading-6 text-charcoal/70">Sign in to manage declarations, savings, loans, reports, and transparent member records.</p>
-          </div>
+        <div className="auth-hero login-hero">
+          <BrandMark size="lg" className="auth-hero-mark text-cream" />
+          <h1>Visionaries<br className="signup-title-break" /> Village Banking</h1>
+          <span className="auth-gold-rule" aria-hidden="true" />
+          <h2>Welcome Back</h2>
+          <p>Sign in to continue saving and growing together.</p>
         </div>
 
-        <div className={authMobileSummaryClass} aria-label="Secure portal">
-          <ShieldCheck size={18} aria-hidden="true" />
-          <span>Protected member and admin access for transparent financial records</span>
-        </div>
-
-        <Field
+        <section className="auth-form-sheet login-sheet" aria-label="Log in form">
+        <AuthInput
           label="Email"
           value={email}
           onChange={(value) => {
-            setEmail(value);
+            setEmail(value.target.value);
             if (errors.email) setErrors((current) => ({ ...current, email: "" }));
           }}
           type="email"
-          placeholder="name@example.com"
+          placeholder="Phone Number or Email"
           autoComplete="email"
           error={errors.email}
-          icon={Mail}
+          icon={UserRound}
         />
 
         {mfaRequired ? (
-          <Field
+          <AuthInput
             label="Admin verification code"
             value={mfaCode}
-            onChange={setMfaCode}
+            onChange={(event) => setMfaCode(event.target.value)}
             type="text"
             placeholder="6-digit code"
             autoComplete="one-time-code"
             icon={ShieldCheck}
           />
         ) : (
-          <Field
+          <AuthInput
             label="Password"
             value={password}
             onChange={(value) => {
-              setPassword(value);
+              setPassword(value.target.value);
               if (errors.password) setErrors((current) => ({ ...current, password: "" }));
             }}
-            type="password"
-            placeholder="Enter password"
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
             autoComplete="current-password"
             error={errors.password}
+            icon={Lock}
+            action={(
+              <button type="button" className="auth-input-action" onClick={() => setShowPassword((current) => !current)} aria-label={showPassword ? "Hide password" : "Show password"}>
+                {showPassword ? <EyeOff size={22} aria-hidden="true" /> : <Eye size={22} aria-hidden="true" />}
+              </button>
+            )}
           />
         )}
 
         {!mfaRequired ? (
-          <div className="login-options flex items-center justify-between gap-3 text-sm">
-            <label className="check-field">
-              <input type="checkbox" checked={rememberMe} onChange={(event) => setRememberMe(event.target.checked)} />
-              Remember me
-            </label>
+          <div className="login-options">
             <button type="button" className="link-button" onClick={navigateForgot}>Forgot password?</button>
           </div>
         ) : null}
 
         {error ? <Alert tone="danger" title="Unable to log in">{error}</Alert> : null}
 
-        <div className={authActionsClass}>
-          <Button loading={loading} disabled={loading}>{mfaRequired ? "Verify Code" : "Log In"}</Button>
-          <Button type="button" variant="secondary" disabled={loading} onClick={navigateSignup}>Create Account</Button>
-        </div>
+          <button type="submit" className="auth-primary-action" disabled={loading} aria-busy={loading ? "true" : undefined}>
+            <span>{mfaRequired ? "Verify Code" : "Log In"}</span>
+            <ArrowRight size={26} aria-hidden="true" />
+          </button>
+
+          <div className="auth-village-scene auth-form-landscape" aria-hidden="true" />
+
+          <p className="auth-switch-copy">Don't have an account? <button type="button" disabled={loading} onClick={navigateSignup}>Sign Up</button></p>
+        </section>
       </form>
     </AuthLayout>
   );

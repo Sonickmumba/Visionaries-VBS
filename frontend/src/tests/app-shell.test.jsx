@@ -11,10 +11,9 @@ describe("app shell", () => {
 
     expect(html).toContain("Visionaries Village Banking splash screen");
     expect(html).toContain("Visionaries Village Banking");
-    expect(html).toContain("Save Together. Grow Together.");
-    expect(html).toContain("Track Savings");
-    expect(html).toContain("Manage Loans");
-    expect(html).toContain("Share Interest");
+    expect(html).toContain("Stronger Together.");
+    expect(html).toContain("Saving Today, Building Tomorrow.");
+    expect(html).toContain("Secure. Reliable. Community Focused.");
     expect(html).toContain("Checking secure session");
     expect(html).toContain("splash-progress");
   });
@@ -22,7 +21,7 @@ describe("app shell", () => {
   it("renders the guest welcome splash with a continue action", () => {
     const html = renderToStaticMarkup(<SplashScreen onContinue={() => {}} />);
 
-    expect(html).toContain("Continue");
+    expect(html).toContain("Get Started");
     expect(html).toContain("splash-continue");
     expect(html).not.toContain("splash-progress");
   });
@@ -32,7 +31,8 @@ describe("app shell", () => {
 
     expect(css).toContain(".splash-screen");
     expect(css).toContain(".brand-mark");
-    expect(css).toContain(".splash-features");
+    expect(css).toContain(".splash-scene::before");
+    expect(css).toContain(".splash-gold-wave");
     expect(css).toContain(".splash-continue");
     expect(css).toContain("100svh");
     expect(css).toContain("@media (prefers-reduced-motion: reduce)");
@@ -43,7 +43,7 @@ describe("app shell", () => {
     const html = fs.readFileSync(path.join(process.cwd(), "index.html"), "utf8");
 
     expect(html).toContain("boot-phone");
-    expect(html).toContain("Save Together. Grow Together.");
+    expect(html).toContain("Visionaries Village Banking");
     expect(html).not.toContain("Preparing the Visionaries financial operations workspace.");
   });
 });

@@ -62,13 +62,17 @@ describe("signup screen", () => {
   it("renders signup and success states", () => {
     const form = renderToStaticMarkup(<SignupPage onBackToLogin={() => {}} onBackToWelcome={() => {}} />);
 
-    expect(form).toContain("Create account");
+    expect(form).toContain("Create Account");
     expect(form).toContain("Back to welcome");
-    expect(form).toContain("Member access");
-    expect(form).toContain("Use the same details your administrators have on record.");
-    expect(form).toContain("auth-mobile-summary");
-    expect(form).toContain("First name");
-    expect(form).toContain("Confirm password");
-    expect(form).toContain("Back to Login");
+    expect(form).toContain("Join your community and start saving together.");
+    expect(form).toContain("auth-phone");
+    expect(form).toContain("auth-form-sheet");
+    expect(form).toContain("Full Name");
+    expect(form).toContain("Phone Number");
+    expect(form).toContain("Group Code (Optional)");
+    expect(form).toContain("Confirm Password");
+    expect(form).toContain("Terms &amp; Privacy Policy");
+    expect(form).toContain("Log In");
+    expect(form).not.toContain("Continue with Biometrics");
   });
 });

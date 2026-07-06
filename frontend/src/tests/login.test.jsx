@@ -66,18 +66,19 @@ describe("login screen", () => {
   it("renders the complete login form", () => {
     const html = renderToStaticMarkup(<LoginPage onLogin={() => {}} onBackToWelcome={() => {}} />);
 
-    expect(html).toContain("Log in");
+    expect(html).toContain("Log In");
     expect(html).toContain("Back to welcome");
-    expect(html).toContain("Email");
+    expect(html).toContain("Phone Number or Email");
     expect(html).toContain("Password");
-    expect(html).toContain("Remember me");
     expect(html).toContain("Forgot password?");
-    expect(html).toContain("Create Account");
+    expect(html).toContain("Sign Up");
     expect(html).toContain("auth-shell");
-    expect(html).toContain("Welcome back");
-    expect(html).toContain("Protected member and admin access");
-    expect(html).toContain("auth-mobile-summary");
-    expect(html).toContain("Platform highlights");
+    expect(html).toContain("Welcome Back");
+    expect(html).toContain("Sign in to continue saving and growing together.");
+    expect(html).toContain("auth-phone");
+    expect(html).toContain("auth-form-sheet");
+    expect(html).toContain("auth-village-scene");
+    expect(html).not.toContain("Continue with Biometrics");
   });
 
   it("supports current and legacy navigation callback names", () => {
@@ -91,10 +92,12 @@ describe("login screen", () => {
     const css = fs.readFileSync(path.join(process.cwd(), "src/styles/auth.css"), "utf8");
 
     expect(css).toContain("@media (max-width: 480px)");
-    expect(css).toContain(".auth-brand-stats");
+    expect(css).toContain(".auth-phone");
+    expect(css).toContain(".auth-form-sheet");
+    expect(css).toContain(".auth-input-shell");
+    expect(css).toContain(".auth-primary-action");
+    expect(css).toContain(".auth-village-scene");
     expect(css).toContain("display: none");
-    expect(css).toContain("margin-top: -48px");
-    expect(css).toContain(".login-card");
     expect(css).toContain(".auth-back-button svg");
     expect(css).toContain("overflow: visible");
     expect(css).toContain("stroke-width: 2.25");

@@ -23,9 +23,9 @@ describe("app layouts", () => {
   it("renders public auth layout", () => {
     const html = renderToStaticMarkup(<AuthLayout><section className="auth-card">Login</section></AuthLayout>);
 
-    expect(html).toContain("Visionaries Village Banking");
-    expect(html).toContain("brand-lockup");
+    expect(html).toContain("auth-shell");
     expect(html).toContain("auth-card");
+    expect(html).not.toContain("brand-lockup");
   });
 
   it("blocks protected content when there is no user", () => {

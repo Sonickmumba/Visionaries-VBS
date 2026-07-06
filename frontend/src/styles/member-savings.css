@@ -60,10 +60,10 @@
     padding: 14px 14px 60px;
     border-radius: 0 0 34px 34px;
     background:
-      radial-gradient(circle at 90% 16%, rgba(244, 180, 0, 0.15), transparent 24%),
-      linear-gradient(155deg, #002f1f 0%, #005f36 48%, #007a43 100%);
-    box-shadow: 0 20px 54px rgba(0, 63, 39, 0.22);
-    color: white;
+      radial-gradient(circle at 90% 16%, rgba(217, 162, 39, 0.15), transparent 24%),
+      linear-gradient(155deg, #0D3B2E 0%, #0D3B2E 48%, #127A5A 100%);
+    box-shadow: 0 20px 54px rgba(13, 59, 46, 0.22);
+    color: #F7F4EE;
     display: grid;
     gap: 16px;
   }
@@ -79,16 +79,16 @@
   .member-savings-hero-head button {
     width: 38px;
     height: 38px;
-    border: 1px solid rgba(255, 255, 255, 0.22);
+    border: 1px solid rgba(247, 244, 238, 0.22);
     border-radius: 14px;
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
+    background: rgba(247, 244, 238, 0.1);
+    color: #F7F4EE;
     display: inline-grid;
     place-items: center;
   }
 
   .member-savings-hero h2 {
-    color: white;
+    color: #F7F4EE;
     font-size: 17px;
     line-height: 1.05;
     margin: 0;
@@ -96,24 +96,24 @@
   }
 
   .member-savings-hero-main {
-    border: 1px solid rgba(216, 230, 223, 0.92);
+    border: 1px solid rgba(230, 232, 235, 0.92);
     border-radius: 22px;
-    background: #ffffff;
-    color: #172033;
-    box-shadow: 0 16px 38px rgba(16, 42, 67, 0.14);
+    background: #F7F4EE;
+    color: #1F2933;
+    box-shadow: 0 16px 38px rgba(31, 41, 51, 0.14);
     padding: 16px;
     display: grid;
     gap: 8px;
   }
 
   .member-savings-hero-main span {
-    color: #172033;
+    color: #1F2933;
     font-size: 13px;
     font-weight: 850;
   }
 
   .member-savings-hero-main strong {
-    color: #053b2a;
+    color: #0D3B2E;
     display: block;
     font-size: 29px;
     line-height: 1.02;
@@ -121,7 +121,7 @@
   }
 
   .member-savings-hero-main small {
-    color: #52637a;
+    color: #1F2933;
     display: block;
     font-size: 13px;
     font-weight: 800;
@@ -129,7 +129,7 @@
   }
 
   .member-savings-hero-main em {
-    color: #172033;
+    color: #1F2933;
     display: block;
     font-size: 12px;
     font-style: normal;
@@ -140,7 +140,7 @@
   .member-savings-progress {
     height: 9px;
     border-radius: 999px;
-    background: #e5e7eb;
+    background: #E6E8EB;
     overflow: hidden;
     margin-top: 12px;
   }
@@ -149,7 +149,7 @@
     display: block;
     height: 100%;
     border-radius: inherit;
-    background: linear-gradient(90deg, #007a43, #22c55e);
+    background: linear-gradient(90deg, #0D3B2E, #127A5A);
   }
 
   .member-savings-progress-stats {
@@ -163,31 +163,31 @@
 
   .member-savings-progress-stats div {
     min-width: 0;
-    border: 1px solid rgba(216, 230, 223, 0.92);
+    border: 1px solid rgba(230, 232, 235, 0.92);
     border-radius: 16px;
-    background: #ffffff;
-    box-shadow: 0 12px 28px rgba(16, 42, 67, 0.08);
+    background: #F7F4EE;
+    box-shadow: 0 12px 28px rgba(31, 41, 51, 0.08);
     padding: 11px;
     display: grid;
     gap: 4px;
   }
 
   .member-savings-progress-stats strong {
-    color: #52637a;
+    color: #1F2933;
     font-size: 10px;
     font-weight: 900;
     text-transform: uppercase;
   }
 
   .member-savings-progress-stats span {
-    color: #172033;
+    color: #1F2933;
     font-size: 13px;
     font-weight: 950;
     overflow-wrap: anywhere;
   }
 
   .member-savings-cap-note {
-    color: #dcfce7;
+    color: #F7F4EE;
     font-size: 12px;
     font-weight: 800;
   }
@@ -199,14 +199,14 @@
   }
 
   .member-savings-hero-actions .btn {
-    border-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(247, 244, 238, 0.2);
     min-height: 40px;
     width: 100%;
   }
 
   .member-savings-hero-actions .btn.secondary {
-    background: rgba(255, 255, 255, 0.12);
-    color: white;
+    background: rgba(247, 244, 238, 0.12);
+    color: #F7F4EE;
   }
 
   .member-savings-hero-strip {
@@ -216,8 +216,8 @@
   }
 
   .member-savings-hero-strip div {
-    background: rgba(255, 255, 255, 0.12);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(247, 244, 238, 0.12);
+    border: 1px solid rgba(247, 244, 238, 0.18);
     border-radius: 16px;
     display: grid;
     gap: 4px;
@@ -225,7 +225,7 @@
   }
 
   .member-savings-hero-strip span {
-    color: white;
+    color: #F7F4EE;
     display: block;
     font-size: 17px;
     font-weight: 900;
@@ -252,7 +252,7 @@
     width: 100%;
     min-height: 52px;
     border-radius: 13px;
-    box-shadow: 0 16px 32px rgba(0, 95, 54, 0.22);
+    box-shadow: 0 16px 32px rgba(18, 122, 90, 0.22);
   }
 
   .member-savings-mobile-actions {
@@ -260,10 +260,10 @@
   }
 
   .member-savings-mobile-breakdown {
-    border: 1px solid #e5edf5;
+    border: 1px solid #E6E8EB;
     border-radius: 20px;
-    background: #ffffff;
-    box-shadow: 0 10px 30px rgba(16, 42, 67, 0.08);
+    background: #F7F4EE;
+    box-shadow: 0 10px 30px rgba(31, 41, 51, 0.08);
     padding: 12px;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));

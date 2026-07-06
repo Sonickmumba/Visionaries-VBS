@@ -58,10 +58,10 @@
   .member-penalties-hero {
     border-radius: 0 0 26px 26px;
     background:
-      radial-gradient(circle at 88% 14%, rgba(250, 204, 21, 0.24), transparent 23%),
-      linear-gradient(145deg, #007a43 0%, #006b3d 58%, #0f766e 100%);
-    box-shadow: 0 18px 46px rgba(16, 42, 67, 0.14);
-    color: white;
+      radial-gradient(circle at 88% 14%, rgba(217, 162, 39, 0.24), transparent 23%),
+      linear-gradient(145deg, #0D3B2E 0%, #127A5A 62%, #0D3B2E 100%);
+    box-shadow: 0 18px 46px rgba(31, 41, 51, 0.14);
+    color: #F7F4EE;
     display: grid;
     gap: 14px;
     padding: 18px;
@@ -77,21 +77,21 @@
   .member-penalties-hero-head span,
   .member-penalties-hero-main span,
   .member-penalties-hero-strip strong {
-    color: #d9f99d;
+    color: #F7F4EE;
     font-size: 12px;
     font-weight: 900;
     text-transform: uppercase;
   }
 
   .member-penalties-hero h2 {
-    color: white;
+    color: #F7F4EE;
     font-size: 27px;
     line-height: 1.05;
     margin: 4px 0 0;
   }
 
   .member-penalties-hero-main strong {
-    color: white;
+    color: #F7F4EE;
     display: block;
     font-size: 34px;
     line-height: 1.02;
@@ -100,7 +100,7 @@
   }
 
   .member-penalties-hero-main small {
-    color: #dcfce7;
+    color: #F7F4EE;
     display: block;
     font-size: 13px;
     font-weight: 800;
@@ -114,14 +114,14 @@
   }
 
   .member-penalties-hero-actions .btn {
-    border-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(247, 244, 238, 0.2);
     min-height: 40px;
     width: 100%;
   }
 
   .member-penalties-hero-actions .btn.secondary {
-    background: rgba(255, 255, 255, 0.12);
-    color: white;
+    background: rgba(247, 244, 238, 0.12);
+    color: #F7F4EE;
   }
 
   .member-penalties-hero-strip {
@@ -131,8 +131,8 @@
   }
 
   .member-penalties-hero-strip div {
-    background: rgba(255, 255, 255, 0.12);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(247, 244, 238, 0.12);
+    border: 1px solid rgba(247, 244, 238, 0.18);
     border-radius: 16px;
     display: grid;
     gap: 4px;
@@ -140,7 +140,7 @@
   }
 
   .member-penalties-hero-strip span {
-    color: white;
+    color: #F7F4EE;
     display: block;
     font-size: 17px;
     font-weight: 900;
@@ -159,10 +159,10 @@
   }
 
   .member-penalties-mobile-breakdown {
-    border: 1px solid #e5edf5;
+    border: 1px solid #E6E8EB;
     border-radius: 16px;
-    background: #ffffff;
-    box-shadow: 0 10px 30px rgba(16, 42, 67, 0.08);
+    background: #F7F4EE;
+    box-shadow: 0 10px 30px rgba(31, 41, 51, 0.08);
     padding: 12px;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));

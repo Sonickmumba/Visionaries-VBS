@@ -10,10 +10,10 @@
 .member-more-refresh {
   width: 38px;
   height: 38px;
-  border: 1px solid #d8e6df;
+  border: 1px solid #E6E8EB;
   border-radius: 14px;
-  background: #ffffff;
-  color: #005f36;
+  background: #F7F4EE;
+  color: #0D3B2E;
   display: inline-grid;
   place-items: center;
 }
@@ -22,16 +22,16 @@
   margin-bottom: -48px;
   border-radius: 0 0 34px 34px;
   background:
-    radial-gradient(circle at 86% 12%, rgba(250, 204, 21, 0.28), transparent 22%),
-    radial-gradient(circle at 12% 92%, rgba(255, 255, 255, 0.14), transparent 25%),
-    linear-gradient(145deg, #003f27 0%, #007a43 60%, #0f766e 100%);
-  color: white;
+    radial-gradient(circle at 86% 12%, rgba(217, 162, 39, 0.28), transparent 22%),
+    radial-gradient(circle at 12% 92%, rgba(247, 244, 238, 0.14), transparent 25%),
+    linear-gradient(145deg, #0D3B2E 0%, #127A5A 60%, #127A5A 100%);
+  color: #F7F4EE;
   padding: 14px 18px 76px;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
   gap: 14px;
-  box-shadow: 0 20px 54px rgba(0, 63, 39, 0.22);
+  box-shadow: 0 20px 54px rgba(13, 59, 46, 0.22);
 }
 
 .member-more-topbar {
@@ -45,10 +45,10 @@
 .member-more-topbar button {
   width: 38px;
   height: 38px;
-  border: 1px solid rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(247, 244, 238, 0.22);
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
+  background: rgba(247, 244, 238, 0.1);
+  color: #F7F4EE;
   display: inline-grid;
   place-items: center;
 }
@@ -56,10 +56,10 @@
 .member-more-avatar {
   width: 82px;
   height: 82px;
-  border: 3px solid rgba(255, 255, 255, 0.75);
+  border: 3px solid rgba(247, 244, 238, 0.75);
   border-radius: 50%;
-  background: #f4b000;
-  color: #003f27;
+  background: #D9A227;
+  color: #0D3B2E;
   display: grid;
   place-items: center;
   font-weight: 950;
@@ -68,7 +68,7 @@
 }
 
 .member-more-hero span {
-  color: #d9f99d;
+  color: #F7F4EE;
   font-size: 12px;
   font-weight: 900;
   text-transform: uppercase;
@@ -76,14 +76,14 @@
 
 .member-more-hero h2 {
   margin: 0 0 8px;
-  color: white;
+  color: #F7F4EE;
   font-size: 23px;
   line-height: 1.08;
 }
 
 .member-more-hero p {
   margin: 8px 0 0;
-  color: #dcfce7;
+  color: #F7F4EE;
   font-size: 12px;
   font-weight: 800;
 }
@@ -91,10 +91,10 @@
 .member-cycle-position {
   position: relative;
   z-index: 2;
-  border: 1px solid rgba(216, 230, 223, 0.92);
+  border: 1px solid rgba(230, 232, 235, 0.92);
   border-radius: 22px;
-  background: #ffffff;
-  box-shadow: 0 14px 34px rgba(16, 42, 67, 0.08);
+  background: #F7F4EE;
+  box-shadow: 0 14px 34px rgba(31, 41, 51, 0.08);
   padding: 14px;
   display: grid;
   gap: 12px;
@@ -111,7 +111,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: #005f36;
+  color: #0D3B2E;
   font-weight: 950;
 }
 
@@ -123,7 +123,7 @@
 
 .member-cycle-position-grid div {
   border: 0;
-  border-bottom: 1px solid #edf3f7;
+  border-bottom: 1px solid #E6E8EB;
   border-radius: 0;
   background: transparent;
   padding: 12px 2px;
@@ -156,20 +156,20 @@
   width: 32px;
   height: 32px;
   border-radius: 12px;
-  background: #dcfce7;
-  color: #007a43;
+  background: #F7F4EE;
+  color: #127A5A;
   display: inline-grid;
   place-items: center;
 }
 
 .member-cycle-position-icon.amber {
-  background: #ffedd5;
-  color: #ea580c;
+  background: #F7F4EE;
+  color: #D9A227;
 }
 
 .member-cycle-position-icon.purple {
-  background: #ede9fe;
-  color: #7c3aed;
+  background: #F7F4EE;
+  color: #127A5A;
 }
 
 .member-more-menu {
@@ -178,10 +178,10 @@
 }
 
 .member-more-menu {
-  border: 1px solid rgba(216, 230, 223, 0.92);
+  border: 1px solid rgba(230, 232, 235, 0.92);
   border-radius: 22px;
-  background: #ffffff;
-  box-shadow: 0 14px 34px rgba(16, 42, 67, 0.08);
+  background: #F7F4EE;
+  box-shadow: 0 14px 34px rgba(31, 41, 51, 0.08);
   overflow: hidden;
   gap: 0;
 }
@@ -190,9 +190,9 @@
   width: 100%;
   min-height: 62px;
   border: 0;
-  border-bottom: 1px solid #edf3f7;
-  background: #ffffff;
-  color: #172033;
+  border-bottom: 1px solid #E6E8EB;
+  background: #F7F4EE;
+  color: #1F2933;
   display: grid;
   grid-template-columns: 34px minmax(0, 1fr) 22px;
   align-items: center;
@@ -223,13 +223,13 @@
 }
 
 .member-more-menu-row strong {
-  color: #172033;
+  color: #1F2933;
   font-size: 14px;
   font-weight: 900;
 }
 
 .member-more-menu-row small {
-  color: #65758b;
+  color: #1F2933;
   font-size: 12px;
   font-weight: 700;
 }
@@ -238,25 +238,25 @@
   width: 34px;
   height: 34px;
   border-radius: 12px;
-  background: #f4fbf7;
-  color: #007a43;
+  background: #F7F4EE;
+  color: #127A5A;
   display: inline-grid;
   place-items: center;
 }
 
 .member-more-menu-row > svg {
   justify-self: end;
-  color: #64748b;
+  color: #1F2933;
 }
 
 .member-more-menu-row.danger strong,
 .member-more-menu-row.danger > svg {
-  color: #dc2626;
+  color: #E25D5D;
 }
 
 .member-more-menu-row.danger .member-more-menu-icon {
-  background: #fee2e2;
-  color: #dc2626;
+  background: #F7F4EE;
+  color: #E25D5D;
 }
 
 @media (min-width: 768px) {

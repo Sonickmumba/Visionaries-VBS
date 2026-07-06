@@ -6,22 +6,22 @@
 .loan-hero {
   border-radius: 18px;
   background:
-    radial-gradient(circle at 88% 14%, rgba(250, 204, 21, 0.24), transparent 22%),
-    linear-gradient(145deg, #007a43 0%, #006b3d 58%, #0f766e 100%);
-  color: white;
+    radial-gradient(circle at 88% 14%, rgba(217, 162, 39, 0.24), transparent 22%),
+    linear-gradient(145deg, #0D3B2E 0%, #127A5A 62%, #0D3B2E 100%);
+  color: #F7F4EE;
   padding: 18px;
   margin-bottom: 16px;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 16px;
-  box-shadow: 0 18px 46px rgba(16, 42, 67, 0.14);
+  box-shadow: 0 18px 46px rgba(31, 41, 51, 0.14);
 }
 
 .loan-hero span,
 .loan-hero-stat span,
 .loan-detail-hero span,
 .loan-ledger-hero span {
-  color: #d9f99d;
+  color: #F7F4EE;
   font-size: 12px;
   font-weight: 900;
   text-transform: uppercase;
@@ -29,22 +29,22 @@
 
 .loan-hero h2 {
   margin: 4px 0;
-  color: white;
+  color: #F7F4EE;
   font-size: 25px;
   line-height: 1.08;
 }
 
 .loan-hero p {
   margin: 0;
-  color: #dcfce7;
+  color: #F7F4EE;
   font-weight: 800;
 }
 
 .loan-hero-stat {
   min-width: 154px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(247, 244, 238, 0.18);
   border-radius: 16px;
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(247, 244, 238, 0.12);
   padding: 12px;
   display: grid;
   align-content: center;
@@ -52,13 +52,13 @@
 }
 
 .loan-hero-stat strong {
-  color: white;
+  color: #F7F4EE;
   font-size: 22px;
   overflow-wrap: anywhere;
 }
 
 .loan-hero-stat small {
-  color: #dcfce7;
+  color: #F7F4EE;
   font-weight: 800;
 }
 
@@ -96,7 +96,7 @@
 
 .loan-detail-hero span,
 .loan-ledger-hero span {
-  color: #007a43;
+  color: #127A5A;
 }
 
 .loan-detail-hero h2,
@@ -114,8 +114,8 @@
   width: 44px;
   height: 44px;
   border-radius: 16px;
-  background: #dcfce7;
-  color: #007a43;
+  background: #F7F4EE;
+  color: #127A5A;
   display: grid;
   place-items: center;
   font-weight: 900;
@@ -135,9 +135,9 @@
 
 .loan-detail-strip > div,
 .loan-card-values > div {
-  border: 1px solid #e5edf5;
+  border: 1px solid #E6E8EB;
   border-radius: 14px;
-  background: #f8fbf9;
+  background: #F7F4EE;
   padding: 11px;
   display: grid;
   gap: 4px;
@@ -145,7 +145,7 @@
 
 .loan-detail-strip strong,
 .loan-card-values span {
-  color: #65758b;
+  color: #1F2933;
   font-size: 11px;
   font-weight: 900;
   text-transform: uppercase;
@@ -153,7 +153,7 @@
 
 .loan-detail-strip span,
 .loan-card-values strong {
-  color: #102a43;
+  color: #1F2933;
   font-size: 16px;
   font-weight: 900;
   overflow-wrap: anywhere;
@@ -173,18 +173,18 @@
 }
 
 .loan-request-card {
-  border: 1px solid #d8e1eb;
+  border: 1px solid #E6E8EB;
   border-radius: 16px;
-  background: white;
+  background: #F7F4EE;
   padding: 13px;
   display: grid;
   gap: 12px;
-  box-shadow: 0 12px 30px rgba(16, 42, 67, 0.06);
+  box-shadow: 0 12px 30px rgba(31, 41, 51, 0.06);
 }
 
 .loan-request-card.selected {
-  border-color: #007a43;
-  box-shadow: 0 16px 38px rgba(16, 42, 67, 0.12);
+  border-color: #127A5A;
+  box-shadow: 0 16px 38px rgba(31, 41, 51, 0.12);
 }
 
 .loan-card-head {
@@ -201,7 +201,7 @@
 }
 
 .loan-card-head span {
-  color: #65758b;
+  color: #1F2933;
   font-size: 12px;
   font-weight: 800;
 }

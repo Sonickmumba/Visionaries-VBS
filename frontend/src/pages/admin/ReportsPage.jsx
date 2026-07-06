@@ -317,12 +317,12 @@ function openPrintableReport({ title, subtitle, metrics, columns, rows }) {
       <head>
         <title>${safeTitle}</title>
         <style>
-          body{font-family:Inter,Arial,sans-serif;margin:32px;color:#172033}
-          h1{margin:0 0 4px} p{margin:0 0 22px;color:#52637a}
+          body{font-family:Inter,Arial,sans-serif;margin:32px;color:#1F2933}
+          h1{margin:0 0 4px} p{margin:0 0 22px;color:#1F2933}
           .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
-          .metric{border:1px solid #d8e1eb;border-radius:8px;padding:10px}
-          .metric span{display:block;color:#52637a;font-size:12px}.metric strong{font-size:18px}
-          table{width:100%;border-collapse:collapse;font-size:12px} th,td{border:1px solid #d8e1eb;padding:8px;text-align:left} th{background:#eef4f8}
+          .metric{border:1px solid #E6E8EB;border-radius:8px;padding:10px}
+          .metric span{display:block;color:#1F2933;font-size:12px}.metric strong{font-size:18px}
+          table{width:100%;border-collapse:collapse;font-size:12px} th,td{border:1px solid #E6E8EB;padding:8px;text-align:left} th{background:#E6E8EB}
         </style>
       </head>
       <body>

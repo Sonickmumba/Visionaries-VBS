@@ -17,8 +17,8 @@
 }
 
 .member-profile {
-  background: white;
-  border: 1px solid #d8e1eb;
+  background: #F7F4EE;
+  border: 1px solid #E6E8EB;
   border-radius: 16px;
   padding: 16px;
   display: grid;
@@ -37,11 +37,11 @@
 
 .member-profile svg {
   grid-row: span 2;
-  color: #007a43;
+  color: #127A5A;
 }
 
 .member-profile span {
-  color: #65758b;
+  color: #1F2933;
   font-size: 12px;
   font-weight: 800;
   text-transform: uppercase;
@@ -54,20 +54,20 @@
 .member-detail-hero {
   border-radius: 18px;
   background:
-    radial-gradient(circle at 88% 12%, rgba(250, 204, 21, 0.24), transparent 22%),
-    linear-gradient(145deg, #007a43 0%, #006b3d 58%, #0f766e 100%);
-  color: white;
+    radial-gradient(circle at 88% 12%, rgba(217, 162, 39, 0.24), transparent 22%),
+    linear-gradient(145deg, #0D3B2E 0%, #127A5A 62%, #0D3B2E 100%);
+  color: #F7F4EE;
   padding: 18px;
   margin-bottom: 16px;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   gap: 14px;
   align-items: center;
-  box-shadow: 0 18px 46px rgba(16, 42, 67, 0.14);
+  box-shadow: 0 18px 46px rgba(31, 41, 51, 0.14);
 }
 
 .member-detail-hero span {
-  color: #d9f99d;
+  color: #F7F4EE;
   font-size: 12px;
   font-weight: 900;
   text-transform: uppercase;
@@ -75,14 +75,14 @@
 
 .member-detail-hero h2 {
   margin: 2px 0;
-  color: white;
+  color: #F7F4EE;
   font-size: 26px;
   line-height: 1.08;
 }
 
 .member-detail-hero p {
   margin: 0;
-  color: #dcfce7;
+  color: #F7F4EE;
   font-weight: 800;
 }
 
@@ -116,8 +116,8 @@
   width: 44px;
   height: 44px;
   border-radius: 16px;
-  background: #dcfce7;
-  color: #007a43;
+  background: #F7F4EE;
+  color: #127A5A;
   display: grid;
   place-items: center;
   font-weight: 900;
@@ -128,9 +128,9 @@
   width: 62px;
   height: 62px;
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.16);
-  color: #facc15;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+  background: rgba(247, 244, 238, 0.16);
+  color: #D9A227;
+  box-shadow: inset 0 0 0 1px rgba(247, 244, 238, 0.18);
 }
 
 .member-mobile-cards {
@@ -172,13 +172,13 @@
 }
 
 .member-card {
-  border: 1px solid #d8e1eb;
+  border: 1px solid #E6E8EB;
   border-radius: 16px;
-  background: white;
+  background: #F7F4EE;
   padding: 13px;
   display: grid;
   gap: 12px;
-  box-shadow: 0 12px 30px rgba(16, 42, 67, 0.06);
+  box-shadow: 0 12px 30px rgba(31, 41, 51, 0.06);
 }
 
 .member-card-head {
@@ -195,7 +195,7 @@
 }
 
 .member-card-head span {
-  color: #65758b;
+  color: #1F2933;
   font-size: 12px;
   font-weight: 800;
 }
@@ -207,16 +207,16 @@
 }
 
 .member-card-values div {
-  border: 1px solid #e5edf5;
+  border: 1px solid #E6E8EB;
   border-radius: 14px;
-  background: #f8fbf9;
+  background: #F7F4EE;
   padding: 11px;
   display: grid;
   gap: 4px;
 }
 
 .member-card-values span {
-  color: #65758b;
+  color: #1F2933;
   font-size: 11px;
   font-weight: 900;
   text-transform: uppercase;
@@ -224,7 +224,7 @@
 }
 
 .member-card-values strong {
-  color: #102a43;
+  color: #1F2933;
   font-size: 16px;
   overflow-wrap: anywhere;
 }

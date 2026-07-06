@@ -74,11 +74,11 @@ function downloadPdf({ report, rows, totals }) {
       <head>
         <title>${escapeHtml(report.title)}</title>
         <style>
-          body{font-family:Inter,Arial,sans-serif;margin:28px;color:#172033}
-          h1{margin:0 0 6px;color:#005f36} p{margin:0 0 18px;color:#52637a}
+          body{font-family:Inter,Arial,sans-serif;margin:28px;color:#1F2933}
+          h1{margin:0 0 6px;color:#0D3B2E} p{margin:0 0 18px;color:#1F2933}
           .summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0}
-          .box{border:1px solid #d8e6df;border-radius:8px;padding:10px}.box span{display:block;color:#52637a;font-size:12px}.box strong{font-size:18px}
-          table{width:100%;border-collapse:collapse;font-size:12px} th,td{border:1px solid #d8e6df;padding:8px;text-align:left} th{background:#eef8f2}
+          .box{border:1px solid #E6E8EB;border-radius:8px;padding:10px}.box span{display:block;color:#1F2933;font-size:12px}.box strong{font-size:18px}
+          table{width:100%;border-collapse:collapse;font-size:12px} th,td{border:1px solid #E6E8EB;padding:8px;text-align:left} th{background:#F7F4EE}
         </style>
       </head>
       <body>

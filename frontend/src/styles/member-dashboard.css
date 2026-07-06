@@ -5,34 +5,34 @@
 .member-dashboard-hero {
   border-radius: 18px;
   background:
-    radial-gradient(circle at 88% 14%, rgba(244, 180, 0, 0.23), transparent 22%),
-    linear-gradient(145deg, #0f766e 0%, #007a43 58%, #005f36 100%);
-  color: white;
+    radial-gradient(circle at 88% 14%, rgba(217, 162, 39, 0.23), transparent 22%),
+    linear-gradient(145deg, #127A5A 0%, #127A5A 58%, #0D3B2E 100%);
+  color: #F7F4EE;
   padding: 20px;
   margin-bottom: 18px;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(220px, auto);
   gap: 16px;
   align-items: end;
-  box-shadow: 0 18px 46px rgba(16, 42, 67, 0.14);
+  box-shadow: 0 18px 46px rgba(31, 41, 51, 0.14);
 }
 
 .member-dashboard-brand {
   margin-bottom: 10px;
-  color: white;
+  color: #F7F4EE;
 }
 
 .member-dashboard-brand .brand-mark {
-  background: rgba(255, 255, 255, 0.16);
+  background: rgba(247, 244, 238, 0.16);
 }
 
 .member-dashboard-brand .brand-wordmark small {
-  color: #dcfce7;
+  color: #F7F4EE;
 }
 
 .member-dashboard-hero span,
 .member-dashboard-hero-value span {
-  color: #d9f99d;
+  color: #F7F4EE;
   font-size: 12px;
   font-weight: 900;
   text-transform: uppercase;
@@ -40,35 +40,35 @@
 
 .member-dashboard-hero h2 {
   margin: 4px 0;
-  color: white;
+  color: #F7F4EE;
   font-size: 27px;
   line-height: 1.08;
 }
 
 .member-dashboard-hero p {
   margin: 0;
-  color: #dcfce7;
+  color: #F7F4EE;
   font-weight: 800;
 }
 
 .member-dashboard-hero-value {
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(247, 244, 238, 0.18);
   border-radius: 16px;
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(247, 244, 238, 0.12);
   padding: 14px;
   display: grid;
   gap: 4px;
 }
 
 .member-dashboard-hero-value strong {
-  color: white;
+  color: #F7F4EE;
   font-size: 26px;
   line-height: 1.05;
   overflow-wrap: anywhere;
 }
 
 .member-dashboard-hero-value small {
-  color: #dcfce7;
+  color: #F7F4EE;
   font-weight: 800;
 }
 
@@ -133,15 +133,15 @@
     min-height: 246px;
     border-radius: 0 0 34px 34px;
     background:
-      radial-gradient(circle at 84% 20%, rgba(244, 180, 0, 0.18), transparent 22%),
-      radial-gradient(circle at 10% 92%, rgba(255, 255, 255, 0.1), transparent 28%),
-      linear-gradient(155deg, #002f1f 0%, #005f36 48%, #007a43 100%);
-    color: white;
+      radial-gradient(circle at 84% 20%, rgba(217, 162, 39, 0.18), transparent 22%),
+      radial-gradient(circle at 10% 92%, rgba(247, 244, 238, 0.1), transparent 28%),
+      linear-gradient(155deg, #0D3B2E 0%, #0D3B2E 48%, #127A5A 100%);
+    color: #F7F4EE;
     padding: 18px 18px 84px;
     display: grid;
     gap: 22px;
     align-content: start;
-    box-shadow: 0 20px 54px rgba(0, 63, 39, 0.24);
+    box-shadow: 0 20px 54px rgba(13, 59, 46, 0.24);
   }
 
   .member-mobile-hero-head {
@@ -161,10 +161,10 @@
   .member-mobile-bell {
     width: 38px;
     height: 38px;
-    border: 1px solid rgba(255, 255, 255, 0.22);
+    border: 1px solid rgba(247, 244, 238, 0.22);
     border-radius: 14px;
-    background: rgba(255, 255, 255, 0.12);
-    color: white;
+    background: rgba(247, 244, 238, 0.12);
+    color: #F7F4EE;
     display: inline-grid;
     place-items: center;
   }
@@ -181,14 +181,14 @@
   }
 
   .member-mobile-hero-head span {
-    color: #cdeeda;
+    color: #F7F4EE;
     font-size: 12px;
     font-weight: 800;
   }
 
   .member-mobile-hero h2 {
     margin: 3px 0 0;
-    color: white;
+    color: #F7F4EE;
     font-size: 23px;
     line-height: 1.1;
     overflow-wrap: anywhere;
@@ -197,17 +197,17 @@
   .member-mobile-hero-main strong {
     display: block;
     margin-top: 5px;
-    color: white;
+    color: #F7F4EE;
     font-size: 34px;
     line-height: 1.02;
     overflow-wrap: anywhere;
-    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.12);
+    text-shadow: 0 2px 18px rgba(31, 41, 51, 0.12);
   }
 
   .member-mobile-hero-main small {
     display: block;
     margin-top: 5px;
-    color: #dcfce7;
+    color: #F7F4EE;
     font-size: 13px;
     font-weight: 800;
   }
@@ -221,18 +221,18 @@
   .member-mobile-hero-actions .btn {
     width: 100%;
     min-height: 40px;
-    border-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(247, 244, 238, 0.2);
   }
 
   .member-mobile-hero-actions .btn.secondary {
-    background: rgba(255, 255, 255, 0.12);
-    color: white;
+    background: rgba(247, 244, 238, 0.12);
+    color: #F7F4EE;
   }
 
   .member-mobile-community-card {
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(247, 244, 238, 0.18);
     border-radius: 18px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(247, 244, 238, 0.1);
     backdrop-filter: blur(10px);
     padding: 12px;
     display: grid;
@@ -247,21 +247,21 @@
   }
 
   .member-mobile-community-card strong {
-    color: white;
+    color: #F7F4EE;
     font-size: 13px;
     line-height: 1.2;
   }
 
   .member-mobile-community-card small {
     margin-top: 3px;
-    color: #dcfce7;
+    color: #F7F4EE;
     font-size: 12px;
     font-weight: 750;
   }
 
   .member-mobile-community-card .badge {
-    background: rgba(34, 197, 94, 0.24);
-    color: white;
+    background: rgba(18, 122, 90, 0.24);
+    color: #F7F4EE;
     white-space: nowrap;
   }
 
@@ -269,8 +269,8 @@
     width: 34px;
     height: 34px;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.16);
-    color: #fef9c3;
+    background: rgba(247, 244, 238, 0.16);
+    color: #F7F4EE;
     display: inline-grid;
     place-items: center;
   }
@@ -286,10 +286,10 @@
     width: 34px;
     height: 34px;
     margin-left: -8px;
-    border: 2px solid rgba(255, 255, 255, 0.82);
+    border: 2px solid rgba(247, 244, 238, 0.82);
     border-radius: 999px;
-    background: #f4b000;
-    color: #003f27;
+    background: #D9A227;
+    color: #0D3B2E;
     display: grid;
     place-items: center;
     font-size: 11px;
@@ -298,7 +298,7 @@
 
   .member-mobile-community-stack span:first-child {
     margin-left: 0;
-    background: #dcfce7;
+    background: #F7F4EE;
   }
 
   .member-mobile-hero-strip {
@@ -308,16 +308,16 @@
   }
 
   .member-mobile-hero-strip div {
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(247, 244, 238, 0.18);
     border-radius: 16px;
-    background: rgba(255, 255, 255, 0.12);
+    background: rgba(247, 244, 238, 0.12);
     padding: 12px;
     display: grid;
     gap: 4px;
   }
 
   .member-mobile-hero-strip span {
-    color: white;
+    color: #F7F4EE;
     font-size: 17px;
     font-weight: 900;
     overflow-wrap: anywhere;
@@ -339,7 +339,7 @@
   .member-mobile-metrics.mockup-grid .mobile-metric-card {
     min-height: 104px;
     border-radius: 16px;
-    box-shadow: 0 14px 34px rgba(16, 42, 67, 0.11);
+    box-shadow: 0 14px 34px rgba(31, 41, 51, 0.11);
   }
 
   .member-mobile-metrics.mockup-grid .mobile-metric-card strong {
@@ -368,7 +368,7 @@
   .member-mobile-text-link {
     border: 0;
     background: transparent;
-    color: #007a43;
+    color: #127A5A;
     font-size: 12px;
     font-weight: 900;
   }
@@ -378,10 +378,10 @@
   }
 
   .member-mobile-insight {
-    border: 1px solid rgba(216, 230, 223, 0.92);
+    border: 1px solid rgba(230, 232, 235, 0.92);
     border-radius: 22px;
-    background: #ffffff;
-    box-shadow: 0 14px 34px rgba(16, 42, 67, 0.08);
+    background: #F7F4EE;
+    box-shadow: 0 14px 34px rgba(31, 41, 51, 0.08);
     padding: 15px;
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
@@ -392,7 +392,7 @@
   .member-mobile-insight span,
   .member-mobile-insight small {
     display: block;
-    color: #65758b;
+    color: #1F2933;
     font-size: 12px;
     font-weight: 800;
   }
@@ -400,7 +400,7 @@
   .member-mobile-insight strong {
     display: block;
     margin: 3px 0;
-    color: #172033;
+    color: #1F2933;
     font-size: 17px;
     line-height: 1.15;
   }
@@ -411,19 +411,19 @@
     border-radius: 999px;
     display: grid;
     place-items: center;
-    background: conic-gradient(#007a43 0 78%, #e8f0ea 78% 100%);
+    background: conic-gradient(#127A5A 0 78%, #E6E8EB 78% 100%);
   }
 
   .member-mobile-ring.amber {
-    background: conic-gradient(#f4b000 0 58%, #e8f0ea 58% 100%);
+    background: conic-gradient(#D9A227 0 58%, #E6E8EB 58% 100%);
   }
 
   .member-mobile-ring span {
     width: 44px;
     height: 44px;
     border-radius: inherit;
-    background: white;
-    color: #005f36;
+    background: #F7F4EE;
+    color: #0D3B2E;
     display: grid;
     place-items: center;
     font-size: 12px;
@@ -435,10 +435,10 @@
   }
 
   .member-mobile-position {
-    border: 1px solid #e5edf5;
+    border: 1px solid #E6E8EB;
     border-radius: 16px;
-    background: #ffffff;
-    box-shadow: 0 10px 30px rgba(16, 42, 67, 0.08);
+    background: #F7F4EE;
+    box-shadow: 0 10px 30px rgba(31, 41, 51, 0.08);
     padding: 12px;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -452,13 +452,13 @@
   }
 
   .member-mobile-position strong {
-    color: #65758b;
+    color: #1F2933;
     font-size: 11px;
     line-height: 1.2;
   }
 
   .member-mobile-position span {
-    color: #172033;
+    color: #1F2933;
     font-size: 14px;
     font-weight: 900;
     overflow-wrap: anywhere;

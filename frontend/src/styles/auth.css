@@ -520,11 +520,11 @@
 
 .signup-sheet {
   z-index: 5;
-  gap: 12px;
+  gap: 10px;
   width: calc(100% - 56px);
   min-height: auto;
   margin: -128px 28px 0;
-  padding: 34px 28px 30px;
+  padding: 30px 28px 28px;
   border-radius: 28px;
   background: rgba(255, 255, 255, 0.96);
   box-shadow: 0 22px 56px rgba(31, 41, 51, 0.16);
@@ -552,7 +552,7 @@
 }
 
 .signup-sheet .auth-input-shell {
-  min-height: 60px;
+  min-height: 54px;
   border-radius: 18px;
 }
 
@@ -798,8 +798,8 @@
     width: calc(100% - 44px);
     margin-inline: 22px;
     margin-top: -112px;
-    padding: 30px 24px 26px;
-    gap: 10px;
+    padding: 26px 24px 24px;
+    gap: 9px;
   }
 
   .signup-brand-row .auth-hero-mark .brand-mark {

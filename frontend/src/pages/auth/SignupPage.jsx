@@ -54,14 +54,6 @@ export async function performSignup({ form, authApi = api }) {
   });
 }
 
-function splitFullName(fullName) {
-  const parts = String(fullName || "").trim().split(/\s+/).filter(Boolean);
-  return {
-    firstName: parts[0] || "",
-    lastName: parts.slice(1).join(" ") || "",
-  };
-}
-
 function AuthInput({ label, icon: Icon, error, action, ...props }) {
   return (
     <label className={`auth-input-shell ${error ? "has-error" : ""}`}>
@@ -76,7 +68,6 @@ function AuthInput({ label, icon: Icon, error, action, ...props }) {
 
 export function SignupPage({ onSignup, onBackToLogin, onBackToWelcome, authApi = api }) {
   const [form, setForm] = useState({
-    fullName: "",
     firstName: "",
     lastName: "",
     phone: "",
@@ -93,12 +84,6 @@ export function SignupPage({ onSignup, onBackToLogin, onBackToWelcome, authApi =
   const [loading, setLoading] = useState(false);
 
   function update(field, value) {
-    if (field === "fullName") {
-      const names = splitFullName(value);
-      setForm((current) => ({ ...current, fullName: value, ...names }));
-      if (errors.firstName || errors.lastName) setErrors((current) => ({ ...current, firstName: "", lastName: "" }));
-      return;
-    }
     setForm((current) => ({ ...current, [field]: value }));
     if (errors[field]) setErrors((current) => ({ ...current, [field]: "" }));
   }
@@ -177,14 +162,15 @@ export function SignupPage({ onSignup, onBackToLogin, onBackToWelcome, authApi =
 
         <section className="auth-form-sheet signup-sheet" aria-label="Create account form">
           <AuthInput
-            label="Full Name"
-            value={form.fullName}
-            onChange={(event) => update("fullName", event.target.value)}
-            autoComplete="name"
-            placeholder="Full Name"
-            error={errors.firstName || errors.lastName}
+            label="First Name"
+            value={form.firstName}
+            onChange={(event) => update("firstName", event.target.value)}
+            autoComplete="given-name"
+            placeholder="First Name"
+            error={errors.firstName}
             icon={UserRound}
           />
+          <AuthInput label="Last Name" value={form.lastName} onChange={(event) => update("lastName", event.target.value)} autoComplete="family-name" placeholder="Last Name" error={errors.lastName} icon={UserRound} />
           <AuthInput label="Phone Number" value={form.phone} onChange={(event) => update("phone", event.target.value)} autoComplete="tel" placeholder="Phone Number" icon={Smartphone} />
           <AuthInput label="Email" value={form.email} onChange={(event) => update("email", event.target.value)} type="email" autoComplete="email" placeholder="Email" error={errors.email} icon={Mail} />
           <AuthInput

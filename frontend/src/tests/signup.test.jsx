@@ -67,7 +67,8 @@ describe("signup screen", () => {
     expect(form).toContain("Join your community and start saving together.");
     expect(form).toContain("auth-phone");
     expect(form).toContain("auth-form-sheet");
-    expect(form).toContain("Full Name");
+    expect(form).toContain("First Name");
+    expect(form).toContain("Last Name");
     expect(form).toContain("Phone Number");
     expect(form).not.toContain("Group Code (Optional)");
     expect(form).toContain("Confirm Password");

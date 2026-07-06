@@ -31,16 +31,16 @@ function initials(row) {
 function ShareoutHero({ shareout, surplus, isMember }) {
   const status = shareout?.shareout?.status || "DRAFT";
   return (
-    <section className="shareout-hero">
+    <section className="shareout-hero rounded-app bg-gradient-to-br from-forest to-emerald p-5 text-cream shadow-lift md:grid md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:gap-4">
       <div>
-        <span>{isMember ? "My End-of-Cycle Shareout" : "Cycle Shareout"}</span>
-        <h2>{surplus?.cycle?.name || shareout?.cycle?.name || "Visionaries Village Banking"}</h2>
-        <p>Group surplus from social fund, membership fees, and penalties compounds monthly at 15% and is shared equally at cycle end.</p>
+        <span className="text-xs font-extrabold uppercase text-cream/85">{isMember ? "My End-of-Cycle Shareout" : "Cycle Shareout"}</span>
+        <h2 className="my-1.5 text-2xl font-black leading-tight text-cream">{surplus?.cycle?.name || shareout?.cycle?.name || "Visionaries Village Banking"}</h2>
+        <p className="m-0 max-w-3xl text-sm font-semibold text-cream/85">Group surplus from social fund, membership fees, and penalties compounds monthly at 15% and is shared equally at cycle end.</p>
       </div>
-      <div className="shareout-hero-stat">
-        <span>Status</span>
-        <strong>{titleCase(status)}</strong>
-        <small>{money(shareout?.shareout?.total_net_shareout)} net shareout</small>
+      <div className="shareout-hero-stat mt-4 min-w-[180px] rounded-app border border-cream/20 bg-cream/15 p-3 md:mt-0">
+        <span className="text-xs font-extrabold uppercase text-cream/85">Status</span>
+        <strong className="my-1 block text-xl font-black text-cream">{titleCase(status)}</strong>
+        <small className="text-xs font-bold text-cream/85">{money(shareout?.shareout?.total_net_shareout)} net shareout</small>
       </div>
     </section>
   );
@@ -51,22 +51,22 @@ function SurplusCards({ rows }) {
   return (
     <div className="shareout-mobile-cards" aria-label="Monthly surplus cards">
       {rows.map((row) => (
-        <article key={row.cycle_month_id || row.month_number} className="shareout-card">
-          <div className="shareout-card-head">
-            <div className="shareout-avatar">M{row.month_number}</div>
+        <article key={row.cycle_month_id || row.month_number} className="shareout-card grid gap-3 rounded-app border border-mist bg-cream p-3.5 shadow-soft">
+          <div className="shareout-card-head grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2.5">
+            <div className="shareout-avatar grid h-[42px] w-[42px] place-items-center rounded-full bg-mist text-sm font-black text-emerald">M{row.month_number}</div>
             <div>
-              <strong>Month {row.month_number}</strong>
-              <span>{titleCase(row.month_status || "calculated")}</span>
+              <strong className="block text-sm font-black text-charcoal">Month {row.month_number}</strong>
+              <span className="text-xs font-semibold text-charcoal/75">{titleCase(row.month_status || "calculated")}</span>
             </div>
             <Badge text="15%" tone="green" />
           </div>
-          <div className="shareout-card-values">
-            <div><span>Opening</span><strong>{money(row.opening_balance ?? row.openingBalance)}</strong></div>
-            <div><span>Social</span><strong>{money(row.social_fund_collected ?? row.socialFundCollected)}</strong></div>
-            <div><span>Membership</span><strong>{money(row.membership_collected ?? row.membershipCollected)}</strong></div>
-            <div><span>Penalties</span><strong>{money(row.penalties_collected ?? row.penaltiesCollected)}</strong></div>
-            <div><span>Interest</span><strong>{money(row.interest_earned ?? row.interestEarned)}</strong></div>
-            <div><span>Closing</span><strong>{money(row.closing_balance ?? row.closingBalance)}</strong></div>
+          <div className="shareout-card-values grid grid-cols-2 gap-2.5">
+            <div className="rounded-app bg-mist/60 p-2.5"><span className="text-xs font-bold text-charcoal/70">Opening</span><strong className="mt-1 block text-sm font-black text-charcoal">{money(row.opening_balance ?? row.openingBalance)}</strong></div>
+            <div className="rounded-app bg-mist/60 p-2.5"><span className="text-xs font-bold text-charcoal/70">Social</span><strong className="mt-1 block text-sm font-black text-charcoal">{money(row.social_fund_collected ?? row.socialFundCollected)}</strong></div>
+            <div className="rounded-app bg-mist/60 p-2.5"><span className="text-xs font-bold text-charcoal/70">Membership</span><strong className="mt-1 block text-sm font-black text-charcoal">{money(row.membership_collected ?? row.membershipCollected)}</strong></div>
+            <div className="rounded-app bg-mist/60 p-2.5"><span className="text-xs font-bold text-charcoal/70">Penalties</span><strong className="mt-1 block text-sm font-black text-charcoal">{money(row.penalties_collected ?? row.penaltiesCollected)}</strong></div>
+            <div className="rounded-app bg-mist/60 p-2.5"><span className="text-xs font-bold text-charcoal/70">Interest</span><strong className="mt-1 block text-sm font-black text-charcoal">{money(row.interest_earned ?? row.interestEarned)}</strong></div>
+            <div className="rounded-app bg-mist/60 p-2.5"><span className="text-xs font-bold text-charcoal/70">Closing</span><strong className="mt-1 block text-sm font-black text-charcoal">{money(row.closing_balance ?? row.closingBalance)}</strong></div>
           </div>
         </article>
       ))}
@@ -79,20 +79,20 @@ function MemberCards({ members, onSelect }) {
   return (
     <div className="shareout-mobile-cards" aria-label="Member shareout cards">
       {members.map((member) => (
-        <article key={member.id || member.cycle_member_id} className="shareout-card">
-          <div className="shareout-card-head">
-            <div className="shareout-avatar">{initials(member)}</div>
+        <article key={member.id || member.cycle_member_id} className="shareout-card grid gap-3 rounded-app border border-mist bg-cream p-3.5 shadow-soft">
+          <div className="shareout-card-head grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2.5">
+            <div className="shareout-avatar grid h-[42px] w-[42px] place-items-center rounded-full bg-mist text-sm font-black text-emerald">{initials(member)}</div>
             <div>
-              <strong>{memberName(member)}</strong>
-              <span>{member.member_code || "Cycle member"}</span>
+              <strong className="block text-sm font-black text-charcoal">{memberName(member)}</strong>
+              <span className="text-xs font-semibold text-charcoal/75">{member.member_code || "Cycle member"}</span>
             </div>
             <Badge text={titleCase(member.status || "Preview")} tone="blue" />
           </div>
-          <div className="shareout-card-values">
-            <div><span>Savings</span><strong>{money(member.accumulated_savings ?? member.accumulatedSavings)}</strong></div>
-            <div><span>Surplus</span><strong>{money(member.group_surplus_share ?? member.groupSurplusShare)}</strong></div>
-            <div><span>Deductions</span><strong>{money(member.total_deductions ?? member.totalDeductions)}</strong></div>
-            <div><span>Net</span><strong>{money(member.net_shareout ?? member.netShareout)}</strong></div>
+          <div className="shareout-card-values grid grid-cols-2 gap-2.5">
+            <div className="rounded-app bg-mist/60 p-2.5"><span className="text-xs font-bold text-charcoal/70">Savings</span><strong className="mt-1 block text-sm font-black text-charcoal">{money(member.accumulated_savings ?? member.accumulatedSavings)}</strong></div>
+            <div className="rounded-app bg-mist/60 p-2.5"><span className="text-xs font-bold text-charcoal/70">Surplus</span><strong className="mt-1 block text-sm font-black text-charcoal">{money(member.group_surplus_share ?? member.groupSurplusShare)}</strong></div>
+            <div className="rounded-app bg-mist/60 p-2.5"><span className="text-xs font-bold text-charcoal/70">Deductions</span><strong className="mt-1 block text-sm font-black text-charcoal">{money(member.total_deductions ?? member.totalDeductions)}</strong></div>
+            <div className="rounded-app bg-mist/60 p-2.5"><span className="text-xs font-bold text-charcoal/70">Net</span><strong className="mt-1 block text-sm font-black text-charcoal">{money(member.net_shareout ?? member.netShareout)}</strong></div>
           </div>
           <Button type="button" variant="secondary" size="sm" onClick={() => onSelect(member)}>View Details</Button>
         </article>
@@ -105,23 +105,23 @@ function MemberDetail({ member }) {
   if (!member) return null;
   const lineItems = member.lineItems || member.line_items || [];
   return (
-    <section className="shareout-detail">
-      <div className="shareout-detail-hero">
-        <div className="shareout-avatar">{initials(member)}</div>
+    <section className="shareout-detail grid gap-3.5">
+      <div className="shareout-detail-hero grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2.5">
+        <div className="shareout-avatar grid h-[42px] w-[42px] place-items-center rounded-full bg-mist text-sm font-black text-emerald">{initials(member)}</div>
         <div>
-          <span>Shareout Detail</span>
-          <h2>{memberName(member)}</h2>
-          <p>Every amount is stored as a line item for auditability.</p>
+          <span className="text-xs font-bold text-charcoal/70">Shareout Detail</span>
+          <h2 className="m-0 text-xl font-black text-charcoal">{memberName(member)}</h2>
+          <p className="m-0 text-sm font-semibold text-charcoal/75">Every amount is stored as a line item for auditability.</p>
         </div>
         <Badge text={titleCase(member.status || "Preview")} tone="blue" />
       </div>
-      <div className="shareout-detail-grid">
-        <div><strong>Accumulated savings</strong><span>{money(member.accumulated_savings ?? member.accumulatedSavings)}</span></div>
-        <div><strong>Group surplus share</strong><span>{money(member.group_surplus_share ?? member.groupSurplusShare)}</span></div>
-        <div><strong>Outstanding loan</strong><span>{money(member.outstanding_loan_balance ?? member.outstandingLoanBalance)}</span></div>
-        <div><strong>Unpaid penalties</strong><span>{money(member.unpaid_penalties ?? member.unpaidPenalties)}</span></div>
-        <div><strong>Unpaid common interest</strong><span>{money(member.unpaid_common_interest ?? member.unpaidCommonInterest)}</span></div>
-        <div><strong>Net shareout</strong><span>{money(member.net_shareout ?? member.netShareout)}</span></div>
+      <div className="shareout-detail-grid grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+        <div className="rounded-app border border-mist bg-cream p-3"><strong className="text-xs font-black uppercase text-charcoal/70">Accumulated savings</strong><span className="mt-1 block text-sm font-black text-charcoal">{money(member.accumulated_savings ?? member.accumulatedSavings)}</span></div>
+        <div className="rounded-app border border-mist bg-cream p-3"><strong className="text-xs font-black uppercase text-charcoal/70">Group surplus share</strong><span className="mt-1 block text-sm font-black text-charcoal">{money(member.group_surplus_share ?? member.groupSurplusShare)}</span></div>
+        <div className="rounded-app border border-mist bg-cream p-3"><strong className="text-xs font-black uppercase text-charcoal/70">Outstanding loan</strong><span className="mt-1 block text-sm font-black text-charcoal">{money(member.outstanding_loan_balance ?? member.outstandingLoanBalance)}</span></div>
+        <div className="rounded-app border border-mist bg-cream p-3"><strong className="text-xs font-black uppercase text-charcoal/70">Unpaid penalties</strong><span className="mt-1 block text-sm font-black text-charcoal">{money(member.unpaid_penalties ?? member.unpaidPenalties)}</span></div>
+        <div className="rounded-app border border-mist bg-cream p-3"><strong className="text-xs font-black uppercase text-charcoal/70">Unpaid common interest</strong><span className="mt-1 block text-sm font-black text-charcoal">{money(member.unpaid_common_interest ?? member.unpaidCommonInterest)}</span></div>
+        <div className="rounded-app border border-mist bg-cream p-3"><strong className="text-xs font-black uppercase text-charcoal/70">Net shareout</strong><span className="mt-1 block text-sm font-black text-charcoal">{money(member.net_shareout ?? member.netShareout)}</span></div>
       </div>
       <DataTable
         columns={["Line Item", "Amount"]}
@@ -232,7 +232,7 @@ export function ShareoutPage({ readOnly = false, title = "Shareout", apiClient =
   return (
     <Page
       title={title}
-      className="shareout-page"
+      className="shareout-page grid gap-4"
       actions={(
         <>
           <Button type="button" icon={RefreshCw} variant="secondary" onClick={() => loadData(activeCycleId)} loading={loading}>Refresh</Button>
@@ -251,7 +251,7 @@ export function ShareoutPage({ readOnly = false, title = "Shareout", apiClient =
       </div>
 
       {!readOnly ? (
-        <section className="panel shareout-context">
+        <section className="panel shareout-context max-w-[420px] rounded-app border border-mist bg-cream p-4 shadow-soft">
           <Select
             label="Cycle"
             value={activeCycleId}
@@ -262,7 +262,7 @@ export function ShareoutPage({ readOnly = false, title = "Shareout", apiClient =
         </section>
       ) : null}
 
-      <div className="metrics shareout-metrics">
+      <div className="metrics shareout-metrics grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <Card title="Group Surplus" value={money(shareout?.surplusTotals?.closingBalance ?? summary.total_group_surplus ?? surplus?.totals?.closingBalance)} note="Final accumulated fund" icon={HandCoins} />
         <Card title="Accumulated Savings" value={money(summary.total_accumulated_savings)} note="Member savings total" icon={PiggyBank} />
         <Card title="Total Deductions" value={money(summary.total_deductions)} note="Loans and unpaid charges" tone="amber" icon={ShieldCheck} />
@@ -286,12 +286,12 @@ export function ShareoutPage({ readOnly = false, title = "Shareout", apiClient =
         ]}
       />
 
-      {loading ? <section className="panel"><Skeleton lines={8} /></section> : null}
+      {loading ? <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft"><Skeleton lines={8} /></section> : null}
 
       {!loading && tab === "surplus" ? (
-        <section className="panel">
-          <div className="panel-head">
-            <h2>Monthly Surplus Accumulation</h2>
+        <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+          <div className="panel-head mb-3 flex items-center justify-between gap-3">
+            <h2 className="m-0 text-lg font-extrabold text-charcoal">Monthly Surplus Accumulation</h2>
             <Badge text="15% compound monthly" tone="green" />
           </div>
           {surplusRows.length ? (
@@ -317,9 +317,9 @@ export function ShareoutPage({ readOnly = false, title = "Shareout", apiClient =
       ) : null}
 
       {!loading && tab === "members" ? (
-        <section className="panel">
-          <div className="panel-head">
-            <h2>Member Shareout</h2>
+        <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+          <div className="panel-head mb-3 flex items-center justify-between gap-3">
+            <h2 className="m-0 text-lg font-extrabold text-charcoal">Member Shareout</h2>
             <Badge text={titleCase(summary.status || "Not generated")} tone="blue" />
           </div>
           {members.length ? (
@@ -345,9 +345,9 @@ export function ShareoutPage({ readOnly = false, title = "Shareout", apiClient =
       ) : null}
 
       {!loading && tab === "post" ? (
-        <section className="panel shareout-post-panel">
-          <div className="panel-head">
-            <h2>{readOnly ? "Shareout Status" : "Post Final Shareout"}</h2>
+        <section className="panel shareout-post-panel max-w-[760px] rounded-app border border-mist bg-cream p-4 shadow-soft">
+          <div className="panel-head mb-3 flex items-center justify-between gap-3">
+            <h2 className="m-0 text-lg font-extrabold text-charcoal">{readOnly ? "Shareout Status" : "Post Final Shareout"}</h2>
             <Badge text={titleCase(summary.status || "Not generated")} tone={summary.status === "POSTED" ? "green" : "amber"} />
           </div>
           {readOnly ? (

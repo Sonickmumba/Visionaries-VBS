@@ -178,21 +178,26 @@ function cycleToRoundingForm(cycle) {
 }
 
 function DetailValue({ label, value }) {
-  return <div><strong>{label}</strong><span>{value}</span></div>;
+  return (
+    <div className="grid gap-1 rounded-app border border-mist bg-cream p-3">
+      <strong className="text-xs font-black uppercase text-charcoal/70">{label}</strong>
+      <span className="break-words text-sm font-extrabold text-charcoal">{value}</span>
+    </div>
+  );
 }
 
 function SettingsHero({ selectedCycle, metrics }) {
   return (
-    <section className="settings-hero">
+    <section className="settings-hero mb-4 grid gap-4 rounded-mobile bg-gradient-to-br from-forest via-emerald to-forest p-5 text-cream shadow-lift md:grid-cols-[minmax(0,1fr)_auto]" aria-label="Settings configuration overview">
       <div>
-        <span>Configuration Scope</span>
-        <h2>{selectedCycle?.name || "System Configuration"}</h2>
-        <p>Manage users, cycle rules, penalty types, notifications, and default operating policy.</p>
+        <span className="text-xs font-black uppercase text-cream">Configuration Scope</span>
+        <h2 className="my-1 text-[25px] font-extrabold leading-tight text-cream">{selectedCycle?.name || "System Configuration"}</h2>
+        <p className="m-0 text-sm font-extrabold text-cream/85">Manage users, cycle rules, penalty types, notifications, and default operating policy.</p>
       </div>
-      <div className="settings-hero-stat">
-        <span>Active Users</span>
-        <strong>{metrics.activeUsers}</strong>
-        <small>{metrics.users} total accounts</small>
+      <div className="settings-hero-stat grid min-w-40 content-center gap-1 rounded-mobile border border-cream/20 bg-white/10 p-3 backdrop-blur">
+        <span className="text-xs font-black uppercase text-cream">Active Users</span>
+        <strong className="break-words text-[24px] font-extrabold text-cream">{metrics.activeUsers}</strong>
+        <small className="text-xs font-extrabold text-cream/85">{metrics.users} total accounts</small>
       </div>
     </section>
   );
@@ -201,23 +206,23 @@ function SettingsHero({ selectedCycle, metrics }) {
 function UserCards({ users, busy, onUpdate }) {
   if (!users.length) return null;
   return (
-    <div className="settings-mobile-cards" aria-label="Mobile user settings cards">
+    <div className="settings-mobile-cards grid gap-3" aria-label="Mobile user settings cards">
       {users.map((user) => {
         const status = userStatus(user);
         return (
-          <article key={user.id} className="settings-card">
-            <div className="settings-card-head">
-              <div className="settings-avatar">{initials(user.email)}</div>
+          <article key={user.id} className="settings-card grid gap-3 rounded-mobile border border-mist bg-cream p-3 shadow-soft">
+            <div className="settings-card-head grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2.5">
+              <div className="settings-avatar grid h-11 w-11 place-items-center rounded-mobile bg-cream text-sm font-black text-emerald" aria-hidden="true">{initials(user.email)}</div>
               <div>
-                <strong>{user.email}</strong>
-                <span>{titleCase(user.role)}</span>
+                <strong className="block break-words text-sm font-extrabold text-charcoal">{user.email}</strong>
+                <span className="block break-words text-xs font-extrabold text-charcoal/70">{titleCase(user.role)}</span>
               </div>
               <Badge text={status.text} tone={status.tone} />
             </div>
-            <div className="settings-card-values">
-              <div><span>Created</span><strong>{dateOnly(user.created_at)}</strong></div>
-              <div><span>Role</span><strong>{titleCase(user.role)}</strong></div>
-              <div><span>Verified</span><strong>{user.email_verified_at ? dateOnly(user.email_verified_at) : "Pending"}</strong></div>
+            <div className="settings-card-values grid grid-cols-2 gap-2.5">
+              <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Created</span><strong className="break-words text-base font-extrabold text-charcoal">{dateOnly(user.created_at)}</strong></div>
+              <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Role</span><strong className="break-words text-base font-extrabold text-charcoal">{titleCase(user.role)}</strong></div>
+              <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Verified</span><strong className="break-words text-base font-extrabold text-charcoal">{user.email_verified_at ? dateOnly(user.email_verified_at) : "Pending"}</strong></div>
             </div>
             <Button type="button" size="sm" variant="secondary" loading={busy === user.id} onClick={() => onUpdate(user, { isActive: !user.is_active })}>
               {user.is_active ? "Disable User" : "Enable User"}
@@ -232,22 +237,22 @@ function UserCards({ users, busy, onUpdate }) {
 function PenaltyTypeCards({ penaltyTypes, busy, onPatch }) {
   if (!penaltyTypes.length) return null;
   return (
-    <div className="settings-mobile-cards" aria-label="Mobile penalty type settings cards">
+    <div className="settings-mobile-cards grid gap-3" aria-label="Mobile penalty type settings cards">
       {penaltyTypes.map((penaltyType) => (
-        <article key={penaltyType.id} className="settings-card">
-          <div className="settings-card-head">
-            <div className="settings-avatar">{String(penaltyType.code || "P").slice(0, 2).toUpperCase()}</div>
+        <article key={penaltyType.id} className="settings-card grid gap-3 rounded-mobile border border-mist bg-cream p-3 shadow-soft">
+          <div className="settings-card-head grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2.5">
+            <div className="settings-avatar grid h-11 w-11 place-items-center rounded-mobile bg-cream text-sm font-black text-emerald" aria-hidden="true">{String(penaltyType.code || "P").slice(0, 2).toUpperCase()}</div>
             <div>
-              <strong>{penaltyType.name}</strong>
-              <span>{penaltyType.code}</span>
+              <strong className="block break-words text-sm font-extrabold text-charcoal">{penaltyType.name}</strong>
+              <span className="block break-words text-xs font-extrabold text-charcoal/70">{penaltyType.code}</span>
             </div>
             <Badge text={penaltyType.is_active ? "Active" : "Disabled"} tone={penaltyType.is_active ? "green" : "red"} />
           </div>
-          <div className="settings-card-values">
-            <div><span>Amount</span><strong>{money(penaltyType.amount)}</strong></div>
-            <div><span>Convertible</span><strong>{penaltyType.is_convertible_to_loan ? "Yes" : "No"}</strong></div>
+          <div className="settings-card-values grid grid-cols-2 gap-2.5">
+            <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Amount</span><strong className="break-words text-base font-extrabold text-charcoal">{money(penaltyType.amount)}</strong></div>
+            <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Convertible</span><strong className="break-words text-base font-extrabold text-charcoal">{penaltyType.is_convertible_to_loan ? "Yes" : "No"}</strong></div>
           </div>
-          <div className="settings-card-actions">
+          <div className="settings-card-actions grid grid-cols-2 gap-2">
             <Button type="button" size="sm" variant="secondary" loading={busy === penaltyType.id} onClick={() => onPatch(penaltyType, { isActive: !penaltyType.is_active })}>{penaltyType.is_active ? "Disable" : "Enable"}</Button>
             <Button type="button" size="sm" variant="secondary" loading={busy === penaltyType.id} onClick={() => onPatch(penaltyType, { isConvertibleToLoan: !penaltyType.is_convertible_to_loan })}>{penaltyType.is_convertible_to_loan ? "Block Conversion" : "Allow Conversion"}</Button>
           </div>
@@ -491,7 +496,7 @@ export function SettingsPage({
   return (
     <Page
       title="Settings"
-      className="settings-page"
+      className="settings-page grid gap-0"
       actions={(
         <>
           <Button type="button" icon={RefreshCw} onClick={() => loadSettings()} loading={loading}>Refresh</Button>
@@ -506,22 +511,22 @@ export function SettingsPage({
 
       <SettingsHero selectedCycle={selectedCycle} metrics={metrics} />
 
-      <section className="settings-account-panel" aria-label="Account session">
+      <section className="settings-account-panel mb-4 grid items-center gap-3.5 rounded-mobile border border-cream bg-cream p-3.5 md:grid-cols-[minmax(0,1fr)_auto]" aria-label="Account session">
         <div>
-          <span>Current Session</span>
-          <strong>Account access</strong>
-          <p>Sign out from this device when you finish managing the group workspace.</p>
+          <span className="text-[11px] font-black uppercase text-alert">Current Session</span>
+          <strong className="mt-1 block text-[17px] font-black text-charcoal">Account access</strong>
+          <p className="m-0 mt-1 text-[13px] font-bold text-charcoal/80">Sign out from this device when you finish managing the group workspace.</p>
         </div>
         <Button type="button" variant="danger" icon={LogOut} onClick={onLogout} disabled={!onLogout}>Log Out</Button>
       </section>
 
-      <div className="admin-mobile-action-row settings-mobile-actions-row mobile-only" aria-label="Settings quick actions">
+      <div className="admin-mobile-action-row settings-mobile-actions-row mobile-only flex gap-2" aria-label="Settings quick actions">
         <Button type="button" icon={RefreshCw} onClick={() => loadSettings()} loading={loading}>Refresh</Button>
         <Button type="submit" form="invite-user-form" icon={UserPlus} loading={busy === "invite"} disabled={activeTab !== "users"}>Invite</Button>
         <Button type="submit" form="penalty-type-form" variant="secondary" icon={Save} loading={busy === "penalty"} disabled={activeTab !== "penalties"}>Penalty</Button>
       </div>
 
-      <div className="metrics settings-metrics">
+      <div className="metrics settings-metrics grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <Card title="Users" value={metrics.users} note="System accounts" icon={Users} />
         <Card title="Active Users" value={metrics.activeUsers} note="Can sign in" tone="blue" icon={Lock} />
         <Card title="Cycles" value={metrics.cycles} note="Configured cycles" tone="teal" icon={CalendarDays} />
@@ -540,16 +545,16 @@ export function SettingsPage({
         ]}
       />
 
-      {loading ? <section className="panel"><Skeleton lines={8} /></section> : !context ? (
+      {loading ? <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft"><Skeleton lines={8} /></section> : !context ? (
         <EmptyState title="No settings context" message="Refresh settings after the backend is available." />
       ) : (
         <>
           {activeTab === "users" ? (
             <>
-              <section className="panel settings-form-panel">
-                <div className="panel-head"><h2>Invite User</h2></div>
-                <form id="invite-user-form" onSubmit={inviteUser} className="settings-form">
-                  <div className="form-grid two">
+              <section className="panel settings-form-panel mb-5 rounded-app border border-mist bg-cream p-4 shadow-soft">
+                <div className="panel-head mb-3 flex items-center justify-between gap-3"><h2 className="m-0 text-lg font-extrabold text-charcoal">Invite User</h2></div>
+                <form id="invite-user-form" onSubmit={inviteUser} className="settings-form mb-5 grid gap-3.5">
+                  <div className="form-grid two grid gap-3 md:grid-cols-2">
                     <Field label="Email" type="email" value={userForm.email} onChange={(value) => setUserForm((current) => ({ ...current, email: value }))} error={errors.email} />
                     <Select label="Role" value={userForm.role} onChange={(value) => setUserForm((current) => ({ ...current, role: value }))} error={errors.role} options={["MEMBER", "ADMIN", "AUDITOR"].map((role) => ({ value: role, label: titleCase(role) }))} />
                   </div>
@@ -557,8 +562,8 @@ export function SettingsPage({
                 </form>
               </section>
 
-              <section className="panel">
-                <div className="panel-head"><h2>Users</h2></div>
+              <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+                <div className="panel-head mb-3 flex items-center justify-between gap-3"><h2 className="m-0 text-lg font-extrabold text-charcoal">Users</h2></div>
                 <Textarea label="User change reason" value={userReason} onChange={setUserReason} rows={2} />
                 <UserCards users={context.users || []} busy={busy} onUpdate={updateUser} />
                 <div className="settings-desktop-table">
@@ -590,9 +595,9 @@ export function SettingsPage({
 
           {activeTab === "cycle" ? (
             <>
-              <section className="panel settings-form-panel">
-                <div className="panel-head">
-                  <h2>Cycle Configuration</h2>
+              <section className="panel settings-form-panel mb-5 rounded-app border border-mist bg-cream p-4 shadow-soft">
+                <div className="panel-head mb-3 flex items-center justify-between gap-3">
+                  <h2 className="m-0 text-lg font-extrabold text-charcoal">Cycle Configuration</h2>
                   <Badge text={selectedCycle ? titleCase(selectedCycle.status) : "No cycle"} tone={selectedCycle?.status === "DRAFT" ? "amber" : "blue"} />
                 </div>
                 <Select
@@ -601,7 +606,7 @@ export function SettingsPage({
                   onChange={changeCycle}
                   options={(context.cycles || []).map((cycle) => ({ value: cycle.id, label: `${cycle.name} - ${cycle.status}` }))}
                 />
-                <div className="detail-grid settings-detail-grid">
+                <div className="detail-grid settings-detail-grid mt-3.5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
                   <DetailValue label="Savings Cap" value={money(selectedCycle?.savings_cap)} />
                   <DetailValue label="Minimum Borrowing" value={money(selectedCycle?.minimum_borrowing_amount)} />
                   <DetailValue label="Savings Interest" value={`${percentValue(selectedCycle?.savings_interest_rate)}%`} />
@@ -609,9 +614,9 @@ export function SettingsPage({
                 </div>
               </section>
 
-              <form className="panel settings-form" onSubmit={saveCycleDefaults}>
-                <div className="panel-head"><h2>Draft Cycle Defaults</h2><Button type="submit" icon={Save} loading={busy === "cycle"}>Save Defaults</Button></div>
-                <div className="form-grid four">
+              <form className="panel settings-form mb-5 grid gap-3.5 rounded-app border border-mist bg-cream p-4 shadow-soft" onSubmit={saveCycleDefaults}>
+                <div className="panel-head mb-3 flex flex-wrap items-center justify-between gap-3"><h2 className="m-0 text-lg font-extrabold text-charcoal">Draft Cycle Defaults</h2><Button type="submit" icon={Save} loading={busy === "cycle"}>Save Defaults</Button></div>
+                <div className="form-grid four grid gap-3 md:grid-cols-2 xl:grid-cols-4">
                   <CurrencyInput label="Savings cap" value={cycleForm.savingsCap} onChange={(value) => setCycleForm((current) => ({ ...current, savingsCap: value }))} />
                   <CurrencyInput label="Minimum borrowing" value={cycleForm.minimumBorrowingAmount} onChange={(value) => setCycleForm((current) => ({ ...current, minimumBorrowingAmount: value }))} />
                   <Field label="Savings interest %" type="number" value={cycleForm.savingsInterestRate} onChange={(value) => setCycleForm((current) => ({ ...current, savingsInterestRate: value }))} />
@@ -627,9 +632,9 @@ export function SettingsPage({
                 <Textarea label="Reason" value={cycleForm.reason} onChange={(value) => setCycleForm((current) => ({ ...current, reason: value }))} rows={2} required />
               </form>
 
-              <form className="panel settings-form" onSubmit={saveRoundingPolicy}>
-                <div className="panel-head"><h2>Rounding Policy</h2><Button type="submit" variant="secondary" icon={Save} loading={busy === "rounding"}>Save Rounding</Button></div>
-                <div className="form-grid three">
+              <form className="panel settings-form mb-5 grid gap-3.5 rounded-app border border-mist bg-cream p-4 shadow-soft" onSubmit={saveRoundingPolicy}>
+                <div className="panel-head mb-3 flex flex-wrap items-center justify-between gap-3"><h2 className="m-0 text-lg font-extrabold text-charcoal">Rounding Policy</h2><Button type="submit" variant="secondary" icon={Save} loading={busy === "rounding"}>Save Rounding</Button></div>
+                <div className="form-grid three grid gap-3 md:grid-cols-3">
                   <Field label="Rounding scale" type="number" value={roundingForm.roundingScale} onChange={(value) => setRoundingForm((current) => ({ ...current, roundingScale: value }))} />
                   <Select label="Rounding mode" value={roundingForm.roundingMode} onChange={(value) => setRoundingForm((current) => ({ ...current, roundingMode: value }))} options={(context.roundingModes || []).map((mode) => ({ value: mode, label: titleCase(mode) }))} />
                   <Textarea label="Reason" value={roundingForm.reason} onChange={(value) => setRoundingForm((current) => ({ ...current, reason: value }))} rows={2} required />
@@ -640,10 +645,10 @@ export function SettingsPage({
 
           {activeTab === "penalties" ? (
             <>
-              <section className="panel settings-form-panel">
-                <div className="panel-head"><h2>Add Penalty Type</h2></div>
-                <form id="penalty-type-form" onSubmit={submitPenaltyType} className="settings-form">
-                  <div className="form-grid three">
+              <section className="panel settings-form-panel mb-5 rounded-app border border-mist bg-cream p-4 shadow-soft">
+                <div className="panel-head mb-3 flex items-center justify-between gap-3"><h2 className="m-0 text-lg font-extrabold text-charcoal">Add Penalty Type</h2></div>
+                <form id="penalty-type-form" onSubmit={submitPenaltyType} className="settings-form mb-5 grid gap-3.5">
+                  <div className="form-grid three grid gap-3 md:grid-cols-3">
                     <Field label="Code" value={penaltyForm.code} onChange={(value) => setPenaltyForm((current) => ({ ...current, code: value }))} error={errors.code} placeholder="LATE_PAYMENT" />
                     <Field label="Name" value={penaltyForm.name} onChange={(value) => setPenaltyForm((current) => ({ ...current, name: value }))} error={errors.name} placeholder="Late payment" />
                     <CurrencyInput label="Amount" value={penaltyForm.amount} onChange={(value) => setPenaltyForm((current) => ({ ...current, amount: value }))} error={errors.amount} />
@@ -654,8 +659,8 @@ export function SettingsPage({
                 </form>
               </section>
 
-              <section className="panel">
-                <div className="panel-head"><h2>Penalty Types</h2><Badge text={selectedCycle?.name || "Selected cycle"} tone="blue" /></div>
+              <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+                <div className="panel-head mb-3 flex items-center justify-between gap-3"><h2 className="m-0 text-lg font-extrabold text-charcoal">Penalty Types</h2><Badge text={selectedCycle?.name || "Selected cycle"} tone="blue" /></div>
                 <PenaltyTypeCards penaltyTypes={context.penaltyTypes || []} busy={busy} onPatch={patchPenaltyType} />
                 <div className="settings-desktop-table">
                   <DataTable
@@ -666,7 +671,7 @@ export function SettingsPage({
                       money(penaltyType.amount),
                       penaltyType.is_convertible_to_loan ? "Yes" : "No",
                       <Badge text={penaltyType.is_active ? "Active" : "Disabled"} tone={penaltyType.is_active ? "green" : "red"} />,
-                      <div className="button-row compact">
+                      <div className="button-row compact flex flex-wrap items-center gap-2">
                         <Button type="button" size="sm" variant="secondary" loading={busy === penaltyType.id} onClick={() => patchPenaltyType(penaltyType, { isActive: !penaltyType.is_active })}>{penaltyType.is_active ? "Disable" : "Enable"}</Button>
                         <Button type="button" size="sm" variant="secondary" loading={busy === penaltyType.id} onClick={() => patchPenaltyType(penaltyType, { isConvertibleToLoan: !penaltyType.is_convertible_to_loan })}>{penaltyType.is_convertible_to_loan ? "Block Conversion" : "Allow Conversion"}</Button>
                       </div>,
@@ -679,9 +684,9 @@ export function SettingsPage({
           ) : null}
 
           {activeTab === "app" ? (
-            <div className="settings-app-grid">
-              <form className="panel settings-form" onSubmit={saveNotifications}>
-                <div className="panel-head"><h2>Notification Preferences</h2><Button type="submit" icon={Save} loading={busy === "notifications"}>Save</Button></div>
+            <div className="settings-app-grid grid gap-5 lg:grid-cols-2">
+              <form className="panel settings-form mb-5 grid gap-3.5 rounded-app border border-mist bg-cream p-4 shadow-soft" onSubmit={saveNotifications}>
+                <div className="panel-head mb-3 flex flex-wrap items-center justify-between gap-3"><h2 className="m-0 text-lg font-extrabold text-charcoal">Notification Preferences</h2><Button type="submit" icon={Save} loading={busy === "notifications"}>Save</Button></div>
                 <label className="settings-check"><input type="checkbox" checked={notificationForm.emailEnabled} onChange={(event) => setNotificationForm((current) => ({ ...current, emailEnabled: event.target.checked }))} /> Email enabled</label>
                 <label className="settings-check"><input type="checkbox" checked={notificationForm.smsEnabled} onChange={(event) => setNotificationForm((current) => ({ ...current, smsEnabled: event.target.checked }))} /> SMS enabled</label>
                 <Field label="Declaration reminder days" value={notificationForm.declarationReminderDays} onChange={(value) => setNotificationForm((current) => ({ ...current, declarationReminderDays: value }))} />
@@ -689,8 +694,8 @@ export function SettingsPage({
                 <Textarea label="Reason" value={notificationForm.reason} onChange={(value) => setNotificationForm((current) => ({ ...current, reason: value }))} rows={2} required />
               </form>
 
-              <form className="panel settings-form" onSubmit={saveActiveDefaults}>
-                <div className="panel-head"><h2>Active Cycle Defaults</h2><Button type="submit" variant="secondary" icon={Save} loading={busy === "active-defaults"}>Save</Button></div>
+              <form className="panel settings-form mb-5 grid gap-3.5 rounded-app border border-mist bg-cream p-4 shadow-soft" onSubmit={saveActiveDefaults}>
+                <div className="panel-head mb-3 flex flex-wrap items-center justify-between gap-3"><h2 className="m-0 text-lg font-extrabold text-charcoal">Active Cycle Defaults</h2><Button type="submit" variant="secondary" icon={Save} loading={busy === "active-defaults"}>Save</Button></div>
                 <label className="settings-check"><input type="checkbox" checked={activeDefaultsForm.autoSelectLatestActive} onChange={(event) => setActiveDefaultsForm((current) => ({ ...current, autoSelectLatestActive: event.target.checked }))} /> Auto-select latest active cycle</label>
                 <Select label="Default cycle" value={activeDefaultsForm.defaultCycleId} onChange={(value) => setActiveDefaultsForm((current) => ({ ...current, defaultCycleId: value }))} placeholder="No fixed default" options={(context.cycles || []).map((cycle) => ({ value: cycle.id, label: `${cycle.name} - ${cycle.status}` }))} />
                 <Textarea label="Reason" value={activeDefaultsForm.reason} onChange={(value) => setActiveDefaultsForm((current) => ({ ...current, reason: value }))} rows={2} required />

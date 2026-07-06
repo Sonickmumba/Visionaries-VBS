@@ -11,8 +11,8 @@ export function SplashScreen({ onContinue, loadingLabel = "Checking secure sessi
   ];
 
   return (
-    <main className="splash-screen min-h-screen bg-cream px-4 py-6 text-cream" aria-label="Visionaries Village Banking splash screen">
-      <section className="splash-phone mx-auto flex min-h-[min(760px,calc(100vh-48px))] w-full max-w-[390px] flex-col justify-between overflow-hidden rounded-mobile bg-gradient-to-br from-forest to-emerald p-7 shadow-lift">
+    <main className="splash-screen" aria-label="Visionaries Village Banking splash screen">
+      <section className="splash-phone">
         <BrandMark size="lg" className="splash-mark text-cream" />
         <div className="splash-copy">
           <h1 className="text-[2.15rem] font-extrabold leading-none text-cream">Visionaries Village Banking</h1>

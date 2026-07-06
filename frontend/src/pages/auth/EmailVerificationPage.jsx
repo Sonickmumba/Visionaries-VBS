@@ -4,6 +4,13 @@ import { api } from "../../api/client.js";
 import { Alert, Button, Field } from "../../components/ui/index.jsx";
 import { AuthLayout } from "../../layouts/AppLayouts.jsx";
 import { DevEmailLink } from "./DevEmailLink.jsx";
+import {
+  authActionsClass,
+  authCardClass,
+  authEyebrowClass,
+  authFormHeadClass,
+  authIconClass,
+} from "./authTailwind.js";
 import "../../styles/auth.css";
 
 export async function verifyEmailToken({ token, authApi = api }) {
@@ -60,13 +67,13 @@ export function EmailVerificationPage({ token = "", email = "", onBackToLogin, a
 
   return (
     <AuthLayout>
-      <section className="auth-card login-card">
-        <div className="auth-form-head">
-          <span className="auth-icon"><MailCheck size={20} aria-hidden="true" /></span>
+      <section className={authCardClass}>
+        <div className={authFormHeadClass}>
+          <span className={authIconClass}><MailCheck size={20} aria-hidden="true" /></span>
           <div>
-            <span className="auth-eyebrow">Email verification</span>
-            <h2>{status === "success" ? "Email verified" : "Verify your email"}</h2>
-            <p>{token ? "We are checking your verification link." : "Enter your email to request a fresh verification link."}</p>
+            <span className={authEyebrowClass}>Email verification</span>
+            <h2 className="mt-1 text-2xl font-extrabold text-charcoal">{status === "success" ? "Email verified" : "Verify your email"}</h2>
+            <p className="mt-2 text-sm leading-6 text-charcoal/70">{token ? "We are checking your verification link." : "Enter your email to request a fresh verification link."}</p>
           </div>
         </div>
 
@@ -75,13 +82,13 @@ export function EmailVerificationPage({ token = "", email = "", onBackToLogin, a
         <DevEmailLink delivery={delivery} />
 
         {status !== "success" ? (
-          <form onSubmit={resend} className="auth-inline-form">
+          <form onSubmit={resend} className="auth-inline-form grid gap-3">
             <Field label="Email" type="email" value={resendEmail} onChange={setResendEmail} placeholder="name@example.com" />
             <Button icon={Send} loading={loading} disabled={loading || !resendEmail}>Resend Email</Button>
           </form>
         ) : null}
 
-        <div className="button-row auth-actions">
+        <div className={authActionsClass}>
           <Button type="button" variant={status === "success" ? "primary" : "secondary"} icon={ArrowLeft} onClick={onBackToLogin}>Back to Login</Button>
         </div>
       </section>

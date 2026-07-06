@@ -3,6 +3,15 @@ import { ArrowLeft, Lock, Mail, ShieldCheck } from "lucide-react";
 import { api } from "../../api/client.js";
 import { Alert, Button, Field } from "../../components/ui/index.jsx";
 import { AuthLayout } from "../../layouts/AppLayouts.jsx";
+import {
+  authActionsClass,
+  authBackButtonClass,
+  authCardClass,
+  authEyebrowClass,
+  authFormHeadClass,
+  authIconClass,
+  authMobileSummaryClass,
+} from "./authTailwind.js";
 import "../../styles/auth.css";
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -117,22 +126,22 @@ export function LoginPage({
 
   return (
     <AuthLayout>
-      <form className="auth-card login-card" onSubmit={submit} noValidate>
+      <form className={authCardClass} onSubmit={submit} noValidate>
         {onBackToWelcome ? (
-          <button type="button" className="auth-back-button" onClick={onBackToWelcome} aria-label="Back to welcome">
+          <button type="button" className={authBackButtonClass} onClick={onBackToWelcome} aria-label="Back to welcome">
             <ArrowLeft size={18} aria-hidden="true" />
           </button>
         ) : null}
-        <div className="auth-form-head">
-          <span className="auth-icon"><Lock size={20} aria-hidden="true" /></span>
+        <div className={authFormHeadClass}>
+          <span className={authIconClass}><Lock size={20} aria-hidden="true" /></span>
           <div>
-            <span className="auth-eyebrow">Welcome back</span>
-            <h2>Log in</h2>
-            <p>Sign in to manage declarations, savings, loans, reports, and transparent member records.</p>
+            <span className={authEyebrowClass}>Welcome back</span>
+            <h2 className="mt-1 text-2xl font-extrabold text-charcoal">Log in</h2>
+            <p className="mt-2 text-sm leading-6 text-charcoal/70">Sign in to manage declarations, savings, loans, reports, and transparent member records.</p>
           </div>
         </div>
 
-        <div className="auth-mobile-summary" aria-label="Secure portal">
+        <div className={authMobileSummaryClass} aria-label="Secure portal">
           <ShieldCheck size={18} aria-hidden="true" />
           <span>Protected member and admin access for transparent financial records</span>
         </div>
@@ -177,7 +186,7 @@ export function LoginPage({
         )}
 
         {!mfaRequired ? (
-          <div className="login-options">
+          <div className="login-options flex items-center justify-between gap-3 text-sm">
             <label className="check-field">
               <input type="checkbox" checked={rememberMe} onChange={(event) => setRememberMe(event.target.checked)} />
               Remember me
@@ -188,7 +197,7 @@ export function LoginPage({
 
         {error ? <Alert tone="danger" title="Unable to log in">{error}</Alert> : null}
 
-        <div className="button-row auth-actions">
+        <div className={authActionsClass}>
           <Button loading={loading} disabled={loading}>{mfaRequired ? "Verify Code" : "Log In"}</Button>
           <Button type="button" variant="secondary" disabled={loading} onClick={navigateSignup}>Create Account</Button>
         </div>

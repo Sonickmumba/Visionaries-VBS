@@ -4,6 +4,13 @@ import { api } from "../../api/client.js";
 import { Alert, Button, Field } from "../../components/ui/index.jsx";
 import { AuthLayout } from "../../layouts/AppLayouts.jsx";
 import { landingPageForRole } from "./LoginPage.jsx";
+import {
+  authActionsClass,
+  authCardClass,
+  authEyebrowClass,
+  authFormHeadClass,
+  authIconClass,
+} from "./authTailwind.js";
 import "../../styles/auth.css";
 
 export function validateAcceptInviteForm({ password, confirmPassword }) {
@@ -49,13 +56,13 @@ export function AcceptInvitationPage({ token = "", onAccepted, onBackToLogin, au
 
   return (
     <AuthLayout>
-      <form className="auth-card login-card" onSubmit={submit} noValidate>
-        <div className="auth-form-head">
-          <span className="auth-icon"><UserCheck size={20} aria-hidden="true" /></span>
+      <form className={authCardClass} onSubmit={submit} noValidate>
+        <div className={authFormHeadClass}>
+          <span className={authIconClass}><UserCheck size={20} aria-hidden="true" /></span>
           <div>
-            <span className="auth-eyebrow">Account invitation</span>
-            <h2>Set your password</h2>
-            <p>Accept the invitation, verify your email, and create your own password.</p>
+            <span className={authEyebrowClass}>Account invitation</span>
+            <h2 className="mt-1 text-2xl font-extrabold text-charcoal">Set your password</h2>
+            <p className="mt-2 text-sm leading-6 text-charcoal/70">Accept the invitation, verify your email, and create your own password.</p>
           </div>
         </div>
 
@@ -64,7 +71,7 @@ export function AcceptInvitationPage({ token = "", onAccepted, onBackToLogin, au
         <Field label="Confirm password" type="password" value={form.confirmPassword} onChange={(value) => update("confirmPassword", value)} error={errors.confirmPassword} autoComplete="new-password" />
         {error ? <Alert tone="danger" title="Unable to accept invitation">{error}</Alert> : null}
 
-        <div className="button-row auth-actions">
+        <div className={authActionsClass}>
           <Button loading={loading} disabled={loading || !token}>Accept Invitation</Button>
           <Button type="button" variant="secondary" disabled={loading} onClick={onBackToLogin}>Back to Login</Button>
         </div>

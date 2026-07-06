@@ -4,6 +4,15 @@ import { api } from "../../api/client.js";
 import { Alert, Button, Field } from "../../components/ui/index.jsx";
 import { AuthLayout } from "../../layouts/AppLayouts.jsx";
 import { DevEmailLink } from "./DevEmailLink.jsx";
+import {
+  authActionsClass,
+  authBackButtonClass,
+  authCardClass,
+  authEyebrowClass,
+  authFormHeadClass,
+  authIconClass,
+  authMobileSummaryClass,
+} from "./authTailwind.js";
 import "../../styles/auth.css";
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -94,20 +103,20 @@ export function SignupPage({ onSignup, onBackToLogin, onBackToWelcome, authApi =
   if (success) {
     return (
       <AuthLayout>
-        <section className="auth-card login-card">
-          <div className="auth-form-head">
-            <span className="auth-icon"><UserPlus size={20} aria-hidden="true" /></span>
-          <div>
-              <span className="auth-eyebrow">Check your email</span>
-              <h2>Account created</h2>
-              <p>Verify your email before signing in.</p>
+        <section className={authCardClass}>
+          <div className={authFormHeadClass}>
+            <span className={authIconClass}><UserPlus size={20} aria-hidden="true" /></span>
+            <div>
+              <span className={authEyebrowClass}>Check your email</span>
+              <h2 className="mt-1 text-2xl font-extrabold text-charcoal">Account created</h2>
+              <p className="mt-2 text-sm leading-6 text-charcoal/70">Verify your email before signing in.</p>
             </div>
           </div>
           <Alert tone="success" title="Verification email sent">
             We sent a verification link to {success.email || "your email"}. Open it to activate your account.
           </Alert>
           <DevEmailLink delivery={success.delivery} />
-          <div className="button-row auth-actions">
+          <div className={authActionsClass}>
             <Button type="button" variant="secondary" onClick={onBackToLogin}>Back to Login</Button>
           </div>
         </section>
@@ -117,27 +126,27 @@ export function SignupPage({ onSignup, onBackToLogin, onBackToWelcome, authApi =
 
   return (
     <AuthLayout>
-      <form className="auth-card login-card" onSubmit={submit} noValidate>
+      <form className={authCardClass} onSubmit={submit} noValidate>
         {onBackToWelcome ? (
-          <button type="button" className="auth-back-button" onClick={onBackToWelcome} aria-label="Back to welcome">
+          <button type="button" className={authBackButtonClass} onClick={onBackToWelcome} aria-label="Back to welcome">
             <ArrowLeft size={18} aria-hidden="true" />
           </button>
         ) : null}
-        <div className="auth-form-head">
-          <span className="auth-icon"><UserPlus size={20} aria-hidden="true" /></span>
+        <div className={authFormHeadClass}>
+          <span className={authIconClass}><UserPlus size={20} aria-hidden="true" /></span>
           <div>
-            <span className="auth-eyebrow">Member access</span>
-            <h2>Create account</h2>
-            <p>Create a secure member account for declarations, reports, statements, and cycle transparency.</p>
+            <span className={authEyebrowClass}>Member access</span>
+            <h2 className="mt-1 text-2xl font-extrabold text-charcoal">Create account</h2>
+            <p className="mt-2 text-sm leading-6 text-charcoal/70">Create a secure member account for declarations, reports, statements, and cycle transparency.</p>
           </div>
         </div>
 
-        <div className="auth-mobile-summary" aria-label="Signup note">
+        <div className={authMobileSummaryClass} aria-label="Signup note">
           <ShieldCheck size={18} aria-hidden="true" />
           <span>Use the same details your administrators have on record. This keeps enrollment smooth.</span>
         </div>
 
-        <div className="form-grid two">
+        <div className="form-grid two grid gap-3 sm:grid-cols-2">
           <Field label="First name" value={form.firstName} onChange={(value) => update("firstName", value)} autoComplete="given-name" error={errors.firstName} />
           <Field label="Last name" value={form.lastName} onChange={(value) => update("lastName", value)} autoComplete="family-name" error={errors.lastName} />
         </div>
@@ -163,7 +172,7 @@ export function SignupPage({ onSignup, onBackToLogin, onBackToWelcome, authApi =
 
         {error ? <Alert tone="danger" title="Unable to create account">{error}</Alert> : null}
 
-        <div className="button-row auth-actions">
+        <div className={authActionsClass}>
           <Button loading={loading} disabled={loading}>Create Account</Button>
           <Button type="button" variant="secondary" disabled={loading} onClick={onBackToLogin}>Back to Login</Button>
         </div>

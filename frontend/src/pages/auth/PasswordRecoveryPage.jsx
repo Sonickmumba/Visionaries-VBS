@@ -3,6 +3,15 @@ import { ArrowLeft, KeyRound, ShieldCheck } from "lucide-react";
 import { api } from "../../api/client.js";
 import { Alert, Button, Field } from "../../components/ui/index.jsx";
 import { AuthLayout } from "../../layouts/AppLayouts.jsx";
+import {
+  authActionsClass,
+  authBackButtonClass,
+  authCardClass,
+  authEyebrowClass,
+  authFormHeadClass,
+  authIconClass,
+  authMobileSummaryClass,
+} from "./authTailwind.js";
 import "../../styles/auth.css";
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -121,22 +130,22 @@ export function PasswordRecoveryPage({
 
   return (
     <AuthLayout>
-      <form className="auth-card login-card" onSubmit={mode === "forgot" ? submitForgot : submitReset} noValidate>
+      <form className={authCardClass} onSubmit={mode === "forgot" ? submitForgot : submitReset} noValidate>
         {onBackToWelcome && !initialToken ? (
-          <button type="button" className="auth-back-button" onClick={onBackToWelcome} aria-label="Back to welcome">
+          <button type="button" className={authBackButtonClass} onClick={onBackToWelcome} aria-label="Back to welcome">
             <ArrowLeft size={18} aria-hidden="true" />
           </button>
         ) : null}
-        <div className="auth-form-head">
-          <span className="auth-icon"><KeyRound size={20} aria-hidden="true" /></span>
+        <div className={authFormHeadClass}>
+          <span className={authIconClass}><KeyRound size={20} aria-hidden="true" /></span>
           <div>
-            <span className="auth-eyebrow">Account recovery</span>
-            <h2>{mode === "forgot" ? "Reset access" : "Set new password"}</h2>
-            <p>{mode === "forgot" ? "Request a reset link for your account email." : "Enter your reset token and new password."}</p>
+            <span className={authEyebrowClass}>Account recovery</span>
+            <h2 className="mt-1 text-2xl font-extrabold text-charcoal">{mode === "forgot" ? "Reset access" : "Set new password"}</h2>
+            <p className="mt-2 text-sm leading-6 text-charcoal/70">{mode === "forgot" ? "Request a reset link for your account email." : "Enter your reset token and new password."}</p>
           </div>
         </div>
 
-        <div className="auth-mobile-summary" aria-label="Recovery security note">
+        <div className={authMobileSummaryClass} aria-label="Recovery security note">
           <ShieldCheck size={18} aria-hidden="true" />
           <span>{mode === "forgot" ? "We only send reset instructions to registered account emails." : "Choose a password with at least 10 characters."}</span>
         </div>
@@ -164,7 +173,7 @@ export function PasswordRecoveryPage({
         {success ? <Alert tone="success" title="Request complete">{success}</Alert> : null}
         {error ? <Alert tone="danger" title={mode === "reset" ? "Invalid reset" : "Unable to send reset"}>{error}</Alert> : null}
 
-        <div className="button-row auth-actions">
+        <div className={authActionsClass}>
           <Button loading={loading} disabled={loading}>{mode === "forgot" ? "Send Reset Link" : "Reset Password"}</Button>
           <Button type="button" variant="secondary" disabled={loading} onClick={onBackToLogin}>Back to Login</Button>
           <Button type="button" variant="secondary" disabled={loading} onClick={() => { setMode(mode === "forgot" ? "reset" : "forgot"); setError(""); setSuccess(""); setErrors({}); }}>

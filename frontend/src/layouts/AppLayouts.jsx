@@ -88,20 +88,20 @@ export function ProtectedRoute({ user, children, fallback = null }) {
 
 export function AuthLayout({ children }) {
   return (
-    <main className="auth-shell">
-      <section className="auth-brand">
-        <BrandMark size="lg" className="auth-brand-mark" />
-        <div className="auth-brand-copy">
-          <span>Save Together. Grow Together.</span>
-          <h1>Visionaries Village Banking</h1>
-          <p>Run transparent savings, lending, declarations, common interest, penalties, reports, and monthly closing from one audit-ready mobile platform.</p>
+    <main className="auth-shell min-h-screen bg-cream px-4 py-5 text-charcoal md:grid md:grid-cols-[minmax(320px,0.95fr)_minmax(360px,520px)] md:items-center md:gap-8 md:px-8 md:py-8">
+      <section className="auth-brand relative overflow-hidden rounded-mobile bg-gradient-to-br from-forest to-emerald p-6 text-cream shadow-lift md:min-h-[720px] md:p-8">
+        <BrandMark size="lg" className="auth-brand-mark text-cream" />
+        <div className="auth-brand-copy relative z-[1] max-w-[560px]">
+          <span className="text-sm font-semibold uppercase tracking-[0.08em] text-gold">Save Together. Grow Together.</span>
+          <h1 className="mt-3 text-[clamp(2rem,5vw,4.5rem)] font-extrabold leading-[0.98] text-cream">Visionaries Village Banking</h1>
+          <p className="mt-5 max-w-[48rem] text-base leading-7 text-cream/85">Run transparent savings, lending, declarations, common interest, penalties, reports, and monthly closing from one audit-ready mobile platform.</p>
         </div>
-        <div className="auth-brand-stats" aria-label="Platform highlights">
-          <div><strong>15%</strong><span>Monthly rules</span></div>
-          <div><strong>Audit</strong><span>Ledger-first</span></div>
-          <div><strong>Mobile</strong><span>Member ready</span></div>
+        <div className="auth-brand-stats relative z-[1] grid grid-cols-3 gap-3" aria-label="Platform highlights">
+          <div className="rounded-app border border-cream/20 bg-white/10 p-3 backdrop-blur"><strong className="block text-lg text-gold">15%</strong><span className="text-xs text-cream/80">Monthly rules</span></div>
+          <div className="rounded-app border border-cream/20 bg-white/10 p-3 backdrop-blur"><strong className="block text-lg text-gold">Audit</strong><span className="text-xs text-cream/80">Ledger-first</span></div>
+          <div className="rounded-app border border-cream/20 bg-white/10 p-3 backdrop-blur"><strong className="block text-lg text-gold">Mobile</strong><span className="text-xs text-cream/80">Member ready</span></div>
         </div>
-        <div className="auth-note">Built as a financial operations system with auditability at the center.</div>
+        <div className="auth-note relative z-[1] rounded-app border border-cream/20 bg-white/10 px-4 py-3 text-sm text-cream/85 backdrop-blur">Built as a financial operations system with auditability at the center.</div>
       </section>
       {children}
     </main>

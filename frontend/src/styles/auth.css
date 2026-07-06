@@ -307,7 +307,10 @@
 }
 
 .signup-phone {
-  min-height: min(980px, calc(100svh - 24px));
+  min-height: min(982px, calc(100svh - 24px));
+  background:
+    radial-gradient(circle at 88% 9%, rgba(217, 162, 39, 0.42), transparent 16%),
+    linear-gradient(180deg, #0D3B2E 0%, #0D3B2E 56%, #127A5A 100%);
 }
 
 .auth-status-bar {
@@ -389,9 +392,9 @@
 .signup-hero {
   justify-items: start;
   align-content: start;
-  min-height: 490px;
-  gap: 42px;
-  padding: 88px 34px 54px;
+  min-height: 520px;
+  gap: 50px;
+  padding: 92px 34px 58px;
   text-align: left;
 }
 
@@ -413,12 +416,12 @@
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
-  gap: 20px;
+  gap: 22px;
 }
 
 .signup-brand-row .auth-hero-mark .brand-mark {
-  width: 86px;
-  height: 86px;
+  width: 92px;
+  height: 92px;
 }
 
 .auth-hero h1 {
@@ -431,7 +434,7 @@
 }
 
 .signup-hero h1 {
-  font-size: clamp(38px, 9vw, 54px);
+  font-size: clamp(44px, 10vw, 58px);
 }
 
 .auth-gold-rule,
@@ -453,7 +456,7 @@
 
 .signup-hero h2 {
   color: #F7F4EE;
-  font-size: clamp(38px, 9vw, 52px);
+  font-size: clamp(42px, 10vw, 56px);
   text-shadow: 0 5px 16px rgba(31, 41, 51, 0.24);
 }
 
@@ -467,7 +470,7 @@
 }
 
 .signup-brand-row p {
-  max-width: 260px;
+  max-width: 280px;
   font-size: 17px;
 }
 
@@ -520,8 +523,8 @@
   gap: 12px;
   width: calc(100% - 56px);
   min-height: auto;
-  margin: -92px 28px 0;
-  padding: 32px 28px 28px;
+  margin: -128px 28px 0;
+  padding: 34px 28px 30px;
   border-radius: 28px;
   background: rgba(255, 255, 255, 0.96);
   box-shadow: 0 22px 56px rgba(31, 41, 51, 0.16);
@@ -549,7 +552,7 @@
 }
 
 .signup-sheet .auth-input-shell {
-  min-height: 58px;
+  min-height: 60px;
   border-radius: 18px;
 }
 
@@ -704,7 +707,7 @@
   right: 0;
   bottom: 0;
   z-index: 2;
-  min-height: 230px;
+  min-height: 260px;
   border-radius: 0;
   pointer-events: none;
   background-position: center bottom;
@@ -726,7 +729,7 @@
 }
 
 .signup-phone .auth-form-sheet {
-  padding-bottom: 28px;
+  padding-bottom: 30px;
 }
 
 .signup-phone::after {
@@ -786,21 +789,21 @@
   }
 
   .signup-hero {
-    padding-top: 78px;
-    min-height: 440px;
-    gap: 34px;
+    padding-top: 82px;
+    min-height: 474px;
+    gap: 38px;
   }
 
   .signup-sheet {
     width: calc(100% - 44px);
     margin-inline: 22px;
-    margin-top: -82px;
-    padding: 28px 24px 26px;
+    margin-top: -112px;
+    padding: 30px 24px 26px;
     gap: 10px;
   }
 
   .signup-brand-row .auth-hero-mark .brand-mark {
-    width: 78px;
-    height: 78px;
+    width: 82px;
+    height: 82px;
   }
 }

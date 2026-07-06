@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ArrowLeft, ArrowRight, Eye, EyeOff, Lock, Mail, Smartphone, UserRound, UsersRound, UserPlus } from "lucide-react";
+import { ArrowLeft, ArrowRight, Eye, EyeOff, Lock, Mail, Smartphone, UserRound, UserPlus } from "lucide-react";
 import { api } from "../../api/client.js";
 import { Alert, Button } from "../../components/ui/index.jsx";
 import { BrandMark } from "../../components/BrandMark.jsx";
@@ -80,7 +80,6 @@ export function SignupPage({ onSignup, onBackToLogin, onBackToWelcome, authApi =
     firstName: "",
     lastName: "",
     phone: "",
-    groupCode: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -188,7 +187,6 @@ export function SignupPage({ onSignup, onBackToLogin, onBackToWelcome, authApi =
           />
           <AuthInput label="Phone Number" value={form.phone} onChange={(event) => update("phone", event.target.value)} autoComplete="tel" placeholder="Phone Number" icon={Smartphone} />
           <AuthInput label="Email" value={form.email} onChange={(event) => update("email", event.target.value)} type="email" autoComplete="email" placeholder="Email" error={errors.email} icon={Mail} />
-          <AuthInput label="Group Code (Optional)" value={form.groupCode} onChange={(event) => update("groupCode", event.target.value)} placeholder="Group Code (Optional)" icon={UsersRound} />
           <AuthInput
             label="Password"
             value={form.password}

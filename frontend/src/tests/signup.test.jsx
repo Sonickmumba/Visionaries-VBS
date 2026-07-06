@@ -69,7 +69,7 @@ describe("signup screen", () => {
     expect(form).toContain("auth-form-sheet");
     expect(form).toContain("Full Name");
     expect(form).toContain("Phone Number");
-    expect(form).toContain("Group Code (Optional)");
+    expect(form).not.toContain("Group Code (Optional)");
     expect(form).toContain("Confirm Password");
     expect(form).toContain("Terms &amp; Privacy Policy");
     expect(form).toContain("Log In");

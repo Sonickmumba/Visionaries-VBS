@@ -295,7 +295,7 @@ export function MemberDashboardPage({
 
   return (
     <Page
-      className="member-dashboard-page"
+      className="member-dashboard-page grid gap-0"
       title="My Dashboard"
       actions={(
         <>
@@ -307,7 +307,7 @@ export function MemberDashboardPage({
     >
       {error ? <Alert tone="danger" title="Member dashboard failed">{error}</Alert> : null}
 
-      {loading ? <section className="panel"><Skeleton lines={8} /></section> : !hasMembership ? (
+      {loading ? <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft"><Skeleton lines={8} /></section> : !hasMembership ? (
         <EmptyState title="No active cycle membership" message="Ask an administrator to enroll you into a cycle before declarations, savings, loans, and statements can appear." />
       ) : (
         <>

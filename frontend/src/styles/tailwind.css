@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .tw-app-card {
+    @apply rounded-app border border-mist bg-cream shadow-soft;
+  }
+
+  .tw-mobile-panel {
+    @apply rounded-mobile border border-mist bg-cream shadow-soft;
+  }
+
+  .tw-primary-action {
+    @apply inline-flex min-h-10 items-center justify-center gap-2 rounded-app bg-emerald px-4 py-2 font-extrabold text-cream shadow-soft transition;
+  }
+}

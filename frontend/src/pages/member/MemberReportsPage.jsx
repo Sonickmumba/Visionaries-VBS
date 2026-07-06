@@ -138,7 +138,7 @@ export function MemberReportsPage({ setPage, reportsApi, initialData, initialCyc
           </header>
 
           {mobileError ? <Alert tone="danger" title="Reports failed">{mobileError}</Alert> : null}
-          {mobileLoading ? <section className="panel"><Skeleton lines={8} /></section> : (
+          {mobileLoading ? <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft"><Skeleton lines={8} /></section> : (
             <>
               <section className="member-reports-summary-panel" aria-label="Group transparency summary">
                 <h2>Group Transparency Summary</h2>

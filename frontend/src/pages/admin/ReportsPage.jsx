@@ -338,22 +338,27 @@ function openPrintableReport({ title, subtitle, metrics, columns, rows }) {
 }
 
 function DetailValue({ label, value }) {
-  return <div><strong>{label}</strong><span>{value}</span></div>;
+  return (
+    <div className="grid gap-1 rounded-app border border-mist bg-cream p-3">
+      <strong className="text-xs font-black uppercase text-charcoal/70">{label}</strong>
+      <span className="break-words text-sm font-extrabold text-charcoal">{value}</span>
+    </div>
+  );
 }
 
 function ReportsHero({ definition, data, totals, rows, eyebrow = "Reports Center", note = "" }) {
   return (
-    <section className="reports-hero">
+    <section className="reports-hero mb-4 grid gap-4 rounded-mobile bg-gradient-to-br from-forest via-emerald to-forest p-5 text-cream shadow-lift md:grid-cols-[minmax(0,1fr)_auto]" aria-label="Reports center overview">
       <div>
-        <span>{eyebrow}</span>
-        <h2>{definition.label}</h2>
-        <p>{data?.cycle?.name || "Visionaries Village Banking"}{data?.cycleMonth ? ` · Month ${data.cycleMonth.month_number}` : " · cycle-wide view"}</p>
-        {note ? <p className="reports-hero-note">{note}</p> : null}
+        <span className="text-xs font-black uppercase text-cream">{eyebrow}</span>
+        <h2 className="my-1 text-[25px] font-extrabold leading-tight text-cream">{definition.label}</h2>
+        <p className="m-0 text-sm font-extrabold text-cream/85">{data?.cycle?.name || "Visionaries Village Banking"}{data?.cycleMonth ? ` · Month ${data.cycleMonth.month_number}` : " · cycle-wide view"}</p>
+        {note ? <p className="reports-hero-note mt-2 text-[13px] font-extrabold text-cream/85">{note}</p> : null}
       </div>
-      <div className="reports-hero-stat">
-        <span>Rows</span>
-        <strong>{rows.length}</strong>
-        <small>{money(totals.savings)} savings</small>
+      <div className="reports-hero-stat grid min-w-40 content-center gap-1 rounded-mobile border border-cream/20 bg-white/10 p-3 backdrop-blur">
+        <span className="text-xs font-black uppercase text-cream">Rows</span>
+        <strong className="break-words text-[24px] font-extrabold text-cream">{rows.length}</strong>
+        <small className="text-xs font-extrabold text-cream/85">{money(totals.savings)} savings</small>
       </div>
     </section>
   );
@@ -368,13 +373,13 @@ function ReportsGuide({ report, definition }) {
   ];
 
   return (
-    <section className="reports-guide" aria-label="Report guidance">
+    <section className="reports-guide mb-4 grid items-center gap-3 rounded-mobile border border-mist border-l-[5px] border-l-gold bg-cream p-3.5 shadow-soft md:grid-cols-[minmax(0,1fr)_auto]" aria-label="Report guidance">
       <div>
-        <span>{title}</span>
-        <strong>{definition.label}</strong>
-        <p>{detail}</p>
+        <span className="text-xs font-black uppercase text-emerald">{title}</span>
+        <strong className="mt-1 block text-lg font-extrabold text-charcoal">{definition.label}</strong>
+        <p className="m-0 mt-1 text-sm font-bold leading-snug text-charcoal/80">{detail}</p>
       </div>
-      <div className="reports-guide-chips">
+      <div className="reports-guide-chips flex flex-wrap justify-end gap-2">
         {chips.map((chip) => <Badge key={chip} text={chip} tone="blue" />)}
       </div>
     </section>
@@ -385,7 +390,7 @@ function ReportCards({ rows, report, definition, onSelect }) {
   if (!rows.length) return null;
   const columns = definition.columns.filter((column) => column !== "Action");
   return (
-    <div className="reports-mobile-cards" aria-label="Mobile report rows">
+    <div className="reports-mobile-cards grid gap-3" aria-label="Mobile report rows">
       {rows.map((row, index) => {
         const title = row.first_name || row.last_name ? memberName(row) : row.month_number ? `Month ${row.month_number}` : definition.label;
         const subtitle = row.member_code || row.status || row.month_status || row.penalty_type || row.compliance_status || dataLabel(row);
@@ -394,18 +399,18 @@ function ReportCards({ rows, report, definition, onSelect }) {
           return { column, value: formatReportValue(key, row[key]) };
         });
         return (
-          <article key={row.id || row.cycle_member_id || row.cycle_month_id || `${report}-${index}`} className="reports-card">
-            <div className="reports-card-head">
-              <div className="reports-avatar">{initials(row)}</div>
+          <article key={row.id || row.cycle_member_id || row.cycle_month_id || `${report}-${index}`} className="reports-card grid gap-3 rounded-mobile border border-mist bg-cream p-3 shadow-soft">
+            <div className="reports-card-head grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2.5">
+              <div className="reports-avatar grid h-11 w-11 place-items-center rounded-mobile bg-cream text-sm font-black text-emerald" aria-hidden="true">{initials(row)}</div>
               <div>
-                <strong>{title}</strong>
-                <span>{titleCase(subtitle)}</span>
+                <strong className="block break-words text-sm font-extrabold text-charcoal">{title}</strong>
+                <span className="block break-words text-xs font-extrabold text-charcoal/70">{titleCase(subtitle)}</span>
               </div>
               <Badge text={definition.label} tone="blue" />
             </div>
-            <div className="reports-card-values">
+            <div className="reports-card-values grid grid-cols-2 gap-2.5">
               {values.map(({ column, value }) => (
-                <div key={column}><span>{column}</span><strong>{value}</strong></div>
+                <div key={column} className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">{column}</span><strong className="break-words text-base font-extrabold text-charcoal">{value}</strong></div>
               ))}
             </div>
             {definition.columns.includes("Action") ? (
@@ -421,23 +426,23 @@ function ReportCards({ rows, report, definition, onSelect }) {
 function ReportDetail({ selectedRow, definition, onClose }) {
   if (!selectedRow) return null;
   return (
-    <section className="reports-detail">
-      <div className="reports-detail-hero">
-        <div className="reports-avatar">{initials(selectedRow)}</div>
+    <section className="reports-detail grid gap-3.5">
+      <div className="reports-detail-hero mb-0 grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3">
+        <div className="reports-avatar grid h-11 w-11 place-items-center rounded-mobile bg-cream text-sm font-black text-emerald" aria-hidden="true">{initials(selectedRow)}</div>
         <div>
-          <span>Report Detail</span>
-          <h2>{memberName(selectedRow)}</h2>
-          <p>{definition.label}</p>
+          <span className="text-xs font-black uppercase text-emerald">Report Detail</span>
+          <h2 className="my-0.5 text-xl font-extrabold text-charcoal">{memberName(selectedRow)}</h2>
+          <p className="m-0 text-sm font-extrabold text-charcoal/75">{definition.label}</p>
         </div>
         <Badge text={definition.label} tone="blue" />
       </div>
-      <div className="detail-grid reports-detail-grid">
+      <div className="detail-grid reports-detail-grid grid gap-3 md:grid-cols-2 xl:grid-cols-4">
         {Object.entries(selectedRow)
           .filter(([key]) => !["id", "cycle_id", "cycle_month_id", "cycle_member_id", "member_id"].includes(key))
           .slice(0, 16)
           .map(([key, value]) => <DetailValue key={key} label={titleCase(key)} value={formatReportValue(key, value)} />)}
       </div>
-      <div className="button-row">
+      <div className="button-row flex flex-wrap items-center gap-2.5">
         <Button type="button" variant="secondary" onClick={onClose}>Close Detail</Button>
       </div>
     </section>
@@ -681,7 +686,7 @@ export function ReportsPage({
   return (
     <Page
       title={title}
-      className="reports-page"
+      className="reports-page grid gap-0"
       actions={(
         <>
           <Button type="button" icon={RefreshCw} onClick={() => loadReport()} loading={loading}>Run Report</Button>
@@ -695,7 +700,7 @@ export function ReportsPage({
       <ReportsHero definition={definition} data={data} totals={totals} rows={rows} eyebrow={heroEyebrow} note={readOnlyNote} />
       <ReportsGuide report={report} definition={definition} />
 
-      <div className="admin-mobile-action-row reports-mobile-actions-row mobile-only" aria-label="Reports quick actions">
+      <div className="admin-mobile-action-row reports-mobile-actions-row mobile-only flex gap-2" aria-label="Reports quick actions">
         <Button type="button" icon={RefreshCw} onClick={() => loadReport()} loading={loading}>Run Report</Button>
         <Button type="button" variant="secondary" icon={Printer} onClick={downloadPdf}>PDF</Button>
         <Button type="button" variant="secondary" icon={Download} onClick={exportCsv}>CSV</Button>
@@ -708,8 +713,8 @@ export function ReportsPage({
         tabs={Object.entries(REPORT_DEFINITIONS).map(([id, item]) => ({ id, label: item.label }))}
       />
 
-      <section className="panel reports-filters">
-        <div className="form-grid three">
+      <section className="panel reports-filters mb-5 rounded-app border border-mist bg-cream p-4 shadow-soft">
+        <div className="form-grid three grid gap-3 md:grid-cols-3">
           <Select
             label="Cycle"
             value={cycleId}
@@ -736,7 +741,7 @@ export function ReportsPage({
         </div>
       </section>
 
-      <div className="metrics reports-metrics">
+      <div className="metrics reports-metrics grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <Card title="Report Rows" value={rows.length} note={definition.label} icon={FileBarChart} />
         <Card title="Savings" value={money(totals.savings)} note="Principal or monthly total" icon={PiggyBank} />
         <Card title="Loans" value={money(totals.loans)} note="Issued or borrowed" tone="blue" icon={Banknote} />
@@ -750,15 +755,15 @@ export function ReportsPage({
         onClose={() => setSelectedRow(null)}
       >
         {selectedRow ? (
-          <div className="reports-detail-modal">
+          <div className="reports-detail-modal pr-0.5">
             <ReportDetail selectedRow={selectedRow} definition={definition} onClose={() => setSelectedRow(null)} />
           </div>
         ) : null}
       </Modal>
 
-      <section className="panel">
-        <div className="panel-head">
-          <h2>{definition.label}</h2>
+      <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+        <div className="panel-head mb-3 flex items-center justify-between gap-3">
+          <h2 className="m-0 text-lg font-extrabold text-charcoal">{definition.label}</h2>
           <Badge text={data?.cycle?.name || "Cycle context"} tone="blue" />
         </div>
         {loading ? <Skeleton lines={8} /> : rows.length ? (

@@ -85,21 +85,26 @@ export async function postCommonInterestAllocation({ preview, allocationMethod, 
 }
 
 function DetailValue({ label, value }) {
-  return <div><strong>{label}</strong><span>{value}</span></div>;
+  return (
+    <div className="grid gap-1 rounded-app border border-mist bg-cream p-3">
+      <strong className="text-xs font-black uppercase text-charcoal/70">{label}</strong>
+      <span className="break-words text-sm font-extrabold text-charcoal">{value}</span>
+    </div>
+  );
 }
 
 function CommonInterestHero({ preview, totals }) {
   return (
-    <section className="common-interest-hero">
+    <section className="common-interest-hero mb-4 grid gap-4 rounded-mobile bg-gradient-to-br from-forest via-emerald to-forest p-5 text-cream shadow-lift md:grid-cols-[minmax(0,1fr)_auto]" aria-label="Common interest pool assessment">
       <div>
-        <span>Pool Assessment</span>
-        <h2>{preview?.cycle?.name || "Active Cycle"}</h2>
-        <p>{preview?.cycleMonth ? `Month ${preview.cycleMonth.month_number} pool snapshot` : "Calculate the monthly pool before posting allocations."}</p>
+        <span className="text-xs font-black uppercase text-cream">Pool Assessment</span>
+        <h2 className="my-1 text-[25px] font-extrabold leading-tight text-cream">{preview?.cycle?.name || "Active Cycle"}</h2>
+        <p className="m-0 text-sm font-extrabold text-cream/85">{preview?.cycleMonth ? `Month ${preview.cycleMonth.month_number} pool snapshot` : "Calculate the monthly pool before posting allocations."}</p>
       </div>
-      <div className="common-interest-hero-stat">
-        <span>CI Pool</span>
-        <strong>{money(totals.poolCharge)}</strong>
-        <small>{money(totals.unborrowed)} unborrowed</small>
+      <div className="common-interest-hero-stat grid min-w-40 content-center gap-1 rounded-mobile border border-cream/20 bg-white/10 p-3 backdrop-blur">
+        <span className="text-xs font-black uppercase text-cream">CI Pool</span>
+        <strong className="break-words text-[22px] font-extrabold text-cream">{money(totals.poolCharge)}</strong>
+        <small className="text-xs font-extrabold text-cream/85">{money(totals.unborrowed)} unborrowed</small>
       </div>
     </section>
   );
@@ -108,22 +113,22 @@ function CommonInterestHero({ preview, totals }) {
 function AllocationCards({ allocations, selectedAllocation, onSelect }) {
   if (!allocations.length) return null;
   return (
-    <div className="common-interest-mobile-cards" aria-label="Mobile common-interest allocations">
+    <div className="common-interest-mobile-cards grid gap-3" aria-label="Mobile common-interest allocations">
       {allocations.map((allocation) => (
-        <article key={allocation.cycle_member_id || `${memberName(allocation)}-${allocation.assignedBase}`} className={`common-interest-card ${selectedAllocation === allocation ? "selected" : ""}`}>
-          <div className="common-interest-card-head">
-            <div className="common-interest-avatar">{initials(allocation)}</div>
+        <article key={allocation.cycle_member_id || `${memberName(allocation)}-${allocation.assignedBase}`} className={`common-interest-card grid gap-3 rounded-mobile border border-mist bg-cream p-3 shadow-soft ${selectedAllocation === allocation ? "selected border-emerald shadow-lift" : ""}`}>
+          <div className="common-interest-card-head grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2.5">
+            <div className="common-interest-avatar grid h-11 w-11 place-items-center rounded-mobile bg-cream text-sm font-black text-emerald" aria-hidden="true">{initials(allocation)}</div>
             <div>
-              <strong>{memberName(allocation)}</strong>
-              <span>{allocation.member_code || "Allocation preview"}</span>
+              <strong className="block break-words text-sm font-extrabold text-charcoal">{memberName(allocation)}</strong>
+              <span className="block break-words text-xs font-extrabold text-charcoal/70">{allocation.member_code || "Allocation preview"}</span>
             </div>
             <Badge text={allocation.status} tone={statusTone(allocation.status)} />
           </div>
-          <div className="common-interest-card-values">
-            <div><span>Borrowed</span><strong>{money(allocation.cumulativeBorrowed)}</strong></div>
-            <div><span>Shortfall</span><strong>{money(allocation.shortfall)}</strong></div>
-            <div><span>Assigned Base</span><strong>{money(allocation.assignedBase)}</strong></div>
-            <div><span>Charge</span><strong>{money(allocation.charge)}</strong></div>
+          <div className="common-interest-card-values grid grid-cols-2 gap-2.5">
+            <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Borrowed</span><strong className="break-words text-base font-extrabold text-charcoal">{money(allocation.cumulativeBorrowed)}</strong></div>
+            <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Shortfall</span><strong className="break-words text-base font-extrabold text-charcoal">{money(allocation.shortfall)}</strong></div>
+            <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Assigned Base</span><strong className="break-words text-base font-extrabold text-charcoal">{money(allocation.assignedBase)}</strong></div>
+            <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Charge</span><strong className="break-words text-base font-extrabold text-charcoal">{money(allocation.charge)}</strong></div>
           </div>
           <Button type="button" variant="secondary" size="sm" onClick={() => onSelect(allocation)}>View Details</Button>
         </article>
@@ -135,20 +140,20 @@ function AllocationCards({ allocations, selectedAllocation, onSelect }) {
 function ComplianceCards({ members }) {
   if (!members.length) return null;
   return (
-    <div className="common-interest-mobile-cards" aria-label="Mobile borrowing compliance cards">
+    <div className="common-interest-mobile-cards grid gap-3" aria-label="Mobile borrowing compliance cards">
       {members.map((member) => (
-        <article key={member.cycle_member_id || member.member_code || memberName(member)} className="common-interest-card">
-          <div className="common-interest-card-head">
-            <div className="common-interest-avatar">{initials(member)}</div>
+        <article key={member.cycle_member_id || member.member_code || memberName(member)} className="common-interest-card grid gap-3 rounded-mobile border border-mist bg-cream p-3 shadow-soft">
+          <div className="common-interest-card-head grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2.5">
+            <div className="common-interest-avatar grid h-11 w-11 place-items-center rounded-mobile bg-cream text-sm font-black text-emerald" aria-hidden="true">{initials(member)}</div>
             <div>
-              <strong>{memberName(member)}</strong>
-              <span>{member.member_code || "No member code"}</span>
+              <strong className="block break-words text-sm font-extrabold text-charcoal">{memberName(member)}</strong>
+              <span className="block break-words text-xs font-extrabold text-charcoal/70">{member.member_code || "No member code"}</span>
             </div>
             <Badge text={member.status} tone={statusTone(member.status)} />
           </div>
-          <div className="common-interest-card-values">
-            <div><span>Borrowed</span><strong>{money(member.cumulativeBorrowed)}</strong></div>
-            <div><span>Shortfall</span><strong>{money(member.shortfall)}</strong></div>
+          <div className="common-interest-card-values grid grid-cols-2 gap-2.5">
+            <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Borrowed</span><strong className="break-words text-base font-extrabold text-charcoal">{money(member.cumulativeBorrowed)}</strong></div>
+            <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Shortfall</span><strong className="break-words text-base font-extrabold text-charcoal">{money(member.shortfall)}</strong></div>
           </div>
         </article>
       ))}
@@ -159,22 +164,22 @@ function ComplianceCards({ members }) {
 function PostedRunCards({ allocations }) {
   if (!allocations.length) return null;
   return (
-    <div className="common-interest-mobile-cards" aria-label="Mobile posted common-interest allocations">
+    <div className="common-interest-mobile-cards grid gap-3" aria-label="Mobile posted common-interest allocations">
       {allocations.map((item) => (
-        <article key={item.id || item.cycle_member_id || `${memberName(item)}-${item.final_charge}`} className="common-interest-card">
-          <div className="common-interest-card-head">
-            <div className="common-interest-avatar">{initials(item)}</div>
+        <article key={item.id || item.cycle_member_id || `${memberName(item)}-${item.final_charge}`} className="common-interest-card grid gap-3 rounded-mobile border border-mist bg-cream p-3 shadow-soft">
+          <div className="common-interest-card-head grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2.5">
+            <div className="common-interest-avatar grid h-11 w-11 place-items-center rounded-mobile bg-cream text-sm font-black text-emerald" aria-hidden="true">{initials(item)}</div>
             <div>
-              <strong>{memberName(item)}</strong>
-              <span>Posted allocation</span>
+              <strong className="block break-words text-sm font-extrabold text-charcoal">{memberName(item)}</strong>
+              <span className="block break-words text-xs font-extrabold text-charcoal/70">Posted allocation</span>
             </div>
             <Badge text={item.compliance_status} tone={statusTone(item.compliance_status)} />
           </div>
-          <div className="common-interest-card-values">
-            <div><span>Borrowed</span><strong>{money(item.cumulative_borrowed_amount)}</strong></div>
-            <div><span>Shortfall</span><strong>{money(item.borrowing_shortfall)}</strong></div>
-            <div><span>Assigned Base</span><strong>{money(item.assigned_base)}</strong></div>
-            <div><span>Charge</span><strong>{money(item.final_charge)}</strong></div>
+          <div className="common-interest-card-values grid grid-cols-2 gap-2.5">
+            <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Borrowed</span><strong className="break-words text-base font-extrabold text-charcoal">{money(item.cumulative_borrowed_amount)}</strong></div>
+            <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Shortfall</span><strong className="break-words text-base font-extrabold text-charcoal">{money(item.borrowing_shortfall)}</strong></div>
+            <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Assigned Base</span><strong className="break-words text-base font-extrabold text-charcoal">{money(item.assigned_base)}</strong></div>
+            <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Charge</span><strong className="break-words text-base font-extrabold text-charcoal">{money(item.final_charge)}</strong></div>
           </div>
         </article>
       ))}
@@ -185,22 +190,22 @@ function PostedRunCards({ allocations }) {
 function AllocationDetail({ allocation, onClose }) {
   if (!allocation) return null;
   return (
-    <section className="common-interest-detail">
-      <div className="common-interest-detail-hero">
-        <div className="common-interest-avatar">{initials(allocation)}</div>
+    <section className="common-interest-detail grid gap-3.5">
+      <div className="common-interest-detail-hero mb-0 grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3">
+        <div className="common-interest-avatar grid h-11 w-11 place-items-center rounded-mobile bg-cream text-sm font-black text-emerald" aria-hidden="true">{initials(allocation)}</div>
         <div>
-          <span>Allocation Detail</span>
-          <h2>{memberName(allocation)}</h2>
-          <p>Shortfall, weight, assigned base, and charge calculation.</p>
+          <span className="text-xs font-black uppercase text-emerald">Allocation Detail</span>
+          <h2 className="my-0.5 text-xl font-extrabold text-charcoal">{memberName(allocation)}</h2>
+          <p className="m-0 text-sm font-extrabold text-charcoal/75">Shortfall, weight, assigned base, and charge calculation.</p>
         </div>
         <Badge text={allocation.status || allocation.compliance_status} tone={statusTone(allocation.status || allocation.compliance_status)} />
       </div>
-      <div className="common-interest-detail-strip">
+      <div className="common-interest-detail-strip mb-0 grid gap-2.5 md:grid-cols-3">
         <DetailValue label="Assigned Base" value={money(allocation.assignedBase ?? allocation.assigned_base)} />
         <DetailValue label="Calculated Charge" value={money(allocation.charge ?? allocation.calculated_charge)} />
         <DetailValue label="Final Charge" value={money(allocation.final_charge ?? allocation.charge)} />
       </div>
-      <div className="detail-grid common-interest-detail-grid">
+      <div className="detail-grid common-interest-detail-grid grid gap-3 md:grid-cols-2 xl:grid-cols-4">
         <DetailValue label="Borrowed" value={money(allocation.cumulativeBorrowed ?? allocation.cumulative_borrowed_amount)} />
         <DetailValue label="Shortfall" value={money(allocation.shortfall ?? allocation.borrowing_shortfall)} />
         <DetailValue label="Weight" value={Number((allocation.weight ?? allocation.allocation_weight) || 0).toFixed(4)} />
@@ -208,7 +213,7 @@ function AllocationDetail({ allocation, onClose }) {
         <DetailValue label="Calculated Charge" value={money(allocation.charge ?? allocation.calculated_charge)} />
         <DetailValue label="Final Charge" value={money(allocation.final_charge ?? allocation.charge)} />
       </div>
-      <div className="button-row">
+      <div className="button-row flex flex-wrap items-center gap-2.5">
         <Button type="button" variant="secondary" onClick={onClose}>Close Detail</Button>
       </div>
     </section>
@@ -218,16 +223,16 @@ function AllocationDetail({ allocation, onClose }) {
 function RunDetail({ run }) {
   if (!run?.data) return null;
   return (
-    <section className="panel">
-      <div className="common-interest-run-hero">
+    <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+      <div className="common-interest-run-hero mb-3.5 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
         <div>
-          <span>Posted Run</span>
-          <h2>Common-Interest Assessments</h2>
-          <p>Posted to ledger on {dateOnly(run.data.created_at)}.</p>
+          <span className="text-xs font-black uppercase text-emerald">Posted Run</span>
+          <h2 className="my-0.5 text-xl font-extrabold text-charcoal">Common-Interest Assessments</h2>
+          <p className="m-0 text-sm font-extrabold text-charcoal/75">Posted to ledger on {dateOnly(run.data.created_at)}.</p>
         </div>
         <Badge text={run.data.allocation_method?.replaceAll("_", " ")} tone="green" />
       </div>
-      <div className="detail-grid common-interest-detail-grid">
+      <div className="detail-grid common-interest-detail-grid grid gap-3 md:grid-cols-2 xl:grid-cols-4">
         <DetailValue label="Posted" value={dateOnly(run.data.created_at)} />
         <DetailValue label="Pool Contributions" value={money(run.data.total_pool_contributions)} />
         <DetailValue label="Loans Issued" value={money(run.data.total_loans_issued)} />
@@ -373,7 +378,7 @@ export function CommonInterestPage({
   return (
     <Page
       title="Common Interest"
-      className="common-interest-page"
+      className="common-interest-page grid gap-0"
       actions={(
         <>
           <Button type="button" icon={RefreshCw} onClick={() => loadPreview()} loading={loading}>Calculate Preview</Button>
@@ -387,13 +392,13 @@ export function CommonInterestPage({
 
       <CommonInterestHero preview={preview} totals={totals} />
 
-      <div className="admin-mobile-action-row common-interest-mobile-actions-row mobile-only" aria-label="Common interest quick actions">
+      <div className="admin-mobile-action-row common-interest-mobile-actions-row mobile-only flex gap-2" aria-label="Common interest quick actions">
         <Button type="button" icon={RefreshCw} onClick={() => loadPreview()} loading={loading}>Preview</Button>
         <Button type="button" variant="danger" icon={Calculator} onClick={postAllocation} loading={busy === "post"} disabled={Boolean(preview?.existingRun)}>Post</Button>
       </div>
 
-      <section className="panel common-interest-filters">
-        <div className="form-grid three">
+      <section className="panel common-interest-filters mb-5 rounded-app border border-mist bg-cream p-4 shadow-soft">
+        <div className="form-grid three grid gap-3 md:grid-cols-3">
           <Select
             label="Cycle"
             value={cycleId}
@@ -420,7 +425,7 @@ export function CommonInterestPage({
         </div>
       </section>
 
-      <div className="metrics common-interest-metrics">
+      <div className="metrics common-interest-metrics grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <Card title="Pool Contributions" value={money(totals.pool)} note="Savings + fees + inflows" icon={Coins} />
         <Card title="Loans Issued" value={money(totals.loans)} note="Current month payouts" tone="blue" icon={Banknote} />
         <Card title="Unborrowed Money" value={money(totals.unborrowed)} note="Contribution less loans" tone="amber" icon={Scale} />
@@ -433,7 +438,7 @@ export function CommonInterestPage({
         </Alert>
       ) : null}
 
-      {loading ? <section className="panel"><Skeleton lines={8} /></section> : !preview ? (
+      {loading ? <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft"><Skeleton lines={8} /></section> : !preview ? (
         <EmptyState title="No common-interest preview" message="Choose an active cycle month and calculate a preview." />
       ) : (
         <>
@@ -455,16 +460,16 @@ export function CommonInterestPage({
             onClose={() => setSelectedAllocation(null)}
           >
             {selectedAllocation ? (
-              <div className="common-interest-detail-modal">
+              <div className="common-interest-detail-modal pr-0.5">
                 <AllocationDetail allocation={selectedAllocation} onClose={() => setSelectedAllocation(null)} />
               </div>
             ) : null}
           </Modal>
 
           {activeTab === "preview" ? (
-            <section className="panel">
-              <div className="panel-head">
-                <h2>Allocation Preview</h2>
+            <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+              <div className="panel-head mb-3 flex items-center justify-between gap-3">
+                <h2 className="m-0 text-lg font-extrabold text-charcoal">Allocation Preview</h2>
                 <Badge text={ALLOCATION_METHODS.find((item) => item.value === allocationMethod)?.label} tone="blue" />
               </div>
               <AllocationCards allocations={preview.allocations || []} selectedAllocation={selectedAllocation} onSelect={setSelectedAllocation} />
@@ -488,9 +493,9 @@ export function CommonInterestPage({
           ) : null}
 
           {activeTab === "compliance" ? (
-            <section className="panel">
-              <div className="panel-head">
-                <h2>Borrowing Compliance</h2>
+            <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+              <div className="panel-head mb-3 flex items-center justify-between gap-3">
+                <h2 className="m-0 text-lg font-extrabold text-charcoal">Borrowing Compliance</h2>
               </div>
               <ComplianceCards members={preview.members || []} />
               <div className="common-interest-desktop-table">

@@ -69,9 +69,9 @@ export function MemberMorePage({ setPage, onLogout, memberApi = api, initialData
   ];
 
   return (
-    <Page className="member-more-page" title="More">
+    <Page className="member-more-page grid gap-0" title="More">
       {error ? <Alert tone="danger" title="Profile failed">{error}</Alert> : null}
-      {loading ? <section className="panel"><Skeleton lines={8} /></section> : !data?.activeMembership ? (
+      {loading ? <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft"><Skeleton lines={8} /></section> : !data?.activeMembership ? (
         <EmptyState title="No active cycle membership" message="Ask an administrator to enroll you into a cycle before your profile can show cycle position." />
       ) : (
         <div className="member-more-mobile">

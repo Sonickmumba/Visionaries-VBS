@@ -274,6 +274,7 @@
 
 /* Premium mobile auth redesign */
 .auth-shell {
+  font-family: Poppins, Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   min-height: 100svh;
   display: grid;
   place-items: center;
@@ -291,14 +292,15 @@
   border: 1px solid rgba(247, 244, 238, 0.18);
   border-radius: 34px;
   background:
-    radial-gradient(circle at 86% 8%, rgba(217, 162, 39, 0.38), transparent 17%),
+    linear-gradient(180deg, rgba(13, 59, 46, 0.1), rgba(13, 59, 46, 0.12)),
+    url("../assets/auth/background-image-splash.png") center / cover no-repeat,
     linear-gradient(160deg, #0D3B2E 0%, #0D3B2E 42%, #127A5A 100%);
   box-shadow: 0 30px 90px rgba(31, 41, 51, 0.28);
   color: #F7F4EE;
 }
 
 .signup-phone {
-  min-height: min(940px, calc(100svh - 24px));
+  min-height: min(980px, calc(100svh - 24px));
 }
 
 .auth-status-bar {
@@ -357,18 +359,20 @@
   display: grid;
   justify-items: center;
   gap: 10px;
-  padding: 104px 34px 78px;
+  padding: 106px 34px 80px;
   text-align: center;
 }
 
 .login-hero {
-  min-height: 390px;
+  min-height: 430px;
 }
 
 .signup-hero {
   justify-items: start;
-  min-height: 350px;
-  padding: 84px 34px 50px;
+  align-content: start;
+  min-height: 490px;
+  gap: 42px;
+  padding: 88px 34px 54px;
   text-align: left;
 }
 
@@ -390,25 +394,25 @@
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
-  gap: 18px;
+  gap: 20px;
 }
 
 .signup-brand-row .auth-hero-mark .brand-mark {
-  width: 78px;
-  height: 78px;
+  width: 86px;
+  height: 86px;
 }
 
 .auth-hero h1 {
   margin: 0;
   color: #F7F4EE;
-  font-size: clamp(38px, 10vw, 54px);
+  font-size: clamp(40px, 10vw, 56px);
   font-weight: 950;
   line-height: 0.98;
   text-shadow: 0 5px 16px rgba(31, 41, 51, 0.26);
 }
 
 .signup-hero h1 {
-  font-size: clamp(34px, 8vw, 48px);
+  font-size: clamp(38px, 9vw, 54px);
 }
 
 .auth-gold-rule,
@@ -430,7 +434,7 @@
 
 .signup-hero h2 {
   color: #F7F4EE;
-  font-size: clamp(34px, 8vw, 46px);
+  font-size: clamp(38px, 9vw, 52px);
   text-shadow: 0 5px 16px rgba(31, 41, 51, 0.24);
 }
 
@@ -438,14 +442,14 @@
   margin: 0;
   max-width: 310px;
   color: #F7F4EE;
-  font-size: 18px;
+  font-size: 19px;
   font-weight: 750;
   line-height: 1.42;
 }
 
 .signup-brand-row p {
-  max-width: 240px;
-  font-size: 16px;
+  max-width: 260px;
+  font-size: 17px;
 }
 
 .auth-form-sheet {
@@ -466,9 +470,15 @@
 }
 
 .signup-sheet {
-  margin-top: -18px;
-  padding-top: 26px;
+  z-index: 5;
+  gap: 12px;
+  width: calc(100% - 56px);
+  min-height: auto;
+  margin: -92px 28px 0;
+  padding: 32px 28px 28px;
   border-radius: 28px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 22px 56px rgba(31, 41, 51, 0.16);
 }
 
 .auth-success-sheet {
@@ -483,18 +493,18 @@
   display: grid;
   grid-template-columns: 34px minmax(0, 1fr) auto;
   align-items: center;
-  min-height: 58px;
+  min-height: 62px;
   gap: 10px;
   border: 1px solid rgba(31, 41, 51, 0.18);
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.72);
-  padding: 0 14px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.78);
+  padding: 0 16px;
   color: #0D3B2E;
 }
 
 .signup-sheet .auth-input-shell {
-  min-height: 52px;
-  border-radius: 15px;
+  min-height: 58px;
+  border-radius: 18px;
 }
 
 .auth-input-shell input {
@@ -504,8 +514,8 @@
   outline: 0;
   background: transparent;
   color: #1F2933;
-  font-size: 16px;
-  font-weight: 750;
+  font-size: 17px;
+  font-weight: 650;
 }
 
 .auth-input-shell input::placeholder {
@@ -563,10 +573,10 @@
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: center;
-  min-height: 62px;
+  min-height: 64px;
   margin-top: 2px;
   border: 0;
-  border-radius: 16px;
+  border-radius: 18px;
   background: linear-gradient(135deg, #127A5A, #0D3B2E);
   color: #F7F4EE;
   padding: 0 24px;
@@ -584,6 +594,7 @@
 .signup-action {
   grid-template-columns: auto 1fr;
   justify-items: center;
+  margin-top: 2px;
 }
 
 .auth-action-icon,
@@ -622,41 +633,23 @@
   overflow: hidden;
   border-radius: 0 0 30px 30px;
   background:
-    radial-gradient(ellipse at 50% 100%, rgba(247, 244, 238, 0.94), rgba(247, 244, 238, 0.12) 58%, transparent 60%),
-    linear-gradient(165deg, rgba(13, 59, 46, 0.1), rgba(217, 162, 39, 0.18)),
+    linear-gradient(180deg, rgba(247, 244, 238, 0.28), rgba(247, 244, 238, 0.02)),
+    url("../assets/auth/background-image-splash.png") center bottom / cover no-repeat,
     #F7F4EE;
 }
 
 .auth-village-scene::before {
-  content: "";
-  position: absolute;
-  inset: auto -18px 0;
-  height: 118px;
-  background:
-    radial-gradient(circle at 9% 44%, #6F8F66 0 18px, transparent 19px),
-    radial-gradient(circle at 16% 48%, #8FA77B 0 15px, transparent 16px),
-    radial-gradient(circle at 84% 42%, #8FA77B 0 18px, transparent 19px),
-    linear-gradient(120deg, transparent 0 9%, #B49A52 9.5% 14%, transparent 14.5% 22%, #B49A52 22.5% 28%, transparent 28.5% 70%, #8A956B 70.5% 86%, transparent 86.5%),
-    linear-gradient(180deg, transparent 0 34%, rgba(13, 59, 46, 0.22) 35% 100%);
-  opacity: 0.74;
+  display: none;
 }
 
 .auth-village-scene::after {
-  content: "";
-  position: absolute;
-  right: 20px;
-  bottom: 18px;
-  width: 124px;
-  height: 82px;
-  background:
-    linear-gradient(135deg, transparent 0 20%, rgba(13, 59, 46, 0.34) 21% 50%, transparent 51%),
-    linear-gradient(180deg, rgba(13, 59, 46, 0.22) 0 24%, rgba(13, 59, 46, 0.36) 25% 100%);
-  clip-path: polygon(50% 0, 100% 32%, 88% 100%, 12% 100%, 0 32%);
-  opacity: 0.58;
+  display: none;
 }
 
 .auth-form-landscape {
+  min-height: 180px;
   margin: 0 -28px -18px;
+  background-position: center 72%;
 }
 
 .signup-landscape {
@@ -665,9 +658,11 @@
   right: 0;
   bottom: 0;
   z-index: 2;
-  min-height: 182px;
+  min-height: 230px;
   border-radius: 0;
   pointer-events: none;
+  background-position: center bottom;
+  opacity: 0.96;
 }
 
 .auth-switch-copy {
@@ -685,7 +680,7 @@
 }
 
 .signup-phone .auth-form-sheet {
-  padding-bottom: 24px;
+  padding-bottom: 28px;
 }
 
 .signup-phone::after {
@@ -730,11 +725,21 @@
   }
 
   .signup-hero {
-    padding-top: 76px;
-    min-height: 328px;
+    padding-top: 78px;
+    min-height: 440px;
+    gap: 34px;
   }
 
   .signup-sheet {
+    width: calc(100% - 44px);
+    margin-inline: 22px;
+    margin-top: -82px;
+    padding: 28px 24px 26px;
     gap: 10px;
+  }
+
+  .signup-brand-row .auth-hero-mark .brand-mark {
+    width: 78px;
+    height: 78px;
   }
 }

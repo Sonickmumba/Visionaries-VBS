@@ -162,8 +162,8 @@ function Metric({ title, value, note, tone, icon }) {
 function MemberForm({ form, setForm, errors, editing }) {
   const set = (key) => (value) => setForm((current) => ({ ...current, [key]: value }));
   return (
-    <div className="member-form">
-      <div className="form-grid two">
+    <div className="member-form grid gap-3.5">
+      <div className="form-grid two grid gap-3 md:grid-cols-2">
         <Field label="First name" value={form.firstName} onChange={set("firstName")} error={errors.firstName} required />
         <Field label="Last name" value={form.lastName} onChange={set("lastName")} error={errors.lastName} required />
         <Field label="Phone" value={form.phone} onChange={set("phone")} />
@@ -211,17 +211,17 @@ function MemberDetail({ detail, tab, setTab, onBack, onEdit, onToggle }) {
         </>
       )}
     >
-      <section className="member-detail-hero" aria-label="Member profile summary">
-        <div className="member-avatar large" aria-hidden="true">{initials(member)}</div>
+      <section className="member-detail-hero mb-4 grid items-center gap-3.5 rounded-mobile bg-gradient-to-br from-forest via-emerald to-forest p-5 text-cream shadow-lift md:grid-cols-[auto_minmax(0,1fr)_auto]" aria-label="Member profile summary">
+        <div className="member-avatar large grid h-[62px] w-[62px] place-items-center rounded-mobile bg-white/10 text-lg font-black text-gold" aria-hidden="true">{initials(member)}</div>
         <div>
-          <span>Member Profile</span>
-          <h2>{memberName(member)}</h2>
-          <p>{member?.member_code || "No member code"} · {member?.phone || "No phone"}</p>
+          <span className="text-xs font-black uppercase text-cream">Member Profile</span>
+          <h2 className="my-1 text-[26px] font-extrabold leading-tight text-cream">{memberName(member)}</h2>
+          <p className="m-0 text-sm font-extrabold text-cream/85">{member?.member_code || "No member code"} · {member?.phone || "No phone"}</p>
         </div>
         <Badge text={member?.is_active ? "ACTIVE" : "INACTIVE"} tone={member?.is_active ? "green" : "red"} />
       </section>
 
-      <div className="member-detail-mobile-actions mobile-only" aria-label="Member detail quick actions">
+      <div className="member-detail-mobile-actions mobile-only grid gap-2" aria-label="Member detail quick actions">
         <Button type="button" variant="secondary" onClick={onBack}>Back</Button>
         <Button type="button" variant="secondary" icon={Edit3} onClick={() => onEdit(member)}>Edit</Button>
         <Button type="button" variant={member?.is_active ? "danger" : "secondary"} onClick={() => onToggle(member)}>
@@ -229,30 +229,30 @@ function MemberDetail({ detail, tab, setTab, onBack, onEdit, onToggle }) {
         </Button>
       </div>
 
-      <section className="member-profile">
-        <div>
+      <section className="member-profile mb-5 grid gap-3 rounded-app border border-mist bg-cream p-4 shadow-soft md:grid-cols-2 xl:grid-cols-4">
+        <div className="grid min-w-0 grid-cols-[auto_1fr] items-center gap-x-2.5">
           <BadgeCheck size={18} aria-hidden="true" />
-          <span>Member Code</span>
-          <strong>{member?.member_code || "-"}</strong>
+          <span className="text-xs font-black uppercase text-charcoal/70">Member Code</span>
+          <strong className="break-words text-sm font-extrabold text-charcoal">{member?.member_code || "-"}</strong>
         </div>
-        <div>
+        <div className="grid min-w-0 grid-cols-[auto_1fr] items-center gap-x-2.5">
           <Smartphone size={18} aria-hidden="true" />
-          <span>Phone</span>
-          <strong>{member?.phone || "-"}</strong>
+          <span className="text-xs font-black uppercase text-charcoal/70">Phone</span>
+          <strong className="break-words text-sm font-extrabold text-charcoal">{member?.phone || "-"}</strong>
         </div>
-        <div>
+        <div className="grid min-w-0 grid-cols-[auto_1fr] items-center gap-x-2.5">
           <Mail size={18} aria-hidden="true" />
-          <span>Email</span>
-          <strong>{member?.email || "-"}</strong>
+          <span className="text-xs font-black uppercase text-charcoal/70">Email</span>
+          <strong className="break-words text-sm font-extrabold text-charcoal">{member?.email || "-"}</strong>
         </div>
-        <div>
+        <div className="grid min-w-0 grid-cols-[auto_1fr] items-center gap-x-2.5">
           <ShieldCheck size={18} aria-hidden="true" />
-          <span>Status</span>
+          <span className="text-xs font-black uppercase text-charcoal/70">Status</span>
           <Badge text={member?.is_active ? "ACTIVE" : "INACTIVE"} tone={member?.is_active ? "green" : "red"} />
         </div>
       </section>
 
-      <div className="metrics member-metrics">
+      <div className="metrics member-metrics grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <Metric title="Savings Principal" value={money(savings)} note="Ledger deposits" icon={PiggyBank} />
         <Metric title="Borrowed" value={money(loanIn)} note={`${money(repayments)} repaid`} tone="blue" icon={BadgeCheck} />
         <Metric title="Approved Declarations" value={stats.approved || 0} note={`${stats.awaitingReview || 0} awaiting review`} tone="green" icon={ClipboardList} />
@@ -273,13 +273,13 @@ function MemberDetail({ detail, tab, setTab, onBack, onEdit, onToggle }) {
       />
 
       {tab === "overview" ? (
-        <section className="panel">
-          <h2>Profile</h2>
-          <div className="detail-grid">
-            <div><strong>National ID</strong><span>{member?.national_id || "-"}</span></div>
-            <div><strong>Address</strong><span>{member?.address || "-"}</span></div>
-            <div><strong>Created</strong><span>{dateOnly(member?.created_at)}</span></div>
-            <div><strong>Updated</strong><span>{dateOnly(member?.updated_at)}</span></div>
+        <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+          <h2 className="mb-3 text-lg font-extrabold text-charcoal">Profile</h2>
+          <div className="detail-grid grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+            <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><strong className="text-xs font-black uppercase text-charcoal/70">National ID</strong><span className="break-words text-sm font-extrabold text-charcoal">{member?.national_id || "-"}</span></div>
+            <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><strong className="text-xs font-black uppercase text-charcoal/70">Address</strong><span className="break-words text-sm font-extrabold text-charcoal">{member?.address || "-"}</span></div>
+            <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><strong className="text-xs font-black uppercase text-charcoal/70">Created</strong><span className="break-words text-sm font-extrabold text-charcoal">{dateOnly(member?.created_at)}</span></div>
+            <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><strong className="text-xs font-black uppercase text-charcoal/70">Updated</strong><span className="break-words text-sm font-extrabold text-charcoal">{dateOnly(member?.updated_at)}</span></div>
           </div>
         </section>
       ) : null}
@@ -333,32 +333,32 @@ function MemberDetail({ detail, tab, setTab, onBack, onEdit, onToggle }) {
 function MemberCards({ members, busy, onView, onEdit, onEnroll, onToggle }) {
   if (!members.length) return null;
   return (
-    <div className="member-mobile-cards" aria-label="Member cards">
+    <div className="member-mobile-cards grid gap-3" aria-label="Member cards">
       {members.map((member) => (
-        <article className="member-card" key={member.id}>
-          <div className="member-card-head">
-            <div className="member-avatar" aria-hidden="true">{initials(member)}</div>
+        <article className="member-card grid gap-3 rounded-mobile border border-mist bg-cream p-3 shadow-soft" key={member.id}>
+          <div className="member-card-head grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2.5">
+            <div className="member-avatar grid h-11 w-11 place-items-center rounded-mobile bg-cream text-sm font-black text-emerald" aria-hidden="true">{initials(member)}</div>
             <div>
               <strong>{memberName(member)}</strong>
               <span>{member.member_code || "No code"} · {member.phone || "No phone"}</span>
             </div>
             <Badge text={member.is_active ? "ACTIVE" : "INACTIVE"} tone={member.is_active ? "green" : "red"} />
           </div>
-          <div className="member-card-values">
-            <div>
-              <span>Savings</span>
-              <strong>{money(member.savings_principal)}</strong>
+          <div className="member-card-values grid gap-2.5 md:grid-cols-3">
+            <div className="grid gap-1 rounded-app border border-mist bg-cream p-3">
+              <span className="whitespace-nowrap text-[11px] font-black uppercase text-charcoal/70">Savings</span>
+              <strong className="break-words text-base font-extrabold text-charcoal">{money(member.savings_principal)}</strong>
             </div>
-            <div>
-              <span>Borrowed</span>
-              <strong>{money(member.cumulative_borrowed)}</strong>
+            <div className="grid gap-1 rounded-app border border-mist bg-cream p-3">
+              <span className="whitespace-nowrap text-[11px] font-black uppercase text-charcoal/70">Borrowed</span>
+              <strong className="break-words text-base font-extrabold text-charcoal">{money(member.cumulative_borrowed)}</strong>
             </div>
-            <div>
-              <span>Declaration</span>
+            <div className="grid gap-1 rounded-app border border-mist bg-cream p-3">
+              <span className="whitespace-nowrap text-[11px] font-black uppercase text-charcoal/70">Declaration</span>
               <Badge text={member.current_declaration_status || "NONE"} tone={badgeTone(member.current_declaration_status)} />
             </div>
           </div>
-          <div className="member-card-actions">
+          <div className="member-card-actions grid grid-cols-2 gap-2">
             <Button type="button" variant="secondary" size="sm" onClick={() => onView(member.id)}>Details</Button>
             <Button type="button" variant="secondary" size="sm" onClick={() => onEdit(member)}>Edit</Button>
             <EnrollmentButton member={member} onEnroll={onEnroll} />
@@ -596,12 +596,12 @@ export function MemberManagementPage({
       <DevEmailLink delivery={devDelivery} title="Development member invitation link" />
       {error ? <Alert tone="danger" title="Member action failed">{error}</Alert> : null}
 
-      <div className="metrics member-metrics">
+      <div className="metrics member-metrics grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         {metrics.map((metric) => <Metric key={metric.title} {...metric} />)}
       </div>
 
-      <section className="panel member-filters">
-        <div className="form-grid three">
+      <section className="panel member-filters mb-5 rounded-app border border-mist bg-cream p-4 shadow-soft">
+        <div className="form-grid three grid gap-3 md:grid-cols-3">
           <Field label="Search members" value={searchTerm} onChange={setSearchTerm} placeholder="Name or member code" />
           <Select
             label="Status"
@@ -613,18 +613,18 @@ export function MemberManagementPage({
               { value: "INACTIVE", label: "Inactive" },
             ]}
           />
-          <div className="button-row member-search-actions">
+          <div className="button-row member-search-actions flex flex-wrap items-end gap-2.5 self-end">
             <Button type="button" icon={Search} onClick={() => loadMembers(1)}>Search</Button>
             <Button type="button" variant="secondary" onClick={() => { setSearchTerm(""); setStatusFilter(""); }}>Clear</Button>
           </div>
         </div>
       </section>
 
-      <section className="panel">
-        <div className="panel-head">
-          <h2>Member List</h2>
+      <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+        <div className="panel-head mb-3 flex items-center justify-between gap-3">
+          <h2 className="text-lg font-extrabold text-charcoal">Member List</h2>
         </div>
-        <div className="member-list-mobile-actions mobile-only" aria-label="Member list quick actions">
+        <div className="member-list-mobile-actions mobile-only grid gap-2" aria-label="Member list quick actions">
           <Button type="button" icon={Plus} onClick={openCreate}>Create</Button>
           <Button type="button" variant="secondary" icon={UserPlus} onClick={() => openEnroll()}>Enroll</Button>
           <Button type="button" variant="secondary" icon={RefreshCw} onClick={() => loadMembers(pagination.page)} loading={loading}>Refresh</Button>
@@ -644,7 +644,7 @@ export function MemberManagementPage({
                   <Badge text={member.current_declaration_status || "NONE"} tone={badgeTone(member.current_declaration_status)} />,
                   member.approved_declarations || 0,
                   <Badge text={member.is_active ? "ACTIVE" : "INACTIVE"} tone={member.is_active ? "green" : "red"} />,
-                  <div className="button-row compact">
+                  <div className="button-row compact flex flex-nowrap items-center gap-1.5">
                     <Button type="button" variant="secondary" size="sm" onClick={() => loadDetail(member.id)}>View Details</Button>
                     <Button type="button" variant="secondary" size="sm" onClick={() => openEdit(member)}>Edit</Button>
                     <EnrollmentButton member={member} onEnroll={openEnroll} />
@@ -683,7 +683,7 @@ export function MemberManagementPage({
         size="lg"
         onClose={() => setFormMode("")}
         footer={(
-          <div className="button-row">
+          <div className="button-row flex flex-wrap items-center gap-2.5">
             <Button type="button" variant="secondary" onClick={() => setFormMode("")}>Cancel</Button>
             {formMode === "create" ? (
               <Button type="button" variant="secondary" onClick={(event) => submitMember(event, true)} loading={busy === "save"}>Save + Add Another</Button>
@@ -709,7 +709,7 @@ export function MemberManagementPage({
         )}
       >
         <form id="member-enroll-form" onSubmit={submitEnroll}>
-          <div className="form-grid two">
+          <div className="form-grid two grid gap-3 md:grid-cols-2">
             <Select
               label="Member"
               value={enrollForm.memberId}

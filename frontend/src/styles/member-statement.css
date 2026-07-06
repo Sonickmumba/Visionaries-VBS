@@ -1,54 +1,5 @@
-.member-statement-metrics {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-.member-statement-context {
-  margin-bottom: 18px;
-}
-
-.member-statement-context .form-grid > div,
-.statement-detail-grid > div {
-  min-width: 0;
-}
-
-.member-statement-context strong,
-.statement-detail-grid strong {
-  display: block;
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 800;
-  margin-bottom: 6px;
-  text-transform: uppercase;
-}
-
-.member-statement-context span,
-.statement-detail-grid span {
-  display: block;
-  color: var(--text);
-  font-weight: 800;
-  overflow-wrap: anywhere;
-}
-
-.member-statement-detail-grid,
-.statement-detail-grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-.statement-detail-grid {
-  display: grid;
-  gap: 14px;
-}
-
 .member-statement-mobile {
   display: none;
-}
-
-@media (max-width: 1024px) {
-  .member-statement-metrics,
-  .member-statement-detail-grid,
-  .statement-detail-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 }
 
 @media (max-width: 767px) {

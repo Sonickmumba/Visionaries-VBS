@@ -31,7 +31,7 @@ function initials(row) {
 function ShareoutHero({ shareout, surplus, isMember }) {
   const status = shareout?.shareout?.status || "DRAFT";
   return (
-    <section className="shareout-hero rounded-app bg-gradient-to-br from-forest to-emerald p-5 text-cream shadow-lift md:grid md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:gap-4">
+    <section className="shareout-hero grid gap-4 rounded-app bg-gradient-to-br from-forest to-emerald p-5 text-cream shadow-lift md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
       <div>
         <span className="text-xs font-extrabold uppercase text-cream/85">{isMember ? "My End-of-Cycle Shareout" : "Cycle Shareout"}</span>
         <h2 className="my-1.5 text-2xl font-black leading-tight text-cream">{surplus?.cycle?.name || shareout?.cycle?.name || "Visionaries Village Banking"}</h2>

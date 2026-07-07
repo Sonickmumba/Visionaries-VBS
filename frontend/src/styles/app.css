@@ -1202,11 +1202,13 @@ th {
 
 .splash-copy {
   position: relative;
-  z-index: 4;
+  z-index: 6;
+  display: grid;
   justify-items: center;
-  align-content: center;
-  min-height: 580px;
-  padding: 110px 30px 32px;
+  align-content: start;
+  min-height: auto;
+  padding: clamp(86px, 11svh, 112px) 30px 250px;
+  pointer-events: none;
 }
 
 .splash-mark .brand-mark {
@@ -1225,16 +1227,27 @@ th {
 }
 
 .splash-copy p {
-  margin-top: 26px;
-  font-size: 19px;
-  color: #F7F4EE;
+  position: relative;
+  z-index: 7;
+  margin: 26px 0 0;
+  color: #D9A227;
+  font-size: clamp(19px, 5.1vw, 24px);
+  font-weight: 900;
+  line-height: 1.22;
+  text-shadow: 0 4px 16px rgba(13, 59, 46, 0.5);
 }
 
 .splash-copy small {
+  position: relative;
+  z-index: 7;
+  display: block;
   max-width: 330px;
-  font-size: 18px;
+  margin-top: 8px;
+  color: rgba(247, 244, 238, 0.94);
+  font-size: clamp(17px, 4.6vw, 21px);
   font-weight: 850;
   line-height: 1.35;
+  text-shadow: 0 4px 16px rgba(13, 59, 46, 0.56);
 }
 
 .splash-scene {
@@ -1327,5 +1340,9 @@ th {
     border: 0;
     border-radius: 0;
     box-shadow: none;
+  }
+
+  .splash-copy {
+    padding-bottom: 238px;
   }
 }

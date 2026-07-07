@@ -152,6 +152,10 @@
       linear-gradient(145deg, #0D3B2E 0%, #127A5A 58%, #127A5A 100%);
   }
 
+  .notifications-hero p {
+    font-size: 12px;
+  }
+
   .notifications-mobile-topbar {
     min-height: 42px;
     align-items: center;

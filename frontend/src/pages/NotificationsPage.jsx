@@ -191,9 +191,9 @@ export function NotificationsPage({ notificationsApi = api, initialEvents = null
           <Card title="Loans" value={view.loanCount} note="Requests and disbursements" icon={FileBarChart} tone="blue" />
           <Card title="Financial Posts" value={view.financialCount} note="Penalties, CI, closing" icon={Bell} tone="amber" />
         </div>
-        <div className="admin-mobile-action-row notifications-mobile-actions mobile-only" aria-label="Notification quick actions">
+        {/* <div className="admin-mobile-action-row notifications-mobile-actions mobile-only" aria-label="Notification quick actions">
           <Button type="button" variant="secondary" icon={FileBarChart} onClick={openReports}>Reports</Button>
-        </div>
+        </div> */}
         <section className="panel">
           <div className="panel-head notifications-panel-head">
             <h2>Recent Notifications</h2>

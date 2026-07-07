@@ -8,11 +8,11 @@ import { AuthLayout } from "../../layouts/AppLayouts.jsx";
 import "../../styles/auth.css";
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const phoneFrameClass = "relative min-h-[min(932px,calc(100svh-24px))] w-[min(100%,430px)] overflow-hidden rounded-[34px] border border-cream/20 font-sans text-cream shadow-[0_30px_90px_rgba(31,41,51,0.28)] max-[430px]:min-h-[100svh] max-[430px]:w-full max-[430px]:rounded-none max-[430px]:border-0 max-[430px]:shadow-none";
-const backButtonClass = "absolute left-[22px] top-[58px] z-[8] grid h-[42px] w-[42px] place-items-center rounded-app border border-cream/25 bg-cream/10 text-cream backdrop-blur transition hover:bg-cream/20";
-const loginHeroClass = "relative z-[2] grid min-h-[436px] justify-items-center gap-2.5 px-[34px] pb-[84px] pt-[112px] text-center max-[430px]:min-h-[416px] max-[430px]:px-[26px] max-[430px]:pt-[102px]";
-const loginSheetClass = "relative z-[4] -mt-[58px] grid min-h-[496px] w-full gap-3.5 rounded-t-[38px] px-[38px] pb-[34px] pt-12 text-charcoal shadow-[0_-20px_46px_rgba(31,41,51,0.14)] max-[430px]:-mt-14 max-[430px]:min-h-[calc(100svh-358px)] max-[430px]:px-6 max-[430px]:pb-7 max-[430px]:pt-[42px]";
-const primaryActionClass = "mt-1.5 grid min-h-16 grid-cols-[1fr_auto] items-center rounded-[18px] border-0 bg-gradient-to-br from-emerald to-forest px-6 text-xl font-black text-cream shadow-[0_14px_34px_rgba(13,59,46,0.22)] transition hover:-translate-y-0.5 disabled:cursor-wait disabled:opacity-70";
+const phoneFrameClass = "relative min-h-[min(932px,calc(100svh-24px))] w-[min(100%,430px)] overflow-hidden rounded-[34px] border border-cream/20 font-sans text-cream shadow-[0_30px_90px_rgba(31,41,51,0.28)] max-[430px]:flex max-[430px]:h-[100svh] max-[430px]:min-h-0 max-[430px]:w-full max-[430px]:flex-col max-[430px]:rounded-none max-[430px]:border-0 max-[430px]:shadow-none";
+const backButtonClass = "absolute left-[22px] top-[58px] z-[8] grid h-[42px] w-[42px] place-items-center rounded-app border border-cream/25 bg-cream/10 text-cream backdrop-blur transition hover:bg-cream/20 max-[430px]:top-6";
+const loginHeroClass = "relative z-[2] grid min-h-[436px] justify-items-center gap-2.5 px-[34px] pb-[84px] pt-[112px] text-center max-[430px]:min-h-0 max-[430px]:shrink-0 max-[430px]:gap-1.5 max-[430px]:px-[26px] max-[430px]:pb-12 max-[430px]:pt-[72px]";
+const loginSheetClass = "relative z-[4] -mt-[58px] grid min-h-[496px] w-full gap-3.5 rounded-t-[38px] px-[38px] pb-[34px] pt-12 text-charcoal shadow-[0_-20px_46px_rgba(31,41,51,0.14)] max-[430px]:-mt-8 max-[430px]:min-h-0 max-[430px]:flex-1 max-[430px]:gap-2.5 max-[430px]:px-6 max-[430px]:pb-[max(18px,env(safe-area-inset-bottom))] max-[430px]:pt-7";
+const primaryActionClass = "mt-1.5 grid min-h-16 grid-cols-[1fr_auto] items-center rounded-[18px] border-0 bg-gradient-to-br from-emerald to-forest px-6 text-xl font-black text-cream shadow-[0_14px_34px_rgba(13,59,46,0.22)] transition hover:-translate-y-0.5 disabled:cursor-wait disabled:opacity-70 max-[430px]:min-h-[58px] max-[430px]:text-lg";
 const inputActionClass = "grid h-[34px] w-[34px] place-items-center rounded-full border-0 bg-transparent text-forest transition hover:bg-emerald/10";
 const phoneBackgroundStyle = {
   backgroundImage: "radial-gradient(circle at 88% 9%, rgba(217, 162, 39, 0.42), transparent 16%), linear-gradient(160deg, #0D3B2E 0%, #0D3B2E 58%, #127A5A 100%)",
@@ -157,11 +157,11 @@ export function LoginPage({
           </button>
         ) : null}
         <div className={loginHeroClass}>
-          <BrandMark size="lg" className="auth-hero-mark text-cream" />
-          <h1 className="whitespace-nowrap text-[clamp(42px,11vw,56px)] font-black leading-none text-cream drop-shadow-[0_5px_16px_rgba(31,41,51,0.26)]">Village Banking</h1>
+          <BrandMark size="lg" className="auth-hero-mark text-cream max-[430px]:[&_.brand-mark]:!h-20 max-[430px]:[&_.brand-mark]:!w-20" />
+          <h1 className="whitespace-nowrap text-[clamp(38px,10vw,56px)] font-black leading-none text-cream drop-shadow-[0_5px_16px_rgba(31,41,51,0.26)]">Village Banking</h1>
           <span className="h-[3px] w-[58px] rounded-full bg-gold shadow-[0_4px_12px_rgba(217,162,39,0.36)]" aria-hidden="true" />
-          <h2 className="mt-3 text-[clamp(28px,7vw,36px)] font-black leading-none text-gold">Welcome Back</h2>
-          <p className="m-0 max-w-[310px] text-[19px] font-bold leading-snug text-cream">Sign in to continue saving and growing together.</p>
+          <h2 className="mt-2 text-[clamp(26px,7vw,36px)] font-black leading-none text-gold">Welcome Back</h2>
+          <p className="m-0 max-w-[310px] text-[clamp(15px,4.2vw,19px)] font-bold leading-snug text-cream">Sign in to continue saving and growing together.</p>
         </div>
 
         <section className={loginSheetClass} style={sheetBackgroundStyle} aria-label="Log in form">
@@ -223,7 +223,7 @@ export function LoginPage({
             <ArrowRight size={26} aria-hidden="true" />
           </button>
 
-          <p className="mb-0 mt-[86px] self-end text-center text-base font-semibold text-charcoal">Don't have an account? <button className="border-0 bg-transparent font-black text-forest" type="button" disabled={loading} onClick={navigateSignup}>Sign Up</button></p>
+          <p className="mb-0 mt-auto self-end text-center text-base font-semibold text-charcoal">Don't have an account? <button className="border-0 bg-transparent font-black text-forest" type="button" disabled={loading} onClick={navigateSignup}>Sign Up</button></p>
         </section>
       </form>
     </AuthLayout>

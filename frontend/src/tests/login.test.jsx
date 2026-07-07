@@ -98,7 +98,8 @@ describe("login screen", () => {
 
     expect(source).toContain("splashArtwork");
     expect(source).toContain("min-h-[min(932px,calc(100svh-24px))]");
-    expect(source).toContain("max-[430px]:min-h-[100svh]");
+    expect(source).toContain("max-[430px]:h-[100svh]");
+    expect(source).toContain("max-[430px]:flex-col");
     expect(source).toContain("grid-cols-[34px_minmax(0,1fr)_auto]");
     expect(source).toContain("bg-gradient-to-br from-emerald to-forest");
     expect(source).toContain("focus-within:border-emerald");

@@ -10,13 +10,13 @@ import "../../styles/auth.css";
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const signupPhoneClass = "relative min-h-[min(982px,calc(100svh-24px))] w-[min(100%,430px)] overflow-hidden rounded-[34px] border border-cream/20 font-sans text-cream shadow-[0_30px_90px_rgba(31,41,51,0.28)] after:absolute after:bottom-2.5 after:left-1/2 after:z-[7] after:h-[5px] after:w-[122px] after:-translate-x-1/2 after:rounded-full after:bg-cream/90 max-[430px]:flex max-[430px]:h-[100svh] max-[430px]:min-h-0 max-[430px]:w-full max-[430px]:flex-col max-[430px]:rounded-none max-[430px]:border-0 max-[430px]:shadow-none";
-const signupHeroClass = "relative z-[2] grid min-h-[520px] content-start justify-items-start gap-[50px] px-[34px] pb-[58px] pt-[92px] text-left max-[430px]:min-h-0 max-[430px]:shrink-0 max-[430px]:gap-5 max-[430px]:px-6 max-[430px]:pb-9 max-[430px]:pt-[54px]";
-const signupSheetClass = "relative z-[5] mx-7 -mt-32 grid gap-2.5 rounded-[28px] bg-white/95 px-7 pb-7 pt-[30px] text-charcoal shadow-[0_22px_56px_rgba(31,41,51,0.16)] max-[430px]:mx-4 max-[430px]:-mt-8 max-[430px]:flex-1 max-[430px]:gap-1.5 max-[430px]:overflow-hidden max-[430px]:px-4 max-[430px]:pb-[max(18px,env(safe-area-inset-bottom))] max-[430px]:pt-4";
+const signupHeroClass = "relative z-[2] grid min-h-[520px] content-start justify-items-start gap-[50px] px-[34px] pb-[58px] pt-[92px] text-left max-[430px]:min-h-0 max-[430px]:shrink-0 max-[430px]:gap-9 max-[430px]:px-6 max-[430px]:pb-[58px] max-[430px]:pt-[86px] max-[380px]:gap-5 max-[380px]:pb-9 max-[380px]:pt-[54px]";
+const signupSheetClass = "relative z-[5] mx-7 -mt-32 grid gap-2.5 rounded-[28px] bg-white/95 px-7 pb-7 pt-[30px] text-charcoal shadow-[0_22px_56px_rgba(31,41,51,0.16)] max-[430px]:mx-5 max-[430px]:-mt-[118px] max-[430px]:flex-1 max-[430px]:gap-2 max-[430px]:overflow-hidden max-[430px]:px-5 max-[430px]:pb-[max(20px,env(safe-area-inset-bottom))] max-[430px]:pt-6 max-[380px]:mx-4 max-[380px]:-mt-8 max-[380px]:gap-1.5 max-[380px]:px-4 max-[380px]:pt-4";
 const successHeroClass = "relative z-[2] grid min-h-[300px] justify-items-center gap-2.5 px-[34px] pb-12 pt-[92px] text-center";
 const successSheetClass = "relative z-[5] mx-6 -mt-9 grid gap-3.5 rounded-[28px] bg-white/95 p-7 text-charcoal shadow-[0_22px_56px_rgba(31,41,51,0.16)]";
-const backButtonClass = "absolute left-[22px] top-[58px] z-[8] grid h-[42px] w-[42px] place-items-center rounded-app border border-cream/25 bg-cream/10 text-cream backdrop-blur transition hover:bg-cream/20 max-[430px]:top-4";
+const backButtonClass = "absolute left-[22px] top-[58px] z-[8] grid h-[42px] w-[42px] place-items-center rounded-app border border-cream/25 bg-cream/10 text-cream backdrop-blur transition hover:bg-cream/20 max-[430px]:top-7 max-[380px]:top-4";
 const inputActionClass = "grid h-[34px] w-[34px] place-items-center rounded-full border-0 bg-transparent text-forest transition hover:bg-emerald/10";
-const signupActionClass = "grid min-h-[66px] grid-cols-[auto_1fr] items-center gap-4 rounded-[18px] border-0 bg-gradient-to-br from-emerald to-forest px-6 text-center text-[22px] font-black text-cream shadow-[0_14px_34px_rgba(13,59,46,0.22)] transition hover:-translate-y-0.5 disabled:cursor-wait disabled:opacity-70 max-[430px]:min-h-[54px] max-[430px]:text-lg";
+const signupActionClass = "grid min-h-[66px] grid-cols-[auto_1fr] items-center gap-4 rounded-[18px] border-0 bg-gradient-to-br from-emerald to-forest px-6 text-center text-[22px] font-black text-cream shadow-[0_14px_34px_rgba(13,59,46,0.22)] transition hover:-translate-y-0.5 disabled:cursor-wait disabled:opacity-70 max-[430px]:min-h-[58px] max-[430px]:text-xl max-[380px]:min-h-[54px] max-[380px]:text-lg";
 const phoneBackgroundStyle = {
   backgroundImage: "radial-gradient(circle at 88% 9%, rgba(217, 162, 39, 0.42), transparent 16%), linear-gradient(180deg, #0D3B2E 0%, #0D3B2E 56%, #127A5A 100%)",
 };
@@ -75,10 +75,10 @@ export async function performSignup({ form, authApi = api }) {
 
 function AuthInput({ label, icon: Icon, error, action, ...props }) {
   return (
-    <label className={`relative grid min-h-[54px] grid-cols-[34px_minmax(0,1fr)_auto] items-center gap-2.5 rounded-[18px] border bg-white/80 px-4 text-forest transition focus-within:border-emerald focus-within:shadow-[0_0_0_3px_rgba(18,122,90,0.14)] max-[430px]:min-h-[44px] max-[430px]:rounded-[14px] max-[430px]:px-3 ${error ? "border-alert" : "border-charcoal/20"}`}>
+    <label className={`relative grid min-h-[54px] grid-cols-[34px_minmax(0,1fr)_auto] items-center gap-2.5 rounded-[18px] border bg-white/80 px-4 text-forest transition focus-within:border-emerald focus-within:shadow-[0_0_0_3px_rgba(18,122,90,0.14)] max-[430px]:min-h-[48px] max-[430px]:rounded-[16px] max-[430px]:px-4 max-[380px]:min-h-[44px] max-[380px]:rounded-[14px] max-[380px]:px-3 ${error ? "border-alert" : "border-charcoal/20"}`}>
       <span className="sr-only">{label}</span>
       {Icon ? <Icon size={23} aria-hidden="true" /> : null}
-      <input className="min-w-0 border-0 bg-transparent text-[17px] font-semibold text-charcoal outline-none placeholder:text-charcoal/55 max-[430px]:text-sm" aria-label={label} aria-invalid={error ? "true" : undefined} {...props} />
+      <input className="min-w-0 border-0 bg-transparent text-[17px] font-semibold text-charcoal outline-none placeholder:text-charcoal/55 max-[430px]:text-[15px] max-[380px]:text-sm" aria-label={label} aria-invalid={error ? "true" : undefined} {...props} />
       {action}
       {error ? <small className="col-span-full -mt-0.5 mb-1 ml-11 text-xs font-extrabold text-alert">{error}</small> : null}
     </label>
@@ -167,15 +167,15 @@ export function SignupPage({ onSignup, onBackToLogin, onBackToWelcome, authApi =
         ) : null}
         <div className={signupHeroClass}>
           <div className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-[22px]">
-            <BrandMark size="lg" className="auth-hero-mark text-cream max-[430px]:[&_.brand-mark]:!h-16 max-[430px]:[&_.brand-mark]:!w-16" />
+            <BrandMark size="lg" className="auth-hero-mark text-cream max-[430px]:[&_.brand-mark]:!h-[82px] max-[430px]:[&_.brand-mark]:!w-[82px] max-[380px]:[&_.brand-mark]:!h-16 max-[380px]:[&_.brand-mark]:!w-16" />
             <div>
-              <h1 className="m-0 text-[clamp(34px,9vw,58px)] font-black leading-none text-cream drop-shadow-[0_5px_16px_rgba(31,41,51,0.26)]">Visionaries<br />Village Banking</h1>
-              <p className="m-0 mt-1 max-w-[280px] text-[clamp(12px,3.5vw,17px)] font-bold leading-snug text-cream">Stronger Together. Saving Today, Building Tomorrow.</p>
+              <h1 className="m-0 text-[clamp(42px,10vw,58px)] font-black leading-none text-cream drop-shadow-[0_5px_16px_rgba(31,41,51,0.26)] max-[380px]:text-[clamp(34px,9vw,48px)]">Visionaries<br />Village Banking</h1>
+              <p className="m-0 mt-2 max-w-[280px] text-[clamp(15px,4vw,17px)] font-bold leading-snug text-cream max-[380px]:mt-1 max-[380px]:text-[clamp(12px,3.5vw,15px)]">Stronger Together. Saving Today, Building Tomorrow.</p>
             </div>
           </div>
           <div>
-            <h2 className="m-0 text-[clamp(32px,8.5vw,56px)] font-black leading-none text-cream drop-shadow-[0_5px_16px_rgba(31,41,51,0.24)]">Create Account</h2>
-            <p className="m-0 mt-1 max-w-[310px] text-[clamp(13px,3.8vw,19px)] font-bold leading-snug text-cream">Join your community and start saving together.</p>
+            <h2 className="m-0 text-[clamp(40px,9.5vw,56px)] font-black leading-none text-cream drop-shadow-[0_5px_16px_rgba(31,41,51,0.24)] max-[380px]:text-[clamp(32px,8.5vw,44px)]">Create Account</h2>
+            <p className="m-0 mt-2 max-w-[310px] text-[clamp(17px,4.5vw,19px)] font-bold leading-snug text-cream max-[380px]:mt-1 max-[380px]:text-[clamp(13px,3.8vw,17px)]">Join your community and start saving together.</p>
           </div>
         </div>
 
@@ -223,8 +223,8 @@ export function SignupPage({ onSignup, onBackToLogin, onBackToWelcome, authApi =
             )}
           />
 
-          <label className={`flex items-center gap-3 text-[15px] font-semibold text-charcoal max-[430px]:gap-2 max-[430px]:text-xs ${errors.terms ? "text-alert" : ""}`}>
-            <input className="h-6 w-6 rounded-app border border-forest accent-emerald max-[430px]:h-5 max-[430px]:w-5" type="checkbox" checked={acceptedTerms} onChange={(event) => {
+          <label className={`flex items-center gap-3 text-[15px] font-semibold text-charcoal max-[430px]:gap-2 max-[430px]:text-[13px] max-[380px]:text-xs ${errors.terms ? "text-alert" : ""}`}>
+            <input className="h-6 w-6 rounded-app border border-forest accent-emerald max-[430px]:h-[22px] max-[430px]:w-[22px] max-[380px]:h-5 max-[380px]:w-5" type="checkbox" checked={acceptedTerms} onChange={(event) => {
               setAcceptedTerms(event.target.checked);
               if (errors.terms) setErrors((current) => ({ ...current, terms: "" }));
             }} />
@@ -235,11 +235,11 @@ export function SignupPage({ onSignup, onBackToLogin, onBackToWelcome, authApi =
           {error ? <Alert tone="danger" title="Unable to create account">{error}</Alert> : null}
 
           <button type="submit" className={signupActionClass} disabled={loading} aria-busy={loading ? "true" : undefined}>
-            <span className="grid h-12 w-12 place-items-center rounded-full bg-gold text-forest max-[430px]:h-10 max-[430px]:w-10"><ArrowRight size={24} aria-hidden="true" /></span>
+            <span className="grid h-12 w-12 place-items-center rounded-full bg-gold text-forest max-[430px]:h-11 max-[430px]:w-11 max-[380px]:h-10 max-[380px]:w-10"><ArrowRight size={24} aria-hidden="true" /></span>
             <span>Create Account</span>
           </button>
 
-          <p className="my-0 text-center text-base font-semibold text-charcoal max-[430px]:text-sm">Already have an account? <button className="border-0 bg-transparent font-black text-forest" type="button" disabled={loading} onClick={onBackToLogin}>Log In</button></p>
+          <p className="my-0 text-center text-base font-semibold text-charcoal max-[430px]:text-[15px] max-[380px]:text-sm">Already have an account? <button className="border-0 bg-transparent font-black text-forest" type="button" disabled={loading} onClick={onBackToLogin}>Log In</button></p>
         </section>
         <div className="pointer-events-none absolute bottom-0 left-0 right-0 z-[2] min-h-[260px] opacity-95" style={landscapeStyle} aria-hidden="true" />
       </form>

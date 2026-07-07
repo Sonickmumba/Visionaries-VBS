@@ -62,7 +62,7 @@ export function MemberMorePage({ setPage, onLogout, memberApi = api, initialData
     { title: "Notifications", subtitle: "Group activity and approvals", icon: Bell, page: "my-notifications" },
     { title: "Declarations", subtitle: "Submit savings, repayments, and loan requests", icon: ClipboardList, page: "my-declaration" },
     { title: "Statements", subtitle: "View your full member statement", icon: FileText, page: "my-statement" },
-    { title: "Payment Proofs", subtitle: "Open declarations to manage proof uploads", icon: Upload, page: "my-declaration" },
+    // { title: "Payment Proofs", subtitle: "Open declarations to manage proof uploads", icon: Upload, page: "my-declaration" },
     { title: "Reports", subtitle: "Transparent group reports", icon: FileBarChart, page: "my-reports" },
     { title: "Settings", subtitle: "Account settings coming soon", icon: Settings, page: null },
     { title: "Logout", subtitle: "Sign out from this device", icon: LogOut, page: "logout" },
@@ -84,7 +84,7 @@ export function MemberMorePage({ setPage, onLogout, memberApi = api, initialData
               <div className="member-more-avatar" aria-hidden="true">{initials(name)}</div>
               <div>
                 <h2>{name}</h2>
-                <Badge text="Active Member" tone="green" />
+                <Badge text="Active" tone="green" />
                 <p>Member Code: {data?.me?.member?.member_code || "Member"}</p>
               </div>
             </section>
@@ -92,7 +92,7 @@ export function MemberMorePage({ setPage, onLogout, memberApi = api, initialData
             <section className="member-cycle-position" aria-label="Cycle position">
               <div className="member-cycle-position-head">
                 <span><ShieldCheck size={17} aria-hidden="true" /> Cycle Position</span>
-                <Badge text="Transparent" tone="blue" />
+                {/* <Badge text="Transparent" tone="blue" /> */}
               </div>
               <div className="member-cycle-position-grid">
                 <div>

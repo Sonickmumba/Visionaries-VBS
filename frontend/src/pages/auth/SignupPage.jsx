@@ -11,7 +11,7 @@ import "../../styles/auth.css";
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const signupPhoneClass = "relative min-h-[min(982px,calc(100svh-24px))] w-[min(100%,430px)] overflow-hidden rounded-[34px] border border-cream/20 font-sans text-cream shadow-[0_30px_90px_rgba(31,41,51,0.28)] after:absolute after:bottom-2.5 after:left-1/2 after:z-[7] after:h-[5px] after:w-[122px] after:-translate-x-1/2 after:rounded-full after:bg-cream/90 max-[430px]:flex max-[430px]:h-[100svh] max-[430px]:min-h-0 max-[430px]:w-full max-[430px]:flex-col max-[430px]:rounded-none max-[430px]:border-0 max-[430px]:shadow-none";
 const signupHeroClass = "relative z-[2] grid min-h-[520px] content-start justify-items-start gap-[50px] px-[34px] pb-[58px] pt-[92px] text-left max-[430px]:min-h-0 max-[430px]:shrink-0 max-[430px]:gap-9 max-[430px]:px-6 max-[430px]:pb-[58px] max-[430px]:pt-[86px] max-[380px]:gap-5 max-[380px]:pb-9 max-[380px]:pt-[54px]";
-const signupSheetClass = "relative z-[5] mx-7 -mt-32 grid gap-2.5 rounded-[28px] bg-white/95 px-7 pb-7 pt-[30px] text-charcoal shadow-[0_22px_56px_rgba(31,41,51,0.16)] max-[430px]:mx-5 max-[430px]:-mt-[118px] max-[430px]:flex-1 max-[430px]:gap-2 max-[430px]:overflow-hidden max-[430px]:px-5 max-[430px]:pb-[max(20px,env(safe-area-inset-bottom))] max-[430px]:pt-6 max-[380px]:mx-4 max-[380px]:-mt-8 max-[380px]:gap-1.5 max-[380px]:px-4 max-[380px]:pt-4";
+const signupSheetClass = "relative z-[5] mx-7 -mt-32 grid gap-2.5 rounded-[28px] bg-white/95 px-7 pb-7 pt-[30px] text-charcoal shadow-[0_22px_56px_rgba(31,41,51,0.16)] max-[430px]:mx-5 max-[430px]:-mt-12 max-[430px]:flex-1 max-[430px]:gap-2 max-[430px]:overflow-hidden max-[430px]:px-5 max-[430px]:pb-[max(18px,env(safe-area-inset-bottom))] max-[430px]:pt-5 max-[380px]:mx-4 max-[380px]:-mt-8 max-[380px]:gap-1.5 max-[380px]:px-4 max-[380px]:pt-4";
 const successHeroClass = "relative z-[2] grid min-h-[300px] justify-items-center gap-2.5 px-[34px] pb-12 pt-[92px] text-center";
 const successSheetClass = "relative z-[5] mx-6 -mt-9 grid gap-3.5 rounded-[28px] bg-white/95 p-7 text-charcoal shadow-[0_22px_56px_rgba(31,41,51,0.16)]";
 const backButtonClass = "absolute left-[22px] top-[58px] z-[8] grid h-[42px] w-[42px] place-items-center rounded-app border border-cream/25 bg-cream/10 text-cream backdrop-blur transition hover:bg-cream/20 max-[430px]:top-7 max-[380px]:top-4";
@@ -75,10 +75,10 @@ export async function performSignup({ form, authApi = api }) {
 
 function AuthInput({ label, icon: Icon, error, action, ...props }) {
   return (
-    <label className={`relative grid min-h-[54px] grid-cols-[34px_minmax(0,1fr)_auto] items-center gap-2.5 rounded-[18px] border bg-white/80 px-4 text-forest transition focus-within:border-emerald focus-within:shadow-[0_0_0_3px_rgba(18,122,90,0.14)] max-[430px]:min-h-[48px] max-[430px]:rounded-[16px] max-[430px]:px-4 max-[380px]:min-h-[44px] max-[380px]:rounded-[14px] max-[380px]:px-3 ${error ? "border-alert" : "border-charcoal/20"}`}>
+    <label className={`relative grid min-h-[54px] grid-cols-[34px_minmax(0,1fr)_auto] items-center gap-2.5 rounded-[18px] border bg-white/80 px-4 text-forest transition focus-within:border-emerald focus-within:shadow-[0_0_0_3px_rgba(18,122,90,0.14)] max-[430px]:min-h-[44px] max-[430px]:grid-cols-[26px_minmax(0,1fr)_auto] max-[430px]:gap-1.5 max-[430px]:rounded-[15px] max-[430px]:px-3 max-[380px]:rounded-[14px] ${error ? "border-alert" : "border-charcoal/20"}`}>
       <span className="sr-only">{label}</span>
       {Icon ? <Icon size={23} aria-hidden="true" /> : null}
-      <input className="min-w-0 border-0 bg-transparent text-[17px] font-semibold text-charcoal outline-none placeholder:text-charcoal/55 max-[430px]:text-[15px] max-[380px]:text-sm" aria-label={label} aria-invalid={error ? "true" : undefined} {...props} />
+      <input className="min-w-0 border-0 bg-transparent text-[17px] font-semibold text-charcoal outline-none placeholder:text-charcoal/55 max-[430px]:text-[13px] max-[380px]:text-xs" aria-label={label} aria-invalid={error ? "true" : undefined} {...props} />
       {action}
       {error ? <small className="col-span-full -mt-0.5 mb-1 ml-11 text-xs font-extrabold text-alert">{error}</small> : null}
     </label>
@@ -180,16 +180,18 @@ export function SignupPage({ onSignup, onBackToLogin, onBackToWelcome, authApi =
         </div>
 
         <section className={signupSheetClass} aria-label="Create account form">
-          <AuthInput
-            label="First Name"
-            value={form.firstName}
-            onChange={(event) => update("firstName", event.target.value)}
-            autoComplete="given-name"
-            placeholder="First Name"
-            error={errors.firstName}
-            icon={UserRound}
-          />
-          <AuthInput label="Last Name" value={form.lastName} onChange={(event) => update("lastName", event.target.value)} autoComplete="family-name" placeholder="Last Name" error={errors.lastName} icon={UserRound} />
+          <div className="grid gap-2 max-[430px]:grid-cols-2">
+            <AuthInput
+              label="First Name"
+              value={form.firstName}
+              onChange={(event) => update("firstName", event.target.value)}
+              autoComplete="given-name"
+              placeholder="First Name"
+              error={errors.firstName}
+              icon={UserRound}
+            />
+            <AuthInput label="Last Name" value={form.lastName} onChange={(event) => update("lastName", event.target.value)} autoComplete="family-name" placeholder="Last Name" error={errors.lastName} icon={UserRound} />
+          </div>
           <AuthInput label="Phone Number" value={form.phone} onChange={(event) => update("phone", event.target.value)} autoComplete="tel" placeholder="Phone Number" icon={Smartphone} />
           <AuthInput label="Email" value={form.email} onChange={(event) => update("email", event.target.value)} type="email" autoComplete="email" placeholder="Email" error={errors.email} icon={Mail} />
           <AuthInput

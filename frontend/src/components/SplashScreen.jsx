@@ -8,7 +8,7 @@ export function SplashScreen({ onContinue, loadingLabel = "Checking secure sessi
   return (
     <main className="splash-screen" aria-label="Visionaries Village Banking splash screen">
       <section className="splash-phone">
-        <div className="auth-status-bar" aria-hidden="true"><span>9:41</span><span className="auth-device-icons">▮▮▮ ))) ▭</span></div>
+        {/* <div className="auth-status-bar" aria-hidden="true"><span>9:41</span><span className="auth-device-icons">▮▮▮ ))) ▭</span></div> */}
         <div className="splash-orbit" aria-hidden="true" />
         <div className="splash-copy">
           <BrandMark size="lg" className="splash-mark text-cream" />
@@ -20,7 +20,7 @@ export function SplashScreen({ onContinue, loadingLabel = "Checking secure sessi
         <div className="auth-village-scene splash-scene" aria-hidden="true" />
         <div className="splash-gold-wave" aria-hidden="true" />
         {isWelcome ? (
-          <button className="splash-continue inline-flex min-h-12 items-center justify-center gap-2 rounded-app bg-cream px-5 py-3 text-sm font-extrabold text-forest shadow-soft transition hover:-translate-y-0.5" type="button" onClick={onContinue}>
+          <button className="splash-continue inline-flex min-h-12 items-center justify-center gap-4 rounded-app bg-cream px-5 py-3 text-sm font-extrabold text-forest shadow-soft transition hover:-translate-y-0.5" type="button" onClick={onContinue}>
             <span className="splash-continue-icon"><ArrowRight size={22} aria-hidden="true" /></span>
             Get Started
           </button>

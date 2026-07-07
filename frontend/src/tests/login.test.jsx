@@ -75,9 +75,13 @@ describe("login screen", () => {
     expect(html).toContain("auth-shell");
     expect(html).toContain("Welcome Back");
     expect(html).toContain("Sign in to continue saving and growing together.");
-    expect(html).toContain("auth-phone");
-    expect(html).toContain("auth-form-sheet");
-    expect(html).toContain("login-sheet");
+    expect(html).toContain("font-sans");
+    expect(html).toContain("min-h-[min(932px,calc(100svh-24px))]");
+    expect(html).toContain("bg-gradient-to-br");
+    expect(html).toContain("focus-within:border-emerald");
+    expect(html).not.toContain("auth-phone");
+    expect(html).not.toContain("auth-form-sheet");
+    expect(html).not.toContain("login-sheet");
     expect(html).not.toContain("Continue with Biometrics");
   });
 
@@ -89,18 +93,15 @@ describe("login screen", () => {
   });
 
   it("keeps phone auth screens compact enough for primary actions", () => {
-    const css = fs.readFileSync(path.join(process.cwd(), "src/styles/auth.css"), "utf8");
+    const source = fs.readFileSync(path.join(process.cwd(), "src/pages/auth/LoginPage.jsx"), "utf8");
+    const tailwind = fs.readFileSync(path.join(process.cwd(), "tailwind.config.cjs"), "utf8");
 
-    expect(css).toContain("@media (max-width: 480px)");
-    expect(css).toContain(".auth-phone");
-    expect(css).toContain(".auth-form-sheet");
-    expect(css).toContain(".auth-input-shell");
-    expect(css).toContain(".auth-primary-action");
-    expect(css).toContain(".login-sheet");
-    expect(css).toContain("background-image-splash.png");
-    expect(css).toContain("display: none");
-    expect(css).toContain(".auth-back-button svg");
-    expect(css).toContain("overflow: visible");
-    expect(css).toContain("stroke-width: 2.25");
+    expect(source).toContain("splashArtwork");
+    expect(source).toContain("min-h-[min(932px,calc(100svh-24px))]");
+    expect(source).toContain("max-[430px]:min-h-[100svh]");
+    expect(source).toContain("grid-cols-[34px_minmax(0,1fr)_auto]");
+    expect(source).toContain("bg-gradient-to-br from-emerald to-forest");
+    expect(source).toContain("focus-within:border-emerald");
+    expect(tailwind).toContain('"Poppins"');
   });
 });

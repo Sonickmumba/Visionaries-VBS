@@ -1,4 +1,6 @@
 import React from "react";
+import fs from "node:fs";
+import path from "node:path";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import { performSignup, SignupPage, signupPayload, validateSignupForm } from "../pages/auth/SignupPage.jsx";
@@ -65,8 +67,11 @@ describe("signup screen", () => {
     expect(form).toContain("Create Account");
     expect(form).toContain("Back to welcome");
     expect(form).toContain("Join your community and start saving together.");
-    expect(form).toContain("auth-phone");
-    expect(form).toContain("auth-form-sheet");
+    expect(form).toContain("font-sans");
+    expect(form).toContain("min-h-[min(982px,calc(100svh-24px))]");
+    expect(form).toContain("focus-within:border-emerald");
+    expect(form).not.toContain("auth-phone");
+    expect(form).not.toContain("auth-form-sheet");
     expect(form).toContain("First Name");
     expect(form).toContain("Last Name");
     expect(form).toContain("Phone Number");
@@ -75,5 +80,16 @@ describe("signup screen", () => {
     expect(form).toContain("Terms &amp; Privacy Policy");
     expect(form).toContain("Log In");
     expect(form).not.toContain("Continue with Biometrics");
+  });
+
+  it("uses Tailwind utilities for signup frame, inputs, and actions", () => {
+    const source = fs.readFileSync(path.join(process.cwd(), "src/pages/auth/SignupPage.jsx"), "utf8");
+
+    expect(source).toContain("splashArtwork");
+    expect(source).toContain("min-h-[min(982px,calc(100svh-24px))]");
+    expect(source).toContain("after:absolute after:bottom-2.5");
+    expect(source).toContain("grid-cols-[34px_minmax(0,1fr)_auto]");
+    expect(source).toContain("bg-gradient-to-br from-emerald to-forest");
+    expect(source).toContain("focus-within:border-emerald");
   });
 });

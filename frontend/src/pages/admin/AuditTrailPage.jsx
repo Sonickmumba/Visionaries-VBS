@@ -69,21 +69,26 @@ export function auditDetailPairs(row) {
 }
 
 function DetailValue({ label, value }) {
-  return <div><strong>{label}</strong><span>{value}</span></div>;
+  return (
+    <div className="grid gap-1 rounded-app border border-mist bg-cream p-3">
+      <strong className="text-xs font-black uppercase text-charcoal/70">{label}</strong>
+      <span className="break-words text-sm font-extrabold text-charcoal">{value}</span>
+    </div>
+  );
 }
 
 function AuditHero({ metrics, section }) {
   return (
-    <section className="ledger-audit-hero">
+    <section className="ledger-audit-hero mb-4 grid gap-4 rounded-mobile bg-gradient-to-br from-forest via-emerald to-forest p-5 text-cream shadow-lift md:grid-cols-[minmax(0,1fr)_auto]" aria-label="Audit governance overview">
       <div>
-        <span>Governance Log</span>
-        <h2>{section === "overrides" ? "Override Review" : section === "reversals" ? "Reversal Review" : "Administrative Events"}</h2>
-        <p>Trace who acted, what changed, when it happened, and why it was approved.</p>
+        <span className="text-xs font-black uppercase text-cream">Governance Log</span>
+        <h2 className="my-1 text-[25px] font-extrabold leading-tight text-cream">{section === "overrides" ? "Override Review" : section === "reversals" ? "Reversal Review" : "Administrative Events"}</h2>
+        <p className="m-0 text-sm font-extrabold text-cream/85">Trace who acted, what changed, when it happened, and why it was approved.</p>
       </div>
-      <div className="ledger-audit-hero-stat">
-        <span>Audit Logs</span>
-        <strong>{metrics.logs}</strong>
-        <small>{metrics.overrides} overrides · {metrics.reversals} reversals</small>
+      <div className="ledger-audit-hero-stat grid min-w-40 content-center gap-1 rounded-mobile border border-cream/20 bg-white/10 p-3 backdrop-blur">
+        <span className="text-xs font-black uppercase text-cream">Audit Logs</span>
+        <strong className="break-words text-[22px] font-extrabold text-cream">{metrics.logs}</strong>
+        <small className="text-xs font-extrabold text-cream/85">{metrics.overrides} overrides · {metrics.reversals} reversals</small>
       </div>
     </section>
   );
@@ -92,7 +97,7 @@ function AuditHero({ metrics, section }) {
 function AuditCards({ section, rows, onSelect }) {
   if (!rows.length) return null;
   return (
-    <div className="ledger-audit-mobile-cards" aria-label="Mobile audit cards">
+    <div className="ledger-audit-mobile-cards grid gap-3" aria-label="Mobile audit cards">
       {rows.map((row) => {
         const action = row.action || row.transaction_type || row.field_name || row.target_table;
         const title = section === "overrides"
@@ -106,27 +111,27 @@ function AuditCards({ section, rows, onSelect }) {
             ? titleCase(row.transaction_type)
             : `${row.entity_table || "-"}${row.entity_id ? `:${String(row.entity_id).slice(0, 8)}` : ""}`;
         return (
-          <article key={row.id || `${title}-${row.created_at || row.posted_at}`} className="ledger-audit-card">
-            <div className="ledger-audit-card-head">
-              <div className="ledger-audit-avatar">{String(title || "A").slice(0, 2).toUpperCase()}</div>
+          <article key={row.id || `${title}-${row.created_at || row.posted_at}`} className="ledger-audit-card grid gap-3 rounded-mobile border border-mist bg-cream p-3 shadow-soft">
+            <div className="ledger-audit-card-head grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2.5">
+              <div className="ledger-audit-avatar grid h-11 w-11 place-items-center rounded-mobile bg-cream text-sm font-black text-emerald" aria-hidden="true">{String(title || "A").slice(0, 2).toUpperCase()}</div>
               <div>
-                <strong>{title}</strong>
-                <span>{subtitle}</span>
+                <strong className="block break-words text-sm font-extrabold text-charcoal">{title}</strong>
+                <span className="block break-words text-xs font-extrabold text-charcoal/70">{subtitle}</span>
               </div>
               <Badge text={titleCase(action)} tone={actionTone(row.action || row.transaction_type)} />
             </div>
-            <div className="ledger-audit-card-values">
-              <div><span>Date</span><strong>{dateOnly(row.created_at || row.posted_at)}</strong></div>
-              <div><span>Reason</span><strong>{row.reason || row.reversal_reason || "-"}</strong></div>
+            <div className="ledger-audit-card-values grid grid-cols-2 gap-2.5">
+              <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Date</span><strong className="break-words text-base font-extrabold text-charcoal">{dateOnly(row.created_at || row.posted_at)}</strong></div>
+              <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Reason</span><strong className="break-words text-base font-extrabold text-charcoal">{row.reason || row.reversal_reason || "-"}</strong></div>
               {section === "overrides" ? (
                 <>
-                  <div><span>Original</span><strong>{formatValue(row.original_value)}</strong></div>
-                  <div><span>Override</span><strong>{formatValue(row.overridden_value)}</strong></div>
+                  <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Original</span><strong className="break-words text-base font-extrabold text-charcoal">{formatValue(row.original_value)}</strong></div>
+                  <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Override</span><strong className="break-words text-base font-extrabold text-charcoal">{formatValue(row.overridden_value)}</strong></div>
                 </>
               ) : section === "reversals" ? (
-                <div><span>Amount</span><strong>{money(row.amount)}</strong></div>
+                <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Amount</span><strong className="break-words text-base font-extrabold text-charcoal">{money(row.amount)}</strong></div>
               ) : (
-                <div><span>IP</span><strong>{row.ip_address || "-"}</strong></div>
+                <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">IP</span><strong className="break-words text-base font-extrabold text-charcoal">{row.ip_address || "-"}</strong></div>
               )}
             </div>
             <Button type="button" variant="secondary" size="sm" onClick={() => onSelect(row)}>View Audit Detail</Button>
@@ -140,34 +145,34 @@ function AuditCards({ section, rows, onSelect }) {
 function AuditDetail({ row, onClose }) {
   if (!row) return null;
   return (
-    <section className="audit-detail">
-      <div className="ledger-audit-detail-hero">
-        <div className="ledger-audit-avatar">{String(row.actor_email || row.target_table || row.transaction_type || "A").slice(0, 2).toUpperCase()}</div>
+    <section className="audit-detail grid gap-3.5">
+      <div className="ledger-audit-detail-hero mb-0 grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3">
+        <div className="ledger-audit-avatar grid h-11 w-11 place-items-center rounded-mobile bg-cream text-sm font-black text-emerald" aria-hidden="true">{String(row.actor_email || row.target_table || row.transaction_type || "A").slice(0, 2).toUpperCase()}</div>
         <div>
-          <span>Audit Detail</span>
-          <h2>{row.actor_email || titleCase(row.target_table || row.transaction_type)}</h2>
-          <p>{row.reason || row.reversal_reason || "Traceable administrative activity"}</p>
+          <span className="text-xs font-black uppercase text-emerald">Audit Detail</span>
+          <h2 className="my-0.5 text-xl font-extrabold text-charcoal">{row.actor_email || titleCase(row.target_table || row.transaction_type)}</h2>
+          <p className="m-0 break-words text-sm font-extrabold text-charcoal/75">{row.reason || row.reversal_reason || "Traceable administrative activity"}</p>
         </div>
         <Badge text={titleCase(row.action || row.transaction_type || row.target_table)} tone={actionTone(row.action)} />
       </div>
-      <div className="detail-grid audit-detail-grid">
+      <div className="detail-grid audit-detail-grid grid gap-3 md:grid-cols-2 xl:grid-cols-4">
         {auditDetailPairs(row).map(([key, value]) => (
           <DetailValue key={key} label={titleCase(key)} value={formatValue(value)} />
         ))}
       </div>
       {(row.before_data || row.after_data) ? (
-        <div className="audit-json-grid">
-          <section className="panel nested-panel">
-            <h3>Before</h3>
+        <div className="audit-json-grid mt-3.5 grid gap-3.5 md:grid-cols-2">
+          <section className="panel nested-panel m-0 rounded-app border border-mist bg-cream p-4 shadow-soft">
+            <h3 className="m-0 mb-2.5 text-sm font-extrabold text-charcoal">Before</h3>
             <pre className="json-view">{formatValue(row.before_data || {})}</pre>
           </section>
-          <section className="panel nested-panel">
-            <h3>After</h3>
+          <section className="panel nested-panel m-0 rounded-app border border-mist bg-cream p-4 shadow-soft">
+            <h3 className="m-0 mb-2.5 text-sm font-extrabold text-charcoal">After</h3>
             <pre className="json-view">{formatValue(row.after_data || {})}</pre>
           </section>
         </div>
       ) : null}
-      <div className="button-row">
+      <div className="button-row flex flex-wrap items-center gap-2.5">
         <Button type="button" variant="secondary" onClick={onClose}>Close Detail</Button>
       </div>
     </section>
@@ -289,7 +294,7 @@ export function AuditTrailPage({
   return (
     <Page
       title="Audit Trail"
-      className="ledger-audit-page"
+      className="ledger-audit-page grid gap-0"
       actions={(
         <>
           <Button type="button" icon={RefreshCw} onClick={() => loadAudit(filters, 1)} loading={loading}>Apply Filters</Button>
@@ -302,14 +307,14 @@ export function AuditTrailPage({
 
       <AuditHero metrics={metrics} section={section} />
 
-      <div className="admin-mobile-action-row audit-mobile-actions-row mobile-only" aria-label="Audit quick actions">
+      <div className="admin-mobile-action-row audit-mobile-actions-row mobile-only flex gap-2" aria-label="Audit quick actions">
         <Button type="button" icon={RefreshCw} onClick={() => loadAudit(filters, 1)} loading={loading}>Apply</Button>
         <Button type="button" variant="secondary" onClick={clearFilters}>Clear</Button>
         <Button type="button" variant="secondary" icon={Download} onClick={exportCsv}>Export</Button>
       </div>
 
-      <section className="panel audit-filters">
-        <div className="form-grid three">
+      <section className="panel audit-filters mb-5 rounded-app border border-mist bg-cream p-4 shadow-soft">
+        <div className="form-grid three grid gap-3 md:grid-cols-3">
           <Select
             label="Action"
             value={filters.action}
@@ -325,7 +330,7 @@ export function AuditTrailPage({
         </div>
       </section>
 
-      <div className="metrics ledger-audit-metrics">
+      <div className="metrics ledger-audit-metrics grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <Card title="Audit Logs" value={metrics.logs} note="Filtered events" icon={Activity} />
         <Card title="Overrides" value={metrics.overrides} note="Manual value changes" tone="amber" icon={SlidersHorizontal} />
         <Card title="Reversals" value={metrics.reversals} note="Ledger corrections" tone="red" icon={RotateCcw} />
@@ -350,15 +355,15 @@ export function AuditTrailPage({
         onClose={() => setSelected(null)}
       >
         {selected ? (
-          <div className="audit-detail-modal">
+          <div className="audit-detail-modal pr-0.5">
             <AuditDetail row={selected} onClose={() => setSelected(null)} />
           </div>
         ) : null}
       </Modal>
 
-      <section className="panel">
-        <div className="panel-head">
-          <h2>{section === "overrides" ? "Overrides" : section === "reversals" ? "Reversal Transactions" : "Audit Logs"}</h2>
+      <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+        <div className="panel-head mb-3 flex items-center justify-between gap-3">
+          <h2 className="m-0 text-lg font-extrabold text-charcoal">{section === "overrides" ? "Overrides" : section === "reversals" ? "Reversal Transactions" : "Audit Logs"}</h2>
           <Badge text={`${rows.length} rows`} tone="blue" />
         </div>
         {loading ? <Skeleton lines={8} /> : rows.length ? (

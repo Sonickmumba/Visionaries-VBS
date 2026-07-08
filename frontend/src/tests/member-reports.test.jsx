@@ -51,9 +51,11 @@ describe("member reports", () => {
   });
 
   it("keeps member reports wired into lazy app routing", () => {
+    const source = fs.readFileSync(path.join(process.cwd(), "src/pages/member/MemberReportsPage.jsx"), "utf8");
     const appSource = fs.readFileSync(path.join(process.cwd(), "src/PortalApp.jsx"), "utf8");
     const layoutSource = fs.readFileSync(path.join(process.cwd(), "src/layouts/AppLayouts.jsx"), "utf8");
 
+    expect(source).toContain('setPage?.("member-more")');
     expect(appSource).toContain("MemberReportsPage");
     expect(appSource).toContain('case "my-reports"');
     expect(layoutSource).toContain('["my-reports", "Reports", FileBarChart]');

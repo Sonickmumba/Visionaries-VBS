@@ -8,8 +8,8 @@
 }
 
 .cycle-detail-head {
-  background: white;
-  border: 1px solid #d8e1eb;
+  background: #F7F4EE;
+  border: 1px solid #E6E8EB;
   padding: 18px;
   display: flex;
   align-items: flex-start;
@@ -18,7 +18,7 @@
 }
 
 .cycle-detail-head span {
-  color: #65758b;
+  color: #1F2933;
   font-size: 12px;
   font-weight: 800;
   text-transform: uppercase;
@@ -31,12 +31,12 @@
 
 .cycle-detail-head p {
   margin: 0;
-  color: #65758b;
+  color: #1F2933;
 }
 
 .cycle-actions {
-  background: white;
-  border: 1px solid #d8e1eb;
+  background: #F7F4EE;
+  border: 1px solid #E6E8EB;
   padding: 12px;
 }
 
@@ -68,7 +68,7 @@
 .cycle-form h3 {
   margin: 14px 0 10px;
   font-size: 14px;
-  color: #42526b;
+  color: #1F2933;
   text-transform: uppercase;
 }
 

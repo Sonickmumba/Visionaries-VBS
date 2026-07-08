@@ -6,20 +6,20 @@
 .settings-hero {
   border-radius: 18px;
   background:
-    radial-gradient(circle at 88% 14%, rgba(250, 204, 21, 0.24), transparent 22%),
-    linear-gradient(145deg, #007a43 0%, #006b3d 58%, #0f766e 100%);
-  color: white;
+    radial-gradient(circle at 88% 14%, rgba(217, 162, 39, 0.24), transparent 22%),
+    linear-gradient(145deg, #0D3B2E 0%, #127A5A 62%, #0D3B2E 100%);
+  color: #F7F4EE;
   padding: 18px;
   margin-bottom: 16px;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 16px;
-  box-shadow: 0 18px 46px rgba(16, 42, 67, 0.14);
+  box-shadow: 0 18px 46px rgba(31, 41, 51, 0.14);
 }
 
 .settings-hero span,
 .settings-hero-stat span {
-  color: #d9f99d;
+  color: #F7F4EE;
   font-size: 12px;
   font-weight: 900;
   text-transform: uppercase;
@@ -27,22 +27,22 @@
 
 .settings-hero h2 {
   margin: 4px 0;
-  color: white;
+  color: #F7F4EE;
   font-size: 25px;
   line-height: 1.08;
 }
 
 .settings-hero p {
   margin: 0;
-  color: #dcfce7;
+  color: #F7F4EE;
   font-weight: 800;
 }
 
 .settings-hero-stat {
   min-width: 150px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(247, 244, 238, 0.18);
   border-radius: 16px;
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(247, 244, 238, 0.12);
   padding: 12px;
   display: grid;
   align-content: center;
@@ -50,17 +50,51 @@
 }
 
 .settings-hero-stat strong {
-  color: white;
+  color: #F7F4EE;
   font-size: 24px;
 }
 
 .settings-hero-stat small {
-  color: #dcfce7;
+  color: #F7F4EE;
   font-weight: 800;
 }
 
 .settings-metrics {
   grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.settings-account-panel {
+  border: 1px solid #F7F4EE;
+  border-radius: 18px;
+  background: #F7F4EE;
+  padding: 14px;
+  margin-bottom: 16px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+}
+
+.settings-account-panel span {
+  color: #E25D5D;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.settings-account-panel strong {
+  display: block;
+  margin-top: 3px;
+  color: #1F2933;
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.settings-account-panel p {
+  margin: 4px 0 0;
+  color: #1F2933;
+  font-size: 13px;
+  font-weight: 750;
 }
 
 .settings-form-panel,
@@ -79,7 +113,7 @@
   align-items: center;
   gap: 9px;
   font-weight: 800;
-  color: #172033;
+  color: #1F2933;
 }
 
 .settings-check input {
@@ -98,13 +132,13 @@
 }
 
 .settings-card {
-  border: 1px solid #d8e1eb;
+  border: 1px solid #E6E8EB;
   border-radius: 16px;
-  background: white;
+  background: #F7F4EE;
   padding: 13px;
   display: grid;
   gap: 12px;
-  box-shadow: 0 12px 30px rgba(16, 42, 67, 0.06);
+  box-shadow: 0 12px 30px rgba(31, 41, 51, 0.06);
 }
 
 .settings-card-head {
@@ -121,7 +155,7 @@
 }
 
 .settings-card-head span {
-  color: #65758b;
+  color: #1F2933;
   font-size: 12px;
   font-weight: 800;
 }
@@ -130,8 +164,8 @@
   width: 44px;
   height: 44px;
   border-radius: 16px;
-  background: #dcfce7;
-  color: #007a43;
+  background: #F7F4EE;
+  color: #127A5A;
   display: grid;
   place-items: center;
   font-weight: 900;
@@ -145,23 +179,23 @@
 }
 
 .settings-card-values div {
-  border: 1px solid #e5edf5;
+  border: 1px solid #E6E8EB;
   border-radius: 14px;
-  background: #f8fbf9;
+  background: #F7F4EE;
   padding: 11px;
   display: grid;
   gap: 4px;
 }
 
 .settings-card-values span {
-  color: #65758b;
+  color: #1F2933;
   font-size: 11px;
   font-weight: 900;
   text-transform: uppercase;
 }
 
 .settings-card-values strong {
-  color: #102a43;
+  color: #1F2933;
   font-size: 16px;
   font-weight: 900;
   overflow-wrap: anywhere;
@@ -207,6 +241,14 @@
   .settings-hero-stat {
     width: 100%;
     min-width: 0;
+  }
+
+  .settings-account-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-account-panel .btn {
+    width: 100%;
   }
 
   .settings-metrics,

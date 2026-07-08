@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Banknote, ClipboardList, FileText, Gauge, PiggyBank, Receipt, RefreshCw, Scale } from "lucide-react";
+import { ArrowLeft, ClipboardList, FileText, Info, PiggyBank, Receipt, RefreshCw, Scale } from "lucide-react";
 import { api } from "../../api/client.js";
 import {
   Alert,
@@ -10,7 +10,6 @@ import {
   EmptyState,
   MobileActionTile,
   MobileBottomNav,
-  MobileHeader,
   MobileListCard,
   MobileMetricCard,
   MobileScreenShell,
@@ -39,35 +38,42 @@ function transactionTone(type) {
 }
 
 function DetailValue({ label, value }) {
-  return <div><strong>{label}</strong><span>{value}</span></div>;
+  return (
+    <div className="grid gap-1 rounded-app border border-mist bg-cream p-3">
+      <strong className="text-xs font-black uppercase text-charcoal/70">{label}</strong>
+      <span className="break-words text-sm font-extrabold text-charcoal">{value}</span>
+    </div>
+  );
 }
 
 function MemberSavingsMobileHero({ summary, activeMembership, setPage }) {
+  const capPercent = summary.savingsCap > 0 ? Math.min(100, Math.round((summary.savingsPrincipal / summary.savingsCap) * 100)) : 0;
   return (
     <section className="member-savings-hero" aria-label="Savings account summary">
       <div className="member-savings-hero-head">
-        <div>
-          <span>{activeMembership?.cycle_name || "Active cycle"}</span>
-          <h2>My Savings</h2>
-        </div>
-        <Badge text={titleCase(activeMembership?.cycle_status)} tone="green" />
+        <button type="button" aria-label="Back to dashboard" onClick={() => setPage?.("member-dashboard")}><ArrowLeft size={18} aria-hidden="true" /></button>
+        <span hidden>Member Savings</span>
+        <h2>Savings</h2>
+        <button type="button" aria-label="Savings information"><Info size={18} aria-hidden="true" /></button>
       </div>
 
       <div className="member-savings-hero-main">
         <span>Accumulated Savings</span>
         <strong>{money(summary.accumulatedSavings)}</strong>
-        <small>{money(summary.savingsPrincipal)} principal saved</small>
+        <small>Principal Saved: {money(summary.savingsPrincipal)} of {money(summary.savingsCap)} cap</small>
+        <div className="member-savings-progress" aria-label={`Principal savings cap progress ${capPercent}%`}>
+          <span style={{ width: `${capPercent}%` }} />
+        </div>
+        <em>{capPercent}% of principal cap</em>
       </div>
 
-      <div className="member-savings-hero-actions">
-        <Button type="button" size="sm" onClick={() => setPage?.("my-declaration")}>Declare Savings</Button>
-        <Button type="button" size="sm" variant="secondary" onClick={() => setPage?.("my-statement")}>Statement</Button>
+      <div className="member-savings-progress-stats" aria-label="Savings progress details">
+        <DetailValue label="Principal" value={money(summary.savingsPrincipal)} />
+        <DetailValue label="Interest" value={money(summary.savingsInterest)} />
+        <DetailValue label="Remaining" value={money(summary.savingsCapRemaining)} />
       </div>
 
-      <div className="member-savings-hero-strip">
-        <DetailValue label="Interest Earned" value={money(summary.savingsInterest)} />
-        <DetailValue label="Cap Remaining" value={money(summary.savingsCapRemaining)} />
-      </div>
+      <small className="member-savings-cap-note">Savings cap applies to principal only</small>
     </section>
   );
 }
@@ -166,7 +172,7 @@ export function MemberSavingsPage({
 
   return (
     <Page
-      className="member-savings-page"
+      className="member-savings-page grid gap-0"
       title="My Savings"
       actions={(
         <>
@@ -178,18 +184,12 @@ export function MemberSavingsPage({
     >
       {error ? <Alert tone="danger" title="Savings failed">{error}</Alert> : null}
 
-      {loading ? <section className="panel"><Skeleton lines={8} /></section> : !activeMembership ? (
+      {loading ? <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft"><Skeleton lines={8} /></section> : !activeMembership ? (
         <EmptyState title="No active cycle membership" message="Ask an administrator to enroll you into a cycle before savings details can appear." />
       ) : (
         <>
           <div className="member-savings-mobile">
             <MobileScreenShell bottomNav={bottomNav}>
-              <MobileHeader
-                eyebrow="Member Savings"
-                title={memberName(data?.me?.member || data?.savings?.member)}
-                subtitle={activeMembership.cycle_name || "Active cycle"}
-              />
-
               <MemberSavingsMobileHero
                 summary={summary}
                 activeMembership={activeMembership}
@@ -203,7 +203,7 @@ export function MemberSavingsPage({
                 <MobileMetricCard label="Membership Fee" value={money(summary.membershipFeePaid)} note="Once per cycle" icon={FileText} tone="purple" />
               </div>
 
-              <section className="member-mobile-section" aria-label="Savings actions">
+              <section className="member-mobile-section member-savings-mobile-secondary" aria-label="Savings actions">
                 <div className="member-mobile-section-head">
                   <h2>Actions</h2>
                 </div>
@@ -214,7 +214,7 @@ export function MemberSavingsPage({
                 </div>
               </section>
 
-              <section className="member-mobile-section">
+              <section className="member-mobile-section member-savings-mobile-secondary">
                 <div className="member-mobile-section-head">
                   <h2>Savings Breakdown</h2>
                   <Badge text={`Remaining ${money(summary.savingsCapRemaining)}`} tone="blue" />
@@ -231,8 +231,8 @@ export function MemberSavingsPage({
 
               <section className="member-mobile-section">
                 <div className="member-mobile-section-head">
-                  <h2>Savings Ledger</h2>
-                  <Badge text={`${entries.length} records`} tone="blue" />
+                  <h2>Recent Savings Deposits</h2>
+                  <button type="button" className="member-mobile-text-link" onClick={() => setPage?.("my-statement")}>View All</button>
                 </div>
                 <div className="member-mobile-list">
                   {entries.length ? entries.map((entry) => (
@@ -249,7 +249,7 @@ export function MemberSavingsPage({
                 </div>
               </section>
 
-              <section className="member-mobile-section">
+              <section className="member-mobile-section member-savings-mobile-secondary">
                 <div className="member-mobile-section-head">
                   <h2>One-Time Contributions</h2>
                   <Badge text={`${contributions.length} records`} tone="blue" />
@@ -267,23 +267,25 @@ export function MemberSavingsPage({
                   )) : <p className="muted">No one-time contributions found.</p>}
                 </div>
               </section>
+
+              <Button type="button" className="member-savings-primary-action" icon={ClipboardList} onClick={() => setPage?.("my-declaration")}>Make Declaration</Button>
             </MobileScreenShell>
           </div>
 
           <div className="member-savings-desktop">
-            <div className="metrics member-savings-metrics">
+            <div className="metrics member-savings-metrics grid gap-4 md:grid-cols-2 xl:grid-cols-4">
               <Card title="My Accumulated Savings" value={money(summary.accumulatedSavings)} note={`${money(summary.savingsPrincipal)} principal`} icon={PiggyBank} />
               <Card title="Savings Interest" value={money(summary.savingsInterest)} note="Compounded monthly" tone="amber" icon={Receipt} />
               <Card title="Cap Remaining" value={money(summary.savingsCapRemaining)} note={`${money(summary.savingsCap)} cycle cap`} tone="blue" icon={Scale} />
               <Card title="One-Time Contributions" value={money(summary.socialFundPaid + summary.membershipFeePaid)} note="Social fund + membership" tone="teal" icon={FileText} />
             </div>
 
-            <section className="panel member-savings-context">
-              <div className="panel-head">
-                <h2>Savings Breakdown</h2>
+            <section className="panel member-savings-context mb-5 rounded-app border border-mist bg-cream p-4 shadow-soft">
+              <div className="panel-head mb-3 flex items-center justify-between gap-3">
+                <h2 className="m-0 text-lg font-extrabold text-charcoal">Savings Breakdown</h2>
                 <Badge text={`Remaining ${money(summary.savingsCapRemaining)}`} tone="blue" />
               </div>
-              <div className="detail-grid member-savings-detail-grid">
+              <div className="detail-grid member-savings-detail-grid grid gap-3 md:grid-cols-2 xl:grid-cols-4">
                 <DetailValue label="Principal" value={money(summary.savingsPrincipal)} />
                 <DetailValue label="Interest" value={money(summary.savingsInterest)} />
                 <DetailValue label="Accumulated Savings" value={money(summary.accumulatedSavings)} />
@@ -295,17 +297,17 @@ export function MemberSavingsPage({
               </div>
             </section>
 
-            <section className="panel">
-              <div className="panel-head">
-                <h2>Savings Ledger</h2>
+            <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+              <div className="panel-head mb-3 flex items-center justify-between gap-3">
+                <h2 className="m-0 text-lg font-extrabold text-charcoal">Savings Ledger</h2>
                 <Badge text={`${entries.length} records`} tone="blue" />
               </div>
               <LedgerRows entries={entries} />
             </section>
 
-            <section className="panel">
-              <div className="panel-head">
-                <h2>One-Time Contributions</h2>
+            <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+              <div className="panel-head mb-3 flex items-center justify-between gap-3">
+                <h2 className="m-0 text-lg font-extrabold text-charcoal">One-Time Contributions</h2>
                 <Badge text={`${contributions.length} records`} tone="blue" />
               </div>
               <DataTable

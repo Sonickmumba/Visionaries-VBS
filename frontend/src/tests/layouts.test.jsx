@@ -23,9 +23,9 @@ describe("app layouts", () => {
   it("renders public auth layout", () => {
     const html = renderToStaticMarkup(<AuthLayout><section className="auth-card">Login</section></AuthLayout>);
 
-    expect(html).toContain("Visionaries Village Banking");
-    expect(html).toContain("brand-lockup");
+    expect(html).toContain("auth-shell");
     expect(html).toContain("auth-card");
+    expect(html).not.toContain("brand-lockup");
   });
 
   it("blocks protected content when there is no user", () => {
@@ -98,8 +98,9 @@ describe("app layouts", () => {
     expect(appCss).toContain("-webkit-overflow-scrolling: touch");
     expect(appCss).toContain(".btn:hover:not(:disabled)");
     expect(appCss).toContain(".icon-btn:hover:not(:disabled)");
-    expect(appCss).toContain(".panel {\n  background: white;\n  border: 1px solid #d8e1eb;\n  border-radius: 8px;");
-    expect(appCss).toContain(".metric {\n  background: white;\n  border: 1px solid #d8e1eb;\n  border-left: 5px solid #166534;\n  border-radius: 8px;");
+    expect(appCss).toContain(".panel {\n  background: #F7F4EE;\n  border: 1px solid #E6E8EB;\n  border-radius: 8px;");
+    expect(appCss).toContain("min-width: 0;");
+    expect(appCss).toContain(".metric {\n  background: #F7F4EE;\n  border: 1px solid #E6E8EB;\n  border-left: 5px solid #127A5A;\n  border-radius: 8px;");
     expect(appCss).toContain(".tabs button.active");
     expect(appCss).toContain("background: var(--portal-accent-soft");
     expect(layoutCss).toContain("@media (max-width: 900px)");
@@ -120,5 +121,14 @@ describe("app layouts", () => {
     expect(appCss).toContain("border-left: 4px solid var(--portal-page-line");
     expect(layoutCss).toContain(".member-shell .top-member-summary");
     expect(layoutCss).toContain("color: var(--portal-accent");
+  });
+
+  it("keeps the Tailwind shell mobile-first with a desktop-only sidebar column", () => {
+    const source = fs.readFileSync(path.join(process.cwd(), "src/layouts/AppLayouts.jsx"), "utf8");
+
+    expect(source).toContain("grid-cols-1 bg-cream text-charcoal md:grid-cols-[248px_1fr]");
+    expect(source).toContain("sidebar h-screen overflow-y-auto bg-charcoal px-3.5 py-5 text-cream md:sticky md:top-0");
+    expect(source).not.toContain("grid-cols-[248px_1fr] bg-cream text-charcoal");
+    expect(source).not.toContain("sidebar sticky top-0 h-screen");
   });
 });

@@ -143,21 +143,26 @@ export async function reversePenaltyById({ penalty, reason, penaltiesApi = api }
 }
 
 function DetailValue({ label, value }) {
-  return <div><strong>{label}</strong><span>{value}</span></div>;
+  return (
+    <div className="grid gap-1 rounded-app border border-mist bg-cream p-3">
+      <strong className="text-xs font-black uppercase text-charcoal/70">{label}</strong>
+      <span className="break-words text-sm font-extrabold text-charcoal">{value}</span>
+    </div>
+  );
 }
 
 function PenaltyHero({ context, totals, count }) {
   return (
-    <section className="penalty-hero">
+    <section className="penalty-hero mb-4 grid gap-4 rounded-mobile bg-gradient-to-br from-forest via-emerald to-forest p-5 text-cream shadow-lift md:grid-cols-[minmax(0,1fr)_auto]" aria-label="Penalty desk overview">
       <div>
-        <span>Penalty Desk</span>
-        <h2>{context?.cycle?.name || "Active Cycle"}</h2>
-        <p>{context?.cycleMonth ? `Month ${context.cycleMonth.month_number} assessments and recoveries` : "Assess, collect, waive, reverse, or convert unpaid penalties."}</p>
+        <span className="text-xs font-black uppercase text-cream">Penalty Desk</span>
+        <h2 className="my-1 text-[25px] font-extrabold leading-tight text-cream">{context?.cycle?.name || "Active Cycle"}</h2>
+        <p className="m-0 text-sm font-extrabold text-cream/85">{context?.cycleMonth ? `Month ${context.cycleMonth.month_number} assessments and recoveries` : "Assess, collect, waive, reverse, or convert unpaid penalties."}</p>
       </div>
-      <div className="penalty-hero-stat">
-        <span>Outstanding</span>
-        <strong>{money(totals.outstanding)}</strong>
-        <small>{count} penalties tracked</small>
+      <div className="penalty-hero-stat grid min-w-40 content-center gap-1 rounded-mobile border border-cream/20 bg-white/10 p-3 backdrop-blur">
+        <span className="text-xs font-black uppercase text-cream">Outstanding</span>
+        <strong className="break-words text-[22px] font-extrabold text-cream">{money(totals.outstanding)}</strong>
+        <small className="text-xs font-extrabold text-cream/85">{count} penalties tracked</small>
       </div>
     </section>
   );
@@ -166,22 +171,22 @@ function PenaltyHero({ context, totals, count }) {
 function PenaltyRegisterCards({ penalties, selected, onSelect }) {
   if (!penalties.length) return null;
   return (
-    <div className="penalty-mobile-cards" aria-label="Mobile penalty register cards">
+    <div className="penalty-mobile-cards grid gap-3" aria-label="Mobile penalty register cards">
       {penalties.map((penalty) => (
-        <article key={penalty.id} className={`penalty-card ${selected?.id === penalty.id ? "selected" : ""}`}>
-          <div className="penalty-card-head">
-            <div className="penalty-avatar">{initials(penalty)}</div>
+        <article key={penalty.id} className={`penalty-card grid gap-3 rounded-mobile border border-mist bg-cream p-3 shadow-soft ${selected?.id === penalty.id ? "selected border-emerald shadow-lift" : ""}`}>
+          <div className="penalty-card-head grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2.5">
+            <div className="penalty-avatar grid h-11 w-11 place-items-center rounded-mobile bg-cream text-sm font-black text-emerald" aria-hidden="true">{initials(penalty)}</div>
             <div>
-              <strong>{memberName(penalty)}</strong>
-              <span>{penalty.penalty_name || "Penalty"}</span>
+              <strong className="block break-words text-sm font-extrabold text-charcoal">{memberName(penalty)}</strong>
+              <span className="block break-words text-xs font-extrabold text-charcoal/70">{penalty.penalty_name || "Penalty"}</span>
             </div>
             <Badge text={penalty.status} tone={statusTone(penalty.status)} />
           </div>
-          <div className="penalty-card-values">
-            <div><span>Assessed</span><strong>{money(penalty.amount_assessed)}</strong></div>
-            <div><span>Paid</span><strong>{money(penalty.amount_paid)}</strong></div>
-            <div><span>Outstanding</span><strong>{money(outstanding(penalty))}</strong></div>
-            <div><span>Date</span><strong>{dateOnly(penalty.assessed_at)}</strong></div>
+          <div className="penalty-card-values grid grid-cols-2 gap-2.5">
+            <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Assessed</span><strong className="break-words text-base font-extrabold text-charcoal">{money(penalty.amount_assessed)}</strong></div>
+            <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Paid</span><strong className="break-words text-base font-extrabold text-charcoal">{money(penalty.amount_paid)}</strong></div>
+            <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Outstanding</span><strong className="break-words text-base font-extrabold text-charcoal">{money(outstanding(penalty))}</strong></div>
+            <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Date</span><strong className="break-words text-base font-extrabold text-charcoal">{dateOnly(penalty.assessed_at)}</strong></div>
           </div>
           <Button type="button" size="sm" variant={selected?.id === penalty.id ? "primary" : "secondary"} onClick={() => onSelect(penalty)}>View Details</Button>
         </article>
@@ -193,20 +198,20 @@ function PenaltyRegisterCards({ penalties, selected, onSelect }) {
 function PenaltyTypeCards({ penaltyTypes }) {
   if (!penaltyTypes.length) return null;
   return (
-    <div className="penalty-mobile-cards" aria-label="Mobile penalty type cards">
+    <div className="penalty-mobile-cards grid gap-3" aria-label="Mobile penalty type cards">
       {penaltyTypes.map((type) => (
-        <article key={type.id || type.code} className="penalty-card">
-          <div className="penalty-card-head">
-            <div className="penalty-avatar">{String(type.code || type.name || "P").slice(0, 2).toUpperCase()}</div>
+        <article key={type.id || type.code} className="penalty-card grid gap-3 rounded-mobile border border-mist bg-cream p-3 shadow-soft">
+          <div className="penalty-card-head grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2.5">
+            <div className="penalty-avatar grid h-11 w-11 place-items-center rounded-mobile bg-cream text-sm font-black text-emerald" aria-hidden="true">{String(type.code || type.name || "P").slice(0, 2).toUpperCase()}</div>
             <div>
-              <strong>{type.name}</strong>
-              <span>{type.code}</span>
+              <strong className="block break-words text-sm font-extrabold text-charcoal">{type.name}</strong>
+              <span className="block break-words text-xs font-extrabold text-charcoal/70">{type.code}</span>
             </div>
             <Badge text={type.is_active === false ? "Inactive" : "Active"} tone={type.is_active === false ? "gray" : "green"} />
           </div>
-          <div className="penalty-card-values">
-            <div><span>Amount</span><strong>{money(type.amount)}</strong></div>
-            <div><span>Convertible</span><strong>{type.is_convertible_to_loan ? "Yes" : "No"}</strong></div>
+          <div className="penalty-card-values grid grid-cols-2 gap-2.5">
+            <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Amount</span><strong className="break-words text-base font-extrabold text-charcoal">{money(type.amount)}</strong></div>
+            <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Convertible</span><strong className="break-words text-base font-extrabold text-charcoal">{type.is_convertible_to_loan ? "Yes" : "No"}</strong></div>
           </div>
         </article>
       ))}
@@ -233,22 +238,22 @@ function PenaltyDetail({
   busy,
 }) {
   return (
-    <section className="penalty-detail">
-      <div className="penalty-detail-hero">
-        <div className="penalty-avatar">{initials(selected)}</div>
+    <section className="penalty-detail grid gap-3.5">
+      <div className="penalty-detail-hero mb-0 grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3">
+        <div className="penalty-avatar grid h-11 w-11 place-items-center rounded-mobile bg-cream text-sm font-black text-emerald" aria-hidden="true">{initials(selected)}</div>
         <div>
-          <span>Penalty Detail</span>
-          <h2>{memberName(selected)}</h2>
-          <p>{selected.penalty_name || "Penalty"} · {dateOnly(selected.assessed_at)}</p>
+          <span className="text-xs font-black uppercase text-emerald">Penalty Detail</span>
+          <h2 className="my-0.5 text-xl font-extrabold text-charcoal">{memberName(selected)}</h2>
+          <p className="m-0 text-sm font-extrabold text-charcoal/75">{selected.penalty_name || "Penalty"} · {dateOnly(selected.assessed_at)}</p>
         </div>
         <Badge text={selected.status} tone={statusTone(selected.status)} />
       </div>
-      <div className="penalty-detail-strip">
+      <div className="penalty-detail-strip mb-0 grid gap-2.5 md:grid-cols-3">
         <DetailValue label="Assessed" value={money(selected.amount_assessed)} />
         <DetailValue label="Paid" value={money(selected.amount_paid)} />
         <DetailValue label="Outstanding" value={money(outstanding(selected))} />
       </div>
-      <div className="detail-grid penalty-detail-grid">
+      <div className="detail-grid penalty-detail-grid grid gap-3 md:grid-cols-2 xl:grid-cols-4">
         <DetailValue label="Type" value={selected.penalty_name || "-"} />
         <DetailValue label="Assessed" value={money(selected.amount_assessed)} />
         <DetailValue label="Paid" value={money(selected.amount_paid)} />
@@ -256,13 +261,13 @@ function PenaltyDetail({
         <DetailValue label="Assessed Date" value={dateOnly(selected.assessed_at)} />
         <DetailValue label="Cycle Month" value={selected.cycle_month_id ? String(selected.cycle_month_id).slice(0, 8) : "-"} />
       </div>
-      <div className="form-grid four">
+      <div className="form-grid four grid gap-3 md:grid-cols-2 xl:grid-cols-4">
         <CurrencyInput label="Payment amount" value={paymentAmount} onChange={setPaymentAmount} error={errors.paymentAmount} />
         <Field label="Conversion reason" value={conversionReason} onChange={setConversionReason} error={errors.conversionReason} />
         <Field label="Waive reason" value={waiveReason} onChange={setWaiveReason} error={errors.waiveReason} />
         <Field label="Reverse reason" value={reverseReason} onChange={setReverseReason} error={errors.reverseReason} />
       </div>
-      <div className="button-row">
+      <div className="button-row flex flex-wrap items-center gap-2.5">
         <Button type="button" onClick={onPay} disabled={!canAct(selected)} loading={busy === "pay"}>Mark Paid</Button>
         <Button type="button" variant="danger" onClick={onConvert} disabled={!canAct(selected) || outstanding(selected) <= 0} loading={busy === "convert"}>Convert to Loan</Button>
         <Button type="button" variant="secondary" onClick={onWaive} disabled={!canAct(selected)} loading={busy === "waive"}>Waive</Button>
@@ -277,8 +282,8 @@ function AssessmentForm({ form, setForm, context, penaltyTypes, errors }) {
   const set = (key) => (value) => setForm((current) => ({ ...current, [key]: value }));
   const selectedType = penaltyTypes.find((type) => type.id === form.penaltyTypeId);
   return (
-    <div className="penalty-form">
-      <div className="form-grid three">
+    <div className="penalty-form grid gap-3.5">
+      <div className="form-grid three grid gap-3 md:grid-cols-3">
         <Select
           label="Member"
           value={form.cycleMemberId}
@@ -454,7 +459,7 @@ export function PenaltyScreensPage({
   return (
     <Page
       title="Penalties"
-      className="penalties-page"
+      className="penalties-page grid gap-0"
       actions={(
         <>
           <Button type="button" icon={RefreshCw} onClick={() => loadPenalties(pagination.page)} loading={loading}>Refresh</Button>
@@ -468,12 +473,12 @@ export function PenaltyScreensPage({
 
       <PenaltyHero context={context} totals={totals} count={penalties.length} />
 
-      <div className="admin-mobile-action-row penalty-mobile-actions-row mobile-only" aria-label="Penalty quick actions">
+      <div className="admin-mobile-action-row penalty-mobile-actions-row mobile-only flex gap-2" aria-label="Penalty quick actions">
         <Button type="button" icon={RefreshCw} onClick={() => loadPenalties(pagination.page)} loading={loading}>Refresh</Button>
         <Button type="button" variant="secondary" icon={AlertTriangle} onClick={openAssessment}>Assess</Button>
       </div>
 
-      <div className="metrics penalty-metrics">
+      <div className="metrics penalty-metrics grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <Card title="Assessed" value={money(totals.assessed)} note={`${penalties.length} penalties`} tone="amber" icon={AlertTriangle} />
         <Card title="Paid" value={money(totals.paid)} note="Collected penalties" icon={Receipt} />
         <Card title="Outstanding" value={money(totals.outstanding)} note="Needs action" tone="red" icon={BadgeDollarSign} />
@@ -487,7 +492,7 @@ export function PenaltyScreensPage({
         onClose={() => setSelected(null)}
       >
         {selected ? (
-          <div className="penalty-detail-modal">
+          <div className="penalty-detail-modal pr-0.5">
             <PenaltyDetail
               selected={selected}
               paymentAmount={paymentAmount}
@@ -521,10 +526,10 @@ export function PenaltyScreensPage({
       />
 
       {activeTab === "register" ? (
-        <section className="panel">
-          <div className="panel-head">
-            <h2>Penalty Register</h2>
-            <div className="button-row compact">
+        <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+          <div className="panel-head mb-3 flex flex-wrap items-center justify-between gap-3">
+            <h2 className="m-0 text-lg font-extrabold text-charcoal">Penalty Register</h2>
+            <div className="button-row compact flex flex-wrap items-end gap-2.5">
               <Select
                 label="Status"
                 value={statusFilter}
@@ -567,9 +572,9 @@ export function PenaltyScreensPage({
       ) : null}
 
       {activeTab === "types" ? (
-        <section className="panel">
-          <div className="panel-head">
-            <h2>Penalty Types</h2>
+        <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+          <div className="panel-head mb-3 flex items-center justify-between gap-3">
+            <h2 className="m-0 text-lg font-extrabold text-charcoal">Penalty Types</h2>
           </div>
           <PenaltyTypeCards penaltyTypes={penaltyTypes || []} />
           <div className="penalty-desktop-table">
@@ -594,7 +599,7 @@ export function PenaltyScreensPage({
         size="lg"
         onClose={() => setModal("")}
         footer={(
-          <div className="button-row">
+          <div className="button-row flex flex-wrap items-center gap-2.5">
             <Button type="button" variant="secondary" onClick={() => setModal("")}>Cancel</Button>
             <Button type="button" onClick={submitAssessment} loading={busy === "assess"}>Assess Penalty</Button>
           </div>

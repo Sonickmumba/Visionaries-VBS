@@ -24,6 +24,7 @@ const NotificationsPage = lazyNamed(() => import("./pages/NotificationsPage.jsx"
 const MemberDashboardPage = lazyNamed(() => import("./pages/member/MemberDashboardPage.jsx"), "MemberDashboardPage");
 const MemberDeclarationPage = lazyNamed(() => import("./pages/member/MemberDeclarationPage.jsx"), "MemberDeclarationPage");
 const MemberLoansPage = lazyNamed(() => import("./pages/member/MemberLoansPage.jsx"), "MemberLoansPage");
+const MemberMorePage = lazyNamed(() => import("./pages/member/MemberMorePage.jsx"), "MemberMorePage");
 const MemberPenaltiesPage = lazyNamed(() => import("./pages/member/MemberPenaltiesPage.jsx"), "MemberPenaltiesPage");
 const MemberReportsPage = lazyNamed(() => import("./pages/member/MemberReportsPage.jsx"), "MemberReportsPage");
 const MemberSavingsPage = lazyNamed(() => import("./pages/member/MemberSavingsPage.jsx"), "MemberSavingsPage");
@@ -47,7 +48,7 @@ function UnknownPage({ title }) {
   );
 }
 
-function screenForRoute(page, setPage, pageTitle, navigationIntent) {
+function screenForRoute(page, setPage, pageTitle, navigationIntent, onLogout) {
   switch (page) {
     case "dashboard":
       return <AdminDashboardPage setPage={setPage} />;
@@ -76,7 +77,7 @@ function screenForRoute(page, setPage, pageTitle, navigationIntent) {
     case "audit":
       return <AuditTrailPage />;
     case "settings":
-      return <SettingsPage />;
+      return <SettingsPage onLogout={onLogout} />;
     case "notifications":
       return <NotificationsPage setPage={setPage} role="ADMIN" />;
     case "member-dashboard":
@@ -97,6 +98,8 @@ function screenForRoute(page, setPage, pageTitle, navigationIntent) {
       return <MemberSavingsPage setPage={setPage} />;
     case "my-loans":
       return <MemberLoansPage setPage={setPage} />;
+    case "member-more":
+      return <MemberMorePage setPage={setPage} onLogout={onLogout} />;
     default:
       return <UnknownPage title={pageTitle} />;
   }
@@ -108,7 +111,7 @@ export function PortalApp({ user, page, setPage, navigationIntent = null, onLogo
   return (
     <AppLayout user={user} page={page} setPage={setPage} onLogout={onLogout}>
       <Suspense fallback={<PageLoadingFallback />}>
-        {screenForRoute(page, setPage, pageTitle, navigationIntent)}
+        {screenForRoute(page, setPage, pageTitle, navigationIntent, onLogout)}
       </Suspense>
     </AppLayout>
   );

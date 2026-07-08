@@ -147,8 +147,11 @@ describe("member dashboard", () => {
   });
 
   it("keeps the member dashboard mobile responsive contract", () => {
+    const source = fs.readFileSync(path.join(process.cwd(), "src/pages/member/MemberDashboardPage.jsx"), "utf8");
     const css = fs.readFileSync(path.join(process.cwd(), "src/styles/member-dashboard.css"), "utf8");
 
+    expect(source).toContain('setPage?.("member-more")');
+    expect(source).toContain('setPage?.("my-notifications")');
     expect(css).toContain(".member-mobile-hero");
     expect(css).toContain(".member-mobile-hero-actions");
     expect(css).toContain(".member-mobile-hero-strip");

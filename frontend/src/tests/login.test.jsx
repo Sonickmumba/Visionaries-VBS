@@ -66,18 +66,23 @@ describe("login screen", () => {
   it("renders the complete login form", () => {
     const html = renderToStaticMarkup(<LoginPage onLogin={() => {}} onBackToWelcome={() => {}} />);
 
-    expect(html).toContain("Log in");
+    expect(html).toContain("Log In");
     expect(html).toContain("Back to welcome");
-    expect(html).toContain("Email");
+    expect(html).toContain("Phone Number or Email");
     expect(html).toContain("Password");
-    expect(html).toContain("Remember me");
     expect(html).toContain("Forgot password?");
-    expect(html).toContain("Create Account");
+    expect(html).toContain("Sign Up");
     expect(html).toContain("auth-shell");
-    expect(html).toContain("Welcome back");
-    expect(html).toContain("Protected member and admin access");
-    expect(html).toContain("auth-mobile-summary");
-    expect(html).toContain("Platform highlights");
+    expect(html).toContain("Welcome Back");
+    expect(html).toContain("Sign in to continue saving and growing together.");
+    expect(html).toContain("font-sans");
+    expect(html).toContain("min-h-[min(932px,calc(100svh-24px))]");
+    expect(html).toContain("bg-gradient-to-br");
+    expect(html).toContain("focus-within:border-emerald");
+    expect(html).not.toContain("auth-phone");
+    expect(html).not.toContain("auth-form-sheet");
+    expect(html).not.toContain("login-sheet");
+    expect(html).not.toContain("Continue with Biometrics");
   });
 
   it("supports current and legacy navigation callback names", () => {
@@ -88,15 +93,16 @@ describe("login screen", () => {
   });
 
   it("keeps phone auth screens compact enough for primary actions", () => {
-    const css = fs.readFileSync(path.join(process.cwd(), "src/styles/auth.css"), "utf8");
+    const source = fs.readFileSync(path.join(process.cwd(), "src/pages/auth/LoginPage.jsx"), "utf8");
+    const tailwind = fs.readFileSync(path.join(process.cwd(), "tailwind.config.cjs"), "utf8");
 
-    expect(css).toContain("@media (max-width: 480px)");
-    expect(css).toContain(".auth-brand-stats");
-    expect(css).toContain("display: none");
-    expect(css).toContain("margin-top: -48px");
-    expect(css).toContain(".login-card");
-    expect(css).toContain(".auth-back-button svg");
-    expect(css).toContain("overflow: visible");
-    expect(css).toContain("stroke-width: 2.25");
+    expect(source).toContain("splashArtwork");
+    expect(source).toContain("min-h-[min(932px,calc(100svh-24px))]");
+    expect(source).toContain("max-[430px]:h-[100svh]");
+    expect(source).toContain("max-[430px]:flex-col");
+    expect(source).toContain("grid-cols-[34px_minmax(0,1fr)_auto]");
+    expect(source).toContain("bg-gradient-to-br from-emerald to-forest");
+    expect(source).toContain("focus-within:border-emerald");
+    expect(tailwind).toContain('"Poppins"');
   });
 });

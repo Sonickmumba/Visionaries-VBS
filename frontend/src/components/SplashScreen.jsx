@@ -1,42 +1,47 @@
 import React from "react";
-import { ArrowRight, BadgeDollarSign, HandCoins, Scale } from "lucide-react";
+import { ArrowRight, ShieldCheck } from "lucide-react";
+import splashArtwork from "../assets/auth/background-image-splash.png";
 import { BrandMark } from "./BrandMark.jsx";
+
+const splashShellClass = "grid min-h-[100svh] place-items-center bg-cream p-[clamp(12px,3vw,34px)] font-sans text-cream max-[430px]:bg-forest max-[430px]:p-0";
+const splashPhoneClass = "relative min-h-[min(900px,calc(100svh-24px))] w-[min(100%,430px)] overflow-hidden rounded-[40px] border border-cream/20 text-center shadow-[0_30px_90px_rgba(31,41,51,0.28)] max-[430px]:min-h-[100svh] max-[430px]:w-full max-[430px]:rounded-none max-[430px]:border-0 max-[430px]:shadow-none";
+const splashCopyClass = "relative z-[6] grid content-start justify-items-center px-[30px] pb-[250px] pt-[clamp(86px,11svh,112px)] pointer-events-none max-[430px]:pb-[238px]";
+const splashTitleClass = "mt-[10px] mb-[2px] text-[clamp(24px,14vw,40px)] font-black leading-none text-cream ";
+const splashContinueClass = "absolute bottom-[92px] border-0 left-8 right-8 z-[5] inline-flex min-h-[70px] items-center justify-center gap-6 rounded-[18px] bg-cream px-3 py-1 text-xl font-black text-forest shadow-[0_20px_48px_rgba(31,41,51,0.28)]";
+const splashTrustClass = "absolute bottom-[42px] left-5 right-5 z-[5] m-0 flex items-center justify-center gap-2.5 text-[10px] font-normal text-cream";
+const splashBackgroundStyle = {
+  backgroundImage: `linear-gradient(180deg, rgba(13, 59, 46, 0.08), rgba(13, 59, 46, 0.18)), url(${splashArtwork}), linear-gradient(160deg, #0D3B2E 0%, #0D3B2E 52%, #127A5A 100%)`,
+  backgroundPosition: "center",
+  backgroundSize: "cover",
+  backgroundRepeat: "no-repeat",
+};
 
 export function SplashScreen({ onContinue, loadingLabel = "Checking secure session" }) {
   const isWelcome = typeof onContinue === "function";
-  const features = [
-    ["Track Savings", "Live member contributions", BadgeDollarSign],
-    ["Manage Loans", "Transparent requests", HandCoins],
-    ["Share Interest", "Fair monthly rules", Scale],
-  ];
 
   return (
-    <main className="splash-screen" aria-label="Visionaries Village Banking splash screen">
-      <section className="splash-phone">
-        <BrandMark size="lg" className="splash-mark" />
-        <div className="splash-copy">
-          <h1>Visionaries Village Banking</h1>
-          <p>Save Together. Grow Together.</p>
-          <small>Mobile-first village banking with declarations, loans, common interest, reports, and audit-ready monthly closing.</small>
+    <main className={splashShellClass} aria-label="Visionaries Village Banking splash screen">
+      <section className={splashPhoneClass} style={splashBackgroundStyle}>
+        <div className="splash-orbit" aria-hidden="true" />
+        <div className={splashCopyClass}>
+          <BrandMark size="lg" className="splash-mark text-cream" />
+          <h1 className={splashTitleClass}>Visionaries<br />Village Banking</h1>
+          <span className="mt-0 h-[1.5px] w-[58px] rounded-full bg-gold shadow-[0_4px_12px_rgba(217,162,39,0.36)]" aria-hidden="true" />
+          <small className="relative z-[7] mt-0 block max-w-[330px] text-[clamp(9px,4.6vw,14px)] leading-snug text-cream/95 drop-shadow-[0_4px_16px_rgba(13,59,46,0.56)]">Stronger Together.<br />Saving Today, Building Tomorrow.</small>
         </div>
-        <div className="splash-features" aria-label="Product highlights">
-          {features.map(([title, detail, Icon]) => (
-            <div key={title}>
-              <Icon size={17} aria-hidden="true" />
-              <strong>{title}</strong>
-              <span>{detail}</span>
-            </div>
-          ))}
-        </div>
+        <div className="auth-village-scene splash-scene" aria-hidden="true" />
+        <div className="splash-gold-wave" aria-hidden="true" />
         {isWelcome ? (
-          <button className="splash-continue" type="button" onClick={onContinue}>
-            Continue <ArrowRight size={17} aria-hidden="true" />
+          <button className={splashContinueClass} type="button" onClick={onContinue}>
+            <span className="grid h-10 w-10 place-items-center rounded-full bg-gradient-to-br from-forest to-emerald text-gold shadow-[0_10px_22px_rgba(13,59,46,0.22)]"><ArrowRight size={24} aria-hidden="true" /></span>
+            Get Started
           </button>
         ) : (
-          <div className="splash-progress" role="status" aria-live="polite" aria-label={loadingLabel}>
+          <div className="splash-progress absolute bottom-[98px] left-1/2 z-[5] h-1.5 -translate-x-1/2 overflow-hidden rounded-full bg-white/20" role="status" aria-live="polite" aria-label={loadingLabel}>
             <span />
           </div>
         )}
+        <p className={splashTrustClass}><ShieldCheck className="text-gold" size={18} aria-hidden="true" /> Secure. Reliable. Community Focused.</p>
       </section>
     </main>
   );

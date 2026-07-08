@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { AlertTriangle, Banknote, ClipboardList, Download, Eye, FileText, Gauge, PiggyBank, Receipt, RefreshCw, Scale } from "lucide-react";
+import { AlertTriangle, ArrowLeft, Banknote, Download, Eye, FileText, Gauge, PiggyBank, RefreshCw, Scale } from "lucide-react";
 import { api } from "../../api/client.js";
 import {
   Alert,
@@ -10,7 +10,6 @@ import {
   EmptyState,
   MobileActionTile,
   MobileBottomNav,
-  MobileHeader,
   MobileListCard,
   MobileMetricCard,
   MobileScreenShell,
@@ -90,12 +89,22 @@ export async function loadMemberStatementData({ memberApi = api, cycleMonthId = 
 }
 
 function DetailValue({ label, value }) {
-  return <div><strong>{label}</strong><span>{value}</span></div>;
+  return (
+    <div className="grid gap-1 rounded-app border border-mist bg-cream p-3">
+      <strong className="text-xs font-black uppercase text-charcoal/70">{label}</strong>
+      <span className="break-words text-sm font-extrabold text-charcoal">{value}</span>
+    </div>
+  );
 }
 
 function MemberStatementMobileHero({ cycleTotals, selectedMonth, activeMembership, exportStatement, setPage }) {
   return (
     <section className="member-statement-hero" aria-label="Statement summary">
+      <div className="member-statement-topbar">
+        <button type="button" aria-label="Back to dashboard" onClick={() => setPage?.("member-dashboard")}><ArrowLeft size={18} aria-hidden="true" /></button>
+        <h1>Statement</h1>
+        <button type="button" aria-label="Export statement" onClick={exportStatement}><Download size={18} aria-hidden="true" /></button>
+      </div>
       <div className="member-statement-hero-head">
         <div>
           <span>{selectedMonth ? `Month ${selectedMonth.month_number}` : "Full Cycle"}</span>
@@ -123,7 +132,7 @@ function MemberStatementMobileHero({ cycleTotals, selectedMonth, activeMembershi
 function TransactionDetail({ transaction }) {
   if (!transaction) return null;
   return (
-    <div className="statement-detail-grid">
+    <div className="statement-detail-grid grid gap-3 md:grid-cols-2 xl:grid-cols-4">
       <DetailValue label="Transaction Type" value={titleCase(transaction.transaction_type)} />
       <DetailValue label="Amount" value={money(transaction.amount)} />
       <DetailValue label="Posted At" value={dateTime(transaction.posted_at || transaction.transaction_date)} />
@@ -224,7 +233,7 @@ export function MemberStatementPage({
 
   return (
     <Page
-      className="member-statement-page"
+      className="member-statement-page grid gap-0"
       title="My Statement"
       actions={(
         <>
@@ -236,18 +245,12 @@ export function MemberStatementPage({
     >
       {error ? <Alert tone="danger" title="Statement failed">{error}</Alert> : null}
 
-      {loading ? <section className="panel"><Skeleton lines={8} /></section> : !activeMembership ? (
+      {loading ? <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft"><Skeleton lines={8} /></section> : !activeMembership ? (
         <EmptyState title="No active cycle membership" message="Ask an administrator to enroll you into a cycle before statements can appear." />
       ) : (
         <>
           <div className="member-statement-mobile">
             <MobileScreenShell bottomNav={bottomNav}>
-              <MobileHeader
-                eyebrow="Member Statement"
-                title={memberName(statement?.member || data?.me?.member)}
-                subtitle={selectedMonth ? `Month ${selectedMonth.month_number} statement` : activeMembership.cycle_name || "Full cycle"}
-              />
-
               <MemberStatementMobileHero
                 cycleTotals={cycleTotals}
                 selectedMonth={selectedMonth}
@@ -357,19 +360,19 @@ export function MemberStatementPage({
           </div>
 
           <div className="member-statement-desktop">
-          <div className="metrics member-statement-metrics">
+          <div className="metrics member-statement-metrics grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             <Card title="Accumulated Savings" value={money(cycleTotals.accumulatedSavings)} note="Cycle principal + interest" icon={PiggyBank} />
             <Card title="Outstanding Loan" value={money(cycleTotals.outstandingLoan)} note="Borrowed + interest less repayments" tone="blue" icon={Banknote} />
             <Card title="Common Interest Due" value={money(cycleTotals.commonInterestDue)} note="Assessed less paid" tone="amber" icon={Scale} />
             <Card title="Penalty Due" value={money(cycleTotals.penaltyDue)} note="Outstanding penalties" tone={cycleTotals.penaltyDue > 0 ? "red" : "green"} icon={AlertTriangle} />
           </div>
 
-          <section className="panel member-statement-context">
-            <div className="panel-head">
-              <h2>Statement Context</h2>
+          <section className="panel member-statement-context mb-5 rounded-app border border-mist bg-cream p-4 shadow-soft">
+            <div className="panel-head mb-3 flex items-center justify-between gap-3">
+              <h2 className="m-0 text-lg font-extrabold text-charcoal">Statement Context</h2>
               <Badge text={selectedMonth ? `Month ${selectedMonth.month_number}` : "Full Cycle"} tone="blue" />
             </div>
-            <div className="form-grid three">
+            <div className="form-grid three grid gap-3 md:grid-cols-2 xl:grid-cols-3">
               <Select
                 label="Statement period"
                 value={selectedMonthId}
@@ -388,12 +391,12 @@ export function MemberStatementPage({
             </div>
           </section>
 
-          <section className="panel member-statement-context">
-            <div className="panel-head">
-              <h2>{selectedMonth ? "Selected Month Totals" : "Cycle Totals"}</h2>
+          <section className="panel member-statement-context mb-5 rounded-app border border-mist bg-cream p-4 shadow-soft">
+            <div className="panel-head mb-3 flex items-center justify-between gap-3">
+              <h2 className="m-0 text-lg font-extrabold text-charcoal">{selectedMonth ? "Selected Month Totals" : "Cycle Totals"}</h2>
               <Badge text={selectedMonth ? titleCase(selectedMonth.status) : "All months"} tone="gray" />
             </div>
-            <div className="detail-grid member-statement-detail-grid">
+            <div className="detail-grid member-statement-detail-grid grid gap-3 md:grid-cols-2 xl:grid-cols-4">
               <DetailValue label="Savings Principal" value={money(focusedTotals.savingsPrincipal)} />
               <DetailValue label="Savings Interest" value={money(focusedTotals.savingsInterest)} />
               <DetailValue label="Borrowed" value={money(focusedTotals.borrowed)} />
@@ -405,9 +408,9 @@ export function MemberStatementPage({
             </div>
           </section>
 
-          <section className="panel">
-            <div className="panel-head">
-              <h2>Transaction Detail</h2>
+          <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+            <div className="panel-head mb-3 flex items-center justify-between gap-3">
+              <h2 className="m-0 text-lg font-extrabold text-charcoal">Transaction Detail</h2>
               <Badge text={`${transactions.length} records`} tone="blue" />
             </div>
             <DataTable
@@ -417,9 +420,9 @@ export function MemberStatementPage({
             />
           </section>
 
-          <section className="panel">
-            <div className="panel-head">
-              <h2>Monthly Snapshots</h2>
+          <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+            <div className="panel-head mb-3 flex items-center justify-between gap-3">
+              <h2 className="m-0 text-lg font-extrabold text-charcoal">Monthly Snapshots</h2>
               <Badge text={`${snapshots.length} records`} tone="blue" />
             </div>
             <DataTable
@@ -436,6 +439,8 @@ export function MemberStatementPage({
             />
           </section>
 
+          </div>
+
           <Modal
             open={Boolean(selectedTransaction)}
             title="Transaction Detail"
@@ -445,7 +450,6 @@ export function MemberStatementPage({
           >
             <TransactionDetail transaction={selectedTransaction} />
           </Modal>
-          </div>
         </>
       )}
     </Page>

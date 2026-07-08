@@ -169,22 +169,27 @@ export async function postLoanRepayment({ form, context, loansApi = api }) {
 }
 
 function DetailValue({ label, value }) {
-  return <div><strong>{label}</strong><span>{value}</span></div>;
+  return (
+    <div className="grid gap-1 rounded-app border border-mist bg-cream p-3">
+      <strong className="text-xs font-black uppercase text-charcoal/70">{label}</strong>
+      <span className="break-words text-sm font-extrabold text-charcoal">{value}</span>
+    </div>
+  );
 }
 
 function LoanHero({ context, metrics }) {
   const requestedTotal = metrics.find((metric) => metric.title === "Requested Total")?.value || money(0);
   return (
-    <section className="loan-hero">
+    <section className="loan-hero mb-4 grid gap-4 rounded-mobile bg-gradient-to-br from-forest via-emerald to-forest p-5 text-cream shadow-lift md:grid-cols-[minmax(0,1fr)_auto]" aria-label="Loan desk overview">
       <div>
-        <span>Loan Desk</span>
-        <h2>{context?.cycle?.name || "Active Cycle"}</h2>
-        <p>Review requests, approve payouts, disburse funds, and record repayments.</p>
+        <span className="text-xs font-black uppercase text-cream">Loan Desk</span>
+        <h2 className="my-1 text-[25px] font-extrabold leading-tight text-cream">{context?.cycle?.name || "Active Cycle"}</h2>
+        <p className="m-0 text-sm font-extrabold text-cream/85">Review requests, approve payouts, disburse funds, and record repayments.</p>
       </div>
-      <div className="loan-hero-stat">
-        <span>Requested</span>
-        <strong>{requestedTotal}</strong>
-        <small>{context?.cycleMonth ? `Month ${context.cycleMonth.month_number}` : "Current month"}</small>
+      <div className="loan-hero-stat grid min-w-40 content-center gap-1 rounded-mobile border border-cream/20 bg-white/10 p-3 backdrop-blur">
+        <span className="text-xs font-black uppercase text-cream">Requested</span>
+        <strong className="break-words text-[22px] font-extrabold text-cream">{requestedTotal}</strong>
+        <small className="text-xs font-extrabold text-cream/85">{context?.cycleMonth ? `Month ${context.cycleMonth.month_number}` : "Current month"}</small>
       </div>
     </section>
   );
@@ -193,24 +198,24 @@ function LoanHero({ context, metrics }) {
 function LoanRequestCards({ requests, selected, busy, onChoose, onLedger }) {
   if (!requests.length) return null;
   return (
-    <div className="loan-mobile-cards" aria-label="Mobile loan request cards">
+    <div className="loan-mobile-cards grid gap-3" aria-label="Mobile loan request cards">
       {requests.map((request) => (
-        <article key={request.id} className={`loan-request-card ${selected?.id === request.id ? "selected" : ""}`}>
-          <div className="loan-card-head">
-            <div className="loan-avatar">{initials(request)}</div>
+        <article key={request.id} className={`loan-request-card grid gap-3 rounded-mobile border border-mist bg-cream p-3 shadow-soft ${selected?.id === request.id ? "selected border-emerald shadow-lift" : ""}`}>
+          <div className="loan-card-head grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2.5">
+            <div className="loan-avatar grid h-11 w-11 place-items-center rounded-mobile bg-cream text-sm font-black text-emerald" aria-hidden="true">{initials(request)}</div>
             <div>
-              <strong>{memberName(request)}</strong>
-              <span>{request.member_code || "No member code"}</span>
+              <strong className="block break-words text-sm font-extrabold text-charcoal">{memberName(request)}</strong>
+              <span className="block break-words text-xs font-extrabold text-charcoal/70">{request.member_code || "No member code"}</span>
             </div>
             <Badge text={request.is_disbursed ? "DISBURSED" : request.status} tone={statusTone(request.status, request.is_disbursed)} />
           </div>
-          <div className="loan-card-values">
-            <div><span>Requested</span><strong>{money(request.requested_amount)}</strong></div>
-            <div><span>Approved</span><strong>{money(request.approved_amount)}</strong></div>
-            <div><span>Borrowed</span><strong>{money(request.cumulative_borrowed)}</strong></div>
-            <div><span>Type</span><strong>{String(request.origin_type || "-").replaceAll("_", " ")}</strong></div>
+          <div className="loan-card-values grid grid-cols-2 gap-2.5">
+            <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Requested</span><strong className="break-words text-base font-extrabold text-charcoal">{money(request.requested_amount)}</strong></div>
+            <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Approved</span><strong className="break-words text-base font-extrabold text-charcoal">{money(request.approved_amount)}</strong></div>
+            <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Borrowed</span><strong className="break-words text-base font-extrabold text-charcoal">{money(request.cumulative_borrowed)}</strong></div>
+            <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Type</span><strong className="break-words text-base font-extrabold text-charcoal">{String(request.origin_type || "-").replaceAll("_", " ")}</strong></div>
           </div>
-          <div className="loan-card-actions">
+          <div className="loan-card-actions grid grid-cols-2 gap-2">
             <Button type="button" variant={selected?.id === request.id ? "primary" : "secondary"} size="sm" onClick={() => onChoose(request)}>Review</Button>
             <Button type="button" variant="secondary" size="sm" onClick={() => onLedger(request.cycle_member_id)} loading={busy === `ledger-${request.cycle_member_id}`}>Ledger</Button>
           </div>
@@ -223,16 +228,16 @@ function LoanRequestCards({ requests, selected, busy, onChoose, onLedger }) {
 function LoanLedger({ ledger }) {
   const summary = ledger?.summary || {};
   return (
-    <section className="panel loan-ledger">
-      <div className="loan-ledger-hero">
+    <section className="panel loan-ledger mb-5 rounded-app border border-mist bg-cream p-4 shadow-soft">
+      <div className="loan-ledger-hero mb-3.5 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
         <div>
-          <span>Ledger Detail</span>
-          <h2>Member Loan Ledger</h2>
-          <p>Disbursements, interest, repayments, and outstanding balance.</p>
+          <span className="text-xs font-black uppercase text-emerald">Ledger Detail</span>
+          <h2 className="my-0.5 text-xl font-extrabold text-charcoal">Member Loan Ledger</h2>
+          <p className="m-0 text-sm font-extrabold text-charcoal/75">Disbursements, interest, repayments, and outstanding balance.</p>
         </div>
         <Badge text={`Outstanding ${money(summary.outstanding_balance)}`} tone={Number(summary.outstanding_balance || 0) > 0 ? "amber" : "green"} />
       </div>
-      <div className="detail-grid loan-detail-grid">
+      <div className="detail-grid loan-detail-grid grid gap-3 md:grid-cols-2 xl:grid-cols-4">
         <DetailValue label="Cumulative Borrowed" value={money(summary.cumulative_borrowed)} />
         <DetailValue label="Original Loans" value={money(summary.original_loans)} />
         <DetailValue label="Top-ups" value={money(summary.top_ups)} />
@@ -260,8 +265,8 @@ function LoanLedger({ ledger }) {
 function RequestForm({ form, setForm, context, errors }) {
   const set = (key) => (value) => setForm((current) => ({ ...current, [key]: value }));
   return (
-    <div className="loan-form">
-      <div className="form-grid two">
+    <div className="loan-form grid gap-3.5">
+      <div className="form-grid two grid gap-3 md:grid-cols-2">
         <Select
           label="Member"
           value={form.cycleMemberId}
@@ -292,8 +297,8 @@ function RequestForm({ form, setForm, context, errors }) {
 function RepaymentForm({ form, setForm, context, errors }) {
   const set = (key) => (value) => setForm((current) => ({ ...current, [key]: value }));
   return (
-    <div className="loan-form">
-      <div className="form-grid three">
+    <div className="loan-form grid gap-3.5">
+      <div className="form-grid three grid gap-3 md:grid-cols-3">
         <Select
           label="Member"
           value={form.cycleMemberId}
@@ -508,7 +513,7 @@ export function LoanScreensPage({
   return (
     <Page
       title="Loans"
-      className="loans-page"
+      className="loans-page grid gap-0"
       actions={(
         <>
           <Button type="button" icon={RefreshCw} onClick={loadRequests} loading={loading}>Refresh</Button>
@@ -523,13 +528,13 @@ export function LoanScreensPage({
       {error ? <Alert tone="danger" title="Loan action failed">{error}</Alert> : null}
       {errors.context ? <Alert tone="danger" title="Loan context unavailable">{errors.context}</Alert> : null}
 
-      <div className="admin-mobile-action-row loan-mobile-actions mobile-only" aria-label="Loan quick actions">
+      <div className="admin-mobile-action-row loan-mobile-actions mobile-only flex gap-2" aria-label="Loan quick actions">
         <Button type="button" icon={RefreshCw} onClick={loadRequests} loading={loading}>Refresh</Button>
         <Button type="button" variant="secondary" icon={Banknote} onClick={openNewRequest}>Create</Button>
         <Button type="button" variant="secondary" icon={Send} onClick={openRepayment}>Repayment</Button>
       </div>
 
-      <div className="metrics loan-metrics">
+      <div className="metrics loan-metrics grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         {metrics.map((metric) => <Card key={metric.title} {...metric} />)}
       </div>
 
@@ -540,23 +545,23 @@ export function LoanScreensPage({
         onClose={() => setSelected(null)}
       >
         {selected ? (
-          <div className="loan-detail-modal">
-            <section className="loan-detail-panel">
-              <div className="loan-detail-hero">
-                <div className="loan-avatar">{initials(selected)}</div>
+          <div className="loan-detail-modal pr-0.5">
+            <section className="loan-detail-panel mb-0 rounded-app border border-mist bg-cream p-4 shadow-soft">
+              <div className="loan-detail-hero mb-3.5 grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3">
+                <div className="loan-avatar grid h-11 w-11 place-items-center rounded-mobile bg-cream text-sm font-black text-emerald" aria-hidden="true">{initials(selected)}</div>
                 <div>
-                  <span>Loan Request Detail</span>
-                  <h2>{memberName(selected)}</h2>
-                  <p>{selected.member_code || "No member code"} · {String(selected.origin_type || "-").replaceAll("_", " ")}</p>
+                  <span className="text-xs font-black uppercase text-emerald">Loan Request Detail</span>
+                  <h2 className="my-0.5 text-xl font-extrabold text-charcoal">{memberName(selected)}</h2>
+                  <p className="m-0 text-sm font-extrabold text-charcoal/75">{selected.member_code || "No member code"} · {String(selected.origin_type || "-").replaceAll("_", " ")}</p>
                 </div>
                 <Badge text={selected.is_disbursed ? "DISBURSED" : selected.status} tone={statusTone(selected.status, selected.is_disbursed)} />
               </div>
-              <div className="loan-detail-strip">
+              <div className="loan-detail-strip mb-3.5 grid gap-2.5 md:grid-cols-3">
                 <DetailValue label="Requested" value={money(selected.requested_amount)} />
                 <DetailValue label="Approved" value={money(selected.approved_amount)} />
                 <DetailValue label="Borrowed" value={money(selected.cumulative_borrowed)} />
               </div>
-              <div className="detail-grid loan-detail-grid">
+              <div className="detail-grid loan-detail-grid grid gap-3 md:grid-cols-2 xl:grid-cols-4">
                 <DetailValue label="Type" value={String(selected.origin_type || "-").replaceAll("_", " ")} />
                 <DetailValue label="Requested" value={money(selected.requested_amount)} />
                 <DetailValue label="Approved" value={money(selected.approved_amount)} />
@@ -564,11 +569,11 @@ export function LoanScreensPage({
                 <DetailValue label="Requested Date" value={dateOnly(selected.requested_at)} />
                 <DetailValue label="Member Code" value={selected.member_code || "-"} />
               </div>
-              <div className="form-grid two">
+              <div className="form-grid two grid gap-3 md:grid-cols-2">
                 <CurrencyInput label="Approved amount" value={approvedAmount} onChange={setApprovedAmount} error={errors.approvedAmount} />
                 <Field label="Rejection reason" value={rejectionReason} onChange={setRejectionReason} error={errors.rejectionReason} placeholder="Required when rejecting" />
               </div>
-              <div className="button-row">
+              <div className="button-row flex flex-wrap items-center gap-2.5">
                 <Button type="button" icon={CheckCircle2} onClick={approveRequest} disabled={selected.status === "REJECTED" || selected.is_disbursed} loading={busy === "approve"}>Approve</Button>
                 <Button type="button" variant="danger" icon={XCircle} onClick={rejectRequest} disabled={selected.status !== "PENDING" || selected.is_disbursed} loading={busy === "reject"}>Reject</Button>
                 <Button type="button" icon={Banknote} onClick={disburseRequest} disabled={selected.status !== "APPROVED" || selected.is_disbursed} loading={busy === "disburse"}>Disburse Loan</Button>
@@ -591,9 +596,9 @@ export function LoanScreensPage({
       />
 
       {activeTab === "queue" ? (
-        <section className="panel">
-          <div className="panel-head">
-            <h2>Loan Approval Queue</h2>
+        <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+          <div className="panel-head mb-3 flex items-center justify-between gap-3">
+            <h2 className="m-0 text-lg font-extrabold text-charcoal">Loan Approval Queue</h2>
           </div>
           {loading ? <Skeleton lines={7} /> : requests.length ? (
             <>
@@ -631,7 +636,7 @@ export function LoanScreensPage({
         size="lg"
         onClose={() => setModal("")}
         footer={(
-          <div className="button-row">
+          <div className="button-row flex flex-wrap items-center gap-2.5">
             <Button type="button" variant="secondary" onClick={() => setModal("")}>Cancel</Button>
             <Button type="button" onClick={submitNewRequest} loading={busy === "request"}>Save Request</Button>
           </div>
@@ -648,7 +653,7 @@ export function LoanScreensPage({
         size="lg"
         onClose={() => setModal("")}
         footer={(
-          <div className="button-row">
+          <div className="button-row flex flex-wrap items-center gap-2.5">
             <Button type="button" variant="secondary" onClick={() => setModal("")}>Cancel</Button>
             <Button type="button" onClick={submitRepayment} loading={busy === "repayment"}>Record Repayment</Button>
           </div>

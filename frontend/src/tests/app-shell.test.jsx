@@ -11,10 +11,9 @@ describe("app shell", () => {
 
     expect(html).toContain("Visionaries Village Banking splash screen");
     expect(html).toContain("Visionaries Village Banking");
-    expect(html).toContain("Save Together. Grow Together.");
-    expect(html).toContain("Track Savings");
-    expect(html).toContain("Manage Loans");
-    expect(html).toContain("Share Interest");
+    expect(html).toContain("Stronger Together.");
+    expect(html).toContain("Saving Today, Building Tomorrow.");
+    expect(html).toContain("Secure. Reliable. Community Focused.");
     expect(html).toContain("Checking secure session");
     expect(html).toContain("splash-progress");
   });
@@ -22,19 +21,21 @@ describe("app shell", () => {
   it("renders the guest welcome splash with a continue action", () => {
     const html = renderToStaticMarkup(<SplashScreen onContinue={() => {}} />);
 
-    expect(html).toContain("Continue");
-    expect(html).toContain("splash-continue");
+    expect(html).toContain("Get Started");
+    expect(html).toContain("bg-gradient-to-br");
     expect(html).not.toContain("splash-progress");
   });
 
   it("keeps splash styles mobile-first and motion-safe", () => {
+    const source = fs.readFileSync(path.join(process.cwd(), "src/components/SplashScreen.jsx"), "utf8");
     const css = fs.readFileSync(path.join(process.cwd(), "src/styles/app.css"), "utf8");
 
-    expect(css).toContain(".splash-screen");
+    expect(source).toContain("splashArtwork");
+    expect(source).toContain("min-h-[min(900px,calc(100svh-24px))]");
+    expect(source).toContain("max-[430px]:min-h-[100svh]");
+    expect(source).toContain("text-[clamp(50px,14vw,74px)]");
+    expect(source).toContain("bg-gradient-to-br from-forest to-emerald");
     expect(css).toContain(".brand-mark");
-    expect(css).toContain(".splash-features");
-    expect(css).toContain(".splash-continue");
-    expect(css).toContain("100svh");
     expect(css).toContain("@media (prefers-reduced-motion: reduce)");
     expect(css).toContain("@keyframes splash-progress");
   });
@@ -43,7 +44,7 @@ describe("app shell", () => {
     const html = fs.readFileSync(path.join(process.cwd(), "index.html"), "utf8");
 
     expect(html).toContain("boot-phone");
-    expect(html).toContain("Save Together. Grow Together.");
+    expect(html).toContain("Visionaries Village Banking");
     expect(html).not.toContain("Preparing the Visionaries financial operations workspace.");
   });
 });

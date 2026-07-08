@@ -102,8 +102,17 @@ describe("member loans screen", () => {
     expect(html).toContain("My Loan Balance");
     expect(html).toContain("Loan account summary");
     expect(html).toContain("Member loan summary");
-    expect(html).toContain("Loan Breakdown");
+    expect(html).toContain("Loan Balance Breakdown");
+    expect(html).toContain("Interest Assessed (Unpaid)");
+    expect(html).toContain("Minimum Borrowing Pending");
+    expect(html).toContain("member-loans-breakdown-icon");
+    expect(html).toContain("loan-action request");
+    expect(html).toContain("loan-action topup");
+    expect(html).toContain("loan-action repayment");
     expect(html).toContain("Loan Ledger");
+    expect(html.indexOf("Loan Balance Breakdown")).toBeLessThan(html.indexOf("Loan Ledger"));
+    expect(html.indexOf("Loan Ledger")).toBeLessThan(html.indexOf("loan-action request"));
+    expect(html).not.toContain("Repayment Progress");
     expect(html).toContain("Loan disbursement");
     expect(html).toContain("K9,000");
     expect(html).toContain("aria-label=\"Primary mobile navigation\"");
@@ -118,12 +127,19 @@ describe("member loans screen", () => {
   });
 
   it("keeps the member loans mobile responsive contract", () => {
+    const source = fs.readFileSync(path.join(process.cwd(), "src/pages/member/MemberLoansPage.jsx"), "utf8");
     const css = fs.readFileSync(path.join(process.cwd(), "src/styles/member-loans.css"), "utf8");
 
+    expect(source).toContain("borrowingBadgeText");
+    expect(source).toContain("MobileBreakdownValue");
     expect(css).toContain(".member-loans-hero");
     expect(css).toContain(".member-loans-hero-actions");
     expect(css).toContain(".member-loans-hero-strip");
     expect(css).toContain(".member-loans-mobile");
+    expect(css).toContain(".member-loans-breakdown-row:last-child");
+    expect(css).toContain(".member-loans-breakdown-icon");
+    expect(css).toContain(".member-loans-page .member-mobile-section-head h2");
+    expect(css).toContain(".loan-action.topup");
     expect(css).toContain("@media (max-width: 767px)");
   });
 

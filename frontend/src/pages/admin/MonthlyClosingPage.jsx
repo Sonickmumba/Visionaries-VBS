@@ -125,21 +125,26 @@ export function closingStepIndex(preview, result) {
 }
 
 function DetailValue({ label, value }) {
-  return <div><strong>{label}</strong><span>{value}</span></div>;
+  return (
+    <div className="grid gap-1 rounded-app border border-mist bg-cream p-3">
+      <strong className="text-xs font-black uppercase text-charcoal/70">{label}</strong>
+      <span className="break-words text-sm font-extrabold text-charcoal">{value}</span>
+    </div>
+  );
 }
 
 function ClosingHero({ preview, totals, exceptions }) {
   return (
-    <section className="closing-hero">
+    <section className="closing-hero mb-4 grid gap-4 rounded-mobile bg-gradient-to-br from-forest via-emerald to-forest p-5 text-cream shadow-lift md:grid-cols-[minmax(0,1fr)_auto]" aria-label="Monthly closing overview">
       <div>
-        <span>Closing Preview</span>
-        <h2>{preview?.cycle?.name || "Active Cycle"}</h2>
-        <p>{preview?.cycleMonth ? `Month ${preview.cycleMonth.month_number} closing preview` : "Review declarations, interest, penalties, and carry-forward balances."}</p>
+        <span className="text-xs font-black uppercase text-cream">Closing Preview</span>
+        <h2 className="my-1 text-[25px] font-extrabold leading-tight text-cream">{preview?.cycle?.name || "Active Cycle"}</h2>
+        <p className="m-0 text-sm font-extrabold text-cream/85">{preview?.cycleMonth ? `Month ${preview.cycleMonth.month_number} closing preview` : "Review declarations, interest, penalties, and carry-forward balances."}</p>
       </div>
-      <div className="closing-hero-stat">
-        <span>Exceptions</span>
-        <strong>{exceptions.length}</strong>
-        <small>{totals.declared || 0} declared · {totals.missed || 0} missed</small>
+      <div className="closing-hero-stat grid min-w-40 content-center gap-1 rounded-mobile border border-cream/20 bg-white/10 p-3 backdrop-blur">
+        <span className="text-xs font-black uppercase text-cream">Exceptions</span>
+        <strong className="break-words text-[24px] font-extrabold text-cream">{exceptions.length}</strong>
+        <small className="text-xs font-extrabold text-cream/85">{totals.declared || 0} declared · {totals.missed || 0} missed</small>
       </div>
     </section>
   );
@@ -147,7 +152,7 @@ function ClosingHero({ preview, totals, exceptions }) {
 
 function OverviewStrip({ totals }) {
   return (
-    <div className="closing-overview-strip">
+    <div className="closing-overview-strip mt-3.5 grid gap-2.5 md:grid-cols-2 xl:grid-cols-4">
       <DetailValue label="Savings Deposits" value={money(totals.savingsDeposit)} />
       <DetailValue label="Savings Interest" value={money(totals.savingsInterest)} />
       <DetailValue label="Loan Interest" value={money(totals.loanInterest)} />
@@ -159,27 +164,27 @@ function OverviewStrip({ totals }) {
 function MemberSnapshotCards({ members }) {
   if (!members.length) return null;
   return (
-    <div className="closing-mobile-cards" aria-label="Mobile member closing snapshots">
+    <div className="closing-mobile-cards grid gap-3" aria-label="Mobile member closing snapshots">
       {members.map((member) => {
         const newLoan = Number(member.newLoanAmount || 0) + Number(member.topUpAmount || 0) + Number(member.convertedPenaltyLoanAmount || 0);
         const repayments = Number(member.principalRepaid || 0) + Number(member.interestRepaid || 0);
         return (
-          <article key={member.cycle_member_id || member.member_code || memberName(member)} className="closing-card">
-            <div className="closing-card-head">
-              <div className="closing-avatar">{initials(member)}</div>
+          <article key={member.cycle_member_id || member.member_code || memberName(member)} className="closing-card grid gap-3 rounded-mobile border border-mist bg-cream p-3 shadow-soft">
+            <div className="closing-card-head grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2.5">
+              <div className="closing-avatar grid h-11 w-11 place-items-center rounded-mobile bg-cream text-sm font-black text-emerald" aria-hidden="true">{initials(member)}</div>
               <div>
-                <strong>{memberName(member)}</strong>
-                <span>{member.member_code || "Member snapshot"}</span>
+                <strong className="block break-words text-sm font-extrabold text-charcoal">{memberName(member)}</strong>
+                <span className="block break-words text-xs font-extrabold text-charcoal/70">{member.member_code || "Member snapshot"}</span>
               </div>
               <Badge text={statusLabel(member.declarationStatus)} tone={statusTone(member.declarationStatus)} />
             </div>
-            <div className="closing-card-values">
-              <div><span>Loan B/F</span><strong>{money(member.loanBroughtForward)}</strong></div>
-              <div><span>New Loan</span><strong>{money(newLoan)}</strong></div>
-              <div><span>Loan Interest</span><strong>{money(member.loanInterest)}</strong></div>
-              <div><span>Repayments</span><strong>{money(repayments)}</strong></div>
-              <div><span>Loan C/F</span><strong>{money(member.loanCarriedForward)}</strong></div>
-              <div><span>Penalty</span><strong>{money(member.penaltyAmount)}</strong></div>
+            <div className="closing-card-values grid grid-cols-2 gap-2.5">
+              <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Loan B/F</span><strong className="break-words text-base font-extrabold text-charcoal">{money(member.loanBroughtForward)}</strong></div>
+              <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">New Loan</span><strong className="break-words text-base font-extrabold text-charcoal">{money(newLoan)}</strong></div>
+              <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Loan Interest</span><strong className="break-words text-base font-extrabold text-charcoal">{money(member.loanInterest)}</strong></div>
+              <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Repayments</span><strong className="break-words text-base font-extrabold text-charcoal">{money(repayments)}</strong></div>
+              <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Loan C/F</span><strong className="break-words text-base font-extrabold text-charcoal">{money(member.loanCarriedForward)}</strong></div>
+              <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Penalty</span><strong className="break-words text-base font-extrabold text-charcoal">{money(member.penaltyAmount)}</strong></div>
             </div>
             <Badge text={statusLabel(member.borrowingStatus)} tone={statusTone(member.borrowingStatus)} />
           </article>
@@ -192,22 +197,22 @@ function MemberSnapshotCards({ members }) {
 function ExceptionCards({ exceptions }) {
   if (!exceptions.length) return null;
   return (
-    <div className="closing-mobile-cards" aria-label="Mobile monthly closing exceptions">
+    <div className="closing-mobile-cards grid gap-3" aria-label="Mobile monthly closing exceptions">
       {exceptions.map((member) => {
         const missed = member.declarationStatus === "MISSED";
         return (
-          <article key={member.cycle_member_id || member.member_code || memberName(member)} className="closing-card">
-            <div className="closing-card-head">
-              <div className="closing-avatar">{initials(member)}</div>
+          <article key={member.cycle_member_id || member.member_code || memberName(member)} className="closing-card grid gap-3 rounded-mobile border border-mist bg-cream p-3 shadow-soft">
+            <div className="closing-card-head grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2.5">
+              <div className="closing-avatar grid h-11 w-11 place-items-center rounded-mobile bg-cream text-sm font-black text-emerald" aria-hidden="true">{initials(member)}</div>
               <div>
-                <strong>{memberName(member)}</strong>
-                <span>{missed ? "Missed declaration" : statusLabel(member.borrowingStatus)}</span>
+                <strong className="block break-words text-sm font-extrabold text-charcoal">{memberName(member)}</strong>
+                <span className="block break-words text-xs font-extrabold text-charcoal/70">{missed ? "Missed declaration" : statusLabel(member.borrowingStatus)}</span>
               </div>
               <Badge text={missed ? "Penalty" : "Compliance"} tone={missed ? "red" : "amber"} />
             </div>
-            <div className="closing-card-values">
-              <div><span>Action</span><strong>{missed ? "Assess penalty" : "Carry status"}</strong></div>
-              <div><span>Amount</span><strong>{missed ? money(member.penaltyAmount) : money(member.borrowingShortfall)}</strong></div>
+            <div className="closing-card-values grid grid-cols-2 gap-2.5">
+              <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Action</span><strong className="break-words text-base font-extrabold text-charcoal">{missed ? "Assess penalty" : "Carry status"}</strong></div>
+              <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><span className="text-[11px] font-black uppercase text-charcoal/70">Amount</span><strong className="break-words text-base font-extrabold text-charcoal">{missed ? money(member.penaltyAmount) : money(member.borrowingShortfall)}</strong></div>
             </div>
           </article>
         );
@@ -223,16 +228,16 @@ function RunResult({ result }) {
   const commonInterestRun = result.commonInterest?.run || {};
 
   return (
-    <section className="panel closing-result">
-      <div className="closing-result-hero">
+    <section className="panel closing-result mb-5 rounded-app border border-mist bg-cream p-4 shadow-soft">
+      <div className="closing-result-hero mb-3.5 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
         <div>
-          <span>Approved Run</span>
-          <h2>Monthly Closing Posted</h2>
-          <p>{(result.snapshots || []).length} member snapshots created.</p>
+          <span className="text-xs font-black uppercase text-emerald">Approved Run</span>
+          <h2 className="my-0.5 text-xl font-extrabold text-charcoal">Monthly Closing Posted</h2>
+          <p className="m-0 text-sm font-extrabold text-charcoal/75">{(result.snapshots || []).length} member snapshots created.</p>
         </div>
         <Badge text={run.status || "APPROVED"} tone="green" />
       </div>
-      <div className="detail-grid closing-detail-grid">
+      <div className="detail-grid closing-detail-grid grid gap-3 md:grid-cols-2 xl:grid-cols-4">
         <DetailValue label="Run Number" value={run.run_number || "-"} />
         <DetailValue label="Approved" value={dateOnly(run.approved_at || run.completed_at)} />
         <DetailValue label="Snapshots" value={(result.snapshots || []).length} />
@@ -362,7 +367,7 @@ export function MonthlyClosingPage({
   return (
     <Page
       title="Monthly Closing"
-      className="monthly-closing-page"
+      className="monthly-closing-page grid gap-0"
       actions={(
         <>
           <Button type="button" icon={RefreshCw} onClick={loadPreview} loading={loading}>Refresh Preview</Button>
@@ -378,15 +383,15 @@ export function MonthlyClosingPage({
 
       <ClosingHero preview={preview} totals={totals} exceptions={exceptions} />
 
-      <div className="admin-mobile-action-row closing-mobile-actions-row mobile-only" aria-label="Monthly closing quick actions">
+      <div className="admin-mobile-action-row closing-mobile-actions-row mobile-only flex gap-2" aria-label="Monthly closing quick actions">
         <Button type="button" icon={RefreshCw} onClick={loadPreview} loading={loading}>Refresh</Button>
         <Button type="button" variant="danger" icon={FileCheck2} onClick={runClosing} loading={busy === "run"} disabled={preview?.cycleMonth?.status === "LOCKED"}>
           Run
         </Button>
       </div>
 
-      <section className="panel closing-context">
-        <div className="form-grid three">
+      <section className="panel closing-context mb-5 rounded-app border border-mist bg-cream p-4 shadow-soft">
+        <div className="form-grid three grid gap-3 md:grid-cols-3">
           <Select
             label="Cycle"
             value={cycleId}
@@ -411,25 +416,25 @@ export function MonthlyClosingPage({
             options={CLOSING_ALLOCATION_METHODS}
           />
         </div>
-        <label className="closing-lock-toggle">
+        <label className="closing-lock-toggle mt-3.5 inline-flex items-center gap-2.5 text-sm font-extrabold text-charcoal">
           <input type="checkbox" checked={lockMonth} onChange={(event) => setLockMonth(event.target.checked)} />
           <span><Lock size={15} aria-hidden="true" /> Lock month after approval</span>
         </label>
       </section>
 
-      <section className="panel closing-steps-panel">
-        <div className="panel-head">
-          <h2>Closing Workflow</h2>
+      <section className="panel closing-steps-panel mb-5 rounded-app border border-mist bg-cream p-4 shadow-soft">
+        <div className="panel-head mb-3 flex items-center justify-between gap-3">
+          <h2 className="m-0 text-lg font-extrabold text-charcoal">Closing Workflow</h2>
           <Badge text={preview?.cycleMonth ? statusLabel(preview.cycleMonth.status) : "No month"} tone={statusTone(preview?.cycleMonth?.status)} />
         </div>
         <Stepper steps={CLOSING_STEPS} active={stepIndex} />
       </section>
 
-      {loading ? <section className="panel"><Skeleton lines={9} /></section> : !preview ? (
+      {loading ? <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft"><Skeleton lines={9} /></section> : !preview ? (
         <EmptyState title="No monthly closing preview" message="Choose a cycle month and refresh the preview before running closing." />
       ) : (
         <>
-          <div className="metrics closing-metrics">
+          <div className="metrics closing-metrics grid gap-4 md:grid-cols-2 xl:grid-cols-5">
             <Card title="Declared" value={totals.declared || 0} note="Members declared" icon={ClipboardList} />
             <Card title="Missed" value={totals.missed || 0} note="Penalty candidates" tone={Number(totals.missed || 0) ? "red" : "green"} icon={AlertTriangle} />
             <Card title="Savings Interest" value={money(totals.savingsInterest)} note="To post this month" tone="teal" icon={PiggyBank} />
@@ -450,12 +455,12 @@ export function MonthlyClosingPage({
           />
 
           {activeTab === "overview" ? (
-            <section className="panel">
-              <div className="panel-head">
-                <h2>Closing Context</h2>
+            <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+              <div className="panel-head mb-3 flex items-center justify-between gap-3">
+                <h2 className="m-0 text-lg font-extrabold text-charcoal">Closing Context</h2>
                 <Badge text={preview.cycle?.name || "Cycle"} tone="blue" />
               </div>
-              <div className="detail-grid closing-detail-grid">
+              <div className="detail-grid closing-detail-grid grid gap-3 md:grid-cols-2 xl:grid-cols-4">
                 <DetailValue label="Cycle" value={preview.cycle?.name || "-"} />
                 <DetailValue label="Month" value={preview.cycleMonth ? `Month ${preview.cycleMonth.month_number}` : "-"} />
                 <DetailValue label="Month Status" value={statusLabel(preview.cycleMonth?.status)} />
@@ -479,9 +484,9 @@ export function MonthlyClosingPage({
           ) : null}
 
           {activeTab === "members" ? (
-            <section className="panel">
-              <div className="panel-head">
-                <h2>Member Snapshots</h2>
+            <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+              <div className="panel-head mb-3 flex items-center justify-between gap-3">
+                <h2 className="m-0 text-lg font-extrabold text-charcoal">Member Snapshots</h2>
                 <Badge text={`${members.length} members`} tone="blue" />
               </div>
               <MemberSnapshotCards members={members} />
@@ -506,9 +511,9 @@ export function MonthlyClosingPage({
           ) : null}
 
           {activeTab === "exceptions" ? (
-            <section className="panel">
-              <div className="panel-head">
-                <h2>Exceptions</h2>
+            <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+              <div className="panel-head mb-3 flex items-center justify-between gap-3">
+                <h2 className="m-0 text-lg font-extrabold text-charcoal">Exceptions</h2>
                 <Badge text={`${exceptions.length} items`} tone={exceptions.length ? "amber" : "green"} />
               </div>
               <ExceptionCards exceptions={exceptions} />

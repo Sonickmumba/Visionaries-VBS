@@ -19,6 +19,10 @@ import "../../styles/dashboard.css";
 
 const money = (value) => `K${Number(value || 0).toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
 
+function cx(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
+
 function monthScope(financialPosition) {
   return financialPosition?.month_number ? `up to Month ${financialPosition.month_number}` : "latest calculated";
 }
@@ -173,14 +177,14 @@ function viewMonthStatus(status) {
 function DashboardLoading() {
   return (
     <>
-      <div className="metrics">
+      <div className="metrics grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {Array.from({ length: 6 }, (_, index) => (
           <section className="metric" key={index}><Skeleton lines={3} /></section>
         ))}
       </div>
-      <div className="grid two">
-        <section className="panel"><Skeleton lines={6} /></section>
-        <section className="panel"><Skeleton lines={5} /></section>
+      <div className="grid two mt-5 grid gap-4 lg:grid-cols-2">
+        <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft"><Skeleton lines={6} /></section>
+        <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft"><Skeleton lines={5} /></section>
       </div>
     </>
   );
@@ -197,16 +201,16 @@ function ProgressPanel({ setPage }) {
   ];
 
   return (
-    <section className="panel dashboard-panel">
-      <div className="panel-head">
-        <h2>Monthly Closing Progress</h2>
+    <section className="panel dashboard-panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+      <div className="panel-head mb-3 flex items-center justify-between gap-3">
+        <h2 className="text-lg font-extrabold text-charcoal">Monthly Closing Progress</h2>
         <Button type="button" size="sm" variant="secondary" onClick={() => setPage?.("closing")}>Open Closing</Button>
       </div>
       {steps.map(([title, note], index) => (
-        <button className="dashboard-step" key={title} type="button" onClick={() => setPage?.("closing")}>
-          <span>{index + 1}</span>
-          <strong>{title}</strong>
-          <small>{note}</small>
+        <button className="dashboard-step grid w-full grid-cols-[28px_minmax(0,0.7fr)_minmax(0,1fr)_22px] items-center gap-2.5 border-0 border-b border-mist bg-cream py-2.5 text-left" key={title} type="button" onClick={() => setPage?.("closing")}>
+          <span className="grid h-6 w-6 place-items-center rounded-full bg-mist text-xs font-extrabold text-emerald">{index + 1}</span>
+          <strong className="text-sm font-extrabold text-charcoal">{title}</strong>
+          <small className="text-xs font-semibold text-charcoal/75">{note}</small>
           <CheckCircle2 size={16} aria-hidden="true" />
         </button>
       ))}
@@ -216,16 +220,16 @@ function ProgressPanel({ setPage }) {
 
 function PriorityPanel({ priorities, setPage }) {
   return (
-    <section className="panel dashboard-panel">
-      <div className="panel-head">
-        <h2>Priority Queue</h2>
+    <section className="panel dashboard-panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+      <div className="panel-head mb-3 flex items-center justify-between gap-3">
+        <h2 className="text-lg font-extrabold text-charcoal">Priority Queue</h2>
         <Button type="button" size="sm" variant="secondary" onClick={() => setPage?.("reports")}>View Reports</Button>
       </div>
-      <div className="dashboard-priorities">
+      <div className="dashboard-priorities grid gap-2.5">
         {priorities.map((item) => (
-          <button key={item.label} type="button" className={item.urgent ? "urgent" : ""} onClick={() => setPage?.(item.page)}>
-            <span>{item.label}</span>
-            <strong>{item.detail}</strong>
+          <button key={item.label} type="button" className={cx("rounded-app border border-mist border-l-4 bg-cream p-3 text-left shadow-soft", item.urgent ? "urgent border-l-alert" : "border-l-emerald")} onClick={() => setPage?.(item.page)}>
+            <span className="text-xs font-black uppercase text-charcoal/75">{item.label}</span>
+            <strong className="mt-1 block text-sm font-extrabold text-charcoal">{item.detail}</strong>
           </button>
         ))}
       </div>
@@ -235,23 +239,23 @@ function PriorityPanel({ priorities, setPage }) {
 
 function DashboardHero({ view, setPage }) {
   return (
-    <section className="admin-dashboard-hero" aria-label="Admin dashboard summary">
-      <div className="admin-hero-copy">
+    <section className="admin-dashboard-hero mb-4 grid overflow-hidden rounded-mobile bg-gradient-to-br from-forest via-emerald to-forest p-5 text-cream shadow-lift md:grid-cols-[minmax(0,1fr)_auto]" aria-label="Admin dashboard summary">
+      <div className="admin-hero-copy grid gap-1">
         <BrandMark size="sm" showText className="admin-hero-brand" />
-        <span>Good day</span>
-        <h2>Visionaries Operations</h2>
-        <p>{view.cycleName} · {view.monthLabel}</p>
+        <span className="text-xs font-black uppercase text-cream">Good day</span>
+        <h2 className="m-0 text-[28px] font-extrabold leading-tight text-cream">Visionaries Operations</h2>
+        <p className="m-0 text-sm font-extrabold text-cream/90">{view.cycleName} · {view.monthLabel}</p>
       </div>
-      <div className="admin-hero-status" aria-label="Month status">
-        <span>Status</span>
-        <strong>{view.monthStatus}</strong>
+      <div className="admin-hero-status grid min-w-[150px] self-start rounded-app border border-cream/20 bg-white/10 p-3 backdrop-blur" aria-label="Month status">
+        <span className="text-xs font-black uppercase text-cream">Status</span>
+        <strong className="text-sm font-extrabold capitalize text-cream">{view.monthStatus}</strong>
       </div>
-      <div className="admin-hero-stats">
+      <div className="admin-hero-stats col-span-full mt-4 grid grid-cols-3 gap-2.5">
         {view.heroStats.map(({ label, value, icon: Icon }) => (
-          <button key={label} type="button" onClick={() => setPage?.(label === "Savings" ? "savings" : label === "Loans" ? "loans" : "declarations")}>
-            <Icon size={18} aria-hidden="true" />
-            <span>{label}</span>
-            <strong>{value}</strong>
+          <button key={label} type="button" className="grid min-h-[82px] content-start gap-1.5 rounded-app border border-cream/20 bg-white/10 p-3 text-left text-cream transition hover:bg-white/20" onClick={() => setPage?.(label === "Savings" ? "savings" : label === "Loans" ? "loans" : "declarations")}>
+            <Icon size={18} className="text-gold" aria-hidden="true" />
+            <span className="text-xs font-black uppercase text-cream">{label}</span>
+            <strong className="break-words text-lg font-extrabold leading-tight text-cream">{value}</strong>
           </button>
         ))}
       </div>
@@ -261,12 +265,12 @@ function DashboardHero({ view, setPage }) {
 
 function QuickActions({ actions, setPage }) {
   return (
-    <section className="admin-quick-actions" aria-label="Quick actions">
+    <section className="admin-quick-actions mb-4 grid gap-3 md:grid-cols-2 xl:grid-cols-4" aria-label="Quick actions">
       {actions.map(({ label, detail, page, icon: Icon, tone }) => (
-        <button key={label} type="button" className={tone} onClick={() => setPage?.(page)}>
-          <span><Icon size={18} aria-hidden="true" /></span>
-          <strong>{label}</strong>
-          <small>{detail}</small>
+        <button key={label} type="button" className={cx("grid min-h-[94px] grid-cols-[auto_1fr_auto] items-center gap-x-2.5 rounded-mobile border border-mist bg-cream p-3 text-left text-charcoal shadow-soft transition hover:border-emerald hover:shadow-lift", tone)} onClick={() => setPage?.(page)}>
+          <span className="grid h-10 w-10 place-items-center rounded-app bg-mist text-emerald"><Icon size={18} aria-hidden="true" /></span>
+          <strong className="text-sm font-extrabold text-charcoal">{label}</strong>
+          <small className="col-start-2 text-xs font-extrabold capitalize text-charcoal/75">{detail}</small>
           <Send size={15} aria-hidden="true" />
         </button>
       ))}
@@ -324,43 +328,43 @@ export function AdminDashboardPage({ setPage, dashboardApi = api, initialData = 
           <DashboardHero view={view} setPage={setPage} />
           <QuickActions actions={view.quickActions} setPage={setPage} />
 
-          <section className="dashboard-context">
-            <div>
+          <section className="dashboard-context mb-5 grid gap-3 lg:grid-cols-3">
+            <div className="grid grid-cols-[auto_1fr] items-center gap-x-2.5 rounded-app border border-mist bg-cream p-3 shadow-soft">
               <CalendarDays size={18} aria-hidden="true" />
-              <span>Active Cycle</span>
-              <strong>{view.cycleName}</strong>
+              <span className="text-xs font-black uppercase text-charcoal/75">Active Cycle</span>
+              <strong className="font-extrabold text-charcoal">{view.cycleName}</strong>
             </div>
-            <div>
+            <div className="grid grid-cols-[auto_1fr] items-center gap-x-2.5 rounded-app border border-mist bg-cream p-3 shadow-soft">
               <CheckCircle2 size={18} aria-hidden="true" />
-              <span>Current Month</span>
-              <strong>{view.monthLabel}</strong>
+              <span className="text-xs font-black uppercase text-charcoal/75">Current Month</span>
+              <strong className="font-extrabold text-charcoal">{view.monthLabel}</strong>
             </div>
-            <div>
+            <div className="grid grid-cols-[auto_1fr] items-center gap-x-2.5 rounded-app border border-mist bg-cream p-3 shadow-soft">
               <Users size={18} aria-hidden="true" />
-              <span>Declaration Status</span>
-              <strong>{view.declarations.awaiting_review || 0} awaiting review</strong>
+              <span className="text-xs font-black uppercase text-charcoal/75">Declaration Status</span>
+              <strong className="font-extrabold text-charcoal">{view.declarations.awaiting_review || 0} awaiting review</strong>
             </div>
           </section>
 
-          <div className="metrics dashboard-metrics">
+          <div className="metrics dashboard-metrics grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {view.cards.map((card) => (
-              <button className="dashboard-card" type="button" key={card.title} onClick={() => setPage?.(card.page)}>
+              <button className="dashboard-card block border-0 bg-transparent p-0 text-left" type="button" key={card.title} onClick={() => setPage?.(card.page)}>
                 <Card {...card} />
               </button>
             ))}
           </div>
 
-          <section className="panel dashboard-panel dashboard-financial-position">
-            <div className="panel-head">
-              <h2>Cycle Financial Position {view.financialPositionScope}</h2>
+          <section className="panel dashboard-panel dashboard-financial-position mb-5 rounded-app border border-mist bg-cream p-4 shadow-soft">
+            <div className="panel-head mb-3 flex items-center justify-between gap-3">
+              <h2 className="text-lg font-extrabold text-charcoal">Cycle Financial Position {view.financialPositionScope}</h2>
               <Button type="button" size="sm" variant="secondary" onClick={() => setPage?.("common-interest")}>Open Common Interest</Button>
             </div>
-            <div className="metrics dashboard-pool-metrics">
+            <div className="metrics dashboard-pool-metrics grid gap-4 md:grid-cols-2 xl:grid-cols-5">
               {view.poolCards.map((card) => <Card key={card.title} {...card} />)}
             </div>
           </section>
 
-          <div className="grid two">
+          <div className="grid two grid gap-4 lg:grid-cols-2">
             <ProgressPanel setPage={setPage} />
             <PriorityPanel priorities={view.priorities} setPage={setPage} />
           </div>

@@ -117,7 +117,10 @@ describe("member statement screens", () => {
     expect(html).toContain("Export CSV");
     expect(html).toContain("member-statement-mobile");
     expect(html).toContain("Statement summary");
-    expect(html).toContain("Member Statement");
+    expect(html).toContain("<h1>Statement</h1>");
+    expect(html).toContain("member-statement-topbar");
+    expect(html).toContain("Back to dashboard");
+    expect(html).toContain("Export statement");
     expect(html).toContain("Statement financial summary");
     expect(html).toContain("Statement Period");
     expect(html).toContain("aria-label=\"Statement actions\"");
@@ -132,6 +135,19 @@ describe("member statement screens", () => {
     expect(html).toContain("Mary Phiri");
   });
 
+  it("keeps the transaction detail modal outside the desktop-only statement wrapper", () => {
+    const source = fs.readFileSync(path.join(process.cwd(), "src/pages/member/MemberStatementPage.jsx"), "utf8");
+    const desktopStart = source.indexOf('<div className="member-statement-desktop">');
+    const desktopClose = source.indexOf("</div>\n\n          <Modal", desktopStart);
+    const modalIndex = source.indexOf("<Modal", desktopStart);
+
+    expect(desktopStart).toBeGreaterThan(-1);
+    expect(desktopClose).toBeGreaterThan(desktopStart);
+    expect(modalIndex).toBeGreaterThan(desktopClose);
+    expect(source).toContain("onAction={() => setSelectedTransaction(tx)}");
+    expect(source).toContain("statementRows(transactions, setSelectedTransaction)");
+  });
+
   it("renders an empty state without active membership", () => {
     const html = renderToStaticMarkup(
       <MemberStatementPage initialData={{ me: { member: null, cycleMemberships: [] }, activeMembership: null, statement: null, months: [] }} />,
@@ -144,7 +160,10 @@ describe("member statement screens", () => {
     const css = fs.readFileSync(path.join(process.cwd(), "src/styles/member-statement.css"), "utf8");
 
     expect(css).toContain(".member-statement-hero");
+    expect(css).toContain(".member-statement-page .mobile-shell-inner");
+    expect(css).toContain(".member-statement-topbar");
     expect(css).toContain(".member-statement-hero-actions");
+    expect(css).toContain(".member-statement-page .member-mobile-section-head h2");
     expect(css).toContain(".member-statement-hero-strip");
     expect(css).toContain(".member-statement-mobile");
     expect(css).toContain("@media (max-width: 767px)");

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Banknote, ClipboardCheck, ClipboardList, FileText, Gauge, PiggyBank, Receipt, RefreshCw, RotateCcw, Scale, Send, UploadCloud } from "lucide-react";
+import { ArrowLeft, Banknote, ClipboardCheck, FileText, PiggyBank, Receipt, RefreshCw, RotateCcw, Scale, Send, UploadCloud } from "lucide-react";
 import { api } from "../../api/client.js";
 import {
   Alert,
@@ -9,7 +9,6 @@ import {
   DataTable,
   EmptyState,
   MobileBottomNav,
-  MobileHeader,
   MobileMetricCard,
   MobileScreenShell,
   MobileStepper,
@@ -220,7 +219,7 @@ function formFromDeclaration(declaration) {
 }
 
 function FieldSummary({ label, value }) {
-  return <div><strong>{label}</strong><span>{value}</span></div>;
+  return <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><strong className="text-xs font-black uppercase text-charcoal/70">{label}</strong><span className="break-words text-sm font-extrabold text-charcoal">{value}</span></div>;
 }
 
 function MemberDeclarationMobileHero({
@@ -231,24 +230,29 @@ function MemberDeclarationMobileHero({
   enteredRepayments,
   form,
   load,
+  setPage,
 }) {
   return (
-    <section className="member-declaration-hero" aria-label="Declaration status summary">
-      <div className="member-declaration-hero-head">
+    <section className="member-declaration-hero grid gap-3 rounded-b-[34px] bg-gradient-to-br from-forest to-emerald px-[14px] py-[14px] text-cream shadow-lift" aria-label="Declaration status summary">
+      <div className="member-declaration-topbar grid min-h-[42px] grid-cols-[42px_1fr_42px] items-center gap-2">
+        <button type="button" className="inline-grid h-[38px] w-[38px] place-items-center rounded-app border border-cream/20 bg-white/10 text-cream" aria-label="Back to dashboard" onClick={() => setPage?.("member-dashboard")}><ArrowLeft size={18} aria-hidden="true" /></button>
+        <h1 className="m-0 text-center text-[17px] font-extrabold leading-tight text-cream">Declaration</h1>
+        <button type="button" className="inline-grid h-[38px] w-[38px] place-items-center rounded-app border border-cream/20 bg-white/10 text-cream" aria-label="Refresh declaration" onClick={load}><RefreshCw size={18} aria-hidden="true" /></button>
+      </div>
+      <div className="member-declaration-hero-head flex items-center justify-between gap-3 rounded-mobile border border-mist bg-cream p-4 text-charcoal shadow-soft">
         <div>
-          <span>Declaration Status</span>
-          <h2>{titleCase(declarationStatus)}</h2>
+          <span className="text-xs font-black uppercase text-charcoal/70">Monthly Declaration</span>
+          <h2 className="mt-1 text-[28px] font-extrabold leading-tight text-forest">{titleCase(declarationStatus)}</h2>
         </div>
         <Badge text={selectedMonth ? `Month ${selectedMonth.month_number}` : "No month"} tone={statusTone(declarationStatus)} />
       </div>
-      <p>{selectedMonth ? `${dateOnly(selectedMonth.declaration_window_start)} to ${dateOnly(selectedMonth.declaration_window_end)}` : "Select a month"}</p>
-      <div className="member-declaration-hero-values">
+      <p className="m-0 text-sm font-extrabold text-cream/90">{selectedMonth ? `${dateOnly(selectedMonth.declaration_window_start)} to ${dateOnly(selectedMonth.declaration_window_end)}` : "Select a month"}</p>
+      <div className="member-declaration-hero-values grid grid-cols-2 gap-2.5">
         <FieldSummary label="Savings" value={money(enteredSavings)} />
         <FieldSummary label="Loans" value={money(enteredLoans)} />
         <FieldSummary label="Repayments" value={money(enteredRepayments)} />
         <FieldSummary label="Common Interest" value={money(form.commonInterestPaymentAmount)} />
       </div>
-      <Button type="button" size="sm" variant="secondary" icon={RefreshCw} onClick={load}>Refresh</Button>
     </section>
   );
 }
@@ -259,8 +263,8 @@ function monthLabel(month) {
 
 function ProofUploadField({ type, existing, proofFiles, setProofFiles, errors, setErrors, closedDeclaration }) {
   return (
-    <label className={`proof-upload ${errors[type] ? "has-error" : ""}`}>
-      <span><UploadCloud size={17} aria-hidden="true" /> {proofTypeLabels[type]}</span>
+    <label className={`proof-upload ${errors[type] ? "has-error" : ""} grid min-w-0 gap-2 rounded-app border border-mist bg-cream p-3.5 ${errors[type] ? "border-alert" : ""}`}>
+      <span className="flex items-center gap-2 text-sm font-extrabold text-charcoal"><UploadCloud size={17} aria-hidden="true" /> {proofTypeLabels[type]}</span>
       <input
         type="file"
         accept="image/jpeg,image/png,image/webp,application/pdf"
@@ -271,7 +275,7 @@ function ProofUploadField({ type, existing, proofFiles, setProofFiles, errors, s
           if (errors[type]) setErrors((current) => ({ ...current, [type]: "" }));
         }}
       />
-      <small>{proofFiles[type]?.name || existing?.original_filename || "JPG, PNG, WEBP, or PDF up to 5 MB"}</small>
+      <small className="break-words text-xs font-semibold text-charcoal/70">{proofFiles[type]?.name || existing?.original_filename || "JPG, PNG, WEBP, or PDF up to 5 MB"}</small>
       {existing ? <Badge text="Uploaded" tone="green" /> : null}
       {errors[type] ? <small className="field-error">{errors[type]}</small> : null}
     </label>
@@ -286,7 +290,7 @@ function MobileProofUploadField({ type, existing, proofFiles, setProofFiles, err
     || "JPG, PNG, WEBP, or PDF up to 5 MB";
 
   return (
-    <div className={errors[type] ? "mobile-proof has-error" : "mobile-proof"}>
+    <div className={errors[type] ? "mobile-proof has-error grid gap-1.5" : "mobile-proof grid gap-1.5"}>
       <MobileUploadCard
         label={proofTypeLabels[type]}
         fileName={proofFiles[type]?.name || existing?.original_filename}
@@ -469,7 +473,7 @@ export function MemberDeclarationPage({
 
   return (
     <Page
-      className="member-declaration-page"
+      className="member-declaration-page grid gap-0"
       title="My Declaration"
       actions={(
         <>
@@ -484,18 +488,12 @@ export function MemberDeclarationPage({
       {errors.activity ? <Alert tone="danger" title="Declaration needs activity">{errors.activity}</Alert> : null}
       {message ? <Alert tone="success" title="Declaration saved">{message}</Alert> : null}
 
-      {loading ? <section className="panel"><Skeleton lines={8} /></section> : !activeMembership ? (
+      {loading ? <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft"><Skeleton lines={8} /></section> : !activeMembership ? (
         <EmptyState title="No active cycle membership" message="Ask an administrator to enroll you into an active cycle before submitting declarations." />
       ) : (
         <>
           <div className="member-declaration-mobile">
             <MobileScreenShell bottomNav={bottomNav}>
-              <MobileHeader
-                eyebrow="Monthly Declaration"
-                title={monthLabel(selectedMonth)}
-                subtitle={activeMembership.cycle_name || "Active cycle"}
-              />
-
               <MemberDeclarationMobileHero
                 selectedMonth={selectedMonth}
                 declarationStatus={declarationStatus}
@@ -504,6 +502,7 @@ export function MemberDeclarationPage({
                 enteredRepayments={enteredRepayments}
                 form={form}
                 load={load}
+                setPage={setPage}
               />
 
               <MobileStepper
@@ -519,11 +518,11 @@ export function MemberDeclarationPage({
               {closedDeclaration ? <Alert tone="info" title="Declaration is closed">Approved, missed, or cancelled declarations cannot be replaced from the member portal.</Alert> : null}
 
               <section className="member-mobile-section">
-                <div className="member-mobile-section-head">
-                  <h2>Month Context</h2>
+                <div className="member-mobile-section-head flex items-center justify-between gap-3">
+                  <h2 className="text-base font-extrabold text-charcoal">Month Context</h2>
                   <Badge text={titleCase(declarationStatus)} tone={statusTone(declarationStatus)} />
                 </div>
-                <div className="member-mobile-position">
+                <div className="member-mobile-position grid gap-2.5">
                   <Select
                     label="Cycle month"
                     value={selectedMonthId}
@@ -534,21 +533,22 @@ export function MemberDeclarationPage({
                   />
                   <FieldSummary label="Savings Cap" value={money(activeMembership.savings_cap)} />
                   <FieldSummary label="Minimum Borrowing" value={money(activeMembership.minimum_borrowing_amount)} />
+                  <FieldSummary label="Cycle" value={activeMembership.cycle_name || "-"} />
                 </div>
               </section>
 
               <section className="member-mobile-section">
-                <div className="member-mobile-section-head">
-                  <h2>Amounts</h2>
+                <div className="member-mobile-section-head flex items-center justify-between gap-3">
+                  <h2 className="text-base font-extrabold text-charcoal">Amounts</h2>
                   <Badge text={currentDeclaration ? "Existing Record" : "New Record"} tone={currentDeclaration ? "amber" : "blue"} />
                 </div>
-                <div className="member-declaration-mobile-summary" aria-label="Declaration amount summary">
+                <div className="member-declaration-mobile-summary grid grid-cols-2 gap-2.5" aria-label="Declaration amount summary">
                   <MobileMetricCard label="Savings" value={money(enteredSavings)} note="Requires proof when submitted" icon={PiggyBank} />
                   <MobileMetricCard label="Loans" value={money(enteredLoans)} note="Request or top-up" icon={Banknote} tone="blue" />
                   <MobileMetricCard label="Repayments" value={money(enteredRepayments)} note="Principal plus interest" icon={Receipt} tone="amber" />
                   <MobileMetricCard label="Common Interest" value={money(form.commonInterestPaymentAmount)} note="Payment declaration" icon={Scale} tone="purple" />
                 </div>
-                <div className="member-declaration-mobile-form">
+                <div className="member-declaration-mobile-form mt-2.5 grid gap-2.5">
                   <CurrencyInput label="Savings amount" value={form.savingsAmount} onChange={updateForm("savingsAmount")} error={errors.savingsAmount} disabled={closedDeclaration} />
                   <CurrencyInput label="Loan request" value={form.loanRequestAmount} onChange={updateForm("loanRequestAmount")} error={errors.loanRequestAmount} disabled={closedDeclaration} />
                   <CurrencyInput label="Loan top-up" value={form.loanTopUpAmount} onChange={updateForm("loanTopUpAmount")} error={errors.loanTopUpAmount} disabled={closedDeclaration} />
@@ -562,11 +562,11 @@ export function MemberDeclarationPage({
 
               {visibleProofTypes.length ? (
                 <section className="member-mobile-section">
-                  <div className="member-mobile-section-head">
-                    <h2>Proof of Payment</h2>
+                  <div className="member-mobile-section-head flex items-center justify-between gap-3">
+                    <h2 className="text-base font-extrabold text-charcoal">Proof of Payment</h2>
                     <Badge text={proofLoading ? "Loading proofs" : `${proofAttachments.length} uploaded`} tone="blue" />
                   </div>
-                  <div className="member-mobile-list">
+                  <div className="member-mobile-list grid gap-2.5">
                     {visibleProofTypes.map((type) => (
                       <MobileProofUploadField
                         key={type}
@@ -584,18 +584,18 @@ export function MemberDeclarationPage({
               ) : null}
 
               <section className="member-mobile-section">
-                <div className="member-mobile-section-head">
-                  <h2>History</h2>
+                <div className="member-mobile-section-head flex items-center justify-between gap-3">
+                  <h2 className="text-base font-extrabold text-charcoal">History</h2>
                   <Badge text={`${declarations.length} records`} tone="blue" />
                 </div>
-                <div className="member-mobile-list">
+                <div className="member-mobile-list grid gap-2.5">
                   {declarations.slice(0, 5).length ? declarations.slice(0, 5).map((declaration) => (
-                    <article key={declaration.id} className="member-mobile-history-card">
-                      <div>
+                    <article key={declaration.id} className="member-mobile-history-card flex items-center justify-between gap-2.5 rounded-mobile border border-mist bg-cream p-3 shadow-soft">
+                      <div className="grid min-w-0 gap-1">
                         <strong>{declaration.month_number ? `Month ${declaration.month_number}` : dateOnly(declaration.submitted_at)}</strong>
                         <span>{dateOnly(declaration.submitted_at)}</span>
                       </div>
-                      <div>
+                      <div className="grid justify-items-end gap-1 text-right">
                         <strong>{money(Number(declaration.savings_amount || 0) + Number(declaration.loan_request_amount || 0) + Number(declaration.loan_top_up_amount || 0))}</strong>
                         <Badge text={titleCase(declaration.status)} tone={statusTone(declaration.status)} />
                       </div>
@@ -617,12 +617,12 @@ export function MemberDeclarationPage({
           </div>
 
           <div className="member-declaration-desktop">
-          <section className="panel member-declaration-context">
-            <div className="panel-head">
-              <h2>Declaration Window</h2>
+          <section className="panel member-declaration-context mb-5 rounded-app border border-mist bg-cream p-4 shadow-soft">
+            <div className="panel-head mb-3 flex items-center justify-between gap-3">
+              <h2 className="text-lg font-extrabold text-charcoal">Declaration Window</h2>
               <Badge text={titleCase(declarationStatus)} tone={statusTone(declarationStatus)} />
             </div>
-            <div className="form-grid three">
+            <div className="form-grid three grid gap-3 md:grid-cols-2 xl:grid-cols-3">
               <Select
                 label="Cycle month"
                 value={selectedMonthId}
@@ -646,12 +646,12 @@ export function MemberDeclarationPage({
             {closedDeclaration ? <Alert tone="info" title="Declaration is closed">Approved, missed, or cancelled declarations cannot be replaced from the member portal.</Alert> : null}
           </section>
 
-          <section className="panel">
-            <div className="panel-head">
-              <h2>Declaration Details</h2>
+          <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+            <div className="panel-head mb-3 flex items-center justify-between gap-3">
+              <h2 className="text-lg font-extrabold text-charcoal">Declaration Details</h2>
               <Badge text={currentDeclaration ? "Existing month record" : "New month record"} tone={currentDeclaration ? "amber" : "blue"} />
             </div>
-            <div className="form-grid three">
+            <div className="form-grid three grid gap-3 md:grid-cols-2 xl:grid-cols-3">
               <CurrencyInput label="Savings amount" value={form.savingsAmount} onChange={updateForm("savingsAmount")} error={errors.savingsAmount} disabled={closedDeclaration} />
               <CurrencyInput label="Loan request" value={form.loanRequestAmount} onChange={updateForm("loanRequestAmount")} error={errors.loanRequestAmount} disabled={closedDeclaration} />
               <CurrencyInput label="Loan top-up" value={form.loanTopUpAmount} onChange={updateForm("loanTopUpAmount")} error={errors.loanTopUpAmount} disabled={closedDeclaration} />
@@ -664,12 +664,12 @@ export function MemberDeclarationPage({
           </section>
 
           {visibleProofTypes.length ? (
-            <section className="panel payment-proof-panel">
-              <div className="panel-head">
-                <h2>Proof of Payment</h2>
+            <section className="panel payment-proof-panel mt-5 rounded-app border border-mist bg-cream p-4 shadow-soft">
+              <div className="panel-head mb-3 flex items-center justify-between gap-3">
+                <h2 className="text-lg font-extrabold text-charcoal">Proof of Payment</h2>
                 <Badge text={proofLoading ? "Loading proofs" : `${proofAttachments.length} uploaded`} tone="blue" />
               </div>
-              <div className="proof-grid">
+              <div className="proof-grid grid gap-3 md:grid-cols-2">
                 {visibleProofTypes.map((type) => {
                   const existing = proofAttachments.find((attachment) => attachment.attachment_type === type);
                   return (
@@ -689,9 +689,9 @@ export function MemberDeclarationPage({
             </section>
           ) : null}
 
-          <section className="panel">
-            <div className="panel-head">
-              <h2>My Declaration History</h2>
+          <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+            <div className="panel-head mb-3 flex items-center justify-between gap-3">
+              <h2 className="text-lg font-extrabold text-charcoal">My Declaration History</h2>
               <Badge text={`${declarations.length} records`} tone="blue" />
             </div>
             <DataTable
@@ -709,7 +709,7 @@ export function MemberDeclarationPage({
             />
           </section>
 
-          <div className="button-row">
+          <div className="button-row flex flex-wrap items-center gap-2.5">
             <Button type="button" variant="secondary" icon={ClipboardCheck} onClick={() => setPage?.("member-dashboard")}>Back to Dashboard</Button>
           </div>
           </div>

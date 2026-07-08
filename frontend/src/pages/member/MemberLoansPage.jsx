@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { AlertTriangle, Banknote, ClipboardList, FileText, Gauge, PiggyBank, Receipt, RefreshCw } from "lucide-react";
+import { AlertTriangle, ArrowLeft, Banknote, ClipboardList, FileText, Info, PiggyBank, Receipt, RefreshCw } from "lucide-react";
 import { api } from "../../api/client.js";
 import {
   Alert,
@@ -10,7 +10,6 @@ import {
   EmptyState,
   MobileActionTile,
   MobileBottomNav,
-  MobileHeader,
   MobileListCard,
   MobileMetricCard,
   MobileScreenShell,
@@ -39,7 +38,26 @@ function transactionTone(type) {
 }
 
 function DetailValue({ label, value }) {
-  return <div><strong>{label}</strong><span>{value}</span></div>;
+  return (
+    <div className="grid gap-1 rounded-app border border-mist bg-cream p-3">
+      <strong className="text-xs font-black uppercase text-charcoal/70">{label}</strong>
+      <span className="break-words text-sm font-extrabold text-charcoal">{value}</span>
+    </div>
+  );
+}
+
+function MobileBreakdownValue({ label, value, icon: Icon = Banknote, tone = "green" }) {
+  return (
+    <div className={`member-loans-breakdown-row ${tone}`.trim()}>
+      <span className="member-loans-breakdown-icon"><Icon size={14} aria-hidden="true" /></span>
+      <strong>{label}</strong>
+      <span>{value}</span>
+    </div>
+  );
+}
+
+function borrowingBadgeText(summary) {
+  return summary.borrowingShortfall > 0 ? "Minimum Borrowing Pending" : "Minimum Borrowing Met";
 }
 
 function MemberLoansMobileHero({ summary, activeMembership, setPage }) {
@@ -48,27 +66,17 @@ function MemberLoansMobileHero({ summary, activeMembership, setPage }) {
   return (
     <section className="member-loans-hero" aria-label="Loan account summary">
       <div className="member-loans-hero-head">
-        <div>
-          <span>{activeMembership?.cycle_name || "Active cycle"}</span>
-          <h2>My Loans</h2>
-        </div>
-        <Badge text={titleCase(summary.borrowingStatus)} tone={statusTone} />
+        <button type="button" aria-label="Back to dashboard" onClick={() => setPage?.("member-dashboard")}><ArrowLeft size={18} aria-hidden="true" /></button>
+        <span hidden>Member Loans</span>
+        <h2>Loans</h2>
+        <button type="button" aria-label="Loan information"><Info size={18} aria-hidden="true" /></button>
       </div>
 
       <div className="member-loans-hero-main">
-        <span>Loan Balance</span>
+        <span>Outstanding Loan Balance</span>
         <strong>{money(summary.outstandingBalance)}</strong>
+        <Badge text={borrowingBadgeText(summary)} tone={statusTone} />
         <small>{money(summary.cumulativeBorrowed)} cumulative borrowed</small>
-      </div>
-
-      <div className="member-loans-hero-actions">
-        <Button type="button" size="sm" onClick={() => setPage?.("my-declaration")}>Request Loan</Button>
-        <Button type="button" size="sm" variant="secondary" onClick={() => setPage?.("my-statement")}>Statement</Button>
-      </div>
-
-      <div className="member-loans-hero-strip">
-        <DetailValue label="Interest Due" value={money(Math.max(0, summary.interestAssessed - summary.interestRepaid))} />
-        <DetailValue label="Shortfall" value={money(summary.borrowingShortfall)} />
       </div>
     </section>
   );
@@ -155,6 +163,7 @@ export function MemberLoansPage({
   const activeMembership = data?.activeMembership;
   const summary = useMemo(() => memberLoanSummary(data), [data]);
   const entries = data?.ledger?.data || [];
+  const unpaidInterest = Math.max(0, summary.interestAssessed - summary.interestRepaid);
   const bottomNav = (
     <MobileBottomNav
       active="my-loans"
@@ -165,7 +174,7 @@ export function MemberLoansPage({
 
   return (
     <Page
-      className="member-loans-page"
+      className="member-loans-page grid gap-0"
       title="My Loans"
       actions={(
         <>
@@ -177,61 +186,54 @@ export function MemberLoansPage({
     >
       {error ? <Alert tone="danger" title="Loans failed">{error}</Alert> : null}
 
-      {loading ? <section className="panel"><Skeleton lines={8} /></section> : !activeMembership ? (
+      {loading ? <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft"><Skeleton lines={8} /></section> : !activeMembership ? (
         <EmptyState title="No active cycle membership" message="Ask an administrator to enroll you into a cycle before loan details can appear." />
       ) : (
         <>
           <div className="member-loans-mobile">
             <MobileScreenShell bottomNav={bottomNav}>
-              <MobileHeader
-                eyebrow="Member Loans"
-                title={memberName(data?.me?.member)}
-                subtitle={activeMembership.cycle_name || "Active cycle"}
-              />
-
               <MemberLoansMobileHero
                 summary={summary}
                 activeMembership={activeMembership}
                 setPage={setPage}
               />
 
-              <div className="member-loans-mobile-metrics" aria-label="Member loan summary">
+              <div className="member-loans-mobile-metrics member-loans-mobile-secondary" aria-label="Member loan summary">
                 <MobileMetricCard label="Borrowing Shortfall" value={money(summary.borrowingShortfall)} note={titleCase(summary.borrowingStatus)} icon={PiggyBank} />
                 <MobileMetricCard label="Interest Assessed" value={money(summary.interestAssessed)} note={`${money(summary.interestRepaid)} repaid`} icon={Receipt} tone="amber" />
                 <MobileMetricCard label="Principal Repaid" value={money(summary.principalRepaid)} note="Paid toward balance" icon={Banknote} tone="green" />
                 <MobileMetricCard label="Top-ups" value={money(summary.topUps)} note="Additional borrowing" icon={Banknote} tone="blue" />
               </div>
 
-              <section className="member-mobile-section" aria-label="Loan actions">
+              <section className="member-mobile-section member-loans-mobile-secondary" aria-label="Loan actions">
                 <div className="member-mobile-section-head">
                   <h2>Actions</h2>
                 </div>
                 <div className="member-loans-mobile-actions">
                   <MobileActionTile label="Request Loan" icon={ClipboardList} onClick={() => setPage?.("my-declaration")} />
-                  <MobileActionTile label="Statement" icon={Receipt} tone="blue" onClick={() => setPage?.("my-statement")} />
-                  <MobileActionTile label="Refresh" icon={RefreshCw} tone="amber" onClick={load} disabled={loading} />
+                  <MobileActionTile label="Request Top-up" icon={Banknote} tone="blue" onClick={() => setPage?.("my-declaration")} />
+                  <MobileActionTile label="Declare Repayment" icon={Receipt} tone="amber" onClick={() => setPage?.("my-declaration")} />
                 </div>
               </section>
 
               <section className="member-mobile-section">
                 <div className="member-mobile-section-head">
-                  <h2>Loan Breakdown</h2>
-                  <Badge text={titleCase(summary.borrowingStatus)} tone={summary.borrowingShortfall > 0 ? "amber" : "green"} />
+                  <h2>Loan Balance Breakdown</h2>
                 </div>
                 <div className="member-loans-mobile-breakdown">
-                  <DetailValue label="Original Loans" value={money(summary.originalLoans)} />
-                  <DetailValue label="Top-ups" value={money(summary.topUps)} />
-                  <DetailValue label="Converted Penalties" value={money(summary.convertedPenaltyLoans)} />
-                  <DetailValue label="Interest Assessed" value={money(summary.interestAssessed)} />
-                  <DetailValue label="Principal Repaid" value={money(summary.principalRepaid)} />
-                  <DetailValue label="Interest Repaid" value={money(summary.interestRepaid)} />
+                  <MobileBreakdownValue label="Original Loans" value={money(summary.originalLoans)} icon={Banknote} />
+                  <MobileBreakdownValue label="Top-ups" value={money(summary.topUps)} icon={PiggyBank} tone="amber" />
+                  <MobileBreakdownValue label="Converted Penalty Loans" value={money(summary.convertedPenaltyLoans)} icon={AlertTriangle} tone="red" />
+                  <MobileBreakdownValue label="Interest Assessed (Unpaid)" value={money(unpaidInterest)} icon={Receipt} tone="blue" />
+                  <MobileBreakdownValue label="Principal Repaid" value={money(summary.principalRepaid)} icon={Banknote} />
+                  <MobileBreakdownValue label="Interest Paid" value={money(summary.interestRepaid)} icon={Receipt} />
                 </div>
               </section>
 
               <section className="member-mobile-section">
                 <div className="member-mobile-section-head">
                   <h2>Loan Ledger</h2>
-                  <Badge text={`${entries.length} records`} tone="blue" />
+                  <button type="button" className="member-mobile-text-link" onClick={() => setPage?.("my-statement")}>View All</button>
                 </div>
                 <div className="member-mobile-list">
                   {entries.length ? entries.map((entry) => (
@@ -247,23 +249,29 @@ export function MemberLoansPage({
                   )) : <p className="muted">No loan ledger entries found.</p>}
                 </div>
               </section>
+
+              <div className="member-loans-bottom-actions" aria-label="Loan actions">
+                <Button type="button" variant="secondary" className="loan-action request" icon={ClipboardList} onClick={() => setPage?.("my-declaration")}>Request Loan</Button>
+                <Button type="button" variant="secondary" className="loan-action topup" icon={Banknote} onClick={() => setPage?.("my-declaration")}>Request Top-up</Button>
+                <Button type="button" variant="secondary" className="loan-action repayment" icon={Receipt} onClick={() => setPage?.("my-declaration")}>Declare Repayment</Button>
+              </div>
             </MobileScreenShell>
           </div>
 
           <div className="member-loans-desktop">
-            <div className="metrics member-loans-metrics">
+            <div className="metrics member-loans-metrics grid gap-4 md:grid-cols-2 xl:grid-cols-4">
               <Card title="My Loan Balance" value={money(summary.outstandingBalance)} note="Outstanding balance" tone="blue" icon={Banknote} />
               <Card title="Cumulative Borrowed" value={money(summary.cumulativeBorrowed)} note="Cycle borrowing" icon={PiggyBank} />
               <Card title="Interest Assessed" value={money(summary.interestAssessed)} note={`${money(summary.interestRepaid)} repaid`} tone="amber" icon={Receipt} />
               <Card title="Borrowing Shortfall" value={money(summary.borrowingShortfall)} note={titleCase(summary.borrowingStatus)} tone={summary.borrowingShortfall > 0 ? "amber" : "green"} icon={AlertTriangle} />
             </div>
 
-            <section className="panel member-loans-context">
-              <div className="panel-head">
-                <h2>Loan Breakdown</h2>
+            <section className="panel member-loans-context mb-5 rounded-app border border-mist bg-cream p-4 shadow-soft">
+              <div className="panel-head mb-3 flex items-center justify-between gap-3">
+                <h2 className="m-0 text-lg font-extrabold text-charcoal">Loan Breakdown</h2>
                 <Badge text={titleCase(summary.borrowingStatus)} tone={summary.borrowingShortfall > 0 ? "amber" : "green"} />
               </div>
-              <div className="detail-grid member-loans-detail-grid">
+              <div className="detail-grid member-loans-detail-grid grid gap-3 md:grid-cols-2 xl:grid-cols-4">
                 <DetailValue label="Original Loans" value={money(summary.originalLoans)} />
                 <DetailValue label="Top-ups" value={money(summary.topUps)} />
                 <DetailValue label="Converted Penalties" value={money(summary.convertedPenaltyLoans)} />
@@ -275,9 +283,9 @@ export function MemberLoansPage({
               </div>
             </section>
 
-            <section className="panel">
-              <div className="panel-head">
-                <h2>Loan Ledger</h2>
+            <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+              <div className="panel-head mb-3 flex items-center justify-between gap-3">
+                <h2 className="m-0 text-lg font-extrabold text-charcoal">Loan Ledger</h2>
                 <Badge text={`${entries.length} records`} tone="blue" />
               </div>
               <LedgerRows entries={entries} />

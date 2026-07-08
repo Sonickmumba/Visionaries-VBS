@@ -141,6 +141,10 @@ describe("design system components", () => {
     expect(css).toContain(".member-mobile-section");
     expect(css).toContain(".member-mobile-section-head");
     expect(css).toContain(".member-mobile-list");
+    expect(css).toContain(".member-declaration-page .mobile-bottom-nav");
+    expect(css).toContain(".member-statement-page .mobile-bottom-nav");
+    expect(css).toContain("width: 100vw");
+    expect(css).toContain("border-radius: 22px 22px 0 0");
     expect(css).toContain(".mobile-bottom-nav button:focus-visible");
     expect(css).toContain("touch-action: manipulation");
     expect(css).toContain(".mobile-shell.has-bottom-nav .mobile-sticky-actions");

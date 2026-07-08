@@ -54,6 +54,10 @@ const EMPTY_FORM = {
   notes: "",
 };
 
+function cx(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
+
 function memberName(item) {
   return `${item?.first_name || ""} ${item?.last_name || ""}`.trim() || "Member";
 }
@@ -160,8 +164,8 @@ export async function markMissedDeclaration({ member, cycleMonthId, declarationA
 function DeclarationForm({ form, setForm, errors, members, editing }) {
   const set = (key) => (value) => setForm((current) => ({ ...current, [key]: value }));
   return (
-    <div className="declaration-form">
-      <div className="form-grid three">
+    <div className="declaration-form grid gap-3.5">
+      <div className="form-grid three grid gap-3 md:grid-cols-2 xl:grid-cols-3">
         <Select
           label="Member"
           value={form.cycleMemberId}
@@ -186,7 +190,7 @@ function DeclarationForm({ form, setForm, errors, members, editing }) {
 }
 
 function DetailValue({ label, value }) {
-  return <div><strong>{label}</strong><span>{value}</span></div>;
+  return <div className="grid gap-1 rounded-app border border-mist bg-cream p-3"><strong className="text-[11px] font-black uppercase text-charcoal/70">{label}</strong><span className="break-words text-sm font-extrabold text-charcoal">{value}</span></div>;
 }
 
 function DeclarationDetail({ detail, onEdit, onApprove, onLoanRequest, onCancel, onClose, onViewAttachment, loading }) {
@@ -196,22 +200,22 @@ function DeclarationDetail({ detail, onEdit, onApprove, onLoanRequest, onCancel,
     + Number(detail.loan_interest_repayment_amount || 0)
     + Number(detail.common_interest_payment_amount || 0);
   return (
-    <section className="declaration-detail">
-      <div className="declaration-detail-hero">
-        <div className="declaration-avatar" aria-hidden="true">{initials(detail)}</div>
+    <section className="declaration-detail grid gap-3.5">
+      <div className="declaration-detail-hero grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3">
+        <div className="declaration-avatar grid h-11 w-11 place-items-center rounded-mobile bg-cream text-sm font-black text-emerald" aria-hidden="true">{initials(detail)}</div>
         <div>
-          <span>Declaration Detail</span>
-          <h2>{memberName(detail)}</h2>
-          <p>{detail.cycle_name || "-"} · {detail.month_number ? `Month ${detail.month_number}` : "-"}</p>
+          <span className="text-xs font-black uppercase text-emerald">Declaration Detail</span>
+          <h2 className="my-0.5 text-xl font-extrabold text-charcoal">{memberName(detail)}</h2>
+          <p className="m-0 text-sm font-extrabold text-charcoal/75">{detail.cycle_name || "-"} · {detail.month_number ? `Month ${detail.month_number}` : "-"}</p>
         </div>
         <Badge text={detail.status} tone={statusTone(detail.status)} />
       </div>
-      <div className="declaration-detail-strip" aria-label="Declaration financial summary">
+      <div className="declaration-detail-strip grid gap-2.5 md:grid-cols-3" aria-label="Declaration financial summary">
         <DetailValue label="Savings" value={money(detail.savings_amount)} />
         <DetailValue label="Loan Intent" value={money(Number(detail.loan_request_amount || 0) + Number(detail.loan_top_up_amount || 0))} />
         <DetailValue label="Payments" value={money(paymentTotal)} />
       </div>
-      <div className="detail-grid declaration-detail-grid">
+      <div className="detail-grid declaration-detail-grid grid gap-3 md:grid-cols-2 xl:grid-cols-4">
         <DetailValue label="Cycle" value={detail.cycle_name || "-"} />
         <DetailValue label="Month" value={detail.month_number ? `Month ${detail.month_number}` : "-"} />
         <DetailValue label="Submitted" value={dateTime(detail.submitted_at)} />
@@ -226,13 +230,13 @@ function DeclarationDetail({ detail, onEdit, onApprove, onLoanRequest, onCancel,
         <DetailValue label="Within Window" value={detail.is_within_window ? "Yes" : "No"} />
       </div>
       {detail.notes ? <p className="muted">{detail.notes}</p> : null}
-      <section className="declaration-proof-review" aria-label="Payment proofs">
-        <h3>Payment Proofs</h3>
+      <section className="declaration-proof-review border-t border-mist pt-4" aria-label="Payment proofs">
+        <h3 className="mb-2.5 mt-0 text-base font-extrabold text-charcoal">Payment Proofs</h3>
         {detail.attachments?.length ? (
           <>
-            <div className="declaration-proof-cards">
+            <div className="declaration-proof-cards grid gap-3">
               {detail.attachments.map((attachment) => (
-                <article className="declaration-proof-card" key={attachment.id}>
+                <article className="declaration-proof-card grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2.5 rounded-app border border-mist bg-cream p-3" key={attachment.id}>
                   <Receipt size={18} aria-hidden="true" />
                   <div>
                     <strong>{proofTypeLabels[attachment.attachment_type] || attachment.attachment_type}</strong>
@@ -261,7 +265,7 @@ function DeclarationDetail({ detail, onEdit, onApprove, onLoanRequest, onCancel,
           <p className="muted">No payment proof uploaded for this declaration.</p>
         )}
       </section>
-      <div className="button-row declaration-detail-actions">
+      <div className="button-row declaration-detail-actions mt-4 flex flex-wrap items-center gap-2.5">
         <Button type="button" variant="secondary" icon={Edit3} onClick={onEdit} disabled={detailIsClosed}>Edit Declaration</Button>
         <Button type="button" icon={Banknote} onClick={onLoanRequest} disabled={detailIsClosed || detail.has_loan_request || !hasLoanIntent} loading={loading === "loan"}>
           {detail.has_loan_request ? "Loan Request Exists" : "Create Loan Request"}
@@ -278,17 +282,17 @@ function DeclarationDetail({ detail, onEdit, onApprove, onLoanRequest, onCancel,
 
 function DeclarationHero({ queue, totals }) {
   return (
-    <section className="declaration-hero" aria-label="Declaration queue overview">
+    <section className="declaration-hero mb-4 grid gap-4 rounded-mobile bg-gradient-to-br from-forest via-emerald to-forest p-5 text-cream shadow-lift md:grid-cols-[minmax(0,1fr)_auto]" aria-label="Declaration queue overview">
       <div>
-        <span>Declaration Queue</span>
-        <h2>{queue.cycleMonth ? `${queue.cycleMonth.cycle_name} · Month ${queue.cycleMonth.month_number}` : "Select a declaration month"}</h2>
-        <p>{queue.cycleMonth ? String(queue.cycleMonth.status || "OPEN").replaceAll("_", " ") : "Choose an active cycle month to review member submissions."}</p>
+        <span className="text-xs font-black uppercase text-cream">Declaration Queue</span>
+        <h2 className="my-1 text-[25px] font-extrabold leading-tight text-cream">{queue.cycleMonth ? `${queue.cycleMonth.cycle_name} · Month ${queue.cycleMonth.month_number}` : "Select a declaration month"}</h2>
+        <p className="m-0 text-sm font-extrabold text-cream/85">{queue.cycleMonth ? String(queue.cycleMonth.status || "OPEN").replaceAll("_", " ") : "Choose an active cycle month to review member submissions."}</p>
       </div>
-      <div className="declaration-hero-stats">
-        <strong>{totals.submitted}</strong>
-        <span>Submitted</span>
-        <strong>{totals.missed}</strong>
-        <span>Missed</span>
+      <div className="declaration-hero-stats grid min-w-[118px] grid-cols-[auto_1fr] items-baseline gap-x-2 gap-y-1 rounded-mobile border border-cream/20 bg-white/10 p-3 backdrop-blur">
+        <strong className="text-[22px] font-extrabold text-cream">{totals.submitted}</strong>
+        <span className="text-xs font-black uppercase text-cream">Submitted</span>
+        <strong className="text-[22px] font-extrabold text-cream">{totals.missed}</strong>
+        <span className="text-xs font-black uppercase text-cream">Missed</span>
       </div>
     </section>
   );
@@ -296,25 +300,25 @@ function DeclarationHero({ queue, totals }) {
 
 function SubmittedDeclarationCards({ declarations, selectedId, busy, onOpen }) {
   return (
-    <div className="declaration-mobile-cards" aria-label="Submitted declaration cards">
+    <div className="declaration-mobile-cards grid gap-3" aria-label="Submitted declaration cards">
       {!declarations.length ? <EmptyState title="No submitted declarations" message="No submitted declarations for this month." /> : null}
       {declarations.map((item) => (
-        <article className={`declaration-queue-card ${selectedId === item.id ? "selected" : ""}`} key={item.id}>
-          <div className="declaration-card-head">
-            <div className="declaration-avatar" aria-hidden="true">{initials(item)}</div>
+        <article className={cx("declaration-queue-card grid gap-3 rounded-mobile border border-mist bg-cream p-3 shadow-soft", selectedId === item.id && "selected border-emerald shadow-lift")} key={item.id}>
+          <div className="declaration-card-head grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2.5">
+            <div className="declaration-avatar grid h-11 w-11 place-items-center rounded-mobile bg-cream text-sm font-black text-emerald" aria-hidden="true">{initials(item)}</div>
             <div>
               <strong>{memberName(item)}</strong>
               <span>{item.member_code || "Member"} · {dateOnly(item.submitted_at)}</span>
             </div>
             <Badge text={item.status} tone={statusTone(item.status)} />
           </div>
-          <div className="declaration-card-values">
+          <div className="declaration-card-values grid gap-2.5 md:grid-cols-3">
             <DetailValue label="Savings" value={money(item.savings_amount)} />
             <DetailValue label="Loan" value={money(Number(item.loan_request_amount || 0) + Number(item.loan_top_up_amount || 0))} />
             <DetailValue label="Repayments" value={money(Number(item.principal_repayment_amount || 0) + Number(item.loan_interest_repayment_amount || 0))} />
           </div>
-          <div className="declaration-card-foot">
-            <span>{item.has_loan_request ? "Loan request created" : item.has_loan_intent ? "Loan request needed" : "No loan intent"}</span>
+          <div className="declaration-card-foot flex items-center justify-between gap-2.5">
+            <span className="text-xs font-extrabold text-charcoal/75">{item.has_loan_request ? "Loan request created" : item.has_loan_intent ? "Loan request needed" : "No loan intent"}</span>
             <Button type="button" variant={selectedId === item.id ? "primary" : "secondary"} size="sm" onClick={() => onOpen(item.id)} loading={busy === `detail-${item.id}`}>View Details</Button>
           </div>
         </article>
@@ -325,24 +329,24 @@ function SubmittedDeclarationCards({ declarations, selectedId, busy, onOpen }) {
 
 function MissedDeclarationCards({ members, busy, onAssess }) {
   return (
-    <div className="declaration-mobile-cards" aria-label="Missed declaration cards">
+    <div className="declaration-mobile-cards grid gap-3" aria-label="Missed declaration cards">
       {!members.length ? <EmptyState title="No missed declarations" message="No missed declarations for this month." /> : null}
       {members.map((item) => (
-        <article className="declaration-queue-card missed" key={item.cycle_member_id}>
-          <div className="declaration-card-head">
-            <div className="declaration-avatar" aria-hidden="true">{initials(item)}</div>
+        <article className="declaration-queue-card missed grid gap-3 rounded-mobile border border-l-4 border-mist border-l-alert bg-cream p-3 shadow-soft" key={item.cycle_member_id}>
+          <div className="declaration-card-head grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2.5">
+            <div className="declaration-avatar grid h-11 w-11 place-items-center rounded-mobile bg-cream text-sm font-black text-emerald" aria-hidden="true">{initials(item)}</div>
             <div>
               <strong>{memberName(item)}</strong>
               <span>{item.member_code || "Member code unavailable"}</span>
             </div>
             <Badge text={item.has_failure_penalty ? "PENALTY ASSESSED" : "MISSED"} tone={item.has_failure_penalty ? "green" : "red"} />
           </div>
-          <div className="declaration-card-values">
+          <div className="declaration-card-values grid gap-2.5 md:grid-cols-2">
             <DetailValue label="Penalty" value={money(item.failure_penalty_amount)} />
             <DetailValue label="Status" value={item.has_failure_penalty ? "Assessed" : "Pending"} />
           </div>
-          <div className="declaration-card-foot">
-            <span>Failure-to-declare review</span>
+          <div className="declaration-card-foot flex items-center justify-between gap-2.5">
+            <span className="text-xs font-extrabold text-charcoal/75">Failure-to-declare review</span>
             <Button
               type="button"
               variant={item.has_failure_penalty ? "secondary" : "danger"}
@@ -626,8 +630,8 @@ export function DeclarationScreensPage({
 
       <DeclarationHero queue={queue} totals={totals} />
 
-      <section className="panel declaration-filters">
-        <div className="form-grid three">
+      <section className="panel declaration-filters mb-5 rounded-app border border-mist bg-cream p-4 shadow-soft">
+        <div className="form-grid three grid gap-3 md:grid-cols-3">
           <Select
             label="Cycle"
             value={cycleId}
@@ -642,22 +646,22 @@ export function DeclarationScreensPage({
             placeholder="Choose month"
             options={(cycleDetail.months || []).map((month) => ({ value: month.id, label: `Month ${month.month_number} - ${String(month.status || "OPEN").replaceAll("_", " ")}` }))}
           />
-          <div className="queue-note">
+          <div className="queue-note grid min-h-[46px] content-center rounded-app border border-mist bg-mist px-3 text-sm font-extrabold text-charcoal">
             {queue.cycleMonth ? `${queue.cycleMonth.cycle_name} - Month ${queue.cycleMonth.month_number}` : "Select an active cycle month"}
           </div>
         </div>
       </section>
 
-      <div className="metrics declaration-metrics">
+      <div className="metrics declaration-metrics grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <Card title="Submitted" value={totals.submitted} note={`${totals.approved} approved`} icon={ClipboardList} />
         <Card title="Missed" value={totals.missed} note="Members not declared" tone="amber" icon={AlertTriangle} />
         <Card title="Declared Savings" value={money(totals.savings)} note="Pending or posted" tone="green" icon={PiggyBank} />
         <Card title="Loan Intent" value={money(totals.loanIntent)} note={`${money(totals.repayments)} repayments`} tone="blue" icon={Banknote} />
       </div>
 
-      {loading ? <section className="panel"><Skeleton lines={8} /></section> : null}
+      {loading ? <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft"><Skeleton lines={8} /></section> : null}
 
-      <div className="admin-mobile-action-row declaration-mobile-actions mobile-only" aria-label="Declaration quick actions">
+      <div className="admin-mobile-action-row declaration-mobile-actions mobile-only flex gap-2" aria-label="Declaration quick actions">
         <Button type="button" icon={RefreshCw} onClick={() => loadQueue()} loading={loading}>Refresh</Button>
         <Button type="button" variant="secondary" icon={Plus} onClick={startNewDeclaration}>New</Button>
       </div>
@@ -669,7 +673,7 @@ export function DeclarationScreensPage({
         onClose={() => { setDetail(null); setSelectedId(""); }}
       >
         {detail ? (
-          <div className="declaration-detail-modal">
+          <div className="declaration-detail-modal max-h-[min(72vh,720px)] overflow-auto pr-0.5">
             <DeclarationDetail
               detail={detail}
               onEdit={startEditDeclaration}
@@ -696,9 +700,9 @@ export function DeclarationScreensPage({
       />
 
       {activeTab === "submitted" ? (
-        <section className="panel">
-          <div className="panel-head">
-            <h2>Submitted Declarations</h2>
+        <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+          <div className="panel-head mb-3 flex items-center justify-between gap-3">
+            <h2 className="text-lg font-extrabold text-charcoal">Submitted Declarations</h2>
           </div>
           <SubmittedDeclarationCards declarations={queue.declarations || []} selectedId={selectedId} busy={busy} onOpen={openDeclaration} />
           <div className="declaration-desktop-table">
@@ -721,9 +725,9 @@ export function DeclarationScreensPage({
       ) : null}
 
       {activeTab === "missed" ? (
-        <section className="panel">
-          <div className="panel-head">
-            <h2>Missed Declarations</h2>
+        <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+          <div className="panel-head mb-3 flex items-center justify-between gap-3">
+            <h2 className="text-lg font-extrabold text-charcoal">Missed Declarations</h2>
           </div>
           <MissedDeclarationCards members={queue.missed || []} busy={busy} onAssess={assessMissedPenalty} />
           <div className="declaration-desktop-table">
@@ -752,10 +756,10 @@ export function DeclarationScreensPage({
       ) : null}
 
       {activeTab === "summary" ? (
-        <section className="panel">
-          <h2>Monthly Declaration Summary</h2>
+        <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+          <h2 className="mb-3 text-lg font-extrabold text-charcoal">Monthly Declaration Summary</h2>
           {queue.cycleMonth ? (
-            <div className="detail-grid declaration-detail-grid">
+            <div className="detail-grid declaration-detail-grid grid gap-3 md:grid-cols-2 xl:grid-cols-4">
               <DetailValue label="Cycle Month" value={`Month ${queue.cycleMonth.month_number}`} />
               <DetailValue label="Status" value={String(queue.cycleMonth.status || "-").replaceAll("_", " ")} />
               <DetailValue label="Period" value={`${dateOnly(queue.cycleMonth.start_date)} to ${dateOnly(queue.cycleMonth.end_date)}`} />
@@ -778,7 +782,7 @@ export function DeclarationScreensPage({
         size="lg"
         onClose={() => setFormMode("")}
         footer={(
-          <div className="button-row">
+          <div className="button-row flex flex-wrap items-center gap-2.5">
             <Button type="button" variant="secondary" onClick={() => setFormMode("")}>Cancel</Button>
             <Button type="button" onClick={submitDeclaration} loading={busy === "save"}>
               {formMode === "edit" ? "Save Declaration" : "Submit Declaration"}

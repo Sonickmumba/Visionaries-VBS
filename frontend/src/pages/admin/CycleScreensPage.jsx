@@ -195,9 +195,9 @@ export async function enrollCycleMember({ cycleId, memberId, cycleApi = api }) {
 
 function DetailValue({ label, value }) {
   return (
-    <div>
-      <strong>{label}</strong>
-      <span>{value}</span>
+    <div className="grid gap-1 rounded-app border border-mist bg-cream p-3">
+      <strong className="text-xs font-black uppercase text-charcoal/70">{label}</strong>
+      <span className="break-words text-sm font-extrabold text-charcoal">{value}</span>
     </div>
   );
 }
@@ -206,16 +206,16 @@ function CycleForm({ form, setForm, errors, editing, selectedCycle }) {
   const needsReason = editing && selectedCycle?.status !== "DRAFT";
   const set = (key) => (value) => setForm((current) => ({ ...current, [key]: value }));
   return (
-    <div className="cycle-form">
-      <div className="form-grid two">
+    <div className="cycle-form grid gap-3.5">
+      <div className="form-grid two grid gap-3 md:grid-cols-2">
         <Field label="Cycle name" value={form.name} onChange={set("name")} error={errors.name} required placeholder="2026 Main Cycle" />
         <Field label="Description" value={form.description} onChange={set("description")} placeholder="Operational note" />
         <DateInput label="Start date" value={form.startDate} onChange={set("startDate")} error={errors.startDate} required />
         <DateInput label="End date" value={form.endDate} onChange={set("endDate")} error={errors.endDate} required />
       </div>
 
-      <h3>Cycle Rules</h3>
-      <div className="form-grid three">
+      <h3 className="mb-2 mt-3.5 text-sm font-black uppercase text-charcoal">Cycle Rules</h3>
+      <div className="form-grid three grid gap-3 md:grid-cols-2 xl:grid-cols-3">
         <CurrencyInput label="Savings cap" value={form.savingsCap} onChange={set("savingsCap")} error={errors.savingsCap} required />
         <CurrencyInput label="Minimum borrowing" value={form.minimumBorrowingAmount} onChange={set("minimumBorrowingAmount")} error={errors.minimumBorrowingAmount} required />
         <CurrencyInput label="Social fund" value={form.socialFundAmount} onChange={set("socialFundAmount")} error={errors.socialFundAmount} required />
@@ -225,8 +225,8 @@ function CycleForm({ form, setForm, errors, editing, selectedCycle }) {
         <Field type="number" step="0.01" min="0" max="1" label="Common-interest rate" value={form.commonInterestRate} onChange={set("commonInterestRate")} error={errors.commonInterestRate} required />
       </div>
 
-      <h3>Operational Windows</h3>
-      <div className="form-grid four">
+      <h3 className="mb-2 mt-3.5 text-sm font-black uppercase text-charcoal">Operational Windows</h3>
+      <div className="form-grid four grid gap-3 md:grid-cols-2 xl:grid-cols-4">
         <Field type="number" min="1" max="31" label="Declaration start day" value={form.declarationStartDay} onChange={set("declarationStartDay")} error={errors.declarationStartDay} required />
         <Field type="number" min="1" max="31" label="Declaration end day" value={form.declarationEndDay} onChange={set("declarationEndDay")} error={errors.declarationEndDay} required />
         <Field type="number" min="1" max="31" label="Payout start day" value={form.payoutStartDay} onChange={set("payoutStartDay")} error={errors.payoutStartDay} required />
@@ -250,12 +250,12 @@ function CycleForm({ form, setForm, errors, editing, selectedCycle }) {
 
 function RulesTab({ cycle, onEdit }) {
   return (
-    <section className="panel cycle-tab-panel">
-      <div className="panel-head">
-        <h2>Configured Rules</h2>
+    <section className="panel cycle-tab-panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+      <div className="panel-head mb-3 flex items-center justify-between gap-3">
+        <h2 className="text-lg font-extrabold text-charcoal">Configured Rules</h2>
         <Button type="button" variant="secondary" size="sm" icon={Edit3} onClick={onEdit}>Edit Rules</Button>
       </div>
-      <div className="detail-grid cycle-detail-grid">
+      <div className="detail-grid cycle-detail-grid grid gap-3 md:grid-cols-2 xl:grid-cols-3">
         <DetailValue label="Savings Cap" value={money(cycle.savings_cap)} />
         <DetailValue label="Minimum Borrowing" value={money(cycle.minimum_borrowing_amount)} />
         <DetailValue label="Savings Interest" value={percent(cycle.savings_interest_rate)} />
@@ -272,9 +272,9 @@ function RulesTab({ cycle, onEdit }) {
 
 function MonthsTab({ months }) {
   return (
-    <section className="panel cycle-tab-panel">
-      <div className="panel-head">
-        <h2>Cycle Months</h2>
+    <section className="panel cycle-tab-panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+      <div className="panel-head mb-3 flex items-center justify-between gap-3">
+        <h2 className="text-lg font-extrabold text-charcoal">Cycle Months</h2>
       </div>
       <DataTable
         columns={["Month", "Period", "Declaration Window", "Payout Window", "Status"]}
@@ -293,9 +293,9 @@ function MonthsTab({ months }) {
 
 function MembersTab({ members, onEnroll }) {
   return (
-    <section className="panel cycle-tab-panel">
-      <div className="panel-head">
-        <h2>Enrolled Members</h2>
+    <section className="panel cycle-tab-panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+      <div className="panel-head mb-3 flex items-center justify-between gap-3">
+        <h2 className="text-lg font-extrabold text-charcoal">Enrolled Members</h2>
         <Button type="button" variant="secondary" size="sm" icon={UserPlus} onClick={onEnroll}>Enroll Members</Button>
       </div>
       <DataTable
@@ -314,9 +314,9 @@ function MembersTab({ members, onEnroll }) {
 
 function PenaltiesTab({ penaltyTypes }) {
   return (
-    <section className="panel cycle-tab-panel">
-      <div className="panel-head">
-        <h2>Penalty Types</h2>
+    <section className="panel cycle-tab-panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+      <div className="panel-head mb-3 flex items-center justify-between gap-3">
+        <h2 className="text-lg font-extrabold text-charcoal">Penalty Types</h2>
       </div>
       <DataTable
         columns={["Code", "Name", "Amount", "Convertible", "Status"]}
@@ -335,9 +335,9 @@ function PenaltiesTab({ penaltyTypes }) {
 
 function AuditTab({ auditRows }) {
   return (
-    <section className="panel cycle-tab-panel">
-      <div className="panel-head">
-        <h2>Cycle Audit</h2>
+    <section className="panel cycle-tab-panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+      <div className="panel-head mb-3 flex items-center justify-between gap-3">
+        <h2 className="text-lg font-extrabold text-charcoal">Cycle Audit</h2>
       </div>
       <DataTable
         columns={["Action", "Entity", "Reason", "Posted At"]}
@@ -570,15 +570,15 @@ export function CycleScreensPage({
       {message ? <Alert tone="success" title="Saved">{message}</Alert> : null}
       {error ? <Alert tone="danger" title="Cycle action failed">{error}</Alert> : null}
 
-      <div className="metrics cycle-metrics">
+      <div className="metrics cycle-metrics grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         {metrics.map((metric) => <ButtonlessMetric key={metric.title} {...metric} />)}
       </div>
 
-      <section className="panel">
-        <div className="panel-head">
-          <h2>Cycle List</h2>
+      <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+        <div className="panel-head mb-3 flex items-center justify-between gap-3">
+          <h2 className="text-lg font-extrabold text-charcoal">Cycle List</h2>
         </div>
-        <div className="cycle-list-mobile-actions mobile-only" aria-label="Cycle list quick actions">
+        <div className="cycle-list-mobile-actions mobile-only grid gap-2" aria-label="Cycle list quick actions">
           <Button type="button" icon={Plus} onClick={openCreate}>Create</Button>
           <Button type="button" variant="secondary" icon={RefreshCw} onClick={loadCycles} loading={loading}>Refresh</Button>
           <Button type="button" variant="secondary" icon={CalendarDays} onClick={handleGenerateMonths} disabled={!selectedCycle} loading={busy === "months"}>Months</Button>
@@ -600,18 +600,18 @@ export function CycleScreensPage({
         )}
       </section>
 
-      {detailLoading ? <section className="panel"><Skeleton lines={8} /></section> : selectedCycle ? (
-        <section className="cycle-detail">
-          <div className="cycle-detail-head">
+      {detailLoading ? <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft"><Skeleton lines={8} /></section> : selectedCycle ? (
+        <section className="cycle-detail grid gap-4">
+          <div className="cycle-detail-head flex items-start justify-between gap-4 rounded-app border border-mist bg-cream p-4 shadow-soft">
             <div>
-              <span>Selected Cycle</span>
-              <h2>{selectedCycle.name}</h2>
-              <p>{normalizeDate(selectedCycle.start_date)} to {normalizeDate(selectedCycle.end_date)}</p>
+              <span className="text-xs font-black uppercase text-charcoal/70">Selected Cycle</span>
+              <h2 className="my-1 text-xl font-extrabold text-charcoal">{selectedCycle.name}</h2>
+              <p className="m-0 text-sm font-semibold text-charcoal/75">{normalizeDate(selectedCycle.start_date)} to {normalizeDate(selectedCycle.end_date)}</p>
             </div>
             <Badge text={selectedCycle.status} tone={statusTone(selectedCycle.status)} />
           </div>
 
-          <div className="button-row cycle-actions">
+          <div className="button-row cycle-actions flex flex-wrap items-center gap-2.5 rounded-app border border-mist bg-cream p-3 shadow-soft">
             <Button type="button" icon={CheckCircle2} onClick={activateCycle} disabled={selectedCycle.status === "ACTIVE"} loading={busy === "activate"}>Activate Cycle</Button>
             <Button type="button" className="cycle-detail-generate-action" variant="secondary" icon={CalendarDays} onClick={handleGenerateMonths} loading={busy === "months"}>Generate Months</Button>
             <Button type="button" variant="secondary" icon={UserPlus} onClick={openEnrollMembers} loading={busy === "load-members"}>Enroll Members</Button>
@@ -653,7 +653,7 @@ export function CycleScreensPage({
         size="lg"
         onClose={() => setFormMode("")}
         footer={(
-          <div className="button-row">
+          <div className="button-row flex flex-wrap items-center gap-2.5">
             <Button type="button" variant="secondary" onClick={() => setFormMode("")}>Cancel</Button>
             <Button type="button" variant="secondary" onClick={submitCycle} loading={busy === "save"}>Save Draft</Button>
             <Button type="button" onClick={submitCycle} loading={busy === "save"}>Save Cycle</Button>
@@ -670,7 +670,7 @@ export function CycleScreensPage({
         title="Enroll Member"
         onClose={() => setEnrollOpen(false)}
         footer={(
-          <div className="button-row">
+          <div className="button-row flex flex-wrap items-center gap-2.5">
             <Button type="button" variant="secondary" onClick={() => setEnrollOpen(false)}>Cancel</Button>
             <Button type="button" onClick={submitEnrollment} loading={busy === "enroll"}>Enroll Members</Button>
           </div>
@@ -697,7 +697,7 @@ export function CycleScreensPage({
 
 function ButtonlessMetric({ title, value, note, tone, icon: Icon }) {
   return (
-    <section className={`metric ${tone}`}>
+    <section className={`metric ${tone} rounded-app border border-mist border-l-[5px] bg-cream p-4 shadow-soft`}>
       <Icon size={20} aria-hidden="true" />
       <span>{title}</span>
       <strong>{value}</strong>

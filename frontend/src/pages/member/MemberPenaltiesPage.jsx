@@ -37,7 +37,12 @@ function statusTone(status) {
 }
 
 function DetailValue({ label, value }) {
-  return <div><strong>{label}</strong><span>{value}</span></div>;
+  return (
+    <div className="grid gap-1 rounded-app border border-mist bg-cream p-3">
+      <strong className="text-xs font-black uppercase text-charcoal/70">{label}</strong>
+      <span className="break-words text-sm font-extrabold text-charcoal">{value}</span>
+    </div>
+  );
 }
 
 function MemberPenaltiesMobileHero({ summary, activeMembership, setPage }) {
@@ -160,7 +165,7 @@ export function MemberPenaltiesPage({
 
   return (
     <Page
-      className="member-penalties-page"
+      className="member-penalties-page grid gap-0"
       title="My Penalties"
       actions={(
         <>
@@ -172,7 +177,7 @@ export function MemberPenaltiesPage({
     >
       {error ? <Alert tone="danger" title="Penalties failed">{error}</Alert> : null}
 
-      {loading ? <section className="panel"><Skeleton lines={8} /></section> : !activeMembership ? (
+      {loading ? <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft"><Skeleton lines={8} /></section> : !activeMembership ? (
         <EmptyState title="No active cycle membership" message="Ask an administrator to enroll you into a cycle before penalty details can appear." />
       ) : (
         <>
@@ -244,19 +249,19 @@ export function MemberPenaltiesPage({
           </div>
 
           <div className="member-penalties-desktop">
-            <div className="metrics member-penalties-metrics">
+            <div className="metrics member-penalties-metrics grid gap-4 md:grid-cols-2 xl:grid-cols-4">
               <Card title="Penalty Due" value={money(summary.outstanding)} note={`${summary.count} records`} tone={summary.outstanding > 0 ? "red" : "green"} icon={AlertTriangle} />
               <Card title="Assessed" value={money(summary.assessed)} note="Total penalties" tone="amber" icon={FileText} />
               <Card title="Paid" value={money(summary.paid)} note="Payments posted" icon={Receipt} />
               <Card title="Converted to Loan" value={money(summary.converted)} note="Added to loan balance" tone="blue" icon={Banknote} />
             </div>
 
-            <section className="panel member-penalties-context">
-              <div className="panel-head">
-                <h2>Penalty Breakdown</h2>
+            <section className="panel member-penalties-context mb-5 rounded-app border border-mist bg-cream p-4 shadow-soft">
+              <div className="panel-head mb-3 flex items-center justify-between gap-3">
+                <h2 className="m-0 text-lg font-extrabold text-charcoal">Penalty Breakdown</h2>
                 <Badge text={summary.outstanding > 0 ? "Outstanding" : "Clear"} tone={summary.outstanding > 0 ? "red" : "green"} />
               </div>
-              <div className="detail-grid member-penalties-detail-grid">
+              <div className="detail-grid member-penalties-detail-grid grid gap-3 md:grid-cols-2 xl:grid-cols-3">
                 <DetailValue label="Assessed" value={money(summary.assessed)} />
                 <DetailValue label="Paid" value={money(summary.paid)} />
                 <DetailValue label="Outstanding" value={money(summary.outstanding)} />
@@ -266,9 +271,9 @@ export function MemberPenaltiesPage({
               </div>
             </section>
 
-            <section className="panel">
-              <div className="panel-head">
-                <h2>Penalty Register</h2>
+            <section className="panel rounded-app border border-mist bg-cream p-4 shadow-soft">
+              <div className="panel-head mb-3 flex items-center justify-between gap-3">
+                <h2 className="m-0 text-lg font-extrabold text-charcoal">Penalty Register</h2>
                 <Badge text={`${penalties.length} records`} tone="blue" />
               </div>
               <PenaltyRows penalties={penalties} />

@@ -6,26 +6,24 @@ import splashArtwork from "../../assets/auth/background-image-splash.png";
 import { BrandMark } from "../../components/BrandMark.jsx";
 import { AuthLayout } from "../../layouts/AppLayouts.jsx";
 import { DevEmailLink } from "./DevEmailLink.jsx";
+import {
+  signupActionClass,
+  signupBackButtonClass,
+  signupHeroClass,
+  signupInputActionClass,
+  signupPhoneClass,
+  signupSheetClass,
+  signupSuccessHeroClass,
+  signupSuccessSheetClass,
+} from "./authTailwind.js";
 import "../../styles/auth.css";
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const signupPhoneClass = "relative min-h-[min(982px,calc(100svh-24px))] w-[min(100%,430px)] overflow-hidden rounded-[34px] border border-cream/20 font-sans text-cream shadow-[0_30px_90px_rgba(31,41,51,0.28)] after:absolute after:bottom-2.5 after:left-1/2 after:z-[7] after:h-[5px] after:w-[122px] after:-translate-x-1/2 after:rounded-full after:bg-cream/90 max-[430px]:flex max-[430px]:h-[100svh] max-[430px]:min-h-0 max-[430px]:w-full max-[430px]:flex-col max-[430px]:rounded-none max-[430px]:border-0 max-[430px]:shadow-none";
-const signupHeroClass = "relative z-[2] grid min-h-[520px] content-start justify-items-start gap-[50px] px-[34px] pb-[58px] pt-[92px] text-left max-[430px]:min-h-0 max-[430px]:shrink-0 max-[430px]:gap-6 max-[430px]:px-6 max-[430px]:pb-12 max-[430px]:pt-[72px] max-[380px]:gap-4 max-[380px]:pb-8 max-[380px]:pt-[52px]";
-const signupSheetClass = "relative z-[5] mx-7 -mt-32 grid gap-2.5 rounded-[28px] bg-white/95 px-7 pb-7 pt-[30px] text-charcoal shadow-[0_22px_56px_rgba(31,41,51,0.16)] max-[430px]:mx-5 max-[430px]:-mt-10 max-[430px]:flex-1 max-[430px]:gap-1.5 max-[430px]:overflow-hidden max-[430px]:px-5 max-[430px]:pb-[max(16px,env(safe-area-inset-bottom))] max-[430px]:pt-5 max-[380px]:mx-4 max-[380px]:-mt-7 max-[380px]:gap-1 max-[380px]:px-4 max-[380px]:pt-4";
-const successHeroClass = "relative z-[2] grid min-h-[300px] justify-items-center gap-2.5 px-[34px] pb-12 pt-[92px] text-center";
-const successSheetClass = "relative z-[5] mx-6 -mt-9 grid gap-3.5 rounded-[28px] bg-white/95 p-7 text-charcoal shadow-[0_22px_56px_rgba(31,41,51,0.16)]";
-const backButtonClass = "absolute left-[22px] top-[58px] z-[8] grid h-[42px] w-[42px] place-items-center rounded-app border border-cream/25 bg-cream/10 text-cream backdrop-blur transition hover:bg-cream/20 max-[430px]:top-7 max-[380px]:top-4";
-const inputActionClass = "grid h-[34px] w-[34px] place-items-center rounded-full border-0 bg-transparent text-forest transition hover:bg-emerald/10";
-const signupActionClass = "grid min-h-[66px] grid-cols-[auto_1fr] items-center gap-4 rounded-[18px] border-0 bg-gradient-to-br from-emerald to-forest px-6 text-center text-[22px] font-black text-cream shadow-[0_14px_34px_rgba(13,59,46,0.22)] transition hover:-translate-y-0.5 disabled:cursor-wait disabled:opacity-70 max-[430px]:min-h-[54px] max-[430px]:text-lg max-[380px]:min-h-[50px] max-[380px]:text-base";
 const phoneBackgroundStyle = {
-  backgroundImage: "radial-gradient(circle at 88% 9%, rgba(217, 162, 39, 0.42), transparent 16%), linear-gradient(180deg, #0D3B2E 0%, #0D3B2E 56%, #127A5A 100%)",
-};
-const landscapeStyle = {
-  backgroundImage: `linear-gradient(180deg, rgba(247,244,238,0.28), rgba(247,244,238,0.02)), url(${splashArtwork})`,
+  backgroundImage: `linear-gradient(180deg, rgba(13,59,46,0.98) 0%, rgba(13,59,46,0.92) 44%, rgba(18,122,90,0.72) 100%), url(${splashArtwork})`,
   backgroundPosition: "center bottom",
   backgroundSize: "cover",
   backgroundRepeat: "no-repeat",
-  backgroundColor: "#F7F4EE",
 };
 
 export function validateSignupForm({ firstName, lastName, email, password, confirmPassword }) {
@@ -75,10 +73,10 @@ export async function performSignup({ form, authApi = api }) {
 
 function AuthInput({ label, icon: Icon, error, action, ...props }) {
   return (
-    <label className={`relative grid min-h-[44px] grid-cols-[34px_minmax(0,1fr)_auto] items-center gap-2.5 rounded-[18px] border bg-white/80 px-4 text-forest transition focus-within:border-emerald focus-within:shadow-[0_0_0_3px_rgba(18,122,90,0.14)] max-[430px]:min-h-[32px] max-[430px]:grid-cols-[28px_minmax(0,1fr)_auto] max-[430px]:gap-1.5 max-[430px]:rounded-[15px] max-[430px]:px-3 max-[380px]:min-h-10 max-[380px]:rounded-[14px] ${error ? "border-alert" : "border-charcoal/20"}`}>
+    <label className={`relative grid min-h-[44px] grid-cols-[34px_minmax(0,1fr)_auto] items-center gap-2.5 rounded-[18px] border bg-white/80 px-4 text-forest transition focus-within:border-emerald focus-within:shadow-[0_0_0_3px_rgba(18,122,90,0.14)] max-[430px]:min-h-[32px] max-[430px]:grid-cols-[28px_minmax(0,1fr)_auto] max-[430px]:gap-1.5 max-[430px]:rounded-[15px] max-[430px]:px-3 max-[380px]:min-h-10 max-[380px]:rounded-[14px] [@media(max-height:620px)]:min-h-8 [@media(max-height:620px)]:rounded-[12px] ${error ? "border-alert" : "border-charcoal/20"}`}>
       <span className="sr-only">{label}</span>
-      {Icon ? <Icon size={23} aria-hidden="true" /> : null}
-      <input className="min-w-0 border-0 bg-transparent text-[17px] font-semibold text-charcoal outline-none placeholder:text-charcoal/55 max-[430px]:text-sm max-[380px]:text-xs" aria-label={label} aria-invalid={error ? "true" : undefined} {...props} />
+      {Icon ? <Icon className="[@media(max-height:620px)]:h-[18px] [@media(max-height:620px)]:w-[18px]" size={23} aria-hidden="true" /> : null}
+      <input className="min-w-0 border-0 bg-transparent text-[17px] font-semibold text-charcoal outline-none placeholder:text-charcoal/55 max-[430px]:text-sm max-[380px]:text-xs [@media(max-height:620px)]:text-[11px]" aria-label={label} aria-invalid={error ? "true" : undefined} {...props} />
       {action}
       {error ? <small className="col-span-full -mt-0.5 mb-1 ml-11 text-xs font-extrabold text-alert">{error}</small> : null}
     </label>
@@ -131,11 +129,11 @@ export function SignupPage({ onSignup, onBackToLogin, onBackToWelcome, authApi =
     return (
       <AuthLayout>
         <section className={signupPhoneClass} style={phoneBackgroundStyle}>
-          <div className={successHeroClass}>
+          <div className={signupSuccessHeroClass}>
             <BrandMark size="lg" className="auth-hero-mark text-cream max-[430px]:[&_.brand-mark]:!h-16 max-[430px]:[&_.brand-mark]:!w-16" />
-            <h1 className="m-0 text-[clamp(40px,10vw,56px)] font-black leading-none text-cream drop-shadow-[0_5px_16px_rgba(31,41,51,0.26)]">Visionaries<br />Village Banking</h1>
+            <h1 className="m-0 text-[clamp(34px,8vw,44px)] font-black leading-none text-cream drop-shadow-[0_5px_16px_rgba(31,41,51,0.26)]">Visionaries<br />Village Banking</h1>
           </div>
-          <div className={successSheetClass}>
+          <div className={signupSuccessSheetClass}>
             <div className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-3">
               <span className="grid h-11 w-11 place-items-center rounded-[16px] bg-emerald/10 text-emerald"><UserPlus size={20} aria-hidden="true" /></span>
               <div>
@@ -160,17 +158,22 @@ export function SignupPage({ onSignup, onBackToLogin, onBackToWelcome, authApi =
       <form className={signupPhoneClass} style={phoneBackgroundStyle} onSubmit={submit} noValidate>
         {/* <div className="auth-status-bar" aria-hidden="true"><span>9:41</span><span className="auth-device-icons">▮▮▮ ))) ▭</span></div> */}
         {/* <div className="auth-orbit" aria-hidden="true" /> */}
+        {/* {onBackToWelcome ? (
+          <button type="button" className={signupBackButtonClass} onClick={onBackToWelcome} aria-label="Back to welcome">
+            <ArrowLeft size={18} aria-hidden="true" />
+          </button>
+        ) : null} */}
         <div className={signupHeroClass}>
-          <div className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-[22px]">
-            <BrandMark size="lg" className="auth-hero-mark text-cream max-[430px]:[&_.brand-mark]:!h-[72px] max-[430px]:[&_.brand-mark]:!w-[72px] max-[380px]:[&_.brand-mark]:!h-16 max-[380px]:[&_.brand-mark]:!w-16" />
+          <div className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-4 [@media(max-height:680px)]:gap-3">
+            <BrandMark size="lg" className="auth-hero-mark text-cream max-[430px]:[&_.brand-mark]:!h-[72px] max-[430px]:[&_.brand-mark]:!w-[72px] max-[380px]:[&_.brand-mark]:!h-16 max-[380px]:[&_.brand-mark]:!w-16 [@media(max-height:680px)]:[&_.brand-mark]:!h-14 [@media(max-height:680px)]:[&_.brand-mark]:!w-14" />
             <div>
-              <h1 className="m-0 text-[clamp(32px,8.5vw,42px)] font-black leading-none text-cream drop-shadow-[0_5px_16px_rgba(31,41,51,0.26)] max-[380px]:text-[clamp(30px,8vw,38px)]">Visionaries<br />Village Banking</h1>
-              <p className="m-0 mt-1.5 max-w-[280px] text-[clamp(13px,3.5vw,15px)] font-semibold leading-snug text-cream max-[380px]:mt-1 max-[380px]:text-xs">Stronger Together. Saving Today, Building Tomorrow.</p>
+              <h1 className="m-0 text-[clamp(27px,6.8vw,34px)] font-black leading-none text-cream drop-shadow-[0_5px_16px_rgba(31,41,51,0.26)] max-[380px]:text-[clamp(24px,6.2vw,30px)] [@media(max-height:680px)]:text-[clamp(21px,5.6vw,26px)]">Visionaries<br />Village Banking</h1>
+              <p className="m-0 mt-1 max-w-[260px] text-[clamp(12px,3vw,14px)] font-medium leading-snug text-cream/90 max-[380px]:mt-0.5 max-[380px]:text-[11px] [@media(max-height:700px)]:hidden">Stronger Together. Saving Today, Building Tomorrow.</p>
             </div>
           </div>
           <div>
-            <h2 className="m-0 text-[clamp(34px,8.8vw,44px)] font-black leading-none text-cream drop-shadow-[0_5px_16px_rgba(31,41,51,0.24)] max-[380px]:text-[clamp(30px,8vw,38px)]">Create Account</h2>
-            <p className="m-0 mt-2 max-w-[310px] text-[clamp(15px,4vw,17px)] font-semibold leading-snug text-cream max-[380px]:mt-1 max-[380px]:text-sm">Join your community and start saving together.</p>
+            <h2 className="m-0 text-[clamp(21px,5.2vw,27px)] font-extrabold leading-tight text-cream drop-shadow-[0_5px_16px_rgba(31,41,51,0.24)] max-[380px]:text-[clamp(19px,4.9vw,24px)] [@media(max-height:680px)]:text-[clamp(18px,4.6vw,22px)]">Create Account</h2>
+            <p className="m-0 mt-1 max-w-[280px] text-[clamp(11px,2.9vw,13px)] font-medium leading-snug text-cream/90 max-[380px]:mt-0.5 max-[380px]:text-[10px] [@media(max-height:680px)]:text-[10px] [@media(max-height:620px)]:hidden">Join your community and start saving together.</p>
           </div>
         </div>
 
@@ -197,7 +200,7 @@ export function SignupPage({ onSignup, onBackToLogin, onBackToWelcome, authApi =
             error={errors.password}
             icon={Lock}
             action={(
-              <button type="button" className={inputActionClass} onClick={() => setShowPassword((current) => !current)} aria-label={showPassword ? "Hide password" : "Show password"}>
+              <button type="button" className={signupInputActionClass} onClick={() => setShowPassword((current) => !current)} aria-label={showPassword ? "Hide password" : "Show password"}>
                 {showPassword ? <EyeOff size={21} aria-hidden="true" /> : <Eye size={21} aria-hidden="true" />}
               </button>
             )}
@@ -212,7 +215,7 @@ export function SignupPage({ onSignup, onBackToLogin, onBackToWelcome, authApi =
             error={errors.confirmPassword}
             icon={Lock}
             action={(
-              <button type="button" className={inputActionClass} onClick={() => setShowConfirmPassword((current) => !current)} aria-label={showConfirmPassword ? "Hide confirm password" : "Show confirm password"}>
+              <button type="button" className={signupInputActionClass} onClick={() => setShowConfirmPassword((current) => !current)} aria-label={showConfirmPassword ? "Hide confirm password" : "Show confirm password"}>
                 {showConfirmPassword ? <EyeOff size={21} aria-hidden="true" /> : <Eye size={21} aria-hidden="true" />}
               </button>
             )}
@@ -230,13 +233,12 @@ export function SignupPage({ onSignup, onBackToLogin, onBackToWelcome, authApi =
           {error ? <Alert tone="danger" title="Unable to create account">{error}</Alert> : null}
 
           <button type="submit" className={signupActionClass} disabled={loading} aria-busy={loading ? "true" : undefined}>
-            <span className="grid h-12 w-12 place-items-center rounded-full bg-gold text-forest max-[430px]:h-10 max-[430px]:w-10 max-[380px]:h-9 max-[380px]:w-9"><ArrowRight size={24} aria-hidden="true" /></span>
+            <span className="grid h-11 w-11 place-items-center rounded-full bg-gold text-forest max-[430px]:h-10 max-[430px]:w-10 max-[380px]:h-9 max-[380px]:w-9"><ArrowRight size={21} aria-hidden="true" /></span>
             <span>Create Account</span>
           </button>
 
           <p className="my-0 text-center text-base font-semibold text-charcoal max-[430px]:text-sm max-[380px]:text-xs">Already have an account? <button className="border-0 bg-transparent font-black text-forest" type="button" disabled={loading} onClick={onBackToLogin}>Log In</button></p>
         </section>
-        <div className="pointer-events-none absolute bottom-0 left-0 right-0 z-[2] min-h-[260px] opacity-95" style={landscapeStyle} aria-hidden="true" />
       </form>
     </AuthLayout>
   );

@@ -9,21 +9,35 @@ import "../../styles/auth.css";
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const phoneFrameClass = "relative min-h-[min(932px,calc(100svh-24px))] w-[min(100%,430px)] overflow-hidden rounded-[34px] border border-cream/20 font-sans text-cream shadow-[0_30px_90px_rgba(31,41,51,0.28)] max-[430px]:flex max-[430px]:h-[100svh] max-[430px]:min-h-0 max-[430px]:w-full max-[430px]:flex-col max-[430px]:rounded-none max-[430px]:border-0 max-[430px]:shadow-none";
+
 const backButtonClass = "absolute left-[22px] top-[58px] z-[8] grid h-[42px] w-[42px] place-items-center rounded-app border border-cream/25 bg-cream/10 text-cream backdrop-blur transition hover:bg-cream/20 max-[430px]:top-7 max-[380px]:top-5";
 const loginHeroClass = "relative z-[2] grid min-h-[436px] justify-items-center gap-2.5 px-[34px] pb-[84px] pt-[112px] text-center max-[430px]:min-h-0 max-[430px]:shrink-0 max-[430px]:gap-2 max-[430px]:px-[26px] max-[430px]:pb-[76px] max-[430px]:pt-[96px] max-[380px]:pb-12 max-[380px]:pt-[72px]";
 const loginSheetClass = "relative z-[4] -mt-[58px] grid min-h-[496px] w-full gap-3.5 rounded-t-[38px] px-[38px] pb-[34px] pt-12 text-charcoal shadow-[0_-20px_46px_rgba(31,41,51,0.14)] max-[430px]:-mt-[54px] max-[430px]:min-h-0 max-[430px]:flex-1 max-[430px]:gap-3 max-[430px]:px-6 max-[430px]:pb-[max(22px,env(safe-area-inset-bottom))] max-[430px]:pt-11 max-[380px]:-mt-8 max-[380px]:gap-2.5 max-[380px]:pt-7";
-const primaryActionClass = "mt-1.5 grid min-h-16 grid-cols-[1fr_auto] items-center rounded-[18px] border-0 bg-gradient-to-br from-emerald to-forest px-6 text-xl font-black text-cream shadow-[0_14px_34px_rgba(13,59,46,0.22)] transition hover:-translate-y-0.5 disabled:cursor-wait disabled:opacity-70 max-[430px]:min-h-[58px] max-[430px]:text-lg";
+const primaryActionClass = "mt-1 grid min-h-7 grid-cols-[1fr_auto] items-center rounded-[18px] border-0 bg-gradient-to-br from-emerald to-forest px-4 text-xl font-black text-cream shadow-[0_14px_34px_rgba(13,59,46,0.22)] transition hover:-translate-y-0.5 disabled:cursor-wait disabled:opacity-70 max-[430px]:min-h-[20px] max-[430px]:text-lg";
 const inputActionClass = "grid h-[34px] w-[34px] place-items-center rounded-full border-0 bg-transparent text-forest transition hover:bg-emerald/10";
+// const phoneBackgroundStyle = {
+//   backgroundImage: "radial-gradient(circle at 88% 9%, rgba(217, 162, 39, 0.42), transparent 16%), url(${splashArtwork}), linear-gradient(160deg, #0D3B2E 0%, #0D3B2E 58%, #127A5A 100%)",
+// };
+
 const phoneBackgroundStyle = {
-  backgroundImage: "radial-gradient(circle at 88% 9%, rgba(217, 162, 39, 0.42), transparent 16%), linear-gradient(160deg, #0D3B2E 0%, #0D3B2E 58%, #127A5A 100%)",
+  backgroundImage: `linear-gradient(180deg, rgba(13, 59, 46, 0.08), rgba(13, 59, 46, 0.18)), url(${splashArtwork}), linear-gradient(160deg, #0D3B2E 0%, #0D3B2E 52%, #127A5A 100%)`,
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
 };
+
 const sheetBackgroundStyle = {
   backgroundImage: `linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.98) 62%, rgba(247,244,238,0.76) 79%, rgba(247,244,238,0.24) 100%), url(${splashArtwork})`,
-  backgroundPosition: "center bottom",
-  backgroundSize: "132% auto",
+  // backgroundPosition: "center bottom",
+  backgroundSize: "100% auto",
   backgroundRepeat: "no-repeat",
   backgroundColor: "#F7F4EE",
 };
+
+// const sheetBackgroundStyle = {
+//   background:
+//     "linear-gradient(180deg, rgba(255,255,255,0.97) 0%, rgba(247,244,238,0.95) 100%)",
+// };
 
 export function validateLoginForm({ email, password }) {
   const errors = {};
@@ -72,12 +86,12 @@ export async function performLogin({ email, password, authApi = api }) {
 
 function AuthInput({ label, icon: Icon, error, action, ...props }) {
   return (
-    <label className={`relative grid min-h-16 grid-cols-[34px_minmax(0,1fr)_auto] items-center gap-2.5 rounded-[18px] border bg-white/85 px-4 text-forest transition focus-within:border-emerald focus-within:shadow-[0_0_0_3px_rgba(18,122,90,0.14)] ${error ? "border-alert" : "border-charcoal/20"}`}>
+    <label className={`relative grid min-h-3 grid-cols-[34px_minmax(0,1fr)_auto] items-center gap-2.5 rounded-[18px] border bg-white/85 px-4 text-forest transition focus-within:border-emerald focus-within:shadow-[0_0_0_3px_rgba(18,122,90,0.14)] ${error ? "border-alert" : "border-charcoal/20"}`}>
       <span className="sr-only">{label}</span>
       {Icon ? <Icon size={24} aria-hidden="true" /> : null}
       <input className="min-w-0 border-0 bg-transparent text-[17px] font-semibold text-charcoal outline-none placeholder:text-charcoal/55" aria-label={label} aria-invalid={error ? "true" : undefined} {...props} />
       {action}
-      {error ? <small className="col-span-full -mt-0.5 mb-2 ml-11 text-xs font-extrabold text-alert">{error}</small> : null}
+      {error ? <small className="col-span-full -mt-0.5 mb-1 ml-11 text-xs font-extrabold text-alert">{error}</small> : null}
     </label>
   );
 }
@@ -158,10 +172,10 @@ export function LoginPage({
         ) : null}
         <div className={loginHeroClass}>
           <BrandMark size="lg" className="auth-hero-mark text-cream max-[430px]:[&_.brand-mark]:!h-24 max-[430px]:[&_.brand-mark]:!w-24 max-[380px]:[&_.brand-mark]:!h-20 max-[380px]:[&_.brand-mark]:!w-20" />
-          <h1 className="whitespace-nowrap text-[clamp(42px,11vw,56px)] font-black leading-none text-cream drop-shadow-[0_5px_16px_rgba(31,41,51,0.26)] max-[380px]:text-[clamp(38px,10vw,50px)]">Village Banking</h1>
-          <span className="h-[3px] w-[58px] rounded-full bg-gold shadow-[0_4px_12px_rgba(217,162,39,0.36)]" aria-hidden="true" />
-          <h2 className="mt-2 text-[clamp(30px,7.5vw,36px)] font-black leading-none text-gold max-[380px]:text-[clamp(26px,7vw,32px)]">Welcome Back</h2>
-          <p className="m-0 max-w-[310px] text-[clamp(17px,4.5vw,19px)] font-bold leading-snug text-cream max-[380px]:text-[clamp(15px,4.2vw,17px)]">Sign in to continue saving and growing together.</p>
+          <h1 className="whitespace-nowrap m-0 text-[clamp(30px,11vw,41px)] font-black leading-none text-cream drop-shadow-[0_5px_16px_rgba(31,41,51,0.26)] max-[380px]:text-[clamp(38px,10vw,50px)]">Village Banking</h1>
+          <span className="h-[1px] w-[58px] rounded-full bg-gold shadow-[0_4px_12px_rgba(217,162,39,0.36)]" aria-hidden="true" />
+          <h2 className="mt-2 mb-0 text-[clamp(14px,3.5vw,20px)] font-black leading-none text-gold max-[380px]:text-[clamp(20px,7vw,26px)]">Welcome Back</h2>
+          <p className="m-0 max-w-[200px] text-[clamp(10px,4.5vw,12px)] leading-snug text-cream max-[380px]:text-[clamp(15px,4.2vw,17px)]">Sign in to continue saving and growing together.</p>
         </div>
 
         <section className={loginSheetClass} style={sheetBackgroundStyle} aria-label="Log in form">

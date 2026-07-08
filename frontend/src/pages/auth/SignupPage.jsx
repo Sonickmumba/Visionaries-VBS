@@ -75,7 +75,7 @@ export async function performSignup({ form, authApi = api }) {
 
 function AuthInput({ label, icon: Icon, error, action, ...props }) {
   return (
-    <label className={`relative grid min-h-[54px] grid-cols-[34px_minmax(0,1fr)_auto] items-center gap-2.5 rounded-[18px] border bg-white/80 px-4 text-forest transition focus-within:border-emerald focus-within:shadow-[0_0_0_3px_rgba(18,122,90,0.14)] max-[430px]:min-h-[42px] max-[430px]:grid-cols-[28px_minmax(0,1fr)_auto] max-[430px]:gap-1.5 max-[430px]:rounded-[15px] max-[430px]:px-3 max-[380px]:min-h-10 max-[380px]:rounded-[14px] ${error ? "border-alert" : "border-charcoal/20"}`}>
+    <label className={`relative grid min-h-[44px] grid-cols-[34px_minmax(0,1fr)_auto] items-center gap-2.5 rounded-[18px] border bg-white/80 px-4 text-forest transition focus-within:border-emerald focus-within:shadow-[0_0_0_3px_rgba(18,122,90,0.14)] max-[430px]:min-h-[32px] max-[430px]:grid-cols-[28px_minmax(0,1fr)_auto] max-[430px]:gap-1.5 max-[430px]:rounded-[15px] max-[430px]:px-3 max-[380px]:min-h-10 max-[380px]:rounded-[14px] ${error ? "border-alert" : "border-charcoal/20"}`}>
       <span className="sr-only">{label}</span>
       {Icon ? <Icon size={23} aria-hidden="true" /> : null}
       <input className="min-w-0 border-0 bg-transparent text-[17px] font-semibold text-charcoal outline-none placeholder:text-charcoal/55 max-[430px]:text-sm max-[380px]:text-xs" aria-label={label} aria-invalid={error ? "true" : undefined} {...props} />
@@ -159,12 +159,7 @@ export function SignupPage({ onSignup, onBackToLogin, onBackToWelcome, authApi =
     <AuthLayout>
       <form className={signupPhoneClass} style={phoneBackgroundStyle} onSubmit={submit} noValidate>
         {/* <div className="auth-status-bar" aria-hidden="true"><span>9:41</span><span className="auth-device-icons">▮▮▮ ))) ▭</span></div> */}
-        <div className="auth-orbit" aria-hidden="true" />
-        {onBackToWelcome ? (
-          <button type="button" className={backButtonClass} onClick={onBackToWelcome} aria-label="Back to welcome">
-            <ArrowLeft size={18} aria-hidden="true" />
-          </button>
-        ) : null}
+        {/* <div className="auth-orbit" aria-hidden="true" /> */}
         <div className={signupHeroClass}>
           <div className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-[22px]">
             <BrandMark size="lg" className="auth-hero-mark text-cream max-[430px]:[&_.brand-mark]:!h-[72px] max-[430px]:[&_.brand-mark]:!w-[72px] max-[380px]:[&_.brand-mark]:!h-16 max-[380px]:[&_.brand-mark]:!w-16" />

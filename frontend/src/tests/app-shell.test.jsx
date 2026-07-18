@@ -31,9 +31,12 @@ describe("app shell", () => {
     const css = fs.readFileSync(path.join(process.cwd(), "src/styles/app.css"), "utf8");
 
     expect(source).toContain("splashArtwork");
+    expect(source).toContain("splashDesktopClass");
+    expect(source).toContain("md:grid");
+    expect(source).toContain("md:hidden");
     expect(source).toContain("min-h-[min(900px,calc(100svh-24px))]");
     expect(source).toContain("max-[430px]:min-h-[100svh]");
-    expect(source).toContain("text-[clamp(50px,14vw,74px)]");
+    expect(source).toContain("text-[clamp(44px,5.2vw,72px)]");
     expect(source).toContain("bg-gradient-to-br from-forest to-emerald");
     expect(css).toContain(".brand-mark");
     expect(css).toContain("@media (prefers-reduced-motion: reduce)");

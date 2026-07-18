@@ -6,6 +6,7 @@ import splashArtwork from "../../assets/auth/background-image-splash.png";
 import { BrandMark } from "../../components/BrandMark.jsx";
 import { AuthLayout } from "../../layouts/AppLayouts.jsx";
 import { DevEmailLink } from "./DevEmailLink.jsx";
+import { AuthDesktopShell } from "./AuthDesktopShell.jsx";
 import {
   signupActionClass,
   signupBackButtonClass,
@@ -25,6 +26,10 @@ const phoneBackgroundStyle = {
   backgroundSize: "cover",
   backgroundRepeat: "no-repeat",
 };
+const signupDesktopFormClass = "grid max-h-[calc(100dvh-170px)] gap-3 overflow-y-auto rounded-[28px] border border-mist bg-white p-5 text-charcoal shadow-[0_22px_60px_rgba(31,41,51,0.12)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:p-6";
+const signupDesktopFieldGridClass = "grid gap-3 sm:grid-cols-2";
+const signupDesktopBackButtonClass = "mb-1 inline-flex w-max items-center gap-2 rounded-full border border-mist bg-cream px-3 py-2 text-xs font-black text-forest shadow-soft transition hover:-translate-y-0.5 hover:border-gold";
+const signupDesktopActionClass = "mt-1 flex min-h-[58px] w-full items-center justify-center gap-3 rounded-[18px] border-0 bg-gradient-to-br from-emerald to-forest px-5 text-lg font-black text-cream shadow-[0_14px_34px_rgba(13,59,46,0.22)] transition hover:-translate-y-0.5 disabled:cursor-wait disabled:opacity-70";
 
 export function validateSignupForm({ firstName, lastName, email, password, confirmPassword }) {
   const errors = {};
@@ -125,44 +130,154 @@ export function SignupPage({ onSignup, onBackToLogin, onBackToWelcome, authApi =
     }
   }
 
+  function renderTerms() {
+    return (
+      <>
+        <label className={`flex items-center gap-3 text-[15px] font-semibold text-charcoal max-[430px]:gap-2 max-[430px]:text-xs ${errors.terms ? "text-alert" : ""}`}>
+          <input className="h-6 w-6 rounded-app border border-forest accent-emerald max-[430px]:h-[22px] max-[430px]:w-[22px] max-[380px]:h-5 max-[380px]:w-5" type="checkbox" checked={acceptedTerms} onChange={(event) => {
+            setAcceptedTerms(event.target.checked);
+            if (errors.terms) setErrors((current) => ({ ...current, terms: "" }));
+          }} />
+          <span>I agree to the <strong>Terms &amp; Privacy Policy</strong></span>
+        </label>
+        {errors.terms ? <small className="-mt-2 ml-1 text-xs font-extrabold text-alert">{errors.terms}</small> : null}
+      </>
+    );
+  }
+
+  function renderPasswordFields() {
+    return (
+      <>
+        <AuthInput
+          label="Password"
+          value={form.password}
+          onChange={(event) => update("password", event.target.value)}
+          type={showPassword ? "text" : "password"}
+          autoComplete="new-password"
+          placeholder="Password"
+          error={errors.password}
+          icon={Lock}
+          action={(
+            <button type="button" className={signupInputActionClass} onClick={() => setShowPassword((current) => !current)} aria-label={showPassword ? "Hide password" : "Show password"}>
+              {showPassword ? <EyeOff size={21} aria-hidden="true" /> : <Eye size={21} aria-hidden="true" />}
+            </button>
+          )}
+        />
+        <AuthInput
+          label="Confirm password"
+          value={form.confirmPassword}
+          onChange={(event) => update("confirmPassword", event.target.value)}
+          type={showConfirmPassword ? "text" : "password"}
+          autoComplete="new-password"
+          placeholder="Confirm Password"
+          error={errors.confirmPassword}
+          icon={Lock}
+          action={(
+            <button type="button" className={signupInputActionClass} onClick={() => setShowConfirmPassword((current) => !current)} aria-label={showConfirmPassword ? "Hide confirm password" : "Show confirm password"}>
+              {showConfirmPassword ? <EyeOff size={21} aria-hidden="true" /> : <Eye size={21} aria-hidden="true" />}
+            </button>
+          )}
+        />
+      </>
+    );
+  }
+
+  function renderSignupAction(actionClass = signupActionClass) {
+    return (
+      <>
+        {error ? <Alert tone="danger" title="Unable to create account">{error}</Alert> : null}
+        <button type="submit" className={actionClass} disabled={loading} aria-busy={loading ? "true" : undefined}>
+          <span className="grid h-11 w-11 place-items-center rounded-full bg-gold text-forest max-[430px]:h-10 max-[430px]:w-10 max-[380px]:h-9 max-[380px]:w-9"><ArrowRight size={21} aria-hidden="true" /></span>
+          <span>Create Account</span>
+        </button>
+        <p className="my-0 text-center text-base font-semibold text-charcoal max-[430px]:text-sm max-[380px]:text-xs">Already have an account? <button className="border-0 bg-transparent font-black text-forest" type="button" disabled={loading} onClick={onBackToLogin}>Log In</button></p>
+      </>
+    );
+  }
+
   if (success) {
     return (
       <AuthLayout>
-        <section className={signupPhoneClass} style={phoneBackgroundStyle}>
-          <div className={signupSuccessHeroClass}>
-            <BrandMark size="lg" className="auth-hero-mark text-cream max-[430px]:[&_.brand-mark]:!h-16 max-[430px]:[&_.brand-mark]:!w-16" />
-            <h1 className="m-0 text-[clamp(34px,8vw,44px)] font-black leading-none text-cream drop-shadow-[0_5px_16px_rgba(31,41,51,0.26)]">Visionaries<br />Village Banking</h1>
-          </div>
-          <div className={signupSuccessSheetClass}>
-            <div className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-3">
-              <span className="grid h-11 w-11 place-items-center rounded-[16px] bg-emerald/10 text-emerald"><UserPlus size={20} aria-hidden="true" /></span>
-              <div>
-                <span className="text-[11px] font-black uppercase text-emerald">Check your email</span>
-                <h2 className="mt-1 text-2xl font-extrabold text-charcoal">Account created</h2>
-                <p className="mt-2 text-sm leading-6 text-charcoal/70">Verify your email before signing in.</p>
-              </div>
+        <div className="w-full">
+          <AuthDesktopShell
+            eyebrow="Email verification"
+            title="Check your email"
+            subtitle="Your account was created. Verify your email before signing in to the village banking portal."
+          >
+            <section className="grid gap-4 rounded-[28px] border border-mist bg-white p-6 shadow-[0_22px_60px_rgba(31,41,51,0.12)]">
+              <Alert tone="success" title="Verification email sent">
+                We sent a verification link to {success.email || "your email"}. Open it to activate your account.
+              </Alert>
+              <DevEmailLink delivery={success.delivery} />
+              <Button type="button" variant="secondary" onClick={onBackToLogin}>Back to Login</Button>
+            </section>
+          </AuthDesktopShell>
+
+          <section className={signupPhoneClass} style={phoneBackgroundStyle}>
+            <div className={signupSuccessHeroClass}>
+              <BrandMark size="lg" className="auth-hero-mark text-cream max-[430px]:[&_.brand-mark]:!h-16 max-[430px]:[&_.brand-mark]:!w-16" />
+              <h1 className="m-0 text-[clamp(34px,8vw,44px)] font-black leading-none text-cream drop-shadow-[0_5px_16px_rgba(31,41,51,0.26)]">Visionaries<br />Village Banking</h1>
             </div>
-            <Alert tone="success" title="Verification email sent">
-              We sent a verification link to {success.email || "your email"}. Open it to activate your account.
-            </Alert>
-            <DevEmailLink delivery={success.delivery} />
-            <Button type="button" variant="secondary" onClick={onBackToLogin}>Back to Login</Button>
-          </div>
-        </section>
+            <div className={signupSuccessSheetClass}>
+              <div className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-3">
+                <span className="grid h-11 w-11 place-items-center rounded-[16px] bg-emerald/10 text-emerald"><UserPlus size={20} aria-hidden="true" /></span>
+                <div>
+                  <span className="text-[11px] font-black uppercase text-emerald">Check your email</span>
+                  <h2 className="mt-1 text-2xl font-extrabold text-charcoal">Account created</h2>
+                  <p className="mt-2 text-sm leading-6 text-charcoal/70">Verify your email before signing in.</p>
+                </div>
+              </div>
+              <Alert tone="success" title="Verification email sent">
+                We sent a verification link to {success.email || "your email"}. Open it to activate your account.
+              </Alert>
+              <DevEmailLink delivery={success.delivery} />
+              <Button type="button" variant="secondary" onClick={onBackToLogin}>Back to Login</Button>
+            </div>
+          </section>
+        </div>
       </AuthLayout>
     );
   }
 
   return (
     <AuthLayout>
-      <form className={signupPhoneClass} style={phoneBackgroundStyle} onSubmit={submit} noValidate>
+      <div className="w-full">
+        <AuthDesktopShell
+          eyebrow="Create member access"
+          title="Create Account"
+          subtitle="Join your community and start saving together with transparent cycle records."
+        >
+          <form className={signupDesktopFormClass} onSubmit={submit} noValidate>
+            {onBackToWelcome ? (
+              <button type="button" className={signupDesktopBackButtonClass} onClick={onBackToWelcome}>
+                <ArrowLeft size={16} aria-hidden="true" />
+                Back to splash
+              </button>
+            ) : null}
+            <div className={signupDesktopFieldGridClass}>
+              <AuthInput label="First Name" value={form.firstName} onChange={(event) => update("firstName", event.target.value)} autoComplete="given-name" placeholder="First Name" error={errors.firstName} icon={UserRound} />
+              <AuthInput label="Last Name" value={form.lastName} onChange={(event) => update("lastName", event.target.value)} autoComplete="family-name" placeholder="Last Name" error={errors.lastName} icon={UserRound} />
+            </div>
+            <div className={signupDesktopFieldGridClass}>
+              <AuthInput label="Phone Number" value={form.phone} onChange={(event) => update("phone", event.target.value)} autoComplete="tel" placeholder="Phone Number" icon={Smartphone} />
+              <AuthInput label="Email" value={form.email} onChange={(event) => update("email", event.target.value)} type="email" autoComplete="email" placeholder="Email" error={errors.email} icon={Mail} />
+            </div>
+            <div className={signupDesktopFieldGridClass}>
+              {renderPasswordFields()}
+            </div>
+            {renderTerms()}
+            {renderSignupAction(signupDesktopActionClass)}
+          </form>
+        </AuthDesktopShell>
+
+        <form className={signupPhoneClass} style={phoneBackgroundStyle} onSubmit={submit} noValidate>
         {/* <div className="auth-status-bar" aria-hidden="true"><span>9:41</span><span className="auth-device-icons">▮▮▮ ))) ▭</span></div> */}
         {/* <div className="auth-orbit" aria-hidden="true" /> */}
-        {/* {onBackToWelcome ? (
+        {onBackToWelcome ? (
           <button type="button" className={signupBackButtonClass} onClick={onBackToWelcome} aria-label="Back to welcome">
             <ArrowLeft size={18} aria-hidden="true" />
           </button>
-        ) : null} */}
+        ) : null}
         <div className={signupHeroClass}>
           <div className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-4 [@media(max-height:680px)]:gap-3">
             <BrandMark size="lg" className="auth-hero-mark text-cream max-[430px]:[&_.brand-mark]:!h-[72px] max-[430px]:[&_.brand-mark]:!w-[72px] max-[380px]:[&_.brand-mark]:!h-16 max-[380px]:[&_.brand-mark]:!w-16 [@media(max-height:680px)]:[&_.brand-mark]:!h-14 [@media(max-height:680px)]:[&_.brand-mark]:!w-14" />
@@ -190,56 +305,12 @@ export function SignupPage({ onSignup, onBackToLogin, onBackToWelcome, authApi =
           <AuthInput label="Last Name" value={form.lastName} onChange={(event) => update("lastName", event.target.value)} autoComplete="family-name" placeholder="Last Name" error={errors.lastName} icon={UserRound} />
           <AuthInput label="Phone Number" value={form.phone} onChange={(event) => update("phone", event.target.value)} autoComplete="tel" placeholder="Phone Number" icon={Smartphone} />
           <AuthInput label="Email" value={form.email} onChange={(event) => update("email", event.target.value)} type="email" autoComplete="email" placeholder="Email" error={errors.email} icon={Mail} />
-          <AuthInput
-            label="Password"
-            value={form.password}
-            onChange={(event) => update("password", event.target.value)}
-            type={showPassword ? "text" : "password"}
-            autoComplete="new-password"
-            placeholder="Password"
-            error={errors.password}
-            icon={Lock}
-            action={(
-              <button type="button" className={signupInputActionClass} onClick={() => setShowPassword((current) => !current)} aria-label={showPassword ? "Hide password" : "Show password"}>
-                {showPassword ? <EyeOff size={21} aria-hidden="true" /> : <Eye size={21} aria-hidden="true" />}
-              </button>
-            )}
-          />
-          <AuthInput
-            label="Confirm password"
-            value={form.confirmPassword}
-            onChange={(event) => update("confirmPassword", event.target.value)}
-            type={showConfirmPassword ? "text" : "password"}
-            autoComplete="new-password"
-            placeholder="Confirm Password"
-            error={errors.confirmPassword}
-            icon={Lock}
-            action={(
-              <button type="button" className={signupInputActionClass} onClick={() => setShowConfirmPassword((current) => !current)} aria-label={showConfirmPassword ? "Hide confirm password" : "Show confirm password"}>
-                {showConfirmPassword ? <EyeOff size={21} aria-hidden="true" /> : <Eye size={21} aria-hidden="true" />}
-              </button>
-            )}
-          />
-
-          <label className={`flex items-center gap-3 text-[15px] font-semibold text-charcoal max-[430px]:gap-2 max-[430px]:text-xs ${errors.terms ? "text-alert" : ""}`}>
-            <input className="h-6 w-6 rounded-app border border-forest accent-emerald max-[430px]:h-[22px] max-[430px]:w-[22px] max-[380px]:h-5 max-[380px]:w-5" type="checkbox" checked={acceptedTerms} onChange={(event) => {
-              setAcceptedTerms(event.target.checked);
-              if (errors.terms) setErrors((current) => ({ ...current, terms: "" }));
-            }} />
-            <span>I agree to the <strong>Terms &amp; Privacy Policy</strong></span>
-          </label>
-          {errors.terms ? <small className="-mt-2 ml-1 text-xs font-extrabold text-alert">{errors.terms}</small> : null}
-
-          {error ? <Alert tone="danger" title="Unable to create account">{error}</Alert> : null}
-
-          <button type="submit" className={signupActionClass} disabled={loading} aria-busy={loading ? "true" : undefined}>
-            <span className="grid h-11 w-11 place-items-center rounded-full bg-gold text-forest max-[430px]:h-10 max-[430px]:w-10 max-[380px]:h-9 max-[380px]:w-9"><ArrowRight size={21} aria-hidden="true" /></span>
-            <span>Create Account</span>
-          </button>
-
-          <p className="my-0 text-center text-base font-semibold text-charcoal max-[430px]:text-sm max-[380px]:text-xs">Already have an account? <button className="border-0 bg-transparent font-black text-forest" type="button" disabled={loading} onClick={onBackToLogin}>Log In</button></p>
+          {renderPasswordFields()}
+          {renderTerms()}
+          {renderSignupAction()}
         </section>
-      </form>
+        </form>
+      </div>
     </AuthLayout>
   );
 }

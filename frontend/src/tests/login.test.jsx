@@ -75,8 +75,12 @@ describe("login screen", () => {
     expect(html).toContain("auth-shell");
     expect(html).toContain("Welcome Back");
     expect(html).toContain("Sign in to continue saving and growing together.");
+    expect(html).toContain("Secure member access");
+    expect(html).toContain("Sign in to manage savings, declarations, loans, reports, and transparent cycle records.");
     expect(html).toContain("font-sans");
     expect(html).toContain("min-h-[min(932px,calc(100svh-24px))]");
+    expect(html).toContain("md:hidden");
+    expect(html).toContain("desktop auth layout");
     expect(html).toContain("bg-gradient-to-br");
     expect(html).toContain("focus-within:border-emerald");
     expect(html).not.toContain("auth-phone");
@@ -97,7 +101,11 @@ describe("login screen", () => {
     const tailwind = fs.readFileSync(path.join(process.cwd(), "tailwind.config.cjs"), "utf8");
 
     expect(source).toContain("splashArtwork");
+    expect(source).toContain("AuthDesktopShell");
+    expect(source).toContain("desktopLoginFormClass");
+    expect(source).toContain("desktopPrimaryActionClass");
     expect(source).toContain("min-h-[min(932px,calc(100svh-24px))]");
+    expect(source).toContain("md:hidden");
     expect(source).toContain("max-[430px]:h-[100svh]");
     expect(source).toContain("max-[430px]:flex-col");
     expect(source).toContain("grid-cols-[34px_minmax(0,1fr)_auto]");

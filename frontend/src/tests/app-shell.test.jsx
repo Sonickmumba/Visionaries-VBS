@@ -35,7 +35,8 @@ describe("app shell", () => {
     expect(source).toContain("md:grid");
     expect(source).toContain("md:hidden");
     expect(source).toContain("min-h-[min(900px,calc(100svh-24px))]");
-    expect(source).toContain("max-[430px]:min-h-[100svh]");
+    expect(source).toContain("max-[430px]:h-[100svh]");
+    expect(source).toContain("max-[430px]:min-h-0");
     expect(source).toContain("text-[clamp(44px,5.2vw,72px)]");
     expect(source).toContain("bg-gradient-to-br from-forest to-emerald");
     expect(css).toContain(".brand-mark");

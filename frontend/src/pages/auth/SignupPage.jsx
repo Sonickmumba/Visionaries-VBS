@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ArrowLeft, ArrowRight, Eye, EyeOff, Lock, Mail, Smartphone, UserRound, UserPlus } from "lucide-react";
 import { api } from "../../api/client.js";
 import { Alert, Button } from "../../components/ui/index.jsx";
-import splashArtwork from "../../assets/auth/background-image-splash.png";
+import splashArtwork from "../../assets/auth/background-image-splash.webp";
 import { BrandMark } from "../../components/BrandMark.jsx";
 import { AuthLayout } from "../../layouts/AppLayouts.jsx";
 import { DevEmailLink } from "./DevEmailLink.jsx";
@@ -26,10 +26,8 @@ const phoneBackgroundStyle = {
   backgroundSize: "cover",
   backgroundRepeat: "no-repeat",
 };
-const signupDesktopFormClass = "grid max-h-[calc(100dvh-170px)] gap-3 overflow-y-auto rounded-[28px] border border-mist bg-white p-5 text-charcoal shadow-[0_22px_60px_rgba(31,41,51,0.12)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:p-6";
-const signupDesktopFieldGridClass = "grid gap-3 sm:grid-cols-2";
-const signupDesktopBackButtonClass = "mb-1 inline-flex w-max items-center gap-2 rounded-full border border-mist bg-cream px-3 py-2 text-xs font-black text-forest shadow-soft transition hover:-translate-y-0.5 hover:border-gold";
-const signupDesktopActionClass = "mt-1 flex min-h-[58px] w-full items-center justify-center gap-3 rounded-[18px] border-0 bg-gradient-to-br from-emerald to-forest px-5 text-lg font-black text-cream shadow-[0_14px_34px_rgba(13,59,46,0.22)] transition hover:-translate-y-0.5 disabled:cursor-wait disabled:opacity-70";
+const signupDesktopFormClass = "grid gap-4 text-charcoal lg:gap-2.5";
+const signupDesktopActionClass = "relative mt-1 flex min-h-14 w-full items-center justify-center rounded-[14px] border-0 bg-gradient-to-br from-emerald to-forest px-12 text-[16px] font-semibold text-cream shadow-[0_12px_28px_rgba(13,59,46,0.2)] transition hover:-translate-y-0.5 disabled:cursor-wait disabled:opacity-70 lg:min-h-11 lg:text-[15px]";
 
 export function validateSignupForm({ firstName, lastName, email, password, confirmPassword }) {
   const errors = {};
@@ -76,12 +74,26 @@ export async function performSignup({ form, authApi = api }) {
   });
 }
 
-function AuthInput({ label, icon: Icon, error, action, ...props }) {
+function AuthInput({ label, icon: Icon, error, action, desktop = false, ...props }) {
+  if (desktop) {
+    return (
+      <label className="grid gap-2 text-charcoal lg:gap-1.5">
+        <span className="text-[14px] font-semibold leading-5 lg:text-[12px] lg:leading-4">{label}</span>
+        <span className={`grid min-h-14 ${action ? "grid-cols-[24px_minmax(0,1fr)_40px]" : "grid-cols-[24px_minmax(0,1fr)]"} items-center gap-3 rounded-[14px] border border-solid bg-white px-4 text-forest transition focus-within:border-emerald focus-within:shadow-[0_0_0_3px_rgba(18,122,90,0.12)] lg:min-h-11 lg:rounded-[12px] ${error ? "border-alert" : "border-charcoal/20"}`}>
+          {Icon ? <Icon size={19} strokeWidth={1.9} aria-hidden="true" /> : null}
+          <input className="min-w-0 border-0 bg-transparent text-[16px] font-medium text-charcoal outline-none placeholder:font-normal placeholder:text-charcoal/50 lg:text-[14px]" aria-label={label} aria-invalid={error ? "true" : undefined} {...props} />
+          {action}
+        </span>
+        {error ? <small className="text-[12px] font-semibold text-alert">{error}</small> : null}
+      </label>
+    );
+  }
+
   return (
-    <label className={`relative grid min-h-[44px] grid-cols-[34px_minmax(0,1fr)_auto] items-center gap-2.5 rounded-[18px] border bg-white/80 px-4 text-forest transition focus-within:border-emerald focus-within:shadow-[0_0_0_3px_rgba(18,122,90,0.14)] max-[430px]:min-h-[32px] max-[430px]:grid-cols-[28px_minmax(0,1fr)_auto] max-[430px]:gap-1.5 max-[430px]:rounded-[15px] max-[430px]:px-3 max-[380px]:min-h-10 max-[380px]:rounded-[14px] [@media(max-height:620px)]:min-h-8 [@media(max-height:620px)]:rounded-[12px] ${error ? "border-alert" : "border-charcoal/20"}`}>
+    <label className={`relative grid min-h-[54px] shrink-0 grid-cols-[34px_minmax(0,1fr)_auto] items-center gap-2.5 rounded-[18px] border bg-white/80 px-4 text-forest transition focus-within:border-emerald focus-within:shadow-[0_0_0_3px_rgba(18,122,90,0.14)] max-[430px]:min-h-12 max-[430px]:grid-cols-[28px_minmax(0,1fr)_auto] max-[430px]:gap-2 max-[430px]:rounded-[15px] max-[430px]:px-3 max-[380px]:min-h-11 max-[380px]:rounded-[14px] [@media(max-width:430px)_and_(max-height:620px)]:min-h-10 [@media(max-width:430px)_and_(max-height:620px)]:rounded-[12px] ${error ? "border-alert" : "border-charcoal/20"}`}>
       <span className="sr-only">{label}</span>
-      {Icon ? <Icon className="[@media(max-height:620px)]:h-[18px] [@media(max-height:620px)]:w-[18px]" size={23} aria-hidden="true" /> : null}
-      <input className="min-w-0 border-0 bg-transparent text-[17px] font-semibold text-charcoal outline-none placeholder:text-charcoal/55 max-[430px]:text-sm max-[380px]:text-xs [@media(max-height:620px)]:text-[11px]" aria-label={label} aria-invalid={error ? "true" : undefined} {...props} />
+      {Icon ? <Icon className="[@media(max-width:430px)_and_(max-height:620px)]:h-[18px] [@media(max-width:430px)_and_(max-height:620px)]:w-[18px]" size={23} aria-hidden="true" /> : null}
+      <input className="min-w-0 border-0 bg-transparent text-[17px] font-semibold text-charcoal outline-none placeholder:text-charcoal/55 max-[430px]:text-sm max-[380px]:text-[13px]" aria-label={label} aria-invalid={error ? "true" : undefined} {...props} />
       {action}
       {error ? <small className="col-span-full -mt-0.5 mb-1 ml-11 text-xs font-extrabold text-alert">{error}</small> : null}
     </label>
@@ -130,22 +142,22 @@ export function SignupPage({ onSignup, onBackToLogin, onBackToWelcome, authApi =
     }
   }
 
-  function renderTerms() {
+  function renderTerms(desktop = false) {
     return (
       <>
-        <label className={`flex items-center gap-3 text-[15px] font-semibold text-charcoal max-[430px]:gap-2 max-[430px]:text-xs ${errors.terms ? "text-alert" : ""}`}>
-          <input className="h-6 w-6 rounded-app border border-forest accent-emerald max-[430px]:h-[22px] max-[430px]:w-[22px] max-[380px]:h-5 max-[380px]:w-5" type="checkbox" checked={acceptedTerms} onChange={(event) => {
+        <label className={`flex items-center gap-3 font-medium text-charcoal max-[430px]:gap-2 max-[430px]:text-xs ${desktop ? "text-[14px] lg:text-[12px]" : "text-[15px]"} ${errors.terms ? "text-alert" : ""}`}>
+          <input className={`${desktop ? "h-5 w-5" : "h-6 w-6"} rounded-app border border-forest accent-emerald max-[430px]:h-[22px] max-[430px]:w-[22px] max-[380px]:h-5 max-[380px]:w-5`} type="checkbox" checked={acceptedTerms} onChange={(event) => {
             setAcceptedTerms(event.target.checked);
             if (errors.terms) setErrors((current) => ({ ...current, terms: "" }));
           }} />
-          <span>I agree to the <strong>Terms &amp; Privacy Policy</strong></span>
+          <span>I agree to the <strong className="font-semibold text-forest">Terms &amp; Privacy Policy</strong></span>
         </label>
         {errors.terms ? <small className="-mt-2 ml-1 text-xs font-extrabold text-alert">{errors.terms}</small> : null}
       </>
     );
   }
 
-  function renderPasswordFields() {
+  function renderPasswordFields(desktop = false) {
     return (
       <>
         <AuthInput
@@ -154,24 +166,27 @@ export function SignupPage({ onSignup, onBackToLogin, onBackToWelcome, authApi =
           onChange={(event) => update("password", event.target.value)}
           type={showPassword ? "text" : "password"}
           autoComplete="new-password"
-          placeholder="Password"
+          placeholder={desktop ? "Create password" : "Password"}
           error={errors.password}
           icon={Lock}
+          desktop={desktop}
           action={(
             <button type="button" className={signupInputActionClass} onClick={() => setShowPassword((current) => !current)} aria-label={showPassword ? "Hide password" : "Show password"}>
               {showPassword ? <EyeOff size={21} aria-hidden="true" /> : <Eye size={21} aria-hidden="true" />}
             </button>
           )}
         />
+        {desktop ? <small className="-mt-2 text-[13px] font-normal leading-5 text-charcoal/60 lg:text-[11px] lg:leading-4">Use at least 10 characters.</small> : null}
         <AuthInput
-          label="Confirm password"
+          label="Confirm Password"
           value={form.confirmPassword}
           onChange={(event) => update("confirmPassword", event.target.value)}
           type={showConfirmPassword ? "text" : "password"}
           autoComplete="new-password"
-          placeholder="Confirm Password"
+          placeholder={desktop ? "Confirm password" : "Confirm Password"}
           error={errors.confirmPassword}
           icon={Lock}
+          desktop={desktop}
           action={(
             <button type="button" className={signupInputActionClass} onClick={() => setShowConfirmPassword((current) => !current)} aria-label={showConfirmPassword ? "Hide confirm password" : "Show confirm password"}>
               {showConfirmPassword ? <EyeOff size={21} aria-hidden="true" /> : <Eye size={21} aria-hidden="true" />}
@@ -182,15 +197,15 @@ export function SignupPage({ onSignup, onBackToLogin, onBackToWelcome, authApi =
     );
   }
 
-  function renderSignupAction(actionClass = signupActionClass) {
+  function renderSignupAction(actionClass = signupActionClass, desktop = false) {
     return (
       <>
         {error ? <Alert tone="danger" title="Unable to create account">{error}</Alert> : null}
         <button type="submit" className={actionClass} disabled={loading} aria-busy={loading ? "true" : undefined}>
-          <span className="grid h-11 w-11 place-items-center rounded-full bg-gold text-forest max-[430px]:h-10 max-[430px]:w-10 max-[380px]:h-9 max-[380px]:w-9"><ArrowRight size={21} aria-hidden="true" /></span>
+          <span className={desktop ? "absolute right-4 grid place-items-center text-gold" : "grid h-11 w-11 place-items-center rounded-full bg-gold text-forest max-[430px]:h-10 max-[430px]:w-10 max-[380px]:h-9 max-[380px]:w-9"}><ArrowRight size={21} aria-hidden="true" /></span>
           <span>Create Account</span>
         </button>
-        <p className="my-0 text-center text-base font-semibold text-charcoal max-[430px]:text-sm max-[380px]:text-xs">Already have an account? <button className="border-0 bg-transparent font-black text-forest" type="button" disabled={loading} onClick={onBackToLogin}>Log In</button></p>
+        <p className={`my-0 text-center font-medium text-charcoal max-[430px]:text-sm max-[380px]:text-xs ${desktop ? "text-[14px] lg:text-[12px]" : "text-base"}`}>Already have an account? <button className="border-0 bg-transparent font-semibold text-forest hover:underline" type="button" disabled={loading} onClick={onBackToLogin}>Log In</button></p>
       </>
     );
   }
@@ -203,8 +218,9 @@ export function SignupPage({ onSignup, onBackToLogin, onBackToWelcome, authApi =
             eyebrow="Email verification"
             title="Check your email"
             subtitle="Your account was created. Verify your email before signing in to the village banking portal."
+            variant="signup"
           >
-            <section className="grid gap-4 rounded-[28px] border border-mist bg-white p-6 shadow-[0_22px_60px_rgba(31,41,51,0.12)]">
+            <section className="grid gap-4">
               <Alert tone="success" title="Verification email sent">
                 We sent a verification link to {success.email || "your email"}. Open it to activate your account.
               </Alert>
@@ -245,28 +261,18 @@ export function SignupPage({ onSignup, onBackToLogin, onBackToWelcome, authApi =
         <AuthDesktopShell
           eyebrow="Create member access"
           title="Create Account"
-          subtitle="Join your community and start saving together with transparent cycle records."
+          subtitle="Join your community and start saving together."
+          variant="signup"
+          onBackToWelcome={onBackToWelcome}
         >
           <form className={signupDesktopFormClass} onSubmit={submit} noValidate>
-            {onBackToWelcome ? (
-              <button type="button" className={signupDesktopBackButtonClass} onClick={onBackToWelcome}>
-                <ArrowLeft size={16} aria-hidden="true" />
-                Back to splash
-              </button>
-            ) : null}
-            <div className={signupDesktopFieldGridClass}>
-              <AuthInput label="First Name" value={form.firstName} onChange={(event) => update("firstName", event.target.value)} autoComplete="given-name" placeholder="First Name" error={errors.firstName} icon={UserRound} />
-              <AuthInput label="Last Name" value={form.lastName} onChange={(event) => update("lastName", event.target.value)} autoComplete="family-name" placeholder="Last Name" error={errors.lastName} icon={UserRound} />
-            </div>
-            <div className={signupDesktopFieldGridClass}>
-              <AuthInput label="Phone Number" value={form.phone} onChange={(event) => update("phone", event.target.value)} autoComplete="tel" placeholder="Phone Number" icon={Smartphone} />
-              <AuthInput label="Email" value={form.email} onChange={(event) => update("email", event.target.value)} type="email" autoComplete="email" placeholder="Email" error={errors.email} icon={Mail} />
-            </div>
-            <div className={signupDesktopFieldGridClass}>
-              {renderPasswordFields()}
-            </div>
-            {renderTerms()}
-            {renderSignupAction(signupDesktopActionClass)}
+            <AuthInput desktop label="First Name" value={form.firstName} onChange={(event) => update("firstName", event.target.value)} autoComplete="given-name" placeholder="First Name" error={errors.firstName} icon={UserRound} />
+            <AuthInput desktop label="Last Name" value={form.lastName} onChange={(event) => update("lastName", event.target.value)} autoComplete="family-name" placeholder="Last Name" error={errors.lastName} icon={UserRound} />
+            <AuthInput desktop label="Phone Number" value={form.phone} onChange={(event) => update("phone", event.target.value)} autoComplete="tel" placeholder="Phone Number" icon={Smartphone} />
+            <AuthInput desktop label="Email" value={form.email} onChange={(event) => update("email", event.target.value)} type="email" autoComplete="email" placeholder="Email" error={errors.email} icon={Mail} />
+            {renderPasswordFields(true)}
+            {renderTerms(true)}
+            {renderSignupAction(signupDesktopActionClass, true)}
           </form>
         </AuthDesktopShell>
 

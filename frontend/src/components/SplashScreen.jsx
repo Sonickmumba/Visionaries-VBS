@@ -1,13 +1,13 @@
 import React from "react";
 import { ArrowRight, BarChart3, ShieldCheck, Smartphone, UsersRound } from "lucide-react";
-import splashArtwork from "../assets/auth/background-image-splash.png";
+import splashArtwork from "../assets/auth/background-image-splash.webp";
 import { BrandMark } from "./BrandMark.jsx";
 
 const splashShellClass = "grid min-h-[100svh] place-items-center bg-cream p-[clamp(12px,3vw,34px)] font-sans text-cream max-[430px]:bg-forest max-[430px]:p-0";
 const splashDesktopClass = "hidden min-h-[min(820px,calc(100svh-48px))] w-full max-w-[1180px] overflow-hidden rounded-[34px] border border-mist bg-white text-left shadow-[0_28px_90px_rgba(31,41,51,0.18)] md:grid md:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.75fr)] xl:max-w-[1280px]";
-const splashPhoneClass = "relative min-h-[min(900px,calc(100svh-24px))] w-[min(100%,430px)] overflow-hidden rounded-[40px] border border-cream/20 text-center shadow-[0_30px_90px_rgba(31,41,51,0.28)] md:hidden max-[430px]:min-h-[100svh] max-[430px]:w-full max-[430px]:rounded-none max-[430px]:border-0 max-[430px]:shadow-none";
+const splashPhoneClass = "relative min-h-[min(900px,calc(100svh-24px))] w-[min(100%,430px)] overflow-hidden rounded-[40px] border border-cream/20 text-center shadow-[0_30px_90px_rgba(31,41,51,0.28)] md:hidden max-[430px]:h-[100svh] max-[430px]:min-h-0 max-[430px]:w-full max-[430px]:rounded-none max-[430px]:border-0 max-[430px]:shadow-none";
 const splashCopyClass = "relative z-[6] grid content-start justify-items-center px-[30px] pb-[250px] pt-[clamp(86px,11svh,112px)] pointer-events-none max-[430px]:pb-[238px]";
-const splashTitleClass = "mt-[10px] mb-[2px] text-[clamp(24px,14vw,40px)] font-black leading-none text-cream ";
+const splashTitleClass = "mb-[2px] mt-[10px] text-[clamp(24px,14vw,40px)] font-black leading-none text-cream max-[340px]:text-[32px]";
 const splashContinueClass = "absolute bottom-[92px] border-0 left-8 right-8 z-[5] inline-flex min-h-[70px] items-center justify-center gap-6 rounded-[18px] bg-cream px-3 py-1 text-xl font-black text-forest shadow-[0_20px_48px_rgba(31,41,51,0.28)]";
 const splashTrustClass = "absolute bottom-[42px] left-5 right-5 z-[5] m-0 flex items-center justify-center gap-2.5 text-[10px] font-normal text-cream";
 const splashBackgroundStyle = {

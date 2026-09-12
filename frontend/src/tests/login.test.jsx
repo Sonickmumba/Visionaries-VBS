@@ -76,7 +76,10 @@ describe("login screen", () => {
     expect(html).toContain("Welcome Back");
     expect(html).toContain("Sign in to continue saving and growing together.");
     expect(html).toContain("Secure member access");
-    expect(html).toContain("Sign in to manage savings, declarations, loans, reports, and transparent cycle records.");
+    expect(html).toContain("Welcome back");
+    expect(html).toContain("to your community.");
+    expect(html).toContain("Secure records. Transparent banking. Shared progress.");
+    expect(html).toContain("backdrop-blur-md");
     expect(html).toContain("font-sans");
     expect(html).toContain("min-h-[min(932px,calc(100svh-24px))]");
     expect(html).toContain("md:hidden");

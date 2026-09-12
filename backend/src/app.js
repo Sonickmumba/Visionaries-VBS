@@ -1,4 +1,5 @@
 import express from "express";
+import compression from "compression";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
@@ -30,6 +31,13 @@ import { shareoutRouter } from "./modules/shareout/routes.js";
 export const app = express();
 
 app.use(helmet());
+app.use(compression({
+  threshold: 1024,
+  filter(req, res) {
+    if (req.path === "/api/notifications/stream") return false;
+    return compression.filter(req, res);
+  },
+}));
 if (env.nodeEnv === "production") app.set("trust proxy", 1);
 const allowedOrigins = new Set([
   env.frontendOrigin,

@@ -70,6 +70,10 @@ describe("signup screen", () => {
     expect(form).toContain("Create member access");
     expect(form).toContain("desktop auth layout");
     expect(form).toContain("Join your community and start saving together.");
+    expect(form).toContain("Signup form sections");
+    expect(form).toContain("Identity");
+    expect(form).toContain("Contact");
+    expect(form).toContain("Security");
     expect(form).toContain("font-sans");
     expect(form).toContain("h-[100dvh]");
     expect(form).toContain("min-h-[100dvh]");
@@ -108,10 +112,15 @@ describe("signup screen", () => {
     expect(source).toContain("splashArtwork");
     expect(source).toContain("AuthDesktopShell");
     expect(source).toContain("signupDesktopFormClass");
-    expect(source).toContain("signupDesktopFieldGridClass");
+    expect(source).not.toContain("signupDesktopFieldGridClass");
+    expect(source).toContain('placeholder="First Name"');
+    expect(source).toContain('placeholder="Last Name"');
+    expect(source).toContain('placeholder="Phone Number"');
+    expect(source).toContain('placeholder="Email"');
+    expect(source).toContain("Use at least 10 characters.");
     expect(source).toContain("text-[clamp(21px,5.2vw,27px)]");
     expect(source).toContain("grid-cols-[34px_minmax(0,1fr)_auto]");
-    expect(source).toContain("[@media(max-height:620px)]:min-h-8");
+    expect(source).toContain("[@media(max-width:430px)_and_(max-height:620px)]:min-h-10");
     expect(source).toContain("focus-within:border-emerald");
 
     expect(tailwindSource).toContain("after:absolute after:bottom-2.5");

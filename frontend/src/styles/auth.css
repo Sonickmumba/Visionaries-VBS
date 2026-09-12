@@ -293,7 +293,7 @@
   border-radius: 34px;
   background:
     linear-gradient(180deg, rgba(13, 59, 46, 0.1), rgba(13, 59, 46, 0.12)),
-    url("../assets/auth/background-image-splash.png") center / cover no-repeat,
+    url("../assets/auth/background-image-splash.webp") center / cover no-repeat,
     linear-gradient(160deg, #0D3B2E 0%, #0D3B2E 42%, #127A5A 100%);
   box-shadow: 0 30px 90px rgba(31, 41, 51, 0.28);
   color: #F7F4EE;
@@ -498,7 +498,7 @@
   border-radius: 38px 38px 0 0;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.98) 62%, rgba(247, 244, 238, 0.76) 79%, rgba(247, 244, 238, 0.24) 100%),
-    url("../assets/auth/background-image-splash.png") center bottom / 132% auto no-repeat,
+    url("../assets/auth/background-image-splash.webp") center bottom / 132% auto no-repeat,
     #F7F4EE;
   box-shadow: 0 -20px 46px rgba(31, 41, 51, 0.14);
 }
@@ -683,7 +683,7 @@
   border-radius: 0 0 30px 30px;
   background:
     linear-gradient(180deg, rgba(247, 244, 238, 0.28), rgba(247, 244, 238, 0.02)),
-    url("../assets/auth/background-image-splash.png") center bottom / cover no-repeat,
+    url("../assets/auth/background-image-splash.webp") center bottom / cover no-repeat,
     #F7F4EE;
 }
 

@@ -1190,7 +1190,7 @@ th {
   border: 1px solid rgba(247, 244, 238, 0.18);
   background:
     linear-gradient(180deg, rgba(13, 59, 46, 0.08), rgba(13, 59, 46, 0.18)),
-    url("../assets/auth/background-image-splash.png") center / cover no-repeat,
+    url("../assets/auth/background-image-splash.webp") center / cover no-repeat,
     linear-gradient(160deg, #0D3B2E 0%, #0D3B2E 52%, #127A5A 100%);
   box-shadow: 0 30px 90px rgba(31, 41, 51, 0.28);
   text-align: center;

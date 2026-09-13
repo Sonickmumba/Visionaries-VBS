@@ -92,7 +92,7 @@ export function ProtectedRoute({ user, children, fallback = null }) {
 
 export function AuthLayout({ children }) {
   return (
-    <main className="auth-shell min-h-screen bg-cream text-charcoal">
+    <main className="auth-shell min-h-screen !grid-cols-1 bg-cream text-charcoal md:!p-0">
       {children}
     </main>
   );

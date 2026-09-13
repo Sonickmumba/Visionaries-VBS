@@ -63,13 +63,28 @@ describe("signup screen", () => {
 
   it("renders signup and success states", () => {
     const form = renderToStaticMarkup(<SignupPage onBackToLogin={() => {}} onBackToWelcome={() => {}} />);
+    const tailwindSource = fs.readFileSync(path.join(process.cwd(), "src/pages/auth/authTailwind.js"), "utf8");
 
     expect(form).toContain("Create Account");
     expect(form).toContain("Back to welcome");
+    expect(form).toContain("Create member access");
+    expect(form).toContain("desktop auth layout");
     expect(form).toContain("Join your community and start saving together.");
+    expect(form).toContain("Signup form sections");
+    expect(form).toContain("Identity");
+    expect(form).toContain("Contact");
+    expect(form).toContain("Security");
     expect(form).toContain("font-sans");
-    expect(form).toContain("min-h-[min(982px,calc(100svh-24px))]");
+    expect(form).toContain("h-[100dvh]");
+    expect(form).toContain("min-h-[100dvh]");
+    expect(form).toContain("md:hidden");
+    expect(form).toContain("max-[430px]:h-[100svh]");
+    expect(form).toContain("max-[430px]:rounded-none");
+    expect(form).toContain("max-[430px]:border-0");
+    expect(form).toContain("max-h-[calc(100svh-220px)]");
+    expect(form).toContain("overflow-y-auto");
     expect(form).toContain("focus-within:border-emerald");
+    expect(form).toContain("font-extrabold leading-tight text-cream");
     expect(form).not.toContain("auth-phone");
     expect(form).not.toContain("auth-form-sheet");
     expect(form).toContain("First Name");
@@ -80,16 +95,40 @@ describe("signup screen", () => {
     expect(form).toContain("Terms &amp; Privacy Policy");
     expect(form).toContain("Log In");
     expect(form).not.toContain("Continue with Biometrics");
+
+    expect(tailwindSource).toContain("signupPhoneClass");
+    expect(tailwindSource).toContain("signupHeroClass");
+    expect(tailwindSource).toContain("signupSheetClass");
+    expect(tailwindSource).toContain("signupSuccessHeroClass");
+    expect(tailwindSource).toContain("signupSuccessSheetClass");
+    expect(tailwindSource).toContain("signupActionClass");
+    expect(tailwindSource).toContain("md:hidden");
   });
 
   it("uses Tailwind utilities for signup frame, inputs, and actions", () => {
     const source = fs.readFileSync(path.join(process.cwd(), "src/pages/auth/SignupPage.jsx"), "utf8");
+    const tailwindSource = fs.readFileSync(path.join(process.cwd(), "src/pages/auth/authTailwind.js"), "utf8");
 
     expect(source).toContain("splashArtwork");
-    expect(source).toContain("min-h-[min(982px,calc(100svh-24px))]");
-    expect(source).toContain("after:absolute after:bottom-2.5");
+    expect(source).toContain("AuthDesktopShell");
+    expect(source).toContain("signupDesktopFormClass");
+    expect(source).not.toContain("signupDesktopFieldGridClass");
+    expect(source).toContain('placeholder="First Name"');
+    expect(source).toContain('placeholder="Last Name"');
+    expect(source).toContain('placeholder="Phone Number"');
+    expect(source).toContain('placeholder="Email"');
+    expect(source).toContain("Use at least 10 characters.");
+    expect(source).toContain("text-[clamp(21px,5.2vw,27px)]");
     expect(source).toContain("grid-cols-[34px_minmax(0,1fr)_auto]");
-    expect(source).toContain("bg-gradient-to-br from-emerald to-forest");
+    expect(source).toContain("[@media(max-width:430px)_and_(max-height:620px)]:min-h-10");
     expect(source).toContain("focus-within:border-emerald");
+
+    expect(tailwindSource).toContain("after:absolute after:bottom-2.5");
+    expect(tailwindSource).toContain("h-[100dvh]");
+    expect(tailwindSource).toContain("sm:h-[min(900px,calc(100dvh-24px))]");
+    expect(tailwindSource).toContain("max-[430px]:h-[100svh]");
+    expect(tailwindSource).toContain("max-[430px]:rounded-none");
+    expect(tailwindSource).toContain("overflow-y-auto");
+    expect(tailwindSource).toContain("bg-gradient-to-br from-emerald to-forest");
   });
 });
